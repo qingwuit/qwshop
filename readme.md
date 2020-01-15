@@ -14,8 +14,11 @@
 
 ## 代码地址：
 
-[Laravel 后端代码地址](https://gitee.com/qingwuitcn/qwshop_admin_php)
-[Vue 前端代码地址](https://gitee.com/qingwuit/qwshop_admin_vue)
+[Laravel 后端代码地址](https://gitee.com/qingwuitcn/qwShopPhp)
+[Vue 前端代码地址](https://gitee.com/qingwuitcn/qwShopVue)
+
+## 演示地址:
+[演示地址](http://pc.qingwuit.com)
 
 
 > 欢迎各位提交建议、BUG。联系方式 **QQ:364825702**  `添加请写上说明如：青梧商城`。
