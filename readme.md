@@ -7,7 +7,6 @@
 
 > * Laravel 6.x + Vue 前后分离
 > * 多商户、秒杀、团购、Wechat支付、Alipay支付
-> * 代码无保留开源
 > * 支持二次开发
 
 ![cmd-markdown-logo](http://pc.qingwuit.com/pc/logo.png)
