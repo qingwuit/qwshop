@@ -20,8 +20,8 @@
 [演示地址](http://pc.qingwuit.com)
 
 > * [后台地址](http://pc.qingwuit.com/Admin/login): admin 123456 
-> * [商家地址](http://pc.qingwuit.com/Seller/login): admin 123456 
-> * [用户登录](http://pc.qingwuit.com/user/login): admin 123456 (数据库每日会重新导入数据信息)
+> * [商家地址](http://pc.qingwuit.com/Seller/login): 18888888888 123456 
+> * [用户登录](http://pc.qingwuit.com/user/login): 18888888888 123456 (数据库每日会重新导入数据信息)
 
 
 > 欢迎各位提交建议、BUG。联系方式 **QQ:364825702**  `添加请写上说明如：青梧商城`。
