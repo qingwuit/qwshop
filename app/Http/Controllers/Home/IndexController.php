@@ -43,7 +43,7 @@ class IndexController extends NotokenController
         $goods_class = $goods_class_model->where('pid',0)->get()->toArray();
         $goods_list = [];
         foreach($goods_class as $k=>$v){
-            $goods_list[$k]['list'] = $goods_class_model->getGoodsListByClassId([$v['id']],['is_index'=>1]);
+            $goods_list[$k]['list'] = $goods_class_model->getGoodsListByClassId([$v['id']],['is_index'=>1],[],8);
             $goods_list[$k]['class_info'] = $v;
         }
         $data['goods_list'] = $goods_list;

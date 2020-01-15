@@ -45,7 +45,7 @@ class GoodsClassController extends BaseController
     public function edit(Request $req,GoodsClass $goods_class_model,$id){
         if(!$req->isMethod('post')){
             $info = $goods_class_model->find($id);
-    		$goods_class_list = $goods_class_model->orderBy('is_sort','desc')->get();
+    		$goods_class_list = $goods_class_model->orderBy('is_sort','desc')->where('id','<>',$id)->get();
             $list = getTree($goods_class_list);
 
             $arr = [];

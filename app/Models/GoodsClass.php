@@ -42,8 +42,8 @@ class GoodsClass extends Model
         return $list;
     }
 
-    // 根据栏目获取所有商品
-    public function getGoodsListByClassId($ids,$where=[],$order=[]){
+    // 根据栏目获取所有商品 take 为首页显示条数目
+    public function getGoodsListByClassId($ids,$where=[],$order=[],$take=0){
         $class_list = $this->select('id','pid')->whereIn('id',$ids)->get()->toArray();
         $thr_class_ids = []; // 第三层ID
         $fir_class_ids = []; // 第一层ID
@@ -90,6 +90,10 @@ class GoodsClass extends Model
             foreach($order['list'] as $v){
                 $goods_model = $goods_model->orderBy($v,$order['order_type']);
             }
+        }
+
+        if(!empty($take)){
+            $goods_model->take($take);
         }
 
         $goods_list = $goods_model->with('spec_once')->where($this->params)->whereIn('cid',$thr_class_ids)->get()->toArray();

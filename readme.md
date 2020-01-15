@@ -60,3 +60,7 @@ npm run build
 
 
 ## 数据库文件 （是根目录下的admin.sql）
+
+------
+
+## 接口没有严格按照RESTful api来写，我这边用着不太习惯，如DELETE的问题等等，所以我统一GET POST了，我就不改了，按我怎么舒服怎么写。

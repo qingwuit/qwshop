@@ -59,7 +59,7 @@ class MenusController extends BaseController
         
         if(!$req->isMethod('post')){
             $res['info'] = $menus_model->find($id);
-            $menu_list = $menus_model->orderBy('is_sort','desc')->get();
+            $menu_list = $menus_model->orderBy('is_sort','desc')->where('id','<>',$id)->get();
             $res['list'] = getTree($menu_list);
             return $this->success_msg('Success',$res);
         }
