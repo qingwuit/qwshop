@@ -55,6 +55,9 @@ php artisan jwt:secret （这条命令会在 .env 文件下生成一个加密密
 
 ```vue
 npm install (安装扩展)
+
+前端记得要修改src\plugins\api.js  应该是第一行 后端api 根域名，应该是127.0.0.1:8000 （这个是你api服务器域名）
+
 npm run build
 ```
 
