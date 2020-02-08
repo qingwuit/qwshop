@@ -6,7 +6,7 @@
 
 
 > * Laravel 6.x + Vue 前后分离
-> * 多商户、秒杀、团购、Wechat支付、Alipay支付
+> * 多商户、秒杀、团购、在线聊天、三级分销、Wechat支付、Alipay支付
 > * 支持二次开发
 
 ![cmd-markdown-logo](http://pc.qingwuit.com/pc/logo.png)
@@ -62,8 +62,7 @@ npm run build
 ```
 
 
-## 数据库文件 （是根目录下的admin.sql）
+## 数据库文件 （是PHP代码根目录下的admin.sql）
 
 ------
 
-## 接口没有严格按照RESTful api来写，我这边用着不太习惯，如DELETE的问题等等，所以我统一GET POST了，我就不改了，按我怎么舒服怎么写。

@@ -293,7 +293,7 @@ CREATE TABLE `chat_msg` (
   `user_id` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '用户ID',
   `to_user_id` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '聊天对象',
   `type` varchar(10) NOT NULL DEFAULT 'text' COMMENT '内容类型',
-  `content` text NOT NULL DEFAULT '' COMMENT '内容',
+  `content` text CHARACTER set utf8mb4 NOT NULL DEFAULT '' COMMENT '内容',
   `is_read` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT '是否查看',
   `add_time` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '加入时间',
   PRIMARY KEY (`id`),
