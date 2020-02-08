@@ -15,6 +15,10 @@ class ChatFriend extends Model
     }
 
     public function not_read(){
-        return $this->hasMoney('\App\Models\ChatMsg','to_user_id','user_id');
+        return $this->hasMany('\App\Models\ChatMsg','to_user_id','user_id');
+    }
+
+    public function friend_info(){
+        return $this->hasOne('\App\Models\Users','id','to_user_id');
     }
 }

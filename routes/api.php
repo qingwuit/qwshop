@@ -427,3 +427,19 @@ Route::namespace('Home')->group(function(){
 
 
 });
+
+
+
+// 聊天接口
+Route::namespace('chat')->group(function(){
+
+    // 添加为好友
+    Route::post('/chat/add_friend','IndexController@add_friend');
+
+    Route::get('/chat/get_chat_friend','IndexController@get_chat_friend'); // 获取好友列表 
+
+    Route::post('/chat/get_chat_msg','IndexController@get_chat_msg'); // 获取聊天信息
+
+    Route::post('/chat/chat_event','IndexController@chat_event');// 接收前端页面的信息接口
+
+});

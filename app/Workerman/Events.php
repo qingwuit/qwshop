@@ -3,7 +3,9 @@
 namespace App\Workerman;
 
 use \GatewayWorker\Lib\Gateway;
-use Illuminate\Support\Facades\Log;
+use App\Models\ChatMsg;
+use App\Models\Users;
+use Exception;
 
 class Events
 {
@@ -24,14 +26,26 @@ class Events
 
     public static function onMessage($client_id, $message){
         $data = json_decode($message,true);
-        // Log::channel('qwlog')->info('client_id:'.$client_id.$message);
+        $data['client_id'] = $client_id;
+        self::content_handle($data);
     }
 
     public static function onClose($client_id){
     }
 
+    public static function content_handle($data){
+        $jsonData = json_encode($data);
+        switch($data['type']){
+            // 绑定用户
+            case 'bind':
+                self::bindUid($data['client_id'],$data['content']['user_id']);
+                GateWay::sendToUid($data['content']['user_id'],$jsonData);
+                break;
+        }
+    }
+
     // 绑定用户ID
-    public function bindUid($cid,$uid){
+    public static function bindUid($cid,$uid){
         if(empty($cid) || empty($uid)){
             echo "用户ID 不能为空！";
         }
