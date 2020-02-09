@@ -442,4 +442,9 @@ Route::namespace('chat')->group(function(){
 
     Route::post('/chat/chat_event','IndexController@chat_event');// 接收前端页面的信息接口
 
+    Route::post('/chat/read_msg','IndexController@read_msg');// 处理消息为已读
+
+    Route::match(['get','post','options'],'/chat/image','IndexController@image'); 
+
+
 });

@@ -7,23 +7,27 @@ use App\Http\Controllers\Home\BaseController;
 use App\Models\ChatFriend;
 use App\Models\ChatMsg;
 use App\Models\Users;
+use App\Tools\Uploads;
 use \GatewayWorker\Lib\Gateway;
 
 class IndexController extends BaseController
 {
     // 获取好友列表信息
-    public function get_chat_friend(Request $req,ChatFriend $chat_friend_model){
+    public function get_chat_friend(Request $req,ChatFriend $chat_friend_model,ChatMsg $chat_msg_model){
         $user_info = auth()->user();
         unset($user_info['password']);
         unset($user_info['pay_password']);
         $data['user_info'] = $user_info;
         $data['chat_friend'] = $chat_friend_model->with(['chat_msg'=>function($query){
-            $query->orderBy('add_time','desc'); // 加return
+            $query->select('type','content')->orderBy('add_time','desc'); // 加return
         },'friend_info'=>function($query){
             $query->select('id','nickname','avatar');
         }])->withCount(['not_read'=>function($query){
             $query->where('is_read',0);
         }])->where('user_id',$user_info['id'])->paginate(20);
+
+        // 未读消息是否有
+        $data['count_msg'] = $chat_msg_model->where('to_user_id',$user_info['id'])->where('is_read',0)->count();
 
         return $this->success_msg('ok',$data);
     }
@@ -63,6 +67,17 @@ class IndexController extends BaseController
     public function get_chat_msg(Request $req,ChatMsg $chat_msg_model){
         $user_info = auth()->user();
         $to_user_id = $req->to_user_id; // 聊天对象ID
+
+        // 将所有聊天显示已读
+        $rs = $chat_msg_model->where('user_id',$to_user_id)->where('to_user_id',$user_info['id'])->update(['is_read'=>1]);
+
+        // 告诉前端已经标记已读
+        if($rs){
+            GateWay::sendToUid($user_info['id'],json_encode(['type'=>'other']));
+        }
+        
+
+        // 查询列表
         $data = $chat_msg_model->orWhere(function($query) use($user_info,$to_user_id){
             $query->where('user_id',$user_info['id'])->where('to_user_id',$to_user_id);
         })->orWhere(function($query) use($user_info,$to_user_id){
@@ -70,6 +85,20 @@ class IndexController extends BaseController
         })->with(['user_info'=>function($query){
             $query->select('id','nickname','avatar');
         }])->orderBy('add_time','desc')->paginate(20);
+
+        return $this->success_msg('ok',$data);
+    }
+
+    // 修改聊天信息为已读
+    public function read_msg(Request $req,ChatMsg $chat_msg_model){
+        $user_info = auth()->user();
+        $to_user_id = $req->to_user_id; // 聊天对象ID
+        $data = $chat_msg_model->where('user_id',$to_user_id)->where('to_user_id',$user_info['id'])->update(['is_read'=>1]);
+
+        // 告诉前端已经标记已读
+        if($data){
+            GateWay::sendToUid($user_info['id'],json_encode(['type'=>'other']));
+        }
 
         return $this->success_msg('ok',$data);
     }
@@ -130,6 +159,17 @@ class IndexController extends BaseController
                 return $this->error_msg($e->getMessage());
             }
 
+        }
+    }
+
+
+    public function image(){
+        $uploads = new Uploads;
+        $rs = $uploads->uploads(['filepath'=>'chat/']);
+        if($rs['status']){
+            return $this->success_msg('Success',$rs['path']);
+        }else{
+            return $this->error_msg($rs['msg']);
         }
     }
 
