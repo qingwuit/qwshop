@@ -66,3 +66,8 @@ npm run build
 
 ------
 
+## 常见问题
+
+1. 刷新404 后台无法访问。
+https://router.vuejs.org/zh/guide/essentials/history-mode.html   可根据自己环境修改
+
