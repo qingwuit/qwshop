@@ -57,7 +57,7 @@ class OrderController extends BaseController
         $user_info = auth()->user();
         $order_info = $order_model->where('id',$req->order_id)->where('user_id',$user_info['id'])->first();
         $order_info['goods_list'] = $order_goods_model->where('order_id',$order_info['id'])->get();
-
+        $order_info = get_order_status_one($order_info);
         if(empty($order_info)){
             return $this->error_msg('非法数据');
         }else{

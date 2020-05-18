@@ -29,11 +29,13 @@ class AdvController extends BaseController
     		'adv_title' => $req->adv_title,
     		'ap_id' => $req->ap_id,
     		'adv_link' => $req->adv_link??'',
+    		'bg_color' => $req->bg_color??'#fff',
     		'adv_image' => $req->adv_image,
     		'adv_sort' => intval($req->adv_sort),
             'adv_type' => intval($req->adv_type),
             'adv_start'=> strtotime($req->adv_date[0]),
             'adv_end'=> strtotime($req->adv_date[1]),
+            
     	];
 
     	$adv_model->insert($data);
@@ -53,7 +55,8 @@ class AdvController extends BaseController
     	$data = [
     		'adv_title' => $req->adv_title,
     		'ap_id' => $req->ap_id,
-    		'adv_link' => $req->adv_link??'',
+            'adv_link' => $req->adv_link??'',
+            'bg_color' => $req->bg_color??'#fff',
     		'adv_image' => $req->adv_image,
     		'adv_sort' => intval($req->adv_sort),
             'adv_type' => intval($req->adv_type),

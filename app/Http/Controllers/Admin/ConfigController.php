@@ -90,6 +90,7 @@ class ConfigController extends BaseController
         $save_data['appsecret'] = $req->appsecret;
         $save_data['mchid'] = $req->mchid;
         $save_data['key'] = $req->key;
+        $save_data['notify_url'] = $req->notify_url;
         
         $save_data_json = json_encode($save_data);
         $config_model->where(['name'=>'wxpay_h5'])->update(['val'=>$save_data_json]);
@@ -109,6 +110,7 @@ class ConfigController extends BaseController
         $save_data['appsecret'] = $req->appsecret;
         $save_data['mchid'] = $req->mchid;
         $save_data['key'] = $req->key;
+        $save_data['notify_url'] = $req->notify_url;
         
         $save_data_json = json_encode($save_data);
         $config_model->where(['name'=>'wxpay_app'])->update(['val'=>$save_data_json]);
@@ -148,6 +150,7 @@ class ConfigController extends BaseController
         $save_data['appsecret'] = $req->appsecret;
         $save_data['mchid'] = $req->mchid;
         $save_data['key'] = $req->key;
+        $save_data['notify_url'] = $req->notify_url;
         
         $save_data_json = json_encode($save_data);
         $config_model->where(['name'=>'wxpay_mini'])->update(['val'=>$save_data_json]);
@@ -166,6 +169,8 @@ class ConfigController extends BaseController
         $save_data['appid'] = $req->appid;
         $save_data['public_key'] = $req->public_key;
         $save_data['private_key'] = $req->private_key;
+        $save_data['notify_url'] = $req->notify_url;
+        $save_data['return_url'] = $req->return_url;
         
         $save_data_json = json_encode($save_data);
         $config_model->where(['name'=>'alipay_h5'])->update(['val'=>$save_data_json]);
@@ -184,6 +189,8 @@ class ConfigController extends BaseController
         $save_data['appid'] = $req->appid;
         $save_data['public_key'] = $req->public_key;
         $save_data['private_key'] = $req->private_key;
+        $save_data['notify_url'] = $req->notify_url;
+        $save_data['return_url'] = $req->return_url;
         
         $save_data_json = json_encode($save_data);
         $config_model->where(['name'=>'alipay_app'])->update(['val'=>$save_data_json]);

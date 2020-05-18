@@ -16,12 +16,13 @@ class IntegralController extends NotokenController
         $data['hot_goods'] = get_format_image_goods_list($data['hot_goods'],200);
 
         $class_list = $integral_class_model->get()->toArray();
-        foreach($class_list as $v){
+        foreach($class_list as $k=>$v){
             $v['goods_list'] = $integral_goods_model->where(['cid'=>$v['id'],'goods_status'=>1])->get()->toArray();
             foreach($v['goods_list'] as $key=>$vo){
-                $vo['goods_master_image'] = get_format_image($vo['goods_images'],200); // 获取缩略图
+                $vo['image'] = get_format_image($vo['goods_images'],200); // 获取缩略图
                 $v['goods_list'][$key] = $vo;
             }
+            $class_list[$k] = $v;
         }
         $data['class_list'] = $class_list;
         return $this->success_msg('ok',$data);

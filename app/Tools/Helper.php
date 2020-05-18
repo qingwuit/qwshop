@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Endroid\QrCode\QrCode;  // 生成二维码
 use App\Models\Config;
+use GuzzleHttp\Client;
 
 /**
  * Helper
@@ -97,6 +98,20 @@ class Helper extends Controller{
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         }
         return curl_exec($curl);
+    }
+
+    // 发送http请求
+    public function http_send($url,$data=[],$method="GET"){
+        $client = new Client();
+        $params = [];
+        if($method == 'GET'){
+            $params['query'] = $data;
+        }else{
+            $params['form_params'] = $data;
+        }
+        $response = $client->request($method,$url,$params);
+       
+        return $response->getBody();
     }
     
 }

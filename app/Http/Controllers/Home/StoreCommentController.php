@@ -84,7 +84,7 @@ class StoreCommentController extends BaseController
 
         foreach($goods_list as $v){
             $data['content'] = $req->content;
-            $data['score'] = round(($req->agree+$req->service+$req->speed)/3/5,1);
+            $data['score'] = round(($req->agree+$req->service+$req->speed)/3,1);
             $data['agree'] = $req->agree;
             $data['service'] = $req->service;
             $data['speed'] = $req->speed;

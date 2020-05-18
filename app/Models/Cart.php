@@ -102,14 +102,14 @@ class Cart extends Model
             }
             // 修改数据库购物车 商品数量
             $rs = $this->where('id',$cart_info['id'])->increment('goods_num',$update_num);
-            if($rs){ // 如果执行成功则减少规格属性内的数量
-                if($cart_info['spec_id']>0){    // 判断是否有规格
-                    $goods_spec_model->where('id',$cart_info['spec_id'])->decrement('goods_num',$update_num);
-                }else{
-                    $goods_model->where('id',$cart_info['goods_id'])->decrement('goods_num',$update_num);
-                }
+            // if($rs){ // 如果执行成功则减少规格属性内的数量
+            //     if($cart_info['spec_id']>0){    // 判断是否有规格
+            //         $goods_spec_model->where('id',$cart_info['spec_id'])->decrement('goods_num',$update_num);
+            //     }else{
+            //         $goods_model->where('id',$cart_info['goods_id'])->decrement('goods_num',$update_num);
+            //     }
                 
-            }
+            // }
         }else{
             // 修改数据库购物车 商品数量
             if($cart_info['goods_num']-$update_num<=0){
@@ -117,13 +117,13 @@ class Cart extends Model
                 return ['status'=>true,'msg'=>'修改成功'];
             }
             $rs = $this->where('id',$cart_info['id'])->decrement('goods_num',$update_num);
-            if($rs){ // 如果执行成功则添加规格属性内的数量
-                if($cart_info['spec_id']>0){    // 判断是否有规格
-                    $goods_spec_model->where('id',$cart_info['spec_id'])->increment('goods_num',$update_num);
-                }else{
-                    $goods_model->where('id',$cart_info['goods_id'])->increment('goods_num',$update_num);
-                }
-            }
+            // if($rs){ // 如果执行成功则添加规格属性内的数量
+            //     if($cart_info['spec_id']>0){    // 判断是否有规格
+            //         $goods_spec_model->where('id',$cart_info['spec_id'])->increment('goods_num',$update_num);
+            //     }else{
+            //         $goods_model->where('id',$cart_info['goods_id'])->increment('goods_num',$update_num);
+            //     }
+            // }
         }
 
         return ['status'=>true,'msg'=>'修改成功'];

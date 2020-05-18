@@ -1,0 +1,421 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {margin:0;padding:0;} 
+
+.el-scrollbar__wrap {
+    overflow-x: hidden!important;
+    overflow-y: scroll!important;
+    margin-right: -16px!important;
+    margin-bottom: 0px!important;
+}
+.el-scrollbar__view{
+    height: 100%;
+}
+.clear{clear:both;}
+.unline{
+    border-bottom: 1px solid #EBEEF5;
+}
+
+/* 后台内容块公共样式 */
+.admin_main_block{
+    background: #fff;
+    width: 100%;
+    /* height: 100%; */
+    border:1px solid #e7eaec!important;
+    box-sizing: border-box;
+    padding: 20px;
+}
+.admin_main_block_top{
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #efefef;
+}
+.admin_main_block_top:after{
+    clear: both;
+    display: block;
+    content: "";
+}
+.admin_main_block_left{
+    float: left;
+}
+.admin_main_block_left div{
+    float: left;
+    margin-right: 15px;
+}
+
+.admin_main_block_right{
+    width: 10%;
+    float: right;
+    margin-right: 15px;
+}
+.admin_main_block_right div{
+    float: right;
+}
+.admin_table_main_pagination{
+    margin-top: 20px;
+}
+.admin_form_main{
+    width: 100%;
+}
+.admin_form_main .el-form-item{
+    width: 400px;
+}
+.admin_form_main .el-form-item.width_auto{
+    width: 100%;
+}
+.admin_form_main .el-form-item.width_auto_60{
+    width: 60%;
+}
+.admin_form_main .el-form-item.width_auto_70{
+    width: 70%;
+}
+.admin_form_main .el-form-item.width_auto .el-divider{
+    background-color:#e7eaec;
+}
+
+/* table 列表图文混搭 */
+.table_dl dt{
+    float: left;
+    margin-right: 10px;
+}
+
+.table_dl dd.table_dl_dd_all{
+    line-height: 25px;
+}
+
+.table_dl dd.table_dl_dd_all_30{
+    line-height: 30px;
+}
+
+.table_dl dd.table_dl_dd_all_16_gray{
+    line-height: 16px;
+    color:#999;
+}
+
+
+/* 上传头像 后台 */
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+}
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+}
+.avatar-upload {
+    width: 178px;
+    height: 178px;
+    display: block;
+}
+
+/* 圆点绿色和灰色黄色 */
+.green_round{
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #67c23a;
+}
+.gray_round{
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #d3d4d6;
+}
+.yellow_round{
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #e6a23c;
+}
+.red_round{
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #f56c6c;
+}
+
+/* 宽度1200 左右居中 */
+.width_center_1200{
+    width: 1200px;
+    margin:0 auto;
+}
+.width_center_1200:after{
+    display: block;
+    clear:both;
+    content:'';
+}
+
+/* 公共左浮动 */
+.float_left{
+    float: left;
+}
+.float_right{
+    float: right;
+}
+
+/* 商城头部浮动 */
+.shop_top{
+    position: relative;
+    height: 210px;
+}
+
+/* 编辑器的样式 */
+.w-e-text p, .w-e-text h1, .w-e-text h2, .w-e-text h3, .w-e-text h4, .w-e-text h5, .w-e-text table, .w-e-text pre{
+    margin: 10px 0;
+}
+
+/* 商品列表 分类选择 */
+.home_goods_cat_list .el-cascader .el-input .el-input__inner:focus,.home_goods_cat_list .el-cascader .el-input.is-focus .el-input__inner{
+    border-color: #ccc;
+}
+.home_goods_index_cascader .el-cascader-node.in-active-path, .home_goods_index_cascader .el-cascader-node.is-active, .home_goods_index_cascader .el-cascader-node.is-selectable.in-checked-path{
+    color:#666;
+}
+.home_goods_index_cascader  .el-radio__input.is-checked .el-radio__inner{
+    background: #666;
+    border-color: #666;
+}
+.home_goods_index_cascader  .el-radio__input .el-radio__inner:hover{
+    border-color: #ccc;
+}
+.home_goods_cat_list .el-input__inner{
+    border-radius:0;
+}
+
+.user_comment_input .el-textarea__inner:focus{
+    border-color: #ccc;
+}
+.user_comment_input .el-input__inner:focus{
+    border-color: #ccc;
+}
+
+.money_pay .el-checkbox__inner:hover{
+    border-color: #999;
+}
+
+.money_pay .el-checkbox__input.is-checked+.el-checkbox__label{
+    color: #ca151e;
+}
+.money_pay .el-checkbox__input.is-checked .el-checkbox__inner,.money_pay .el-checkbox__input.is-indeterminate .el-checkbox__inner{
+    background-color:#ca151e;
+    border-color: #ca151e;
+}
+
+/* 用户中心资料完成度 */
+.other_user_info_step .el-progress-bar__inner{
+    background-color: #ca151e;
+}
+
+/* 用户单选框颜色 */
+.red_radio .el-radio__input.is-checked .el-radio__inner{
+    background: #666;
+    border-color: #666;
+}
+.red_radio .el-radio__input .el-radio__inner:hover{
+    border-color: #ccc;
+}
+.red_radio .el-input__inner{
+    border-radius:0;
+}
+.red_radio .el-radio__input.is-checked+.el-radio__label{
+    color:#333;
+}
+
+/* 商品列表 分页颜色 */
+.home_fy_block .el-pagination.is-background .el-pager li:not(.disabled).active{
+    background-color:#ca151e;
+}
+.home_fy_block .el-pagination__editor.el-input .el-input__inner:focus{
+    border-color: #ca151e;
+}
+.home_fy_block .el-pagination.is-background .el-pager li:not(.disabled):hover{
+    color:#ca151e;
+}
+
+/* 图片加载失败的自定义样式 */
+.image-slot{
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: #f5f7fa;
+    color: #909399;
+    font-size: 14px;
+    display: flex;
+}
+
+
+/* PC购物车样式修改 */
+.store_goods_list .el-checkbox__input.is-checked .el-checkbox__inner,.store_goods_list  .el-checkbox__input.is-indeterminate .el-checkbox__inner{
+    background-color:#ca151e;
+    border-color:#ca151e;
+}
+.store_goods_list .el-checkbox__input.is-checked+.el-checkbox__label,.store_goods_all_store_info .el-checkbox__input.is-checked+.el-checkbox__label{
+    color:#ca151e;
+}
+.store_goods_all_store_info .el-checkbox__input.is-checked .el-checkbox__inner,.store_goods_all_store_info  .el-checkbox__input.is-indeterminate .el-checkbox__inner{
+    background-color:#ca151e;
+    border-color:#ca151e;
+}
+
+/* PC商品详情tabs 样式修改 */
+.goods_info_text_right .el-tabs__item.is-active{
+    color:#ca151e;
+}
+.goods_info_text_right .el-tabs__active-bar{
+    background-color:#ca151e;
+}
+.goods_info_text_right .el-tabs__nav-wrap::after{
+    height:1px;
+}
+.goods_info_text_right  .el-tabs__item:hover{
+    color:#ca151e;
+}
+
+/* 空列表 */
+.home_empty_list{
+    text-align: center;
+    color:#666;
+    line-height: 200px;
+}
+.home_empty_list i{
+    margin-right: 15px;
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* 空列表  目前购物车 */
+.empty_show_list{
+    padding: 60px 0;
+}
+.empty_show_list dl{
+    width: 461px;
+    margin:0 auto;
+}
+.empty_show_list dl dt{
+    float: left;
+    margin-right: 25px;
+}
+.empty_show_list dl dd{
+    float: left;
+    margin-top: 15px;
+}
+.empty_show_list dl dd.btn{
+    border-radius: 3px;
+    border:1px solid #ca151e;
+    margin-top: 20px;
+    padding: 0 10px;
+    line-height: 25px;
+    
+}
+.empty_show_list dl dd.btn a{
+    color:#ca151e;
+}
+.empty_show_list dl:after{
+    content:'';
+    display: block;
+    clear: both;
+}
+
+
+
+/* PC用户内容块 */
+.user_content_blcok{
+    background: #fff;
+    padding: 20px;
+    font-size: 14px;
+    min-height: 600px;
+}
+.user_content_blcok .el-button--danger{
+    background-color:#ca151e;
+    border-color:#ca151e;
+}
+.user_content_blcok_title{
+    border-left: 3px solid #ca151e;
+    padding-left: 20px;
+    font-size: 16px;;
+    
+}
+.user_content_blcok_title span{
+    font-size: 12px;
+    float: right;
+}
+
+.user_content_blcok_line{
+    clear: both;
+    height: 1px;
+    background: #efefef;
+    margin:15px 0;
+}
+
+
+/* PC 生成订单 */
+.foot_create_order .el-button--danger{
+    background-color: #ca151e;
+    border-color: #ca151e;
+}
+
+/* PC 分数星星 */
+.store_star_in .el-rate__icon{
+    /* font-size: 16px; */
+    margin-right: 4px;
+}
+
+/* PC 用户中心 订单数字显示 */
+.user_info_order_num_show .el-badge__content.is-fixed{
+    top: -4px;
+    right: 1px;
+}
+
+/* 空订单 */
+.empty_order{
+    padding: 60px 0;
+    
+}
+.empty_order dl{
+    width: 461px;
+    margin:0 auto;
+}
+.empty_order dl dt{
+    float: left;
+    margin-right: 25px;
+}
+.empty_order dl dd{
+    float: left;
+    margin-top: 15px;
+}
+ .empty_order dl dd.btn{
+    border-radius: 3px;
+    border:1px solid #ca151e;
+    margin-top: 20px;
+    padding: 0 10px;
+    line-height: 25px;
+    
+}
+.empty_order dl dd.btn a{
+    color:#ca151e;
+}
+.empty_order dl:after{
+    content:'';
+    display: block;
+    clear: both;
+}
+
+/* 用户订单号搜索框里 */
+.user_content_blcok_title .order_search .el-input.is-active .el-input__inner, .el-input__inner:focus{
+    border-color: #ccc;
+}
+
+/* 订单备注 */
+.address_chose .remark .el-textarea__inner:focus{
+    border-color: #ccc;
+}

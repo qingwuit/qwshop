@@ -130,14 +130,19 @@ class Sms extends Controller{
         switch($val){
             case 1:
                 $name = '登录';
+                break;
             case 2:
                 $name = '注册';
+                break;
             case 3:
                 $name = '手机认证';
+                break;
             case 4:
                 $name = '邮件认证';
+                break;
             case 5:
                 $name = '忘记密码';
+                break;
         }
         return $name;
     }

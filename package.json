@@ -22,5 +22,20 @@
         "sass-loader": "7.*",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
+    },
+    "dependencies": {
+        "babel-polyfill": "^6.26.0",
+        "clipboard": "^2.0.6",
+        "core-js": "^3.6.5",
+        "echarts": "^4.7.0",
+        "element-ui": "^2.13.1",
+        "laravel-mix-polyfill": "^2.0.0",
+        "node-sass": "^4.14.1",
+        "qs": "^6.9.4",
+        "vue-amap": "^0.5.10",
+        "vue-emoji-picker": "^1.0.1",
+        "vue-router": "^3.1.6",
+        "vue-wechat-title": "^2.0.5",
+        "wangeditor": "^3.1.1"
     }
 }

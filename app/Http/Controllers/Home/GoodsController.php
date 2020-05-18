@@ -35,7 +35,7 @@ class GoodsController extends NotokenController
     // 商家详情的 销量列表 也就是商家的销量列表
     public function get_sale_list(Request $req,Goods $goods_model){
         $user_id = $req->user_id;
-        $goods_list = $goods_model->where('user_id',$user_id)->orderBy('goods_sale_num','desc')->take(6)->with('spec_once')->get()->toArray();
+        $goods_list = $goods_model->where('user_id',$user_id)->where(['goods_status'=>1,'goods_verify'=>1])->orderBy('goods_sale_num','desc')->take(6)->with('spec_once')->get()->toArray();
         // 是否有规格，有规格则取规格价格
         foreach($goods_list as $k=>$v){
             if(!empty($v['spec_once'])){

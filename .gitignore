@@ -1,4 +1,5 @@
 /node_modules
+/public/dist
 /public/hot
 /public/Uploads
 /public/storage

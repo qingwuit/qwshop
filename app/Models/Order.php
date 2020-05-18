@@ -132,11 +132,16 @@ class Order extends Model
                     }
 
                     // 修改库存
-                    if($order_goods_data['spec_id']>0){
-                        $goods_spec_model->where('id',$order_goods_data['spec_id'])->decrement('goods_num',$order_goods_data['goods_num']); // 修改库存
-                    }else{
-                        $goods_model->where('id',$order_goods_data['goods_id'])->decrement('goods_num',$order_goods_data['goods_num']); // 修改库存
+                    try{
+                        if($order_goods_data['spec_id']>0){
+                            $goods_spec_model->where('id',$order_goods_data['spec_id'])->decrement('goods_num',$order_goods_data['goods_num']); // 修改库存
+                        }else{
+                            $goods_model->where('id',$order_goods_data['goods_id'])->decrement('goods_num',$order_goods_data['goods_num']); // 修改库存
+                        }
+                    }catch(\Exception $e){
+                        throw new \Exception("库存不足");
                     }
+                    
                     
                 }
 
