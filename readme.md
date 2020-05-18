@@ -98,6 +98,14 @@ php artisan workerman start -d  (WINDOWS则不需要运行左侧命令 在根目
 
 ```
 
+3. 定时任务
+
+```php
+
+cd /www/wwwroot/api.qingwuit.com && php artisan schedule:run >> /dev/null 2>&1  （WINDOWS php artisan schedule:run） 
+
+```
+
 ## 数据库文件 （是PHP代码根目录下的admin.sql）
 
 ------
