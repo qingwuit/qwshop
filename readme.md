@@ -36,7 +36,7 @@
   
   
   
-[Vue 前端代码地址(已经和当前Laravel项目合并，不再需要两边处理)](https://gitee.com/qingwuitcn/qwShopVue)
+~~[Vue 前端代码地址(已经和当前Laravel项目合并，不再需要两边处理)](https://gitee.com/qingwuitcn/qwShopVue)~~
   
 
 

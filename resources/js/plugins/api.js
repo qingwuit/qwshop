@@ -1,5 +1,5 @@
 // export const baseUrl="https://app.qingwuit.com/api/";
-export const baseUrl="http://api.qingwuit.com/api/";
+export const baseUrl="http://pc.qingwuit.com/api/";
 // export const baseUrl="http://127.0.0.1:8000/api/";
 export const api = {
     "checkUserLogin" : baseUrl + "Admin/check_user_login", // 验证是否已经登录
