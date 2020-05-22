@@ -103,7 +103,7 @@ export default {
             this.dialogVisible = true;
             this.$get(this.$api.editAddress+id).then(res=>{
                 this.info = res.data;
-                this.default = res.data.is_default==0?false:true;
+                this.info.default = res.data.is_default==0?false:true;
             });
         },
         set_default:function(id){

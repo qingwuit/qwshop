@@ -57,6 +57,11 @@ class AddressController extends BaseController
             'receive_name'  =>  $req->receive_name,
             'is_default'    =>  empty($req->is_default)?0:1,
         ];
+
+        if(!empty($data['is_default'])){
+            $address_model->where('user_id',$user_info['id'])->update(['is_default'=>0]);
+        }
+
         $rs = $address_model->where('id',$id)->update($data);
         return $this->success_msg('ok',$rs);
 

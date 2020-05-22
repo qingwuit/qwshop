@@ -80,7 +80,7 @@ export default {
                 return this.$message.error('两次密码不相同');
             }
 
-            this.$post(this.$api.homeForgetPaasword,this.info).then(res=>{
+            this.$post(this.$api.homeForgetPassword,this.info).then(res=>{
                 if(res.code == 200){
                     this.$message.success(res.msg);
                     this.$router.push('/user/login');
