@@ -80,7 +80,7 @@ vim ./env  (修改配置 数据库 邮件 redis 等等)  // win 系统直接编�
 
 php artisan jwt:secret （这条命令会在 .env 文件下生成一个加密密钥，如：JWT_SECRET=foobar）
 
-npm run install (安装扩展) // 也是在本项目根目录 没有node环境自行安装
+npm install (安装扩展) // 也是在本项目根目录 没有node环境自行安装
 
 前端记得要修改\resources\js\plugins\api.js  应该是第一行 后端api 根域名，应该是127.0.0.1:8000 （这个是你项目域名）
 
