@@ -112,10 +112,12 @@ cd /www/wwwroot/api.qingwuit.com && php artisan schedule:run >> /dev/null 2>&1  
 
 ## 常见问题
 
-1. 刷新404 后台无法访问。（20200518 后克隆代码没有这个问题了）
+1. npm run 打包过程失败，请查看node-sass 是否有下载成功，尝试重新下载或者去淘宝镜像下载
+
+2. 刷新404 后台无法访问。（20200518 后克隆代码没有这个问题了）
 https://router.vuejs.org/zh/guide/essentials/history-mode.html   可根据自己环境修改
 
-2. 地址缺少
+3. 地址缺少
 [代码下载](https://gitee.com/qingwuitcn/address_collection_php)   可以自己去国家统计采集或者用我这个代码
   
 
