@@ -1,0 +1,317 @@
+<?php
+namespace App\Services;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Illuminate\Http\File;
+use Illuminate\Support\Str;
+
+class UploadService extends BaseService{
+
+    protected $path = 'myfiles'; // 文件上传目录，默认地址
+    protected $fileName = 'file'; // 上传的字段
+    protected $fileAllow = ['ico','xls','xlsx']; // 文件允许上传
+    protected $photoAllow = ['jpg','png','gif','jpeg']; // 图片允许上传
+
+    // 非图片文件上传处理
+    public function uploadFile($path='',$filename=''){
+        
+        if(!request()->hasFile($this->fileName)){
+            return $this->format_error(__('upload.file_not_found'));
+        }
+
+        // 获取上传来的文件
+        $file = request()->file($this->fileName);
+
+        if(!$file->isValid()){ //无效文件
+            return $this->format_error(__('upload.invalid_file'));
+        }
+
+        $ext = strtolower($file->getClientOriginalExtension()); // 后缀
+
+        if(!in_array($ext,$this->fileAllow)){
+            return $this->format_error(__('upload.not_allow').'['.implode(',',$this->fileAllow).']');
+        }
+
+        if(!empty($path)){
+            $this->path = $path;
+        }
+
+        $configService = new ConfigService;
+        try{
+            $config = json_decode($configService->get_format_config('alioss'),true);
+        }catch(\Exception $e){
+            return $this->format_error(__('upload.error_config_oss'));
+        }
+
+        $disk = 'public'; // 默认是本地
+        
+        if(!empty($config['status'])){
+            $disk = 'alioss';
+        }
+
+        $this->path .= '/'.date('Y-m-d'); // 加上日期
+
+        if(empty($filename)){
+            $rs = Storage::disk($disk)->putFile($this->path, $file);
+        }else{
+            $rs = Storage::disk($disk)->putFileAs($this->path, $file ,$filename.'.'.$ext);
+        }
+
+        $rs = Storage::disk($disk)->url($rs);
+
+        return $this->format($rs,__('upload.upload_success'));
+
+    }
+
+
+    // 图片上传
+    public function uploadPhoto($path='',$opt=[]){
+
+        if(!request()->hasFile($this->fileName)){
+            return $this->format_error(__('upload.file_not_found'));
+        }
+
+        // 获取上传来的文件
+        $file = request()->file($this->fileName);
+
+        // 判断是单文件上传还是多文件上传
+        if(!isset($opt['many'])){ // many 存在则是多文件，这里if下是单文件
+            // 判断是否传错了 单文件上传选择多文件
+            if(is_array($file)){
+                return $this->format_error(__('upload.upload_type'));
+            }
+            $rs = $this->photoHandle($file,$path,$opt);
+            return $this->format($rs,__('upload.upload_success'));
+         
+        }
+
+        $fileList = []; // 多文件地址
+        if(!is_array($file)){
+            return $this->format_error(__('upload.upload_type'));
+        }
+        foreach($file as $v){
+            $fileList[] = $this->photoHandle($v,$path,$opt);
+        }
+        return $this->format($fileList,__('upload.upload_success'));
+
+    }
+
+    /**
+     * 编辑器图片上传
+     *
+     * @param integer $type 类型 
+     * @author hg <www.qingwuit.com>
+     */
+    public function editer($type=0){
+
+        // 单图片上传
+        $path = 'editers';
+        if($type==0){
+            return $this->uploadPhoto($path);
+        }
+
+        // 多图片上传
+        if($type==1){
+            return $this->uploadPhoto($path,['many'=>1]);
+        }
+
+        // 文件上传
+        if($type==1){
+            return $this->uploadFile($path);
+        }
+
+    }
+
+    /**
+     * 用户头像上传
+     *
+     * @param integer $id 用户ID
+     * @author hg <www.qingwuit.com>
+     */
+    public function avatar($id=0){
+        $path = 'avatars';
+        if(!empty($id)){
+            $path = $path.'/'.$id;
+        }
+        return $this->uploadPhoto($path);
+    }
+    
+    /**
+     * 商品图片上传
+     *
+     * @param integer $store_id  商家ID
+     * @author hg <www.qingwuit.com>
+     */
+    public function goods($store_id=0){
+        $path = 'goods';
+        $opt = [
+            'width'=>800,
+            'height'=>800,
+            'thumb'=>[
+                [400,400],
+                [300,300],
+                [150,150],
+            ],
+        ]; // 配置文件
+        if(empty($store_id)){
+            $path = $path.'/'.$store_id;
+        }
+        return $this->uploadPhoto($path,$opt);
+    }
+
+    /**
+     * 积分产品图片上传
+     *
+     * @param integer $store_id  商家ID
+     * @author hg <www.qingwuit.com>
+     */
+    public function integral($store_id=0){
+        $path = 'integrals';
+        $opt = [
+            'width'=>800,
+            'height'=>800,
+            'thumb'=>[
+                [400,400],
+                [300,300],
+                [150,150],
+            ],
+        ]; // 配置文件
+        if(empty($store_id)){
+            $path = $path.'/'.$store_id;
+        }
+        return $this->uploadPhoto($path,$opt);
+    }
+
+    /**
+     * 评论图片
+     *
+     * @param integer $id  用户ID
+     * @author hg <www.qingwuit.com>
+     */
+    public function comment($id=0){
+        $path = 'comments';
+        $opt = [
+            'width'=>800,
+            'height'=>800,
+            'thumb'=>[
+                [150,150],
+            ],
+        ]; // 配置文件
+        if(empty($id)){
+            $path = $path.'/'.$id;
+        }
+        return $this->uploadPhoto($path,$opt);
+    }
+
+
+    // 图片处理
+    protected function photoHandle($file,$path,$opt){
+
+        if(!$file->isValid()){ //无效文件
+            return $this->format_error(__('upload.invalid_file'));
+        }
+        
+        $ext = strtolower($file->getClientOriginalExtension()); // 后缀
+
+        if(!in_array($ext,$this->photoAllow)){
+            return $this->format_error(__('upload.not_allow').'['.implode(',',$this->photoAllow).']');
+        }
+
+        if(!empty($path)){
+            $this->path = $path;
+        }
+
+        $configService = new ConfigService;
+        try{
+            $config = json_decode($configService->get_format_config('alioss'),true);
+        }catch(\Exception $e){
+            return $this->format_error(__('upload.error_config_oss'));
+        }
+
+        $disk = 'public'; // 默认是本地
+        
+        if(!empty($config['status'])){
+            $disk = 'alioss';
+        }
+
+        $this->path .= '/'.date('Y-m-d'); // 加上日期
+
+        // 实例化扩展 使用gd  imagick
+        $manager = new ImageManager(['driver' => 'gd']);
+        $obj = $manager->make($file);
+
+        // 如果有配置宽高
+        if(isset($opt['width']) && isset($opt['height'])){
+            $width = $obj->width();
+            $height = $obj->height();
+            if($width > $opt['width'] || $height > $opt['height']){ // 如果图片大于则进行裁剪
+                $width = $opt['height'];
+                $height = $opt['height'];
+            }
+            $obj = $obj->resize($width,$height,function($item){
+                $item->aspectRatio();  // 这个应该是同比例缩减
+            })->resizeCanvas($width,$height);
+        }
+
+        $extension = $file->extension();
+        $random = Str::random(40);
+        $tempfilepath = 'app/public/tempfile';
+        $tempfile = storage_path($tempfilepath).'/'.$random.'.'.$ext;
+        $obj->save($tempfile);
+        $obj->destroy();
+
+        // if (!file_exists($this->path)) {
+        //     mkdir($this->path,  0644, true);
+        // }
+
+        if(!isset($opt['filename'])){
+            
+            $rs = Storage::disk($disk)->putFile($this->path, new File($tempfile));
+
+            // 如果有缩略图
+            if(isset($opt['thumb']) && !empty($opt['thumb'])){
+                foreach($opt['thumb'] as $items){
+                    $obj = $manager->make($file);
+                    $obj = $obj->resize($items[0],$items[1],function($item){
+                        $item->aspectRatio();  // 这个应该是同比例缩减
+                    })->resizeCanvas($items[0],$items[1]);
+
+                    $tempfile2 = storage_path($tempfilepath).'/'.$random.'_'.$items[0].'.'.$ext;
+                    $obj->save($tempfile2);
+                    $obj->destroy();
+
+                    Storage::disk($disk)->putFileAs($this->path, new File($tempfile2),$random.'_'.$items[0].'.'.$ext);
+                    unlink($tempfile2);
+                }
+            }
+            unlink($tempfile);
+        }else{
+            $rs = Storage::disk($disk)->putFileAs($this->path, new File($tempfile),$opt['filename'].'.'.$ext);
+
+            // 如果有缩略图
+            if(isset($opt['thumb']) && !empty($opt['thumb'])){
+                foreach($opt['thumb'] as $items){
+                    $obj = $manager->make($file);
+                    $obj = $obj->resize($items[0],$items[1],function($item){
+                        $item->aspectRatio();  // 这个应该是同比例缩减
+                    })->resizeCanvas($items[0],$items[1]);
+
+                    $tempfile2 = storage_path($tempfilepath).'/'.$opt['filename'].'_'.$items[0].'.'.$ext;
+                    $obj->save($tempfile2);
+                    $obj->destroy();
+
+                    Storage::disk($disk)->putFileAs($this->path, new File($tempfile2),$opt['filename'].'_'.$items[0].'.'.$ext);
+                    
+                    unlink($tempfile2);
+                }
+            }
+            unlink($tempfile);
+        }
+
+        $rs = Storage::disk($disk)->url($rs);
+
+        return $rs;
+    }
+
+
+}
