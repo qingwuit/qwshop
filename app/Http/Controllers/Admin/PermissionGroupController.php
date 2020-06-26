@@ -53,7 +53,7 @@ class PermissionGroupController extends Controller
      */
     public function update(Request $request,PermissionGroup $permission_group_model, $id)
     {
-        $permission_group_model->find($id);
+        $permission_group_model = $permission_group_model->find($id);
         $permission_group_model->name = $request->name??'';
         $permission_group_model->save();
         return $this->success(__('base.success'));

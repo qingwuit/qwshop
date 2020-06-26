@@ -35,7 +35,11 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
             'roles'=>'RoleController', // 用户角色
             'menus'=>'MenuController', // 用户菜单
             'permissions'=>'PermissionController', // 角色权限
+            'permission_groups'=>'PermissionGroupController', // 接口权限分组
         ]); 
+
+        // 缓存清除接口
+        Route::get('/menus/cache/clear','MenuController@clear_cache');
     });
 
     

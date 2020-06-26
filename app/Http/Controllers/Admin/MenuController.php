@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use App\Services\MenuService;
 
 class MenuController extends Controller
 {
@@ -13,10 +14,10 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,Menu $menu_model)
+    public function index()
     {
-        $is_type = $request->is_type??0;
-        $list = $menu_model->where('is_type',$is_type)->paginate($request->per_page??30);
+        $menu_service = new MenuService;
+        $list = $menu_service->get_menus()['data'];
         return $this->success($list);
     }
 
@@ -30,12 +31,13 @@ class MenuController extends Controller
     {
         $menu_model->pid = $request->pid??0;
         $menu_model->name = $request->name;
-        $menu_model->ename = $request->ename;
-        $menu_model->icon = $request->icon;
-        $menu_model->link = $request->link;
+        $menu_model->ename = $request->ename??'';
+        $menu_model->icon = $request->icon??'';
+        $menu_model->link = $request->link??'';
         $menu_model->is_type = $request->is_type??0;
         $menu_model->save();
-        return $this->success(__('base.success'));
+        $this->clear_cache(); // 修改则清空缓存
+        return $this->success([],__('base.success'));
     }
 
     /**
@@ -59,15 +61,16 @@ class MenuController extends Controller
      */
     public function update(Request $request,Menu $menu_model, $id)
     {
-        $menu_model->find($id);
+        $menu_model = $menu_model->find($id);
         $menu_model->pid = $request->pid??0;
         $menu_model->name = $request->name;
-        $menu_model->ename = $request->ename;
-        $menu_model->icon = $request->icon;
-        $menu_model->link = $request->link;
+        $menu_model->ename = $request->ename??'';
+        $menu_model->icon = $request->icon??'';
+        $menu_model->link = $request->link??'';
         $menu_model->is_type = $request->is_type??0;
         $menu_model->save();
-        return $this->success(__('base.success'));
+        $this->clear_cache(); // 修改则清空缓存
+        return $this->success([],__('base.success'));
     }
 
     /**
@@ -82,6 +85,14 @@ class MenuController extends Controller
             return is_numeric($item);
         });
         $menu_model->destroy($idArray);
-        return $this->success(__('base.success'));
+        $this->clear_cache(); // 修改则清空缓存
+        return $this->success([],__('base.success'));
+    }
+
+    // 清除菜单缓存
+    public function clear_cache(){
+        $menu_service = new MenuService;
+        $menu_service->clear_cache();
+        return $this->success([],__('base.success'));
     }
 }

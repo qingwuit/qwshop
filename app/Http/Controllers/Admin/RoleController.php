@@ -55,7 +55,7 @@ class RoleController extends Controller
      */
     public function update(Request $request,Role $role_model, $id)
     {
-        $role_model->find($id);
+        $role_model = $role_model->find($id);
         $role_model->name = $request->name;
         $role_model->save();
         $role_model->menus()->sync($request->menu_id??[]);

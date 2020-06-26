@@ -17,9 +17,15 @@ class PermissionController extends Controller
     public function index(Request $req,Permission $permission_model)
     {
         if(!empty($req->name)){
-            $permission_model->where('name','like','%'.$req->name.'%');
+            $permission_model = $permission_model->where('name','like','%'.$req->name.'%');
         }
-        $list = new PermissionCollection($permission_model->paginate($req->per_page??30));
+        if(!empty($req->apis)){
+            $permission_model = $permission_model->where('apis','like','%'.$req->apis.'%');
+        }
+        if(!empty($req->pid)){
+            $permission_model = $permission_model->where('pid',$req->pid);
+        }
+        $list = new PermissionCollection($permission_model->With('permission_group')->paginate($req->per_page??30));
         return $this->success($list);
     }
 
@@ -61,7 +67,7 @@ class PermissionController extends Controller
      */
     public function update(Request $request,Permission $permission_model, $id)
     {
-        $permission_model->find($id);
+        $permission_model = $permission_model->find($id);
         $permission_model->pid = $request->pid;
         $permission_model->name = $request->name;
         $permission_model->apis = $request->apis;

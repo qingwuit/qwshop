@@ -74,7 +74,7 @@ class RefreshTokenAdmin extends BaseMiddleware
     // 判断是否有权限
     protected function getPermission($userInfo){
         $id = $userInfo->id;
-        $as = request()->route()->getAction()['as'];
+        $as = request()->route()->getAction()['as']??'not_name';
         if(env('APP_DEBUG') == true){
             return true;
         }

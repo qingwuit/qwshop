@@ -21,6 +21,7 @@ class CreateMenusTable extends Migration
             $table->string('icon',20)->default('')->comment('图标');
             $table->string('link',60)->default('')->comment('链接');
             $table->unsignedTinyInteger('is_type')->default(0)->comment('类型0 后台 1商家');
+            $table->unsignedTinyInteger('is_sort')->default(0)->comment('排序');
             $table->timestamps();
         });
     }

@@ -1,4 +1,4 @@
-const baseUrl = 'http://127.0.0.1:8000/api/';
+import admin from '@/plugins/apis/admin'
 export const api = {
-    "login" : baseUrl + "Admin/login", // 登录
+    ...admin,
 }

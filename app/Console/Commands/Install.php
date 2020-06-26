@@ -60,6 +60,7 @@ class Install extends Command
         // 执行seeder
         Artisan::call('db:seed --class=AdminSeeder');
         Artisan::call('db:seed --class=ConfigSeeder');
+        Artisan::call('db:seed --class=MenuSeeder');
         $bar->advance(); // 第二步
         $bar->finish();
 

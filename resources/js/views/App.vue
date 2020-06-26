@@ -1,7 +1,5 @@
 <template>
-    <div>
         <router-view></router-view>
-    </div>
 </template>
 
 <script>
@@ -19,6 +17,10 @@ export default {
     mounted() {}
 };
 </script>
-<style lang="scss" scoped>
-
+<style lang="scss">
+#app{
+  color:#333;
+  font-size: 14px;
+  height: 100%;
+}
 </style>

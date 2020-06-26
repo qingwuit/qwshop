@@ -16,9 +16,9 @@ class PermissionCollection extends ResourceCollection
     {
         return [
             'data'=>$this->collection,
-            'tatal'=>$this->count(), // 总页码
-            'per_page'=>$this->count(), // 每页数量
-            'current_page'=>$this->count(), // 当前页码
+            'tatal'=>$this->total(), // 总页码
+            'per_page'=>$this->perPage(), // 每页数量
+            'current_page'=>$this->currentPage(), // 当前页码
         ];
     }
 }
