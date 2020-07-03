@@ -28,7 +28,7 @@
                     <div class="item_right float_right">
                         <a-dropdown>
                             <div class="admin_top_person" @click="e => e.preventDefault()">
-                                <a-avatar class="avatar" size="small" :src="require('@/asset/logo.png')" />
+                                <!-- <a-avatar class="avatar" size="small" :src="require('@/asset/logo.png')" /> -->
                                 <a-avatar class="avatar" size="small" icon="user" />
                                 <span>管理员</span>
                             </div>

@@ -1,6 +1,6 @@
 <?php
 namespace App\Services;
-use App\Http\Resources\Admin\Admin as AdminResource;
+use App\Http\Resources\Admin\AdminResource\Admin as AdminResource;
 use App\Models\Admin;
 use App\Models\User;
 

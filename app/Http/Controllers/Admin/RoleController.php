@@ -15,7 +15,7 @@ class RoleController extends Controller
      */
     public function index(Request $request,Role $role_model)
     {
-        $list = $role_model->paginate($request->per_page??30);
+        $list = $role_model->orderBy('id','desc')->paginate($request->per_page??30);
         return $this->success($list);
     }
 
@@ -27,8 +27,7 @@ class RoleController extends Controller
      */
     public function store(Request $request,Role $role_model)
     {
-        $role_model->name = $request->name;
-        $role_model->save();
+        $role_model = $role_model->create(['name'=>$request->name]);
         $role_model->menus()->sync($request->menu_id??[]);
         $role_model->permissions()->sync($request->permission_id??[]);
         return $this->success(__('base.success'));
@@ -75,7 +74,7 @@ class RoleController extends Controller
             return is_numeric($item);
         });
         foreach($idArray as $v){
-            $role_model->find($v);
+            $role_model = $role_model->find($v);
             $role_model->menus()->detach();
             $role_model->permissions()->detach();
             $role_model->refresh();

@@ -11,9 +11,10 @@ class Admin extends Authenticatable implements JWTSubject
 {
     use Notifiable;
     protected $table = 'admins';
+    protected $guarded = [];
 
     public function roles(){
-        return $this->belongsToMany('App\Models\Role','admin_id','role_id');
+        return $this->belongsToMany('App\Models\Role','admin_role','admin_id','role_id');
     }
 
     public function getJWTIdentifier(){

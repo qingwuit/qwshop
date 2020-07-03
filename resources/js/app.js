@@ -9,7 +9,7 @@ import {Icon} from 'ant-design-vue'
 import App from '@/views/App'
 import {post,get,put,deletes,toJson,isEmpty,apiHandle} from '@/plugins/http.js' // 请求方式中间件
 import {api} from '@/plugins/api' // 后端API
-import '@/plugins/function' // 辅助方法
+import {getSession} from '@/plugins/function' // 辅助方法
 import '@/plugins/style.css' // 公共样式
 
 
@@ -24,6 +24,7 @@ Vue.prototype.$delete=deletes;
 Vue.prototype.$toJson=toJson;
 Vue.prototype.$isEmpty=isEmpty;
 Vue.prototype.$apiHandle=apiHandle;
+Vue.prototype.$getSession=getSession; // 获取session
 
 Vue.config.productionTip = false;
 

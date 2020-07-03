@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Admin\PermissionCollection;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 
@@ -25,7 +24,7 @@ class PermissionController extends Controller
         if(!empty($req->pid)){
             $permission_model = $permission_model->where('pid',$req->pid);
         }
-        $list = new PermissionCollection($permission_model->With('permission_group')->paginate($req->per_page??30));
+        $list = $permission_model->With('permission_group')->orderBy('id','desc')->paginate($req->per_page??30);
         return $this->success($list);
     }
 

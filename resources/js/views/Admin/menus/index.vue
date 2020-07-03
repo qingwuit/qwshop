@@ -10,6 +10,9 @@
         </div>
         <div class="admin_table_list">
             <a-table :columns="columns" :data-source="list" :pagination="false" :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" row-key="id">
+                <span slot="is_sort" slot-scope="rows">
+                    <a-input type="number" @change="sortChange(rows)" v-model="rows.is_sort" />
+                </span>
                 <span slot="action" slot-scope="rows">
                     <a-button icon="edit" @click="$router.push(is_type==0?'/Admin/menus/form/'+rows.id:'/Admin/menus/form/'+rows.id+'?is_type=1')">编辑</a-button>
                 </span>
@@ -30,6 +33,7 @@ export default {
             //   {title:'#',dataIndex:'id',fixed:'left'},
               {title:'菜单名称',dataIndex:'name'},
               {title:'链接',dataIndex:'link'},
+              {title:'排序',fixed:'right',width:'120px',scopedSlots: { customRender: 'is_sort' }},
               {title:'操作',key:'id',fixed:'right',scopedSlots: { customRender: 'action' }},
           ],
           list:[],
@@ -70,7 +74,7 @@ export default {
         // 清空缓存
         clear_cache(){
             this.$get(this.$api.adminMenusClearCache).then(res=>{
-                return this.$message.success(res.data)
+                return this.$message.success(res.msg)
             });
         },
         onload(){
@@ -84,6 +88,19 @@ export default {
                 this.list = res.data;
             });
         },
+        // 排序移动
+        sortChange(rows){
+            let api = this.$apiHandle(this.$api.adminMenus,rows.id);
+            this.$put(api.url,rows).then(res=>{
+                if(res.code == 200){
+                    this.onload();
+                    return this.$message.success(res.msg)
+                }else{
+                    return this.$message.error(res.msg)
+                }
+            })
+            
+        }
     },
     created() {
         this.onload();

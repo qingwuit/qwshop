@@ -17,6 +17,11 @@ export function formatDate (date, fmt) {
     }
     return fmt;
 }
+
+export function getSession(name){
+    let token_type = sessionStorage.getItem(name);
+    return localStorage.getItem(token_type);
+}
  
 function padLeftZero (str) {
     return ('00' + str).substr(str.length);

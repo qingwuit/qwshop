@@ -38,8 +38,30 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
             'permission_groups'=>'PermissionGroupController', // 接口权限分组
         ]); 
 
-        // 缓存清除接口
-        Route::get('/menus/cache/clear','MenuController@clear_cache');
+        // 菜单处理
+        Route::get('/menus/cache/clear','MenuController@clear_cache'); // 缓存清除接口
+
+        // 配置中心
+        Route::apiResource('configs','ConfigController')->except(['update','show','destroy']);
+        Route::post('/configs/upload/logo','ConfigController@config_logo'); // 配置中心图上传(Logo)
+        Route::post('/configs/upload/icon','ConfigController@config_icon'); // 配置中心上传(icon)
+
+        // 短信日志
+        Route::apiResource('sms_logs','SmsLogController')->except(['update','show','store']);
+        // 短信签名
+        Route::apiResource('sms_signs','SmsSignController');
+
+        // 商品分类
+        Route::apiResource('goods_classes','GoodsClassController');
+        Route::post('/goods_classes/upload/thumb','GoodsClassController@goods_class_upload'); // 缩略图上传
+        Route::get('/goods_classes/cache/clear','GoodsClassController@clear_cache'); // 缓存清除商品分类
+
+        // 商品品牌
+        Route::apiResource('goods_brands','GoodsBrandController');
+        Route::post('/goods_brands/upload/thumb','GoodsBrandController@goods_brand_upload'); // 缩略图上传
+
+        // 商品管理
+        Route::apiResource('goods','GoodsController')->except(['store']);
     });
 
     

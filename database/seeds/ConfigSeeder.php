@@ -55,6 +55,11 @@ class ConfigSeeder extends Seeder
                 'content'       =>  '邮箱',
             ],
             [
+                'name'          =>  'icp', 
+                'val'           =>  '',
+                'content'       =>  '备案信息',
+            ],
+            [
                 'name'          =>  'web_status', 
                 'val'           =>  '1',
                 'content'       =>  '网站状态 0关 1开',
@@ -106,8 +111,13 @@ class ConfigSeeder extends Seeder
             ],
             [
                 'name'          =>  'goods_verify', 
-                'val'           =>  '',
+                'val'           =>  '0',
                 'content'       =>  '商品审核',
+            ],
+            [
+                'name'          =>  'cash_rate', 
+                'val'           =>  '0',
+                'content'       =>  '提现手续费',
             ],
         ]);
     }

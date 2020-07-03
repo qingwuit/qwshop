@@ -120,6 +120,11 @@
     white-space: nowrap;
 }
 
+/* 后台卡片上传按钮文字 */
+.admin_form .ant-upload-select-picture-card i {
+    font-size: 32px;
+    color: #999;
+}
 
 /* 后台 搜索框 */
 .admin_table_page_where .ant-form-inline .ant-form-item .ant-form-item-control-wrapper{
@@ -128,6 +133,30 @@
     flex: 1 1;
     /* display: inline-block; */
     vertical-align: middle;
+}
+
+.admin_pic_txt i{
+    font-size: 16px;
+    line-height: 50px;
+    text-align: center;
+    width: 50px;
+}
+.admin_pic_txt img{
+    width: 50px;
+    height: 50px;
+}
+.admin_pic_txt .text{
+    float: left;
+    line-height: 50px;
+}
+.admin_pic_txt .img{
+    width: 50px;
+    height: 50px;
+    display: block;
+    float: left;
+    color:#999;
+    margin-right: 15px;
+    background: #f5f7fa;
 }
 /* 过度动画 */
 /* 可以设置不同的进入和离开动画 */
@@ -142,7 +171,7 @@ background-color: white;
 left:0;top: 15px;right: 0;
 position: absolute;
 transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-opacity:0.8;
+opacity:0.1;
 }
 .slide-fade-enter-active {
 background-color: white;

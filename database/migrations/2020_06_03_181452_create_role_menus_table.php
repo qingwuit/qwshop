@@ -16,7 +16,7 @@ class CreateRoleMenusTable extends Migration
         Schema::create('role_menus', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('role_id');
-            $table->unsignedInteger('menus_id');
+            $table->unsignedInteger('menu_id');
             $table->timestamps();
         });
     }

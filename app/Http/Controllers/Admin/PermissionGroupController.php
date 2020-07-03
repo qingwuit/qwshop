@@ -15,7 +15,9 @@ class PermissionGroupController extends Controller
      */
     public function index(Request $request,PermissionGroup $permission_group_model)
     {
-        $list = $permission_group_model->paginate($request->per_page??30);
+        $list = $permission_group_model->with(['permissions'=>function($q){
+            return $q->select('id','pid','name','apis');
+        }])->orderBy('id','desc')->paginate($request->per_page??30);
         return $this->success($list);
     }
 

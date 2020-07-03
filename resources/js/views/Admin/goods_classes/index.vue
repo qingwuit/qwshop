@@ -1,0 +1,97 @@
+<template>
+    <div class="qingwu">
+        <div class="admin_table_page_title">商品分类管理</div>
+        <div class="unline underm"></div>
+
+        <div class="admin_table_handle_btn">
+            <a-button @click="$router.push('/Admin/goods_classes/form')" type="primary" icon="plus">添加</a-button>
+            <a-button @click="clear_cache"><a-font type="iconitemno_0"></a-font>清除缓存</a-button>
+            <a-button class="admin_delete_btn" type="danger" icon="delete" @click="del">批量删除</a-button>
+        </div>
+        <div class="admin_table_list">
+            <a-table :columns="columns" :data-source="list" :pagination="false" :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" row-key="id">
+                <span slot="expand"></span>
+                <span slot="name" slot-scope="rows">
+                    <div class="admin_pic_txt">
+                        <div class="img"><img v-if="rows.thumb" :src="rows.thumb"><a-icon v-else type="picture" /></div>
+                        <div class="text">{{rows.name}}</div>
+                        <div class="clear"></div>
+                    </div>
+                </span>
+                <span slot="action" slot-scope="rows">
+                    <a-button icon="edit" @click="$router.push('/Admin/goods_classes/form/'+rows.id)">编辑</a-button>
+                </span>
+            </a-table>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    components: {},
+    props: {},
+    data() {
+      return {
+          selectedRowKeys:[], // 被选择的行
+          columns:[
+              {title:'#',key:'id',fixed:'left',scopedSlots: { customRender: 'expand' }},
+              {title:'分类名称',key:'id',fixed:'left',scopedSlots: { customRender: 'name' }},
+            //   {title:'链接',dataIndex:'link'},
+              {title:'操作',key:'id',fixed:'right',scopedSlots: { customRender: 'action' }},
+          ],
+          list:[],
+      };
+    },
+    watch: {},
+    computed: {},
+    methods: {
+        // 选择框被点击
+        onSelectChange(selectedRowKeys) {
+            this.selectedRowKeys = selectedRowKeys;
+        },
+        // 删除
+        del(){
+            if(this.selectedRowKeys.length==0){
+                return this.$message.error('未选择数据.');
+            }
+            this.$confirm({
+                title: '你确定要删除选择的数据？',
+                content: '确定删除后无法恢复.',
+                okText: '是',
+                okType: 'danger',
+                cancelText: '取消',
+                onOk:()=> {
+                    let ids = this.selectedRowKeys.join(',');
+                    this.$delete(this.$api.adminGoodsClasses+'/'+ids).then(res=>{
+                        if(res.code == 200){
+                            this.onload();
+                            this.$message.success('删除成功');
+                        }else{
+                            this.$message.error(res.msg)
+                        }
+                    });
+                    
+                },
+            });
+        },
+        // 清空缓存
+        clear_cache(){
+            this.$get(this.$api.adminGoodsClassesClearCache).then(res=>{
+                return this.$message.success(res.msg)
+            });
+        },
+        onload(){
+            this.$get(this.$api.adminGoodsClasses).then(res=>{
+                this.list = res.data;
+            });
+        },
+    },
+    created() {
+        this.onload();
+    },
+    mounted() {}
+};
+</script>
+<style lang="scss" scoped>
+
+</style>

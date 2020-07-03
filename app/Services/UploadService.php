@@ -1,5 +1,7 @@
 <?php
 namespace App\Services;
+
+use Exception;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Illuminate\Http\File;
@@ -80,7 +82,12 @@ class UploadService extends BaseService{
             if(is_array($file)){
                 return $this->format_error(__('upload.upload_type'));
             }
-            $rs = $this->photoHandle($file,$path,$opt);
+            try{
+                $rs = $this->photoHandle($file,$path,$opt);
+            }catch(Exception $e){
+                return $this->format_error($e->getMessage());
+            }
+            
             return $this->format($rs,__('upload.upload_success'));
          
         }
@@ -89,8 +96,12 @@ class UploadService extends BaseService{
         if(!is_array($file)){
             return $this->format_error(__('upload.upload_type'));
         }
-        foreach($file as $v){
-            $fileList[] = $this->photoHandle($v,$path,$opt);
+        try{
+            foreach($file as $v){
+                $fileList[] = $this->photoHandle($v,$path,$opt);
+            }
+        }catch(Exception $e){
+            return $this->format_error($e->getMessage());
         }
         return $this->format($fileList,__('upload.upload_success'));
 
@@ -130,10 +141,82 @@ class UploadService extends BaseService{
      */
     public function avatar($id=0){
         $path = 'avatars';
+        $opt = [
+            'width'=>140,
+            'height'=>140,
+        ]; // 配置文件
         if(!empty($id)){
             $path = $path.'/'.$id;
         }
-        return $this->uploadPhoto($path);
+        return $this->uploadPhoto($path,$opt);
+    }
+
+    /**
+     * 配置中心图片上传
+     *
+     * @param integer $id 用户ID
+     * @author hg <www.qingwuit.com>
+     */
+    public function config_logo($id=0){
+        $path = 'configs';
+        $opt = [
+            'width'=>600,
+            'height'=>600,
+        ]; // 配置文件
+        if(!empty($id)){
+            $path = $path.'/'.$id;
+        }
+        return $this->uploadPhoto($path,$opt);
+    }
+
+    /**
+     * 配置中心icon上传
+     *
+     * @param integer $id 用户ID
+     * @author hg <www.qingwuit.com>
+     */
+    public function config_icon($id=0){
+        $path = 'configs';
+        if(!empty($id)){
+            $path = $path.'/'.$id;
+        }
+        return $this->uploadFile($path);
+    }
+
+    /**
+     * 商品分类缩略图上传
+     *
+     * @param integer $id 用户ID
+     * @author hg <www.qingwuit.com>
+     */
+    public function goods_class($id=0){
+        $path = 'goods_class';
+        $opt = [
+            'width'=>200,
+            'height'=>200,
+        ]; // 配置文件
+        if(!empty($id)){
+            $path = $path.'/'.$id;
+        }
+        return $this->uploadPhoto($path,$opt);
+    }
+
+    /**
+     * 商品品牌缩略图上传
+     *
+     * @param integer $id 用户ID
+     * @author hg <www.qingwuit.com>
+     */
+    public function goods_brand($id=0){
+        $path = 'goods_brand';
+        $opt = [
+            'width'=>200,
+            'height'=>200,
+        ]; // 配置文件
+        if(!empty($id)){
+            $path = $path.'/'.$id;
+        }
+        return $this->uploadPhoto($path,$opt);
     }
     
     /**
@@ -208,13 +291,13 @@ class UploadService extends BaseService{
     protected function photoHandle($file,$path,$opt){
 
         if(!$file->isValid()){ //无效文件
-            return $this->format_error(__('upload.invalid_file'));
+            throw new Exception(__('upload.invalid_file'));
         }
         
         $ext = strtolower($file->getClientOriginalExtension()); // 后缀
 
         if(!in_array($ext,$this->photoAllow)){
-            return $this->format_error(__('upload.not_allow').'['.implode(',',$this->photoAllow).']');
+            throw new Exception(__('upload.not_allow').'['.implode(',',$this->photoAllow).']');
         }
 
         if(!empty($path)){
@@ -225,7 +308,7 @@ class UploadService extends BaseService{
         try{
             $config = json_decode($configService->get_format_config('alioss'),true);
         }catch(\Exception $e){
-            return $this->format_error(__('upload.error_config_oss'));
+            throw new Exception(__('upload.error_config_oss'));
         }
 
         $disk = 'public'; // 默认是本地

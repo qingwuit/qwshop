@@ -1,6 +1,9 @@
 <template>
     <div class="qingwu">
-        <div class="admin_table_page_title"><a-button @click="$router.back()" class="float_right" icon="arrow-left">返回</a-button>接口分组编辑</div>
+        <div class="admin_table_page_title">
+            <a-button @click="$router.back()" class="float_right" icon="arrow-left">返回</a-button>
+            接口分组编辑
+        </div>
         <div class="unline underm"></div>
         <div class="admin_form">
             <a-form-model :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
@@ -66,7 +69,7 @@ export default {
                 this.info = res.data;
             })
         },
-        // 获取菜单列表
+        // 获取列表
         onload(){
             // 判断你是否是编辑
             if(!this.$isEmpty(this.$route.params.id)){

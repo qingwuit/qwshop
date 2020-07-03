@@ -68,6 +68,7 @@ class MenuController extends Controller
         $menu_model->icon = $request->icon??'';
         $menu_model->link = $request->link??'';
         $menu_model->is_type = $request->is_type??0;
+        $menu_model->is_sort = $request->is_sort??0;
         $menu_model->save();
         $this->clear_cache(); // 修改则清空缓存
         return $this->success([],__('base.success'));

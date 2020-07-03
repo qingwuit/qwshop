@@ -22,10 +22,13 @@ axios.interceptors.request.use(function (config) {
     let token = '';
     if(adminIndex>-1){
         token = localStorage.getItem('admin_token');
+        sessionStorage.setItem('token_type','admin_token');
     }else if(sellerIndex>-1){
         token = localStorage.getItem('seller_token');
+        sessionStorage.setItem('token_type','seller_token');
     }else{
         token = localStorage.getItem('token');
+        sessionStorage.setItem('token_type','token');
     }
 
     
@@ -89,10 +92,13 @@ axios.interceptors.response.use(function (res) {
         
         if(adminIndex>-1){
             localStorage.setItem('admin_token',token);
+            sessionStorage.setItem('token_type','admin_token');
         }else if(sellerIndex>-1){
             localStorage.setItem('seller_token',token);
+            sessionStorage.setItem('token_type','seller_token');
         }else{
             localStorage.setItem('token',token);
+            sessionStorage.setItem('token_type','token');
         }
 		
 	}
