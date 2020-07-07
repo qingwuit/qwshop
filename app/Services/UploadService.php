@@ -306,7 +306,7 @@ class UploadService extends BaseService{
 
         $configService = new ConfigService;
         try{
-            $config = json_decode($configService->get_format_config('alioss'),true);
+            $config = $configService->get_format_config('alioss');
         }catch(\Exception $e){
             throw new Exception(__('upload.error_config_oss'));
         }

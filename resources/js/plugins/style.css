@@ -134,6 +134,10 @@
     /* display: inline-block; */
     vertical-align: middle;
 }
+/* 编辑框 */
+.w-e-toolbar{
+    flex-wrap:wrap;
+}
 
 .admin_pic_txt i{
     font-size: 16px;

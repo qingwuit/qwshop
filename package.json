@@ -24,6 +24,7 @@
     "dependencies": {
         "babel-polyfill": "^6.26.0",
         "laravel-mix-polyfill": "^2.0.0",
-        "qs": "^6.9.4"
+        "qs": "^6.9.4",
+        "wangeditor": "^3.1.1"
     }
 }

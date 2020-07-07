@@ -8,4 +8,7 @@ return [
 
     // 商品分类
     'goods_class_delete'                             =>  '请先删除商品子分类.',
+
+    // 商品规格属性
+    'goods_attr_delete'                              =>  '该属性规格下有商品正使用.',
 ];

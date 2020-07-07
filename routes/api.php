@@ -66,3 +66,23 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
 
     
 });
+
+
+Route::namespace('Seller')->prefix('Seller')->group(function(){
+
+    Route::post('/login','LoginController@login'); // 登陆
+    Route::get('/logout','LoginController@logout'); // 退出账号
+    Route::get('/check_login','LoginController@check_login'); // 检测登陆
+
+    Route::group(['middleware'=>'jwt.admin'],function(){
+
+        // 属性规格
+        Route::apiResource('goods_attrs','GoodsAttrController');
+
+        // 商品管理
+        Route::apiResource('goods','GoodsController');
+        Route::post('/goods/upload/images','GoodsController@goods_upload'); // 图片上传
+    });
+
+    
+});
