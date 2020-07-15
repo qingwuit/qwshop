@@ -51,7 +51,7 @@ class Install extends Command
         if(empty($mysqlHost) || empty($dbPort) || empty($dbName) || empty($dbUserName)){
             return $this->error('Setting Mysql Error.');
         }
-        $bar = $this->output->createProgressBar(2);
+        $bar = $this->output->createProgressBar(3);
 
         // 执行migrate
         Artisan::call('migrate');
@@ -62,6 +62,10 @@ class Install extends Command
         Artisan::call('db:seed --class=ConfigSeeder');
         Artisan::call('db:seed --class=MenuSeeder');
         $bar->advance(); // 第二步
+
+        // 创建软链接链接storage
+        Artisan::call('storage:link');
+        $bar->advance(); // 第三步
         $bar->finish();
 
         $this->line('');

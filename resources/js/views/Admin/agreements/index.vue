@@ -1,20 +1,18 @@
 <template>
     <div class="qingwu">
-        <div class="admin_table_page_title">菜单管理</div>
+        <div class="admin_table_page_title">站点协议管理</div>
         <div class="unline underm"></div>
 
+        <admin-search :searchConfig="searchConfig" @searchParams="search"></admin-search>
+
         <div class="admin_table_handle_btn">
-            <a-button @click="$router.push(is_type==0?'/Admin/menus/form':'/Admin/menus/form?is_type=1')" type="primary" icon="plus">添加</a-button>
-            <a-button @click="clear_cache"><a-font type="iconitemno_0"></a-font>清除缓存</a-button>
+            <a-button @click="$router.push('/Admin/agreements/form')" type="primary" icon="plus">添加</a-button>
             <a-button class="admin_delete_btn" type="danger" icon="delete" @click="del">批量删除</a-button>
         </div>
         <div class="admin_table_list">
             <a-table :columns="columns" :data-source="list" :pagination="false" :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" row-key="id">
-                <span slot="is_sort" slot-scope="rows">
-                    <a-input type="number" @blur="sortChange(rows)" v-model="rows.is_sort" />
-                </span>
                 <span slot="action" slot-scope="rows">
-                    <a-button icon="edit" @click="$router.push(is_type==0?'/Admin/menus/form/'+rows.id:'/Admin/menus/form/'+rows.id+'?is_type=1')">编辑</a-button>
+                    <a-button icon="edit" @click="$router.push('/Admin/agreements/form/'+rows.id)">编辑</a-button>
                 </span>
             </a-table>
         </div>
@@ -22,18 +20,27 @@
 </template>
 
 <script>
+import adminSearch from '@/components/admin/search'
 export default {
-    components: {},
+    components: {adminSearch,},
     props: {},
     data() {
       return {
-          is_type:0,
+          params:{
+              page:1,
+              per_page:30,
+          },
+          total:0, //总页数
+          searchConfig:[
+              {label:'协议名',name:'title',type:'text'},
+              {label:'英文名',name:'ename',type:'text'},
+          ],
           selectedRowKeys:[], // 被选择的行
           columns:[
-            //   {title:'#',dataIndex:'id',fixed:'left'},
-              {title:'菜单名称',dataIndex:'name'},
-              {title:'链接',dataIndex:'link'},
-              {title:'排序',fixed:'right',width:'120px',scopedSlots: { customRender: 'is_sort' }},
+              {title:'协议名',fixed:'left',dataIndex:'title'},
+              {title:'英文名',fixed:'left',dataIndex:'ename'},
+              {title:'修改时间',dataIndex:'updated_at'},
+              {title:'创建时间',dataIndex:'created_at'},
               {title:'操作',key:'id',fixed:'right',scopedSlots: { customRender: 'action' }},
           ],
           list:[],
@@ -42,6 +49,14 @@ export default {
     watch: {},
     computed: {},
     methods: {
+        search(params){
+            let page = this.params.page;
+            let per_page = this.params.per_page;
+            this.params = params;
+            this.params.page = page;
+            this.params.per_page = per_page;
+            this.onload();
+        },
         // 选择框被点击
         onSelectChange(selectedRowKeys) {
             this.selectedRowKeys = selectedRowKeys;
@@ -59,7 +74,7 @@ export default {
                 cancelText: '取消',
                 onOk:()=> {
                     let ids = this.selectedRowKeys.join(',');
-                    this.$delete(this.$api.adminMenus+'/'+ids).then(res=>{
+                    this.$delete(this.$api.adminAgreements+'/'+ids).then(res=>{
                         if(res.code == 200){
                             this.onload();
                             this.$message.success('删除成功');
@@ -71,36 +86,11 @@ export default {
                 },
             });
         },
-        // 清空缓存
-        clear_cache(){
-            this.$get(this.$api.adminMenusClearCache).then(res=>{
-                return this.$message.success(res.msg)
-            });
-        },
         onload(){
-            let is_type = this.$route.query.is_type;
-            let params = {};
-            if(!this.$isEmpty(is_type)){
-                params.is_type = is_type;
-                this.is_type = is_type;
-            }
-            this.$get(this.$api.adminMenus,params).then(res=>{
-                this.list = res.data;
+            this.$get(this.$api.adminAgreements,this.params).then(res=>{
+                this.list = res.data.data;
             });
         },
-        // 排序移动
-        sortChange(rows){
-            let api = this.$apiHandle(this.$api.adminMenus,rows.id);
-            this.$put(api.url,rows).then(res=>{
-                if(res.code == 200){
-                    this.onload();
-                    return this.$message.success(res.msg)
-                }else{
-                    return this.$message.error(res.msg)
-                }
-            })
-            
-        }
     },
     created() {
         this.onload();

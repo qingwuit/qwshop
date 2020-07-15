@@ -39,6 +39,10 @@ export default [
         {path:"/Admin/sms_signs/index",name:"admin_sms_signs_index",component:()=>import("@/views/Admin/configs/sms/sign/index")}, // 短信签名列表
         {path:"/Admin/sms_signs/form/:id?",name:"admin_sms_signs_form",component:()=>import("@/views/Admin/configs/sms/sign/form")}, // 短信签名编辑
 
+        // 站点协议
+        {path:"/Admin/agreements",name:"admin_agreements_index",component:()=>import("@/views/Admin/agreements/index")}, // 短信签名列表
+        {path:"/Admin/agreements/form/:id?",name:"admin_agreements_form",component:()=>import("@/views/Admin/agreements/form")}, // 短信签名编辑
+
 
         // 商品分类
         {path:"/Admin/goods_classes",name:"admin_goods_classes",component:()=>import("@/views/Admin/goods_classes/index")}, 
@@ -51,5 +55,13 @@ export default [
         // 商品管理
         {path:"/Admin/goods",name:"admin_goods",component:()=>import("@/views/Admin/goods/index")}, 
         {path:"/Admin/goods/form/:id?",name:"admin_goods_form",component:()=>import("@/views/Admin/goods/form")},
+
+        // 广告位管理
+        {path:"/Admin/adv_positions",name:"admin_adv_positions",component:()=>import("@/views/Admin/adv_positions/index")}, 
+        {path:"/Admin/adv_positions/form/:id?",name:"admin_adv_positions_form",component:()=>import("@/views/Admin/adv_positions/form")},
+
+        // 广告管理
+        {path:"/Admin/advs",name:"admin_advs",component:()=>import("@/views/Admin/advs/index")}, 
+        {path:"/Admin/advs/form/:id?",name:"admin_advs_form",component:()=>import("@/views/Admin/advs/form")},
     ]},
 ];

@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import wangEditor from "@/components/seller/wangeditor"
+import wangEditor from "@/components/wangeditor"
 export default {
     components: {wangEditor},
     props: {},

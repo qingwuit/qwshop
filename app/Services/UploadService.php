@@ -236,9 +236,10 @@ class UploadService extends BaseService{
                 [150,150],
             ],
         ]; // 配置文件
-        if(empty($store_id)){
+        if(!empty($store_id)){
             $path = $path.'/'.$store_id;
         }
+        
         return $this->uploadPhoto($path,$opt);
     }
 
@@ -336,16 +337,14 @@ class UploadService extends BaseService{
             })->resizeCanvas($width,$height);
         }
 
-        $extension = $file->extension();
         $random = Str::random(40);
         $tempfilepath = 'app/public/tempfile';
+        if (!file_exists(storage_path($tempfilepath))) {
+            mkdir(storage_path($tempfilepath),  0644, true);
+        }
         $tempfile = storage_path($tempfilepath).'/'.$random.'.'.$ext;
         $obj->save($tempfile);
         $obj->destroy();
-
-        // if (!file_exists($this->path)) {
-        //     mkdir($this->path,  0644, true);
-        // }
 
         if(!isset($opt['filename'])){
             

@@ -4,7 +4,7 @@
 
             <!-- 菜单 start -->
             <a-layout-sider v-if="!subMenu" class="admin_menu" v-model="collapsed" :trigger="null" collapsible>
-                    <div class="admin_menu_title"><img :src="require('@/asset/logo.png')" alt="logo"><span :class="collapsed?'hiddens':'shows'">青梧商城</span></div>
+                    <div class="admin_menu_title"><img :src="require('@/asset/system_logo.png')" alt="logo"><span :class="collapsed?'hiddens':'shows'">青梧商城</span></div>
                     <a-menu mode="inline" theme="dark">
                         <a-menu-item @click="to_nav('/Seller/default')"><a-font class="afont menu_icon" type="iconshouye" /><span>系统首页</span></a-menu-item>
                         <a-sub-menu v-for="v in menus" :key="v.id">
@@ -23,12 +23,11 @@
             <!-- 右侧内容 start -->
             <a-layout class="admin_right_content">
                 <a-layout-header :class="subMenu?'admin_right_top mobile':(collapsed?'admin_right_top small':'admin_right_top')">
-                    <div v-if="subMenu" class="admin_menu_title item_left float_left"><img style="margin-top:-6px;margin-right:10px" width="30px" height="30px" :src="require('@/asset/logo.png')" alt="logo"></div>
+                    <div v-if="subMenu" class="admin_menu_title item_left float_left"><img style="margin-top:-6px;margin-right:10px" width="30px" height="30px" :src="require('@/asset/system_logo.png')" alt="logo"></div>
                     <a-icon class="base_font_size item_left float_left" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggleCollapsed"/>
                     <div class="item_right float_right">
                         <a-dropdown>
                             <div class="admin_top_person" @click="e => e.preventDefault()">
-                                <!-- <a-avatar class="avatar" size="small" :src="require('@/asset/logo.png')" /> -->
                                 <a-avatar class="avatar" size="small" icon="user" />
                                 <span>管理员</span>
                             </div>
@@ -64,7 +63,7 @@
             <!-- 手机菜单 start -->
             <a-drawer bodyStyle="padding:0;height:100%;" placement="left" :closable="false" :visible="drawerShow" @close="onClose">
                 <div class="admin_menu mobile">
-                    <div class="admin_menu_title"><img :src="require('@/asset/logo.png')" alt="logo"><span :class="'shows'">青梧商城</span></div>
+                    <div class="admin_menu_title"><img :src="require('@/asset/system_logo.png')" alt="logo"><span :class="'shows'">青梧商城</span></div>
                         <a-menu mode="inline" theme="dark">
                             <a-menu-item @click="to_nav('/Seller/default')"><a-font class="afont menu_icon" type="iconshouye" /><span>系统首页</span></a-menu-item>
                             <a-sub-menu v-for="v in menus" :key="v.id">

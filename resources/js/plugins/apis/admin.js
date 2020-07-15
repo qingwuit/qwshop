@@ -6,6 +6,7 @@ export default
      * 后台接口
      * <www.qingwuit.com>
      */
+
     "login" : baseUrl + "Admin/login", // 登录
 
     'adminAdmins' : baseUrl + 'Admin/admins', // 后台管理员
@@ -23,6 +24,12 @@ export default
     'adminConfigsUploadLogo' : baseUrl + 'Admin/configs/upload/logo', // Logo图上传
     'adminConfigsUploadIcon' : baseUrl + 'Admin/configs/upload/icon', // Icon图上传
 
+    // 站点协议
+    'adminAgreements' : baseUrl + 'Admin/agreements', 
+    
+    // 编辑器上传
+    'adminEditor' : baseUrl + 'Admin/editor/upload',
+
     // 短信日志
     'adminSmsLogs' : baseUrl + 'Admin/sms_logs', // 短信日志
     'adminSmsSigns' : baseUrl + 'Admin/sms_signs', // 短信签名
@@ -38,4 +45,7 @@ export default
 
     // 商品管理
     'adminGoods' : baseUrl + 'Admin/goods', // 商品列表
+
+    // 广告位管理
+    'adminAdvPositions' : baseUrl + 'Admin/adv_positions', 
 };

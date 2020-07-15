@@ -71,9 +71,9 @@
                 </a-form-model-item>
                 <a-form-model-item label="商品详情">
                     <div>
-                        <span class="admin_editor_span check">PC端</span>
-                        <span class="admin_editor_span">Mobile端</span>
-                        <wang-editor />
+                        <span :class="platform?'admin_editor_span':'admin_editor_span check'" @click="check_platform(false)">PC端</span>
+                        <span :class="platform?'admin_editor_span check':'admin_editor_span'" @click="check_platform(true)">Mobile端</span>
+                        <wang-editor :contents="goods_content" @goods_content="goods_content_fun" />
                     </div>
                 </a-form-model-item>
                 <a-form-model-item label="上架状态">
@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import wangEditor from "@/components/seller/wangeditor"
+import wangEditor from "@/components/wangeditor"
 export default {
     components: {wangEditor},
     props: {},
@@ -101,6 +101,8 @@ export default {
               goods_images:[],
           },
           list:[],
+          platform:false, // 平台PC false 手机 TRUE
+          goods_content:'', // 商品详情
           id:0,
       };
     },
@@ -194,10 +196,29 @@ export default {
             }
             
         },
+        // 上传图片前
         beforeUpload(file,fileList){
             if(fileList.length+this.info.goods_images.length>5){
                 this.$message.error('No more than 5 pictures')
                 return false;
+            }
+        },
+        // 编辑器内容修改
+        goods_content_fun(val){
+            if(!this.platform){
+                this.info.goods_content = val;
+            }else{
+                this.info.goods_content_mobile = val;
+            }
+            this.goods_content = val;
+        },
+        // 编辑器切换平台
+        check_platform(status){
+            this.platform = status;
+            if(!status){
+                this.goods_content = this.info.goods_content??'';
+            }else{
+                this.goods_content = this.info.goods_content_mobile??'';
             }
         }
         

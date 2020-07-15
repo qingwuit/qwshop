@@ -59,11 +59,12 @@ export default {
             this.token = this.$getSession('token_type');
             var editor = new wangeditor('#editor');
             this.content = this.contents;
+            editor.customConfig.debug = true;
             editor.customConfig.zIndex = 100;
             editor.customConfig.showLinkImg = false;
             editor.customConfig.uploadFileName = 'file[]';
             editor.customConfig.uploadImgMaxLength = 5;
-            editor.customConfig.uploadImgServer = this.$api.autoUpload;  // 上传图片到服务器
+            editor.customConfig.uploadImgServer = this.$api.adminEditor;  // 上传图片到服务器
             editor.customConfig.uploadImgParams = {token:this.token};
             editor.customConfig.menus = this.toolbar;
             editor.customConfig.onchange = function (html) {

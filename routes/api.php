@@ -30,6 +30,7 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
     Route::get('/check_login','LoginController@check_login'); // 检测登陆
 
     Route::group(['middleware'=>'jwt.admin'],function(){
+        
         Route::apiResources([
             'admins'=>'AdminController', // 超级管理员
             'roles'=>'RoleController', // 用户角色
@@ -46,10 +47,14 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
         Route::post('/configs/upload/logo','ConfigController@config_logo'); // 配置中心图上传(Logo)
         Route::post('/configs/upload/icon','ConfigController@config_icon'); // 配置中心上传(icon)
 
-        // 短信日志
-        Route::apiResource('sms_logs','SmsLogController')->except(['update','show','store']);
-        // 短信签名
-        Route::apiResource('sms_signs','SmsSignController');
+        Route::apiResource('agreements','AgreementController'); // 站点协议 
+
+        // 编辑器上传图片接口
+        Route::post('/editor/upload','EditorController@editor'); 
+
+        // 短信管理
+        Route::apiResource('sms_logs','SmsLogController')->except(['update','show','store']); // 短信日志
+        Route::apiResource('sms_signs','SmsSignController'); // 短信签名
 
         // 商品分类
         Route::apiResource('goods_classes','GoodsClassController');
@@ -62,6 +67,9 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
 
         // 商品管理
         Route::apiResource('goods','GoodsController')->except(['store']);
+
+        // 广告位管理
+        Route::apiResource('adv_positions','AdvPositionController');
     });
 
     
