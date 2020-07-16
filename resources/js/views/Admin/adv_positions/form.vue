@@ -34,7 +34,6 @@ export default {
       return {
           info:{
           },
-          list:[],
           id:0,
       };
     },
@@ -85,10 +84,6 @@ export default {
                 this.get_info();
             }
 
-        },
-        // 编辑器内容修改
-        goods_content_fun(val){
-            this.info.content = val;
         },
         
     },

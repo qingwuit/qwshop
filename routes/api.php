@@ -70,6 +70,8 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
 
         // 广告位管理
         Route::apiResource('adv_positions','AdvPositionController');
+        Route::apiResource('advs','AdvController');
+        Route::post('/advs/upload/thumb','AdvController@adv_upload'); // 缩略图上传
     });
 
     
@@ -82,7 +84,7 @@ Route::namespace('Seller')->prefix('Seller')->group(function(){
     Route::get('/logout','LoginController@logout'); // 退出账号
     Route::get('/check_login','LoginController@check_login'); // 检测登陆
 
-    Route::group(['middleware'=>'jwt.admin'],function(){
+    Route::group(['middleware'=>'jwt.user'],function(){
 
         // 属性规格
         Route::apiResource('goods_attrs','GoodsAttrController');

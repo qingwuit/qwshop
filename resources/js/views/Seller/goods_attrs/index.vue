@@ -9,6 +9,9 @@
         </div>
         <div class="admin_table_list">
             <a-table :columns="columns" :data-source="list" :pagination="false" :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" row-key="id">
+                <span slot="specs" slot-scope="rows">
+                    <a-tag color="blue" v-for="(v,k) in rows.specs" :key="k">{{v.name}}</a-tag>
+                </span>
                 <span slot="action" slot-scope="rows">
                     <a-button icon="edit" @click="$router.push('/Seller/goods_attrs/form/'+rows.id)">编辑</a-button>
                 </span>
@@ -35,6 +38,7 @@ export default {
           columns:[
               {title:'#',dataIndex:'id',fixed:'left'},
               {title:'属性名称',fixed:'left',dataIndex:'name'},
+              {title:'规格',key:'id',fixed:'left',scopedSlots: { customRender: 'specs' }},
               {title:'操作',key:'id',fixed:'right',scopedSlots: { customRender: 'action' }},
           ],
           list:[],

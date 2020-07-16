@@ -7,6 +7,7 @@ use App\Http\Resources\Seller\GoodsAttrResource\GoodsAttrCollection;
 use App\Models\GoodsAttr;
 use App\Models\GoodsSku;
 use App\Models\GoodsSpec;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class GoodsAttrController extends Controller
@@ -18,7 +19,7 @@ class GoodsAttrController extends Controller
      */
     public function index(Request $request,GoodsAttr $goods_attr_model)
     {
-        $list = $goods_attr_model->orderBy('id','desc')->paginate($request->per_page??30);
+        $list = $goods_attr_model->where('store_id',$this->get_store(true))->with('specs')->orderBy('id','desc')->paginate($request->per_page??30);
         return $this->success(new GoodsAttrCollection($list));
     }
 
@@ -30,8 +31,8 @@ class GoodsAttrController extends Controller
      */
     public function store(Request $request,GoodsAttr $goods_attr_model)
     {
-        // $goods_attr_model->name = $request->name;
         $goods_attr_model = $goods_attr_model->create([
+                                'store_id'=>$this->get_store(true),
                                 'name'=>$request->name??''
                             ]);
         if(!empty($request->spec_name)){
@@ -68,6 +69,7 @@ class GoodsAttrController extends Controller
     {
         $goods_attr_model = $goods_attr_model->find($id);
         $goods_attr_model->name = $request->name;
+        $goods_attr_model->store_id = $this->get_store(true);
         $not_spec = $goods_spec_model->where('attr_id',$id)->whereNotIn('name',$request->spec_name)->get();
 
         $spec_id = [];

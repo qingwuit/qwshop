@@ -3,7 +3,7 @@
 // window.VueRouter = require('vue-router');
 
 import Vue from 'vue'
-import store from '@/store'
+import store from '@/store/index'
 import router from '@/plugins/router'
 import Antd from 'ant-design-vue'
 import {Icon} from 'ant-design-vue'
@@ -45,6 +45,7 @@ Vue.use(VueLazyload); // 懒加载图片
 Vue.use(VueRouter)
 const app = new Vue({
     el: '#app',
+    store,
     components: { App },
     router,
 });

@@ -218,6 +218,20 @@ class UploadService extends BaseService{
         }
         return $this->uploadPhoto($path,$opt);
     }
+
+    /**
+     * 广告图上传
+     *
+     * @param integer $id 用户ID
+     * @author hg <www.qingwuit.com>
+     */
+    public function adv($id=0){
+        $path = 'adv';
+        if(!empty($id)){
+            $path = $path.'/'.$id;
+        }
+        return $this->uploadPhoto($path);
+    }
     
     /**
      * 商品图片上传

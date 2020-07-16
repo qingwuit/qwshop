@@ -60,12 +60,11 @@ export default {
                 return;
             }
 
-            this.$post(this.$api.login, {
-                username: this.username,
+            this.$post(this.$api.sellerLogin, {
+                phone: this.username,
                 password: this.password
             }).then(function(res) {
                 if (res.code == 200) {
-                    // console.log(res);
                     // 存储用户的token
                     localStorage.setItem("seller_token", res.data.token);
                     vm.$message.success('登录成功！');
@@ -79,12 +78,12 @@ export default {
     created: function() {
         var _this = this;
         // 判断token是否失效
-        // this.$get(this.$api.checkUserLogin).then(function(res) {
-        //     // console.log(res);
-        //     if (res.code == 200) {
-        //         _this.$router.push({ name: "seller_default" });
-        //     }
-        // });
+        this.$get(this.$api.sellerCheckLogin).then(function(res) {
+            // console.log(res);
+            if (res.code == 200) {
+                _this.$router.push({ name: "seller_default" });
+            }
+        });
     }
 };
 </script>

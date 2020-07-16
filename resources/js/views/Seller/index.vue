@@ -29,7 +29,7 @@
                         <a-dropdown>
                             <div class="admin_top_person" @click="e => e.preventDefault()">
                                 <a-avatar class="avatar" size="small" icon="user" />
-                                <span>管理员</span>
+                                <span>{{storeInfo.store_name}}</span>
                             </div>
                             <a-menu slot="overlay">
                                 <a-menu-item key="0">
@@ -39,7 +39,7 @@
                                     <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">青梧商城</a>
                                 </a-menu-item>
                                 <a-menu-divider />
-                                <a-menu-item key="3">
+                                <a-menu-item key="3"  @click="logout">
                                     <a-icon style="color:red" type="logout"></a-icon>
                                     <font color="red">退出后台</font>
                                 </a-menu-item>
@@ -86,6 +86,7 @@
 </template>
 
 <script>
+import {mapState,mapActions} from 'vuex'
 export default {
     components: {},
     props: {},
@@ -105,12 +106,13 @@ export default {
         }
     },
     watch: {},
-    computed: {},
+    computed: {
+        ...mapState('sellerLogin',['isLogin','storeInfo']),
+    },
     methods: {
         // 收缩菜单
         toggleCollapsed() {
             this.collapsed = !this.collapsed;
-            console.log(this.collapsed)
             if(this.subMenu){
                 this.drawerShow = !this.drawerShow;
             }
@@ -149,6 +151,14 @@ export default {
                 this.isRefresh= true
             })
         },
+        // 退出后台
+        logout(){
+            this.$get(this.$api.sellerLogout).then(res=>{
+                this.$message.success(res.msg);
+                localStorage.removeItem('seller_token');
+                this.$router.push('/Seller/login');
+            })
+        }
 
     },
     created() {
@@ -164,6 +174,15 @@ export default {
                 _this.onScreenWidth();
             })()
         }
+
+        // 判断token是否失效
+        this.$get(this.$api.sellerCheckLogin).then(res=> {
+            this.$store.dispatch('sellerLogin/check_login',res);
+            if(!this.isLogin){
+                localStorage.removeItem('seller_token')
+                return this.$router.push('/Seller/login');
+            }
+        });
     }
 };
 </script>

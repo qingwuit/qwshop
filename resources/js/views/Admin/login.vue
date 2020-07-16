@@ -60,7 +60,7 @@ export default {
                 return;
             }
 
-            this.$post(this.$api.login, {
+            this.$post(this.$api.adminLogin, {
                 username: this.username,
                 password: this.password
             }).then(function(res) {

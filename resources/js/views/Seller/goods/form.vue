@@ -67,7 +67,16 @@
                     </a-input>
                 </a-form-model-item>
                 <a-form-model-item label="规格属性(SKU)">
-                   
+                    <div class="attr_modal">
+                        <div class="attr_item" v-for="(v,k) in goodsAttr" :key="k">
+                            <span style="margin-right:10px;margin-left:8px">{{v.name}}：</span>
+                            <a-checkbox v-for="(vo,key) in v.specs" :key="key">{{vo.name}}</a-checkbox>
+                            <a-tag style="background: #fff; borderStyle: dashed;" @click="showInput">
+                                <a-icon type="plus" /> 添加
+                            </a-tag>
+                        </div>
+                    </div>
+                   <div class="seller_goods_form_btn"><a-button type="primary" icon="plus" @click="open_attr_modal">选择属性</a-button></div>
                 </a-form-model-item>
                 <a-form-model-item label="商品详情">
                     <div>
@@ -84,6 +93,9 @@
                     <a-button type="primary" @click="handleSubmit">提交</a-button>
                 </a-form-model-item>
             </a-form-model>
+
+            <!-- 属性规格选择 -->
+            <goods-attr-modal :attrVisible="attrVisible" @goods_attr_modal_cancel="attrVisible=false" @goods_attr="e=>{goodsAttr=e;attrVisible=false}" />
             
         </div>
     </div>
@@ -91,8 +103,9 @@
 
 <script>
 import wangEditor from "@/components/wangeditor"
+import GoodsAttrModal from "@/components/seller/goods_attr_modal"
 export default {
-    components: {wangEditor},
+    components: {wangEditor,GoodsAttrModal},
     props: {},
     data() {
       return {
@@ -104,6 +117,10 @@ export default {
           platform:false, // 平台PC false 手机 TRUE
           goods_content:'', // 商品详情
           id:0,
+
+          // 规格属性modal
+          attrVisible:false,
+          goodsAttr:[],
       };
     },
     watch: {},
@@ -220,7 +237,11 @@ export default {
             }else{
                 this.goods_content = this.info.goods_content_mobile??'';
             }
-        }
+        },
+        // 打开属性modal
+        open_attr_modal(){
+            this.attrVisible = true;
+        },
         
     },
     created() {

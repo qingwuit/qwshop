@@ -11,4 +11,7 @@ return [
 
     // 商品规格属性
     'goods_attr_delete'                              =>  '该属性规格下有商品正使用.',
+
+    // 站点协议
+    'agreement_not_defined'                          =>  '协议不存在.',
 ];

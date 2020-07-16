@@ -2,6 +2,7 @@
 namespace App\Services;
 use App\Http\Resources\Admin\AdminResource\Admin as AdminResource;
 use App\Models\Admin;
+use App\Models\Store;
 use App\Models\User;
 
 class UserService extends BaseService{
@@ -51,7 +52,7 @@ class UserService extends BaseService{
     }
 
     // 检测用户是否登陆
-    public function check_login($auth='user'){
+    public function check_login($auth='user',$seller = false){
 
         // 查看是否携带token
         if(!auth($auth)->parser()->setRequest(request())->hasToken()){
@@ -65,6 +66,12 @@ class UserService extends BaseService{
             }
         }catch(\Exception $e){
             return $this->format_error(__('auth.error_token'));
+        }
+
+        if($seller){
+            $stores_model = new Store();
+            $store_info = $stores_model->select('id','store_name','store_logo')->where('user_id',auth($auth)->id())->first();
+            return $this->format($store_info);
         }
 
         return $this->format($this->getUserInfo($auth));

@@ -196,7 +196,10 @@ opacity: 0;
 }
 
 
-
+/* 商品属性attr modal */
+.attr_modal .ant-tag-checkable{
+    border-color:#f1f1f1;
+}
 
 
 

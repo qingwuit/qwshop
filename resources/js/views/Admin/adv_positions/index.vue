@@ -14,8 +14,8 @@
                 <span slot="ap_width" slot-scope="rows">{{rows}}px</span>
                 <span slot="ap_height" slot-scope="rows" >{{rows}}px</span>
                 <span slot="action" slot-scope="rows">
-                    <a-button icon="plus" @click="$router.push('/Admin/adv_positions/form/'+rows.id)">添加广告</a-button>
-                    <a-button icon="search" @click="$router.push('/Admin/adv_positions/form/'+rows.id)">查看广告</a-button>
+                    <a-button icon="plus" @click="$router.push('/Admin/advs/form?ap_id='+rows.id)">添加广告</a-button>
+                    <a-button icon="search" @click="$router.push('/Admin/advs?ap_id='+rows.id)">查看广告</a-button>
                     <a-button icon="edit" @click="$router.push('/Admin/adv_positions/form/'+rows.id)">编辑</a-button>
                 </span>
             </a-table>

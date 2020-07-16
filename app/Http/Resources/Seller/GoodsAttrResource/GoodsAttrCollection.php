@@ -19,6 +19,12 @@ class GoodsAttrCollection extends ResourceCollection
                 return [
                     'id'                    =>  $item->id,
                     'name'                  =>  $item->name,
+                    'specs'                 =>  $item->specs->map(function($item2){
+                                                    return [
+                                                        'id'        =>  $item2->id,
+                                                        'name'      =>  $item2->name,
+                                                    ];
+                                                }),
                 ];
             }),
             'tatal'=>$this->total(), // 总页码

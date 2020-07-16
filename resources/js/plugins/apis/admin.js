@@ -7,7 +7,7 @@ export default
      * <www.qingwuit.com>
      */
 
-    "login" : baseUrl + "Admin/login", // 登录
+    "adminLogin" : baseUrl + "Admin/login", // 登录
 
     'adminAdmins' : baseUrl + 'Admin/admins', // 后台管理员
     
@@ -46,6 +46,8 @@ export default
     // 商品管理
     'adminGoods' : baseUrl + 'Admin/goods', // 商品列表
 
-    // 广告位管理
-    'adminAdvPositions' : baseUrl + 'Admin/adv_positions', 
+    // 广告管理
+    'adminAdvPositions' : baseUrl + 'Admin/adv_positions',  // 广告位
+    'adminAdvs' : baseUrl + 'Admin/advs',  // 广告管理
+    'adminAdvsUploadThumb' : baseUrl + 'Admin/advs/upload/thumb', // 品牌缩略图上传
 };

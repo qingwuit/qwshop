@@ -1,6 +1,9 @@
 <template>
     <div class="qingwu">
-        <div class="admin_table_page_title">短信日志</div>
+        <div class="admin_table_page_title">
+            <a-button @click="$router.back()" class="float_right" icon="arrow-left">返回</a-button>
+            短信日志
+        </div>
         <div class="unline underm"></div>
 
         <admin-search :searchConfig="searchConfig" @searchParams="search"></admin-search>
