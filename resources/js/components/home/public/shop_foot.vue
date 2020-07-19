@@ -17,6 +17,7 @@
 
 <script>
 // import ShopIndexAdv from "@/components/home/public/shop_index_adv.vue"
+import {mapState,mapActions} from 'vuex'
 export default {
     components: {
         // ShopIndexAdv,
@@ -29,16 +30,25 @@ export default {
       };
     },
     watch: {},
-    computed: {},
+    computed: {
+        ...mapState('homeLogin',['isLogin','userInfo']),
+    },
     methods: {
         get_foot_info:function(){
             // this.$get(this.$api.homeGetFootInfo).then(res=>{
             //     this.adv = res.data.adv.adv[0];
             //     this.info = res.data.info;
             // });
-        }
+        },
+        checkLogin(){
+            // 判断token是否失效
+            this.$get(this.$api.homeCheckLogin).then(res=> {
+                this.$store.dispatch('homeLogin/check_login',res);
+            });
+        },
     },
     created() {
+        this.checkLogin();
         this.get_foot_info();
     },
     mounted() {}

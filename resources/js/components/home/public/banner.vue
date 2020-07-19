@@ -20,7 +20,9 @@ export default {
             default:450,
         },
     },
-    data() {},
+    data() {
+        return{}
+    },
     watch: {},
     computed: {},
     methods: {},

@@ -33,6 +33,7 @@ class CreateGoodsTable extends Migration
             $table->unsignedTinyInteger('goods_verify')->default(0)->comment('审核状态');
             $table->text('goods_content')->default('')->comment('详情');
             $table->text('goods_content_mobile')->default('')->comment('手机端详情');
+            $table->text('goods_attr')->default('')->comment('属性信息');
             $table->unsignedTinyInteger('is_recommend')->default(0)->comment('是否推荐商家首页');
             $table->unsignedTinyInteger('is_matser')->default(0)->comment('是否推荐主站首页');
             $table->timestamps();

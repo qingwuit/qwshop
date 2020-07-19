@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Seller;
+namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class LoginController extends Controller
 
     // 检测是否登陆
     public function check_login(UserService $user_service){
-        $info = $user_service->check_login('user',true);
+        $info = $user_service->check_login('user');
         return $info['status']?$this->success($info['data']):$this->error($info['msg']);
     }
 

@@ -14,7 +14,7 @@
                     <a-textarea :auto-size="{ minRows: 2, maxRows: 6 }" v-model="info.description" />
                 </a-form-model-item>
                 <a-form-model-item label="商品编号">
-                    <a-input v-model="info.goods_name" />
+                    <a-input v-model="info.goods_name" placeholder="HXC18475456841" />
                 </a-form-model-item>
                 <a-form-model-item label="商品品牌">
                     <a-select>
@@ -49,34 +49,63 @@
                         >
                             <a-button type="primary">上传图片</a-button>
                         </a-upload>
-                        <a-button icon="picture" @click="$message.info('暂未开通')">图片空间</a-button>
+                        <a-button icon="picture" @click="$message.info('暂未开发')">图片空间</a-button>
                     </div>
                 </a-form-model-item>
-                <a-form-model-item label="平台价格">
-                    <a-input v-model="info.goods_price" type="number" suffix="￥" />
-                </a-form-model-item>
-                <a-form-model-item label="市场价格">
-                    <a-input v-model="info.goods_market_price" type="number" suffix="￥" />
-                </a-form-model-item>
-                <a-form-model-item label="商品重量">
-                    <a-input v-model="info.goods_weight" type="number" suffix="Kg" />
-                </a-form-model-item>
-                <a-form-model-item label="商品库存">
-                    <a-input v-model="info.goods_stock" type="number">
-                        <a-icon slot="suffix" type="stock"></a-icon>
-                    </a-input>
-                </a-form-model-item>
+                <template v-if="skuList.length<=0">
+                    <a-form-model-item label="平台价格">
+                        <a-input v-model="info.goods_price" type="number" suffix="￥" />
+                    </a-form-model-item>
+                    <a-form-model-item label="市场价格">
+                        <a-input v-model="info.goods_market_price" type="number" suffix="￥" />
+                    </a-form-model-item>
+                    <a-form-model-item label="商品重量">
+                        <a-input v-model="info.goods_weight" type="number" suffix="Kg" />
+                    </a-form-model-item>
+                    <a-form-model-item label="商品库存">
+                        <a-input v-model="info.goods_stock" type="number">
+                            <a-icon slot="suffix" type="stock"></a-icon>
+                        </a-input>
+                    </a-form-model-item>
+                </template>
                 <a-form-model-item label="规格属性(SKU)">
                     <div class="attr_modal">
                         <div class="attr_item" v-for="(v,k) in goodsAttr" :key="k">
                             <span style="margin-right:10px;margin-left:8px">{{v.name}}：</span>
-                            <a-checkbox v-for="(vo,key) in v.specs" :key="key">{{vo.name}}</a-checkbox>
-                            <a-tag style="background: #fff; borderStyle: dashed;" @click="showInput">
+                            <a-checkbox v-for="(vo,key) in v.specs" :key="key" @change="specChange(v,vo)" :value="vo.check">{{vo.name}}</a-checkbox>
+                            <a-tag style="background: #fff; borderStyle: dashed;">
                                 <a-icon type="plus" /> 添加
                             </a-tag>
                         </div>
                     </div>
                    <div class="seller_goods_form_btn"><a-button type="primary" icon="plus" @click="open_attr_modal">选择属性</a-button></div>
+                   
+                   <!-- 规格SKU start -->
+                   <div class="goods_specs" v-if="skuList.length>0">
+                        <div class="row_th">
+                            <a-row>
+                                <a-col class="col_th" :span="4">SKU</a-col>
+                                <a-col class="col_th" :span="4">市场价</a-col>
+                                <a-col class="col_th" :span="4">平台价</a-col>
+                                <a-col class="col_th" :span="4">库存</a-col>
+                                <a-col class="col_th" :span="4">重量</a-col>
+                            </a-row>
+                        </div>
+                        <div class="row_td">
+                            <a-row :gutter="16" v-for="(v,k) in skuList" :key="k">
+                                <a-col class="col_th" :span="4">{{v.sku_name.join(' ')}}</a-col>
+                                <a-col :span="4"><a-input v-model="v.goods_market_price" type="number" suffix="￥" /></a-col>
+                                <a-col :span="4"><a-input v-model="v.goods_price" type="number" suffix="￥" /></a-col>
+                                <a-col :span="4"><a-input v-model="v.goods_weight" type="number" suffix="Kg" /></a-col>
+                                <a-col :span="4">
+                                    <a-input type="number" v-model="v.goods_stock">
+                                        <a-icon slot="suffix" type="stock"></a-icon>
+                                    </a-input>
+                                </a-col>
+                            </a-row>
+                        </div>
+                    </div>
+                    <!-- 规格sku end -->
                 </a-form-model-item>
                 <a-form-model-item label="商品详情">
                     <div>
@@ -121,6 +150,9 @@ export default {
           // 规格属性modal
           attrVisible:false,
           goodsAttr:[],
+
+          // 构建sku
+          skuList:[],
       };
     },
     watch: {},
@@ -242,6 +274,66 @@ export default {
         open_attr_modal(){
             this.attrVisible = true;
         },
+        // 规格选择
+        specChange(attrs,specs){
+            let index = -1;
+            this.goodsAttr.forEach((items,key)=>{
+                if(items.id == attrs.id){
+                    index = key;
+                }
+            })
+            this.goodsAttr[index].specs.forEach(items=>{
+                if(items.id == specs.id){
+                    if(this.$isEmpty(items.check)){
+                        items.check = true;
+                    }
+                    items.check = !items.check;
+                }
+            })
+            this.structureSku();
+            this.$forceUpdate();
+        },
+        // 构建SKU
+        structureSku(){
+            let skuList = [];
+            let attrList = [];
+            let attrListName = [];
+            this.goodsAttr.forEach((items,key)=>{
+                items.specs.forEach(specItem=>{
+                    if(specItem.check){
+                        if(this.$isEmpty(attrList[key])){
+                            attrList[key] = [];
+                            attrListName[key] = [];
+                        }
+                        attrList[key].push(specItem.id);
+                        attrListName[key].push(specItem.name);
+                    }
+                })
+            })
+            if(attrList.length<=0){
+                return this.skuList = [];
+            }
+            let attrName = this.cartesianProduct(attrListName);
+            let attrId = this.cartesianProduct(attrList);
+            attrId.forEach((items,key)=>{
+                skuList.push({spec_id:items,sku_name:attrName[key],goods_market_price:0,goods_price:0,goods_stock:0,goods_weight:0});
+            })
+            this.skuList = skuList;
+        },
+        // 多数组求笛卡儿积
+        cartesianProduct(array){
+            if(array.length==1){
+                return array;
+            }
+            return array.reduce(function(a,b){
+                return a.map(function(x){
+                    return b.map(function(y){
+                        return x.concat(y);
+                    })
+                }).reduce(function(a,b){ return a.concat(b) },[])
+            }, [[]])
+        }
+        
         
     },
     created() {
@@ -346,5 +438,11 @@ export default {
             }
         }
     }
+}
+.row_th{
+    background: #efefef;
+}
+.col_th{
+    text-align: center;
 }
 </style>

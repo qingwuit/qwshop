@@ -1,7 +1,7 @@
   // initial state
   const state = {
     isLogin:false,
-    storeInfo:{},
+    userInfo:{},
   }
   
   // getters
@@ -12,7 +12,7 @@
       check_login(context,e){
           if(e.code == 200){
             state.isLogin = true;
-            state.storeInfo = e.data;
+            state.userInfo = e.data;
           }
       }
   }

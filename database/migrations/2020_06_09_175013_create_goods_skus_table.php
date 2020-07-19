@@ -16,8 +16,7 @@ class CreateGoodsSkusTable extends Migration
         Schema::create('goods_skus', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('goods_id')->default(0)->comment('商品ID');
-            $table->unsignedInteger('spec_id')->default(0)->comment('规格ID');
-            $table->unsignedInteger('attr_id')->default(0)->comment('属性ID');
+            $table->text('spec_id')->default('')->comment('规格ID');
             $table->string('sku_name',60)->default('')->comment('SKU名称');
             $table->string('goods_image')->default('')->comment('主图');
             $table->unsignedDecimal('goods_price',9,2)->default(0.00)->comment('商品价格');

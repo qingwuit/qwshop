@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 use App\Http\Resources\Admin\AdminResource\Admin as AdminResource;
+use App\Http\Resources\Home\UserResource\UserCheckLogin;
 use App\Models\Admin;
 use App\Models\Store;
 use App\Models\User;
@@ -74,7 +75,7 @@ class UserService extends BaseService{
             return $this->format($store_info);
         }
 
-        return $this->format($this->getUserInfo($auth));
+        return $this->format(new UserCheckLogin($this->getUserInfo($auth)));
         
     }
     

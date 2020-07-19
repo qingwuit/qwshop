@@ -56,6 +56,11 @@ export default {
                     }
                 })
             })
+            attr.forEach(items=>{
+                items.specs.forEach(specItem=>{
+                    specItem.check=false
+                })
+            })
             this.$emit('goods_attr',attr);
         }
     },

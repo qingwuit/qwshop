@@ -78,6 +78,12 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
 });
 
 
+/**
+ * 
+ * @author hg <364825702@qq.com>
+ * 商城商家后台 路由
+ * 
+ */
 Route::namespace('Seller')->prefix('Seller')->group(function(){
 
     Route::post('/login','LoginController@login'); // 登陆
@@ -93,6 +99,32 @@ Route::namespace('Seller')->prefix('Seller')->group(function(){
         Route::apiResource('goods','GoodsController');
         Route::post('/goods/upload/images','GoodsController@goods_upload'); // 图片上传
     });
+
+    
+});
+
+/**
+ * 
+ * @author hg <364825702@qq.com>
+ * 商城PC端 路由
+ * 
+ */
+Route::namespace('Home')->group(function(){
+
+    Route::post('/login','LoginController@login'); // 登陆
+    Route::get('/logout','LoginController@logout'); // 退出账号
+    Route::get('/check_login','LoginController@check_login'); // 检测登陆
+
+    // 获取站点协议
+    Route::get('/agreement/{ename}','AgreementController@show'); 
+
+     
+    Route::group(['middleware'=>'jwt.user'],function(){
+
+        // 商家入驻商家状态
+        Route::get('/store/store_verify','StoreController@store_verify');
+    });
+
 
     
 });

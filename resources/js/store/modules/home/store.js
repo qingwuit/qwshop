@@ -1,7 +1,7 @@
   // initial state
   const state = {
-    isLogin:false,
-    storeInfo:{},
+    isStore:false,
+    storeVerify:0,
   }
   
   // getters
@@ -9,10 +9,10 @@
   
   // actions
   const actions = {
-      check_login(context,e){
+      store_verify(context,e){
           if(e.code == 200){
-            state.isLogin = true;
-            state.storeInfo = e.data;
+            state.isStore = true;
+            state.store_verify = e.data.store_verify;
           }
       }
   }
