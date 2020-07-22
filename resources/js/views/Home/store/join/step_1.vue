@@ -32,7 +32,15 @@ export default {
             if(!this.checked){
                 return this.$message.error('请勾选同意协议.');
             }
-            return this.$router.push('/store/join/step_2')
+
+            this.$post(this.$api.homeStoreJoin).then(res=>{
+                if(res.code == 200){
+                    return this.$router.push('/store/join/step_2')
+                }
+                return this.$message.error(res.msg);
+            })
+
+            
         },
         get_agreement(){
             this.$get(this.$api.homeAgreement+'/store_join').then(res=>{
@@ -49,7 +57,7 @@ export default {
                     if(res.data.store_verify == 1){
                         this.$router.push('/store/join/step_2')
                     }
-                    else if(res.data.store_verify == 2){
+                    else if(res.data.store_verify == 2 || res.data.store_verify == 3 || res.data.store_verify == 0){
                         this.$router.push('/store/join/step_3')
                     }
                 }

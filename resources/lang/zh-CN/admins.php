@@ -15,6 +15,4 @@ return [
     // 站点协议
     'agreement_not_defined'                          =>  '协议不存在.',
 
-    // 获取店铺信息
-    'store_not_defined'                              =>  '店铺不存在',
 ];

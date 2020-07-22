@@ -48,6 +48,10 @@ export default [
         {path:"/Admin/goods_classes",name:"admin_goods_classes",component:()=>import("@/views/Admin/goods_classes/index")}, 
         {path:"/Admin/goods_classes/form/:id?",name:"admin_goods_classes_form",component:()=>import("@/views/Admin/goods_classes/form")},
 
+        // 全国地址管理
+        {path:"/Admin/areas",name:"admin_areas",component:()=>import("@/views/Admin/areas/index")}, 
+        {path:"/Admin/areas/form/:id?",name:"admin_areas_form",component:()=>import("@/views/Admin/areas/form")},
+
         // 商品品牌
         {path:"/Admin/goods_brands",name:"admin_goods_brands",component:()=>import("@/views/Admin/goods_brands/index")}, 
         {path:"/Admin/goods_brands/form/:id?",name:"admin_goods_brands_form",component:()=>import("@/views/Admin/goods_brands/form")},

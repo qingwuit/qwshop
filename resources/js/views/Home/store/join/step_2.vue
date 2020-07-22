@@ -12,8 +12,9 @@
                 <a-form-model-item label="店铺名称">
                     <a-input v-model="info.store_name" />
                 </a-form-model-item>
-                <a-form-model-item label="申请栏目">
-                    <a-input v-model="info.store_name" />
+                <a-form-model-item label="申请产品栏目">
+                    <a-cascader :field-names="{ label: 'name', value: 'id', children: 'children' }" :options="goodsClasses" placeholder="" @change="goods_class_change" />
+                    <a-tag v-for="(v,k) in choseClasses" :key="k" closable >{{v[0].name}} / {{v[1].name}} / {{v[2].name}}</a-tag>
                 </a-form-model-item>
             </a-form-model>
         </div>
@@ -27,9 +28,7 @@
                     <a-input v-model="info.store_company_name" />
                 </a-form-model-item>
                 <a-form-model-item label="公司地址">
-                    <a-select>
-                        <a-select-option key="" value="">测试</a-select-option>
-                    </a-select>
+                    <a-cascader :field-names="{ label: 'name', value: 'id', children: 'children' }" :options="areas" placeholder="" @change="area_change" />
                 </a-form-model-item>
                 <a-form-model-item label="详细地址">
                     <a-input v-model="info.store_address" />
@@ -114,6 +113,9 @@ export default {
       return {
           loading:false,
           info:{},
+          goodsClasses:[],
+          choseClasses:[],
+          areas:[],
       };
     },
     watch: {},
@@ -125,20 +127,58 @@ export default {
         store_verify(){
             this.$get(this.$api.homeStoreVerify).then(res=>{
                 if(res.code == 200){
-                    if(res.data.store_verify == 2){
+                    if(res.data.store_verify == 2 || res.data.store_verify == 3 || res.data.store_verify == 0){
                         this.$router.push('/store/join/step_3')
-                    }
-                    else{
-                        this.$router.push('/store/join/step_1')
                     }
                 }else{
                     this.$router.push('/store/join/step_1')
                 }
             })
-        }
+        },
+        // 获取商品栏目
+        goods_classes(){
+            this.$get(this.$api.homeGoodsClasses).then(res=>{
+                this.goodsClasses = res.data;
+            })
+        },
+        // 商品栏目修改
+        goods_class_change(row,info){
+            console.log(info)
+            if(info != undefined){
+                if(this.choseClasses.length>0){
+                    let isSame = false;
+                    this.choseClasses.forEach(item=>{
+                        if((item[0].name+item[1].name+item[2].name)  == (info[0].name+info[1].name+info[2].name) ){
+                            isSame = true;
+                        }
+                    })
+                    if(!isSame){
+                        this.choseClasses.push(info)
+                    }
+                }else{
+                    this.choseClasses.push(info)
+                }
+            }
+            
+        },
+        // 获取地址
+        get_areas(){
+            this.$get(this.$api.homeAreas).then(res=>{
+                this.areas = res.data
+            })
+        },
+        area_change(row,info){
+            this.info.province_id = row[0];
+            this.info.city_id = row[1];
+            this.info.region_id = row[2];
+            this.info.area_info = info[0].name+' '+info[1].name+' '+info[2].name
+            console.log(this.info)
+        },
     },
     created() {
         this.store_verify();
+        this.goods_classes();
+        this.get_areas();
     },
     mounted() {}
 };

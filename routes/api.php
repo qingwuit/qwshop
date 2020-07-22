@@ -61,6 +61,10 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
         Route::post('/goods_classes/upload/thumb','GoodsClassController@goods_class_upload'); // 缩略图上传
         Route::get('/goods_classes/cache/clear','GoodsClassController@clear_cache'); // 缓存清除商品分类
 
+        // 全国省市区地址
+        Route::apiResource('areas','AreaController');
+        Route::get('/areas/cache/clear','AreaController@clear_cache'); // 缓存清除商品分类
+
         // 商品品牌
         Route::apiResource('goods_brands','GoodsBrandController');
         Route::post('/goods_brands/upload/thumb','GoodsBrandController@goods_brand_upload'); // 缩略图上传
@@ -118,11 +122,18 @@ Route::namespace('Home')->group(function(){
     // 获取站点协议
     Route::get('/agreement/{ename}','AgreementController@show'); 
 
+    // 获取商品栏目
+    Route::get('/goods_classes','GoodsClassController@goods_classes'); 
+
      
     Route::group(['middleware'=>'jwt.user'],function(){
 
-        // 商家入驻商家状态
-        Route::get('/store/store_verify','StoreController@store_verify');
+        // 商家入驻
+        Route::get('/store/store_verify','StoreController@store_verify'); // 商家状态
+        Route::match(['get','post'],'/store/store_join','StoreController@store_join');// 商家入驻
+
+        // 全国省市区地址获取
+        Route::get('/areas','AreaController@areas'); // 商家状态
     });
 
 

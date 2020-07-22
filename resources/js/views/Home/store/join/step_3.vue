@@ -51,9 +51,6 @@ export default {
                     if(res.data.store_verify == 1){
                         this.$router.push('/store/join/step_2')
                     }
-                    else{
-                        this.$router.push('/store/join/step_1')
-                    }
                 }else{
                     this.$router.push('/store/join/step_1')
                 }
