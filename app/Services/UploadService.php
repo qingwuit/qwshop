@@ -281,6 +281,20 @@ class UploadService extends BaseService{
     }
 
     /**
+     * 商家入驻 图片上传
+     *
+     * @param integer $id 用户ID
+     * @author hg <www.qingwuit.com>
+     */
+    public function store_join($id=0){
+        $path = 'store_join';
+        if(!empty($id)){
+            $path = $path.'/'.$id;
+        }
+        return $this->uploadPhoto($path);
+    }
+
+    /**
      * 评论图片
      *
      * @param integer $id  用户ID

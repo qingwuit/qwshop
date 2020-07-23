@@ -22,6 +22,7 @@ export default
     // 商家入驻
     'homeStoreVerify' : baseUrl + 'store/store_verify',  // 商家审核状态
     'homeStoreJoin' : baseUrl + 'store/store_join',  // 商家审核状态
+    'homeStoreJoinUpload' : baseUrl + 'store/join/upload',  // 商家入驻图片上传
 
     
 };

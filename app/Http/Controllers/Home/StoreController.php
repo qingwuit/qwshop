@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Services\StoreService;
 use App\Models\Store;
+use App\Services\UploadService;
 use Illuminate\Http\Request;
 
 class StoreController extends Controller
@@ -46,5 +47,17 @@ class StoreController extends Controller
 
         return $this->success([],__('base.success'));
 
+    }
+
+    // 图片上传
+    public function store_join_upload(Request $request,UploadService $upload_service){
+        $store_id = $this->get_store(true);
+        $name = $request->name??'';
+        $rs = $upload_service->store_join($store_id);
+        if($rs['status']){
+            return $this->success(['url'=>$rs['data'],'name'=>$name],$rs['msg']);
+        }else{
+            return $this->error($rs['msg']);
+        }
     }
 }

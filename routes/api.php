@@ -131,6 +131,7 @@ Route::namespace('Home')->group(function(){
         // 商家入驻
         Route::get('/store/store_verify','StoreController@store_verify'); // 商家状态
         Route::match(['get','post'],'/store/store_join','StoreController@store_join');// 商家入驻
+        Route::post('/store/join/upload','StoreController@store_join_upload'); // 商家入驻图片上传
 
         // 全国省市区地址获取
         Route::get('/areas','AreaController@areas'); // 商家状态

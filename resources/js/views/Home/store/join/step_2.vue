@@ -14,7 +14,7 @@
                 </a-form-model-item>
                 <a-form-model-item label="申请产品栏目">
                     <a-cascader :field-names="{ label: 'name', value: 'id', children: 'children' }" :options="goodsClasses" placeholder="" @change="goods_class_change" />
-                    <a-tag v-for="(v,k) in choseClasses" :key="k" closable >{{v[0].name}} / {{v[1].name}} / {{v[2].name}}</a-tag>
+                    <a-tag v-for="(v,k) in choseClasses" :key="k" closable @close="closeTag(k)">{{v[0].name}} / {{v[1].name}} / {{v[2].name}}</a-tag>
                 </a-form-model-item>
             </a-form-model>
         </div>
@@ -24,11 +24,8 @@
                 <a-form-model-item label="公司名称">
                     <a-input v-model="info.store_company_name" />
                 </a-form-model-item>
-                <a-form-model-item label="公司名称">
-                    <a-input v-model="info.store_company_name" />
-                </a-form-model-item>
                 <a-form-model-item label="公司地址">
-                    <a-cascader :field-names="{ label: 'name', value: 'id', children: 'children' }" :options="areas" placeholder="" @change="area_change" />
+                    <a-cascader v-model="info.area_id" :field-names="{ label: 'name', value: 'id', children: 'children' }" :options="areas" placeholder="" @change="area_change" />
                 </a-form-model-item>
                 <a-form-model-item label="详细地址">
                     <a-input v-model="info.store_address" />
@@ -38,11 +35,11 @@
                         list-type="picture-card"
                         class="avatar-uploader"
                         :show-upload-list="false"
-                        :action="$api.adminGoodsBrandsUploadThumb"
-                        :data="{token:$getSession('token_type')}"
+                        :action="$api.homeStoreJoinUpload"
+                        :data="{token:$getSession('token_type'),name:'business_license'}"
                         @change="upload"
                     >
-                        <img v-if="info.business_license" :src="info.business_license" />
+                        <img height="150px" v-if="info.business_license" :src="info.business_license" />
                         <div v-else>
                             <a-font v-if="!loading" type='iconplus' />
                             <a-icon v-else type="loading" />
@@ -66,11 +63,11 @@
                         list-type="picture-card"
                         class="avatar-uploader"
                         :show-upload-list="false"
-                        :action="$api.adminGoodsBrandsUploadThumb"
-                        :data="{token:$getSession('token_type')}"
+                        :action="$api.homeStoreJoinUpload"
+                        :data="{token:$getSession('token_type'),name:'id_card_t'}"
                         @change="upload"
                     >
-                        <img v-if="info.id_card_t" :src="info.id_card_t" />
+                        <img height="150px" v-if="info.id_card_t" :src="info.id_card_t" />
                         <div v-else>
                             <a-font v-if="!loading" type='iconplus' />
                             <a-icon v-else type="loading" />
@@ -82,11 +79,11 @@
                         list-type="picture-card"
                         class="avatar-uploader"
                         :show-upload-list="false"
-                        :action="$api.adminGoodsBrandsUploadThumb"
-                        :data="{token:$getSession('token_type')}"
+                        :action="$api.homeStoreJoinUpload"
+                        :data="{token:$getSession('token_type'),name:'id_card_b'}"
                         @change="upload"
                     >
-                        <img v-if="info.id_card_b" :src="info.id_card_b" />
+                        <img height="150px" v-if="info.id_card_b" :src="info.id_card_b" />
                         <div v-else>
                             <a-font v-if="!loading" type='iconplus' />
                             <a-icon v-else type="loading" />
@@ -122,7 +119,59 @@ export default {
     computed: {},
     methods: {
         next_step(){
-            return this.$router.push('/store/join/step_3')
+            console.log(this.choseClasses)
+            if(this.$isEmpty(this.info.store_name)){
+                return this.$message.error('店铺名称不能为空');
+            }
+            if(this.$isEmpty(this.info.store_company_name)){
+                return this.$message.error('公司名称不能为空');
+            }
+            if(this.$isEmpty(this.info.area_info)){
+                return this.$message.error('地址不能为空');
+            }
+            if(this.$isEmpty(this.info.store_address)){
+                return this.$message.error('详细地址不能为空');
+            }
+            if(this.$isEmpty(this.info.business_license)){
+                return this.$message.error('营业执照不能为空');
+            }
+            if(this.$isEmpty(this.info.business_license_no)){
+                return this.$message.error('统一社会信用代码不能为空');
+            }
+            if(this.$isEmpty(this.info.legal_person)){
+                return this.$message.error('法人不能为空');
+            }
+            if(this.$isEmpty(this.info.store_phone)){
+                return this.$message.error('法人电话不能为空');
+            }
+            if(this.$isEmpty(this.info.id_card_no)){
+                return this.$message.error('身份证号码不能为空');
+            }
+            if(this.$isEmpty(this.info.id_card_t)){
+                return this.$message.error('身份证(上)不能为空');
+            }
+            if(this.$isEmpty(this.info.id_card_b)){
+                return this.$message.error('身份证(下)不能为空');
+            }
+            if(this.$isEmpty(this.info.emergency_contact)){
+                return this.$message.error('紧急联系人不能为空');
+            }
+            if(this.$isEmpty(this.info.emergency_contact_phone)){
+                return this.$message.error('紧急联系人电话不能为空');
+            }
+            if(this.choseClasses.length<=0){
+                return this.$message.error('申请商品栏目不能为空');
+            }
+            let params = {};
+            params = this.info;
+            params.store_classes = this.choseClasses;
+            this.$post(this.$api.homeStoreJoin,params).then(res=>{
+                if(res.code == 200){
+                    return this.$router.push('/store/join/step_3')
+                }
+                return this.$$message.error(res.msg);
+            })
+            
         },
         store_verify(){
             this.$get(this.$api.homeStoreVerify).then(res=>{
@@ -161,10 +210,24 @@ export default {
             }
             
         },
+        // 删除标签
+        closeTag(e){
+            this.choseClasses.splice(e,1);
+        },
         // 获取地址
         get_areas(){
             this.$get(this.$api.homeAreas).then(res=>{
                 this.areas = res.data
+            })
+        },
+        // 获取店铺信息
+        get_store(){
+            this.$get(this.$api.homeStoreJoin).then(res=>{
+                if(res.code == 200){
+                    this.choseClasses = res.data.chose_store_classes
+                    return this.info = res.data;
+                }
+                return this.$$message.error(res.msg);
             })
         },
         area_change(row,info){
@@ -174,11 +237,25 @@ export default {
             this.info.area_info = info[0].name+' '+info[1].name+' '+info[2].name
             console.log(this.info)
         },
+        upload(e){
+            if(e.file.status == 'done'){
+                this.loading = false;
+                let rs = e.file.response;
+                if(rs.code == 200){
+                    this.$set(this.info,rs.data.name,rs.data.url);
+                }else{
+                    return this.$message.error(rs.msg);
+                }
+            }else{
+                this.loading = true;
+            }
+        }
     },
     created() {
         this.store_verify();
         this.goods_classes();
         this.get_areas();
+        this.get_store();
     },
     mounted() {}
 };

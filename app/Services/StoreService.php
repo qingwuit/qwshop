@@ -2,6 +2,7 @@
 namespace App\Services;
 use App\Http\Resources\Home\StoreResource\StoreJoin;
 use App\Models\Store;
+use App\Models\StoreClass;
 use Illuminate\Support\Facades\Log;
 
 class StoreService extends BaseService{
@@ -23,6 +24,24 @@ class StoreService extends BaseService{
         if(empty($store_info)){
             return $this->format_error(__('stores.store_not_defined'));
         }
+
+        // 地址处理
+        $store_info['area_id'] = [$store_info['province_id'],$store_info['city_id'],$store_info['region_id']];
+
+        // 店铺分类
+        $store_classes_model = new StoreClass();
+        $store_classes = $store_classes_model->where('store_id',$store_info['id'])->first();
+        $class_id = json_decode($store_classes['class_id'],true);
+        $class_name = json_decode($store_classes['class_name'],true);
+        $choseStoreClasses = [];
+        foreach($class_id as $k=>$v){
+            $choseStoreClasses[$k] = [];
+            foreach($v as $key=>$vo){
+                $choseStoreClasses[$k][$key]['id'] = $vo;
+                $choseStoreClasses[$k][$key]['name'] = $class_name[$k][$key];
+            }
+        }
+        $store_info['chose_store_classes'] = $choseStoreClasses;
         return $this->format($store_info);
     }
 
@@ -140,6 +159,30 @@ class StoreService extends BaseService{
         // 紧急联系人电话
         if(isset(request()->emergency_contact_phone)){
             $store_model->emergency_contact_phone = request()->emergency_contact_phone;
+        }
+        // 商家商品栏目
+        if(isset(request()->store_classes)){
+            $store_classes_model = new StoreClass();
+            $store_classes_info = $store_classes_model->where('store_id',$store_id)->first();
+            foreach(request()->store_classes as $k=>$v){
+                $class_id[$k] = [];
+                $class_name[$k] = [];
+                foreach($v as $vo){
+                    $class_id[$k][] = $vo['id'];
+                    $class_name[$k][] = $vo['name'];
+                }
+            }
+            
+            $data = [
+                'store_id'=>$store_id,
+                'class_id'=>json_encode($class_id),
+                'class_name'=>json_encode($class_name),
+            ];
+            if(empty($store_classes_info)){
+                $store_classes_model->insert($data);
+            }else{
+                $store_classes_model->where('store_id',$store_id)->update($data);
+            }
         }
         try{
             $store_model->save();
