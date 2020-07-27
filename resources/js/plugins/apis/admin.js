@@ -39,9 +39,12 @@ export default
     'adminGoodsClassesUploadThumb' : baseUrl + 'Admin/goods_classes/upload/thumb', // 分类缩略图上传
     'adminGoodsClassesClearCache' : baseUrl + 'Admin/goods_classes/cache/clear', // 清空商品分类缓存
 
-    // 全国省市区地址
-    'adminAreas' : baseUrl + 'Admin/areas', // 省市区地址
-    'adminAreasClearCache' : baseUrl + 'Admin/areas/cache/clear', // 清空省市区地址缓存
+    // 店铺管理
+    'adminStores' : baseUrl + 'Admin/stores', 
+    
+    // 商品品牌管理
+    'adminGoodsBrands' : baseUrl + 'Admin/goods_brands', // 商品品牌
+    'adminGoodsBrandsUploadThumb' : baseUrl + 'Admin/goods_brands/upload/thumb', // 品牌缩略图上传
 
     // 商品品牌管理
     'adminGoodsBrands' : baseUrl + 'Admin/goods_brands', // 商品品牌

@@ -17,14 +17,13 @@
                     <a-input v-model="info.goods_name" placeholder="HXC18475456841" />
                 </a-form-model-item>
                 <a-form-model-item label="商品品牌">
-                    <a-select>
-                        <a-select-option key="" value="">测试</a-select-option>
+                    <a-select show-search @search="goodsBrandHandleSearch" v-model="info.brand_id" :filter-option="false">
+                        <a-select-option v-for="(v,k) in brandList" :key="k" :value="v.id">{{v.name}}</a-select-option>
                     </a-select>
                 </a-form-model-item>
                 <a-form-model-item label="商品分类">
-                    <a-select>
-                        <a-select-option key="" value="">测试</a-select-option>
-                    </a-select>
+                    <a-tag><span v-for="(v,k) in classInfo" :key="k" style="font-size:14px">{{k==0?'&nbsp;&nbsp;':''}}{{v.name}}{{k==2?'&nbsp;&nbsp;':'&nbsp;&nbsp;/&nbsp;&nbsp;'}}</span></a-tag>
+                    <a-button @click="to_chose_class" type="primary" size="small">编辑</a-button>
                 </a-form-model-item>
                 <a-form-model-item label="商品图片">
                     <div class="goods_image">
@@ -143,9 +142,12 @@ export default {
               goods_images:[],
           },
           list:[],
+          brandList:[],// 品牌列表
           platform:false, // 平台PC false 手机 TRUE
           goods_content:'', // 商品详情
           id:0,
+          goodsClassList:[],
+          classInfo:[],
 
           // 规格属性modal
           attrVisible:false,
@@ -153,6 +155,7 @@ export default {
 
           // 构建sku
           skuList:[],
+          
       };
     },
     watch: {},
@@ -194,6 +197,27 @@ export default {
                 this.info = res.data;
             })
         },
+        get_goods_class(){
+            this.$get(this.$api.sellerStoreGoodsClasses).then(res=>{
+                this.goodsClassList = res.data;
+                if(!this.$isEmpty(this.$route.query.id)){
+                    let idsStr = this.$route.query.id;
+                    let ids = idsStr.split(',');
+                    this.goodsClassList.forEach(item=>{
+                        if(item[0].id == ids[0] && item[1].id == ids[1] && item[2].id == ids[2]){
+                            this.classInfo = item;
+                        }
+                    })
+                }
+                if(this.classInfo.length<=0){
+                    this.$message.error("非法栏目");
+                    setTimeout(()=>{
+                        this.$router.go(-1);
+                    },1000);
+                    
+                }
+            })
+        },
         // 获取菜单列表
         onload(){
             let is_type = this.$route.query.is_type;
@@ -208,6 +232,8 @@ export default {
                 this.id = this.$route.params.id;
                 this.get_info();
             }
+
+            this.get_goods_class();
 
             // this.$get(this.$api.adminGoodsBrands,params).then(res=>{
             //     this.list = res.data;
@@ -332,7 +358,21 @@ export default {
                     })
                 }).reduce(function(a,b){ return a.concat(b) },[])
             }, [[]])
-        }
+        },
+        // 品牌搜索
+        goodsBrandHandleSearch(e){
+            this.$get(this.$api.sellerGoodsBrands,{name:e}).then(res=>{
+                this.brandList = res.data.data;
+            })
+        },
+        // 修改栏目
+        to_chose_class(){
+            if(this.info.id>0){
+                this.$router.push('/Seller/goods/chose_goods/'+info.id);
+            }else{
+                this.$router.go(-1);
+            }
+        },
         
         
     },

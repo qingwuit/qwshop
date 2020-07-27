@@ -12,6 +12,22 @@
                 <a-form-model-item label="店铺名称">
                     <a-input v-model="info.store_name" />
                 </a-form-model-item>
+                <a-form-model-item label="店铺LOGO">
+                    <a-upload
+                        list-type="picture-card"
+                        class="avatar-uploader"
+                        :show-upload-list="false"
+                        :action="$api.homeStoreJoinUpload"
+                        :data="{token:$getSession('token_type'),name:'store_logo'}"
+                        @change="upload"
+                    >
+                        <img height="150px" v-if="info.store_logo" :src="info.store_logo" />
+                        <div v-else>
+                            <a-font v-if="!loading" type='iconplus' />
+                            <a-icon v-else type="loading" />
+                        </div>
+                    </a-upload>
+                </a-form-model-item>
                 <a-form-model-item label="申请产品栏目">
                     <a-cascader :field-names="{ label: 'name', value: 'id', children: 'children' }" :options="goodsClasses" placeholder="" @change="goods_class_change" />
                     <a-tag v-for="(v,k) in choseClasses" :key="k" closable @close="closeTag(k)">{{v[0].name}} / {{v[1].name}} / {{v[2].name}}</a-tag>

@@ -11,12 +11,8 @@
                 <a-button key="console" type="primary" @click="next_step">{{info.store_verify==2?'返回首页':(info.store_verify==3?'店铺配置':'重新提交')}}</a-button>
             </template>
             <div class="desc" v-if="info.store_verify==0">
-                <p style="font-size: 16px;">
-                    <strong>您提交的内容有以下错误：</strong>
-                </p>
-                <p>
-                    <a-icon :style="{ color: 'red' }" type="close-circle" /> Your account is not yet eligible to
-                    apply 
+                <p style="font-size: 16px;" v-if="info.store_refuse_info !=''">
+                    <a-icon :style="{ color: 'red' }" type="close-circle" /> {{info.store_refuse_info}}
                 </p>
             </div>
         </a-result>
@@ -40,8 +36,16 @@ export default {
     computed: {},
     methods: {
         next_step(){
-            if(info.store_verify == 2 || info.store_verify == 3){
+            if(this.info.store_verify == 2 || this.info.store_verify == 3){
                 return this.$router.push(info.store_verify==2?'/':'/Seller/login')
+            }
+            if(this.info.store_verify == 0){
+                this.$post(this.$api.homeStoreJoin).then(res=>{
+                    if(res.code == 200){
+                        return this.$router.push('/store/join/step_2')
+                    }
+                    return this.$$message.error(res.msg);
+                })
             }
         },
         store_verify(){

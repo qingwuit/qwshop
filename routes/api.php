@@ -61,6 +61,9 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
         Route::post('/goods_classes/upload/thumb','GoodsClassController@goods_class_upload'); // 缩略图上传
         Route::get('/goods_classes/cache/clear','GoodsClassController@clear_cache'); // 缓存清除商品分类
 
+        // 店铺管理
+        Route::apiResource('stores','StoreController')->except(['store']);
+
         // 全国省市区地址
         Route::apiResource('areas','AreaController');
         Route::get('/areas/cache/clear','AreaController@clear_cache'); // 缓存清除商品分类
@@ -101,7 +104,11 @@ Route::namespace('Seller')->prefix('Seller')->group(function(){
 
         // 商品管理
         Route::apiResource('goods','GoodsController');
+        Route::get('store_goods_classes','GoodsController@store_goods_classes'); // 获取店铺有权的商品栏目信息
         Route::post('/goods/upload/images','GoodsController@goods_upload'); // 图片上传
+
+        // 商品品牌
+        Route::apiResource('goods_brands','GoodsBrandController')->except(['update','show','store','destroy']);
     });
 
     

@@ -8,4 +8,5 @@ return [
     'store_not_defined'                              =>  '店铺不存在',
     'store_defined'                                  =>  '店铺已经存在',
     'store_edit_error'                               =>  '店铺编辑失败',
+    'store_success'                                  =>  '店铺编辑成功',
 ];

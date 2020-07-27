@@ -50,15 +50,19 @@ export default [
 
         // 全国地址管理
         {path:"/Admin/areas",name:"admin_areas",component:()=>import("@/views/Admin/areas/index")}, 
-        {path:"/Admin/areas/form/:id?",name:"admin_areas_form",component:()=>import("@/views/Admin/areas/form")},
+        {path:"/Admin/areas/form/:id",name:"admin_areas_form",component:()=>import("@/views/Admin/areas/form")},
 
         // 商品品牌
         {path:"/Admin/goods_brands",name:"admin_goods_brands",component:()=>import("@/views/Admin/goods_brands/index")}, 
-        {path:"/Admin/goods_brands/form/:id?",name:"admin_goods_brands_form",component:()=>import("@/views/Admin/goods_brands/form")},
+        {path:"/Admin/goods_brands/form/:id",name:"admin_goods_brands_form",component:()=>import("@/views/Admin/goods_brands/form")},
+
+        // 店铺管理
+        {path:"/Admin/stores",name:"admin_stores",component:()=>import("@/views/Admin/stores/index")}, 
+        {path:"/Admin/stores/form/:id",name:"admin_stores_form",component:()=>import("@/views/Admin/stores/form")},
 
         // 商品管理
         {path:"/Admin/goods",name:"admin_goods",component:()=>import("@/views/Admin/goods/index")}, 
-        {path:"/Admin/goods/form/:id?",name:"admin_goods_form",component:()=>import("@/views/Admin/goods/form")},
+        {path:"/Admin/goods/form/:id",name:"admin_goods_form",component:()=>import("@/views/Admin/goods/form")},
 
         // 广告位管理
         {path:"/Admin/adv_positions",name:"admin_adv_positions",component:()=>import("@/views/Admin/adv_positions/index")}, 

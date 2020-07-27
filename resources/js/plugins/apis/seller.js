@@ -17,6 +17,10 @@ export default
 
     // 商品管理
     'sellerGoods' : baseUrl + 'Seller/goods', 
+    'sellerStoreGoodsClasses' : baseUrl + 'Seller/store_goods_classes',  // 获取店铺有权的栏目信息
     'sellerGoodsUpload' : baseUrl + 'Seller/goods/upload/images', 
-    
+
+    // 品牌管理
+    'sellerGoodsBrands' : baseUrl + 'Seller/goods_brands', 
+
 };

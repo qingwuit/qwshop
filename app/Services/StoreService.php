@@ -29,8 +29,16 @@ class StoreService extends BaseService{
         $store_info['area_id'] = [$store_info['province_id'],$store_info['city_id'],$store_info['region_id']];
 
         // 店铺分类
+        $choseStoreClasses = $this->store_goods_classes($store_info['id'])['data'];
+        $store_info['chose_store_classes'] = $choseStoreClasses;
+        return $this->format($store_info);
+    }
+
+    // 获取商家拥有的栏目信息
+    public function store_goods_classes($store_id){
+        // 店铺分类
         $store_classes_model = new StoreClass();
-        $store_classes = $store_classes_model->where('store_id',$store_info['id'])->first();
+        $store_classes = $store_classes_model->where('store_id',$store_id)->first();
         $class_id = json_decode($store_classes['class_id'],true);
         $class_name = json_decode($store_classes['class_name'],true);
         $choseStoreClasses = [];
@@ -41,8 +49,7 @@ class StoreService extends BaseService{
                 $choseStoreClasses[$k][$key]['name'] = $class_name[$k][$key];
             }
         }
-        $store_info['chose_store_classes'] = $choseStoreClasses;
-        return $this->format($store_info);
+        return $this->format($choseStoreClasses);
     }
 
     // 建立店铺

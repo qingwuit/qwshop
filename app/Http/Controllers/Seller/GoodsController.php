@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Services\StoreService;
 use App\Services\UploadService;
 use Illuminate\Http\Request;
 
@@ -61,6 +62,12 @@ class GoodsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    // 商家拥有商品栏目信息
+    public function store_goods_classes(StoreService $store_service){
+        $goods_classes = $store_service->store_goods_classes($this->get_store(true));
+        return $this->success($goods_classes['data']);
     }
 
     // 商品图片上传
