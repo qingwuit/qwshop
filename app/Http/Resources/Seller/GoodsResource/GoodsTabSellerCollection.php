@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Resources\Admin\GoodsResource;
+namespace App\Http\Resources\Seller\GoodsResource;
 
+use App\Models\GoodsClass;
+use App\Services\GoodsService;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class GoodsTabSellerCollection extends ResourceCollection
@@ -14,16 +16,17 @@ class GoodsTabSellerCollection extends ResourceCollection
      */
     public function toArray($request)
     {
+        $goods_service = new GoodsService();
         return [
             'data'=>$this->collection->map(function($item){
+                $goods_class = new GoodsClass();
                 return [
                     'id'                    =>  $item->id,
-                    'brand_name'            =>  $item->goods_brand->map(function($goodsItem){
-                                                    return $goodsItem->name;
-                                                }),
-                    'class_name'            =>  $item->goods_class->map(function($goodsItem){
-                                                    return $goodsItem->name;
-                                                }),
+                    'goods_name'            =>  $item->goods_name,
+                    'goods_master_image'    =>  $item->goods_master_image,
+                    'brand_name'            =>  $item->goods_brand->name,
+                    'class_name'            =>  $item->goods_class->name,
+                    'class_id'              =>  [$goods_class->where('id',$item->goods_class->pid)->first()['pid'],$item->goods_class->pid,$item->goods_class->id],
                     'goods_no'              =>  $item->goods_no,
                     'goods_status'          =>  $item->goods_status,
                     'goods_verify'          =>  $item->goods_verify,
@@ -36,6 +39,8 @@ class GoodsTabSellerCollection extends ResourceCollection
             'tatal'=>$this->total(), // 总页码
             'per_page'=>$this->perPage(), // 每页数量
             'current_page'=>$this->currentPage(), // 当前页码
+            // 统计
+            'count'=>$goods_service->get_count(),
         ];
     }
 }

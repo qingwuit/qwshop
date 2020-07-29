@@ -193,7 +193,9 @@ export default {
         // width: 100%;
         width: calc(100% - 200px);
         position: fixed;
+        z-index: 99;
         background: #fff;
+        border-bottom: 1px solid #efefef;
         &:after{
             display: block;
             clear: both;

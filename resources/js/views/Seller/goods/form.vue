@@ -7,25 +7,25 @@
         <div class="unline underm"></div>
         <div class="admin_form">
             <a-form-model :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
-                <a-form-model-item label="商品标题">
+                <a-form-model-item label="商品标题" :rules="{ required: true}">
                     <a-input v-model="info.goods_name" />
                 </a-form-model-item>
                 <a-form-model-item label="商品副标题">
-                    <a-textarea :auto-size="{ minRows: 2, maxRows: 6 }" v-model="info.description" />
+                    <a-textarea :auto-size="{ minRows: 2, maxRows: 6 }" v-model="info.goods_subname" />
                 </a-form-model-item>
                 <a-form-model-item label="商品编号">
-                    <a-input v-model="info.goods_name" placeholder="HXC18475456841" />
+                    <a-input v-model="info.goods_no" placeholder="HXC18475456841" />
                 </a-form-model-item>
-                <a-form-model-item label="商品品牌">
+                <a-form-model-item label="商品品牌" :rules="{ required: true}">
                     <a-select show-search @search="goodsBrandHandleSearch" v-model="info.brand_id" :filter-option="false">
                         <a-select-option v-for="(v,k) in brandList" :key="k" :value="v.id">{{v.name}}</a-select-option>
                     </a-select>
                 </a-form-model-item>
-                <a-form-model-item label="商品分类">
+                <a-form-model-item label="商品分类" :rules="{ required: true}">
                     <a-tag><span v-for="(v,k) in classInfo" :key="k" style="font-size:14px">{{k==0?'&nbsp;&nbsp;':''}}{{v.name}}{{k==2?'&nbsp;&nbsp;':'&nbsp;&nbsp;/&nbsp;&nbsp;'}}</span></a-tag>
                     <a-button @click="to_chose_class" type="primary" size="small">编辑</a-button>
                 </a-form-model-item>
-                <a-form-model-item label="商品图片">
+                <a-form-model-item label="商品图片" :rules="{ required: true}">
                     <div class="goods_image">
                         <div class="item" v-if="info.goods_images.length>0">
                             <div class="item_img" v-for="(v,k) in info.goods_images" :key="k" >
@@ -52,16 +52,16 @@
                     </div>
                 </a-form-model-item>
                 <template v-if="skuList.length<=0">
-                    <a-form-model-item label="平台价格">
+                    <a-form-model-item label="平台价格" :rules="{ required: true}">
                         <a-input v-model="info.goods_price" type="number" suffix="￥" />
                     </a-form-model-item>
-                    <a-form-model-item label="市场价格">
+                    <a-form-model-item label="市场价格" :rules="{ required: true}">
                         <a-input v-model="info.goods_market_price" type="number" suffix="￥" />
                     </a-form-model-item>
-                    <a-form-model-item label="商品重量">
+                    <a-form-model-item label="商品重量" :rules="{ required: true}">
                         <a-input v-model="info.goods_weight" type="number" suffix="Kg" />
                     </a-form-model-item>
-                    <a-form-model-item label="商品库存">
+                    <a-form-model-item label="商品库存" :rules="{ required: true}">
                         <a-input v-model="info.goods_stock" type="number">
                             <a-icon slot="suffix" type="stock"></a-icon>
                         </a-input>
@@ -71,7 +71,7 @@
                     <div class="attr_modal">
                         <div class="attr_item" v-for="(v,k) in goodsAttr" :key="k">
                             <span style="margin-right:10px;margin-left:8px">{{v.name}}：</span>
-                            <a-checkbox v-for="(vo,key) in v.specs" :key="key" @change="specChange(v,vo)" :value="vo.check">{{vo.name}}</a-checkbox>
+                            <a-checkbox v-for="(vo,key) in v.specs" :key="key" @change="specChange(v,vo)" :default-checked="vo.check" :value="vo.check">{{vo.name}}</a-checkbox>
                             <a-tag style="background: #fff; borderStyle: dashed;">
                                 <a-icon type="plus" /> 添加
                             </a-tag>
@@ -86,8 +86,9 @@
                                 <a-col class="col_th" :span="4">SKU</a-col>
                                 <a-col class="col_th" :span="4">市场价</a-col>
                                 <a-col class="col_th" :span="4">平台价</a-col>
-                                <a-col class="col_th" :span="4">库存</a-col>
                                 <a-col class="col_th" :span="4">重量</a-col>
+                                <a-col class="col_th" :span="4">库存</a-col>
+                                <a-col class="col_th" :span="4">图片</a-col>
                             </a-row>
                         </div>
                         <div class="row_td">
@@ -101,6 +102,7 @@
                                         <a-icon slot="suffix" type="stock"></a-icon>
                                     </a-input>
                                 </a-col>
+                                <a-col class="col_th" :span="4">-</a-col>
                             </a-row>
                         </div>
                     </div>
@@ -123,7 +125,7 @@
             </a-form-model>
 
             <!-- 属性规格选择 -->
-            <goods-attr-modal :attrVisible="attrVisible" @goods_attr_modal_cancel="attrVisible=false" @goods_attr="e=>{goodsAttr=e;attrVisible=false}" />
+            <goods-attr-modal :attrVisible="attrVisible" @goods_attr_modal_cancel="attrVisible=false" @goods_attr="goods_attr_chose" />
             
         </div>
     </div>
@@ -138,7 +140,6 @@ export default {
     data() {
       return {
           info:{
-              pid:0,
               goods_images:[],
           },
           list:[],
@@ -164,12 +165,14 @@ export default {
         handleSubmit(){
 
             // 验证代码处
-            if(this.$isEmpty(this.info.name)){
-                return this.$message.error('分类名不能为空');
-            }
+            // if(this.$isEmpty(this.info.name)){
+            //     return this.$message.error('分类名不能为空');
+            // }
 
             
-            let api = this.$apiHandle(this.$api.adminGoods,this.id);
+            let api = this.$apiHandle(this.$api.sellerGoods,this.id);
+            this.info.classInfo = this.classInfo; // 获取商品栏目
+            this.info.skuList = this.skuList; // 获取商品SKU
             if(api.status){
                 this.$put(api.url,this.info).then(res=>{
                     if(res.code == 200){
@@ -183,7 +186,7 @@ export default {
                 this.$post(api.url,this.info).then(res=>{
                     if(res.code == 200){
                         this.$message.success(res.msg)
-                        return this.$router.back();
+                        return this.$router.go(-2);
                     }else{
                         return this.$message.error(res.msg)
                     }
@@ -193,8 +196,13 @@ export default {
             
         },
         get_info(){
-            this.$get(this.$api.adminGoods+'/'+this.id).then(res=>{
+            this.$get(this.$api.sellerGoods+'/'+this.id).then(res=>{
+                this.goodsAttr = res.data.attrList;
+                this.skuList = res.data.skuList;
                 this.info = res.data;
+                this.check_platform(false);
+                this.goodsBrandHandleSearch(this.info.goods_brand.name);
+                this.$forceUpdate();
             })
         },
         get_goods_class(){
@@ -218,14 +226,8 @@ export default {
                 }
             })
         },
-        // 获取菜单列表
+
         onload(){
-            let is_type = this.$route.query.is_type;
-            let params = {};
-            if(!this.$isEmpty(is_type)){
-                params.is_type = is_type;
-                this.info.is_type = parseInt(is_type);
-            }
 
             // 判断你是否是编辑
             if(!this.$isEmpty(this.$route.params.id)){
@@ -235,7 +237,7 @@ export default {
 
             this.get_goods_class();
 
-            // this.$get(this.$api.adminGoodsBrands,params).then(res=>{
+            // this.$get(this.$api.sellerGoodsBrands,params).then(res=>{
             //     this.list = res.data;
             // });
         },
@@ -300,8 +302,31 @@ export default {
         open_attr_modal(){
             this.attrVisible = true;
         },
+        // 属性选择
+        goods_attr_chose(e){
+            this.attrVisible=false;
+            // e=>{goodsAttr=e;attrVisible=false}
+            if(e.length<=0){
+                return;
+            }
+            e.forEach((items,k)=>{
+                let status = false;
+                this.goodsAttr.forEach(attrItems=>{
+                    if(attrItems.id == items.id){
+                        status = true;
+                    }
+                })
+
+                if(!status){
+                    this.goodsAttr.push(e[k]);
+                }
+
+            })
+            this.$forceUpdate();
+        },
         // 规格选择
         specChange(attrs,specs){
+            // console.log(attrs,specs)
             let index = -1;
             this.goodsAttr.forEach((items,key)=>{
                 if(items.id == attrs.id){
@@ -310,10 +335,12 @@ export default {
             })
             this.goodsAttr[index].specs.forEach(items=>{
                 if(items.id == specs.id){
-                    if(this.$isEmpty(items.check)){
+                    if(items.check == undefined){
                         items.check = true;
+                    }else{
+                        items.check = !items.check;
                     }
-                    items.check = !items.check;
+                    
                 }
             })
             this.structureSku();
@@ -324,27 +351,96 @@ export default {
             let skuList = [];
             let attrList = [];
             let attrListName = [];
+            let i=0;
             this.goodsAttr.forEach((items,key)=>{
+                let canPlus = false;
                 items.specs.forEach(specItem=>{
                     if(specItem.check){
-                        if(this.$isEmpty(attrList[key])){
-                            attrList[key] = [];
-                            attrListName[key] = [];
+                        if(this.$isEmpty(attrList[i])){
+                            attrList[i] = [];
+                            attrListName[i] = [];
                         }
-                        attrList[key].push(specItem.id);
-                        attrListName[key].push(specItem.name);
+                        attrList[i].push(specItem.id);
+                        attrListName[i].push(specItem.name);
+                        canPlus = true;
                     }
                 })
+                if(canPlus){
+                    i++;
+                }
             })
             if(attrList.length<=0){
                 return this.skuList = [];
             }
-            let attrName = this.cartesianProduct(attrListName);
-            let attrId = this.cartesianProduct(attrList);
-            attrId.forEach((items,key)=>{
-                skuList.push({spec_id:items,sku_name:attrName[key],goods_market_price:0,goods_price:0,goods_stock:0,goods_weight:0});
-            })
-            this.skuList = skuList;
+            
+            // 判断是否单选一个属性
+            let attrName = []
+            let attrId = [];
+            if(attrList.length!=1){
+                attrName = this.cartesianProduct(attrListName);
+                attrId = this.cartesianProduct(attrList);
+                attrId.forEach((items,key)=>{
+                    skuList.push({spec_id:items,sku_name:attrName[key],goods_market_price:0,goods_price:0,goods_stock:0,goods_weight:0});
+                })
+            }else{
+                attrName = attrListName[0];
+                attrId = attrList[0];
+                attrId.forEach((items,key)=>{
+                    skuList.push({spec_id:[items],sku_name:[attrName[key]],goods_market_price:0,goods_price:0,goods_stock:0,goods_weight:0});
+                })
+            }
+          
+            // 判断是否有已经设置过金额的则不改变内容
+            console.log(skuList.length,this.skuList.length)
+            if(skuList[0].spec_id.length==this.skuList[0].spec_id.length){ // 如果规格数量不一致了则不变了直接替换
+                // 判断是否是规格减少了
+                if(skuList.length<this.skuList.length){
+                    
+                    let skuListLength = this.skuList.length;
+                    let strList = [];
+                    for(let i=0;i<skuListLength;i++){
+                        let ngt = false;
+                        skuList.forEach(skuItem=>{
+                            if(skuItem.spec_id.sort().toString() == this.skuList[i].spec_id.sort().toString()){
+                                ngt = true;
+                            }
+                        })
+                        if(!ngt){
+                            strList.push(this.skuList[i].spec_id.sort().toString());
+                        }
+                    }
+                    for(let i=0;i<strList.length;i++){
+                        let ngt = false;
+                        this.skuList.forEach((skuItem,key)=>{
+                            if(strList[i] == skuItem.spec_id.sort().toString()){
+                                ngt = true;
+                            }
+                            if(ngt){
+                                this.skuList.splice(key,1);
+                            }
+                        })
+                        
+                    }
+                }else{
+                    skuList.forEach(item=>{
+                        let gt = false;
+                        this.skuList.forEach(skuItem=>{
+                            if(skuItem.spec_id.sort().toString() == item.spec_id.sort().toString()){
+                                gt = true;
+                            }
+                        })
+                        if(!gt){
+                            this.skuList.push(item);
+                        }
+                    })
+                }
+                
+            }else{
+                this.skuList = skuList;
+            }
+            
+            
+            
         },
         // 多数组求笛卡儿积
         cartesianProduct(array){
@@ -401,33 +497,41 @@ export default {
 .goods_upload_btn{
     margin-top: 10px;
 }
+.goods_specs{
+    border:1px solid #efefef;
+    margin-top: 10px;
+}
+.row_td{
+    padding:8px;
+}
 .goods_image{
     .item{
         &.noimg{
-            width:110px;
-            height: 110px;
+            width:160px;
+            height: 160px;
             background: #efefef;
             text-align: center;
             border-radius: 4px;
             i{
-                font-size: 30px;
-                line-height: 110px;
+                font-size: 40px;
+                line-height: 160px;
                 color:#999;
             }
         }
         .item_img{
-            width: 110px;
-            height: 110px;
+            width: 160px;
+            height: 160px;
             display: block;
             float: left;
             box-sizing: border-box;
             margin-right: 10px;
             margin-bottom: 10px;
             position: relative;
+            border:1px solid #efefef;
             .item_bg{
                 border-radius: 4px;
                 text-align: center;
-                line-height: 110px;
+                line-height: 160px;
                 display: none;
                 width: 100%;
                 height: 100%;
@@ -437,7 +541,7 @@ export default {
                 left:0;
                 background: rgba(0,0,0,0.5);/* IE9、标准浏览器、IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂 */
                 i{
-                    padding: 0 5px;
+                    padding: 0 14px;
                     font-size: 16px;
                     cursor: pointer;
                 }

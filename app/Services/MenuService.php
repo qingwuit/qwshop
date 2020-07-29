@@ -6,8 +6,11 @@ use Illuminate\Support\Facades\Cache;
 
 class MenuService extends BaseService{
     use HelperTrait;
-    public function get_menus(){
+    public function get_menus($isSeller=false){
         $is_type = request()->get('is_type')??0;
+        if($isSeller){
+            $is_type = 1;
+        }
         $menu_model = new Menu();
         $cache_name = $is_type==0?'admin_menus_cache':'seller_menus_cache';
         $list = [];

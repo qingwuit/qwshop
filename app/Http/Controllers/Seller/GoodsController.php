@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Seller\GoodsResource\GoodsTabSellerCollection;
+use App\Models\Goods;
+use App\Services\GoodsService;
 use App\Services\StoreService;
 use App\Services\UploadService;
 use Illuminate\Http\Request;
@@ -14,9 +17,35 @@ class GoodsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request,Goods $goods_model)
     {
-        //
+        // 条件筛选
+        $goods_params = ['goods_verify'=>1,'goods_status'=>1]; // 商品后台审核 还有上架
+        if(!empty($request->goods_name)){
+            $goods_model = $goods_model->where('name','like','%'.$request->goods_name.'%');
+        }
+        if(!empty($request->brand_id)){
+            $goods_model = $goods_model->where('brand_id',$request->brand_id);
+        }
+        if(!empty($request->class_id)){
+            $goods_model = $goods_model->where('class_id',$request->class_id);
+        }
+        if(!empty($request->goods_no)){
+            $goods_model = $goods_model->where('goods_no',$request->goods_no);
+        }
+        if(isset($request->goods_status)){
+            $goods_params['goods_status'] = $request->goods_status;
+        }
+        if(isset($request->goods_verify)){
+            $goods_params['goods_verify'] = $request->goods_verify;
+        }
+        
+        $list = $goods_model->where($goods_params)
+                            ->where('store_id',$this->get_store(true))
+                            ->with(['goods_class','goods_brand'])
+                            ->orderBy('id','desc')
+                            ->paginate($request->per_page??30);
+        return $this->success(new GoodsTabSellerCollection($list));
     }
 
     /**
@@ -25,9 +54,14 @@ class GoodsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,GoodsService $goods_service)
     {
-        //
+        $info = $goods_service->add();
+        if($info['status']){
+            return $this->success([],__('goods.add_success'));
+        }
+        return $this->error(__('goods.add_error'));
+        
     }
 
     /**
@@ -36,9 +70,14 @@ class GoodsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(GoodsService $goods_service,$id)
     {
-        //
+        $store_id = $this->get_store(true);
+        $info = $goods_service->store_goods_info($id);
+        if($info['status']){
+            return $this->success($info['data']);
+        }
+        return $this->error(__('goods.add_error'));
     }
 
     /**

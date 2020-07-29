@@ -89,7 +89,6 @@ export default {
                     }
                     
                 })
-                console.log(this.sList);
             }
             if(deep == 1){
                 this.choseId[2] = 0;

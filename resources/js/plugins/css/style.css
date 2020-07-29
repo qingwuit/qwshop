@@ -168,6 +168,61 @@ ul,li,ol{
     margin-right: 15px;
     background: #f5f7fa;
 }
+
+/* 商品图文 */
+.admin_goods_pic_txt i{
+    font-size: 16px;
+    line-height: 80px;
+    text-align: center;
+    width: 80px;
+}
+.admin_goods_pic_txt img{
+    width: 80px;
+    height: 80px;
+    border:1px solid #f1f1f1;
+}
+.admin_goods_pic_txt .text{
+    max-width: 240px;
+    height: 40px;
+    overflow: hidden;
+    position: relative;
+    color:#111;
+    margin-top: 5px;
+    /* overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis; */
+}
+.admin_goods_pic_txt .block{
+    float: left;
+}
+/* .admin_goods_pic_txt .text:after{
+    content: "..."; position: absolute; bottom: 0; right: 0; padding-left: 20px;
+	background: -webkit-linear-gradient(left, transparent, #fff 55%);
+	background: -o-linear-gradient(right, transparent, #fff 55%);
+	background: -moz-linear-gradient(right, transparent, #fff 55%);
+	background: linear-gradient(to right, transparent, #fff 55%);
+} */
+.admin_goods_pic_txt .tag{
+    color: #999;
+    font-size: 12px;
+    margin-top: 10px;
+    display: block;
+    /* float: left; */
+}
+.admin_goods_pic_txt .tag .ant-tag{
+    margin-right: 0px;
+    line-height: 14px;
+    font-size: 12px;
+}
+.admin_goods_pic_txt .img{
+    width: 80px;
+    height: 80px;
+    display: block;
+    float: left;
+    color:#999;
+    margin-right: 25px;
+    background: #f5f7fa;
+}
 /* 过度动画 */
 /* 可以设置不同的进入和离开动画 */
 /* 设置持续时间和动画函数 */

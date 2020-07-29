@@ -7,7 +7,7 @@
         <div class="unline underm"></div>
         <div class="admin_form">
             <a-form-model :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
-                <a-form-model-item label="属性名称">
+                <a-form-model-item label="属性名称" :rules="{ required: true}">
                     <a-input v-model="info.name" placeholder="color"></a-input>
                 </a-form-model-item>
                 <a-form-model-item label="规格">

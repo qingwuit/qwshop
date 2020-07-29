@@ -12,6 +12,9 @@ export default
     "sellerLogout" : baseUrl + "Seller/logout", // 登出
     "sellerCheckLogin" : baseUrl + "Seller/check_login", // 检测是否登录
 
+    // 商家菜单
+    'sellerMenus' : baseUrl + 'Seller/menus', 
+
      // 规格属性
     'sellerGoodsAttrs' : baseUrl + 'Seller/goods_attrs', 
 

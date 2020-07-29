@@ -121,7 +121,7 @@ export default {
             this.drawerShow = false;
         },
         get_menus(){
-            this.$get(this.$api.adminMenus+'?is_type=1').then(res=>{
+            this.$get(this.$api.sellerMenus).then(res=>{
                 this.menus = res.data;
             });
         },
@@ -210,9 +210,11 @@ export default {
         line-height: 50px;
         height: 50px;
         // width: 100%;
+        z-index: 99;
         width: calc(100% - 200px);
         position: fixed;
         background: #fff;
+        border-bottom: 1px solid #efefef;
         &:after{
             display: block;
             clear: both;

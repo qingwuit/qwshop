@@ -99,6 +99,9 @@ Route::namespace('Seller')->prefix('Seller')->group(function(){
 
     Route::group(['middleware'=>'jwt.user'],function(){
 
+        // 商家菜单
+        Route::apiResource('menus','MenuController')->except(['update','show','store','destroy']);
+
         // 属性规格
         Route::apiResource('goods_attrs','GoodsAttrController');
 
