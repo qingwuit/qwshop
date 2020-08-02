@@ -34,6 +34,9 @@
                             <router-link to="/">首页</router-link>
                         </li>
                         <li>
+                            <router-link to="/goods/seckill">店铺街</router-link>
+                        </li>
+                        <li>
                             <router-link to="/goods/seckill">秒杀</router-link>
                         </li>
                         <li>
@@ -41,6 +44,9 @@
                         </li>
                         <li>
                             <router-link to="/integral/index">积分商城</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/integral/index">帮助中心</router-link>
                         </li>
                     </ul>
                 </div>

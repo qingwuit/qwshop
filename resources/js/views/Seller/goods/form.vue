@@ -173,6 +173,7 @@ export default {
             let api = this.$apiHandle(this.$api.sellerGoods,this.id);
             this.info.classInfo = this.classInfo; // 获取商品栏目
             this.info.skuList = this.skuList; // 获取商品SKU
+            this.info.goods_status = this.info.goods_status?1:0;
             if(api.status){
                 this.$put(api.url,this.info).then(res=>{
                     if(res.code == 200){
@@ -198,7 +199,8 @@ export default {
         get_info(){
             this.$get(this.$api.sellerGoods+'/'+this.id).then(res=>{
                 this.goodsAttr = res.data.attrList;
-                this.skuList = res.data.skuList;
+                this.skuList = res.data.skuList||[];
+                res.data.goods_status = res.data.goods_status==0?false:true;
                 this.info = res.data;
                 this.check_platform(false);
                 this.goodsBrandHandleSearch(this.info.goods_brand.name);
@@ -392,7 +394,7 @@ export default {
           
             // 判断是否有已经设置过金额的则不改变内容
             console.log(skuList.length,this.skuList.length)
-            if(skuList[0].spec_id.length==this.skuList[0].spec_id.length){ // 如果规格数量不一致了则不变了直接替换
+            if(!this.$isEmpty(this.skuList[0]) && skuList[0].spec_id.length==this.skuList[0].spec_id.length){ // 如果规格数量不一致了则不变了直接替换
                 // 判断是否是规格减少了
                 if(skuList.length<this.skuList.length){
                     

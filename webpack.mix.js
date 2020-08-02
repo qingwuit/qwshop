@@ -16,6 +16,7 @@ mix.js('resources/js/app.js', 'public/dist/js')
    .sass('resources/sass/app.scss', 'public/dist/css')
    .setPublicPath('public/dist')
    .setResourceRoot('/dist/')
+//    .browserSync('127.0.0.1:8000')
    .polyfill({
       enabled: true,
       useBuiltIns: "usage",

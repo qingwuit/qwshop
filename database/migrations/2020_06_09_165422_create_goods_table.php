@@ -30,7 +30,7 @@ class CreateGoodsTable extends Migration
             $table->unsignedInteger('goods_sale')->default(0)->comment('销售量');
             $table->unsignedInteger('goods_collect')->default(0)->comment('收藏量');
             $table->unsignedTinyInteger('goods_status')->default(0)->comment('上架状态');
-            $table->unsignedTinyInteger('goods_verify')->default(0)->comment('审核状态');
+            $table->unsignedTinyInteger('goods_verify')->default(1)->comment('审核状态');
             $table->string('refuse_info',80)->default('暂无缘由')->comment('拒绝原因');
             $table->text('goods_content')->default('')->comment('详情');
             $table->text('goods_content_mobile')->default('')->comment('手机端详情');

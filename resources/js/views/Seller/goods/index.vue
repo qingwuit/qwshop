@@ -24,7 +24,7 @@
                     <div class="admin_goods_pic_txt">
                         <div class="img"><img v-if="rows.goods_master_image" :src="rows.goods_master_image"><a-icon v-else type="picture" /></div>
                         <div class="block">
-                            <div class="text">{{rows.goods_name}}</div>
+                            <div class="text" :title="rows.goods_name">{{rows.goods_name}}</div>
                             <div class="tag">标签：
                                 <a-tag color="orange">推荐</a-tag>
                                 <a-tag color="red">HOT</a-tag>
@@ -41,7 +41,7 @@
                     <div style="margin:0 auto" :class="rows.goods_status==1?'green_round':'red_round'"></div>
                 </span>
                 <span slot="action" slot-scope="rows">
-                    <a-button icon="read" @click="$router.push('/Admin/goods/form/'+rows.id)">查看</a-button>
+                    <a-button icon="read" @click="$router.push('/goods/'+rows.id)">查看</a-button>
                     <a-button icon="edit" @click="$router.push('/Seller/goods/form/'+rows.id+'?id='+rows.class_id.join(','))">编辑</a-button>
                 </span>
             </a-table>
@@ -63,11 +63,11 @@ export default {
           total:0, //总页数
           searchConfig:[
               {label:'商品名称',name:'goods_name',type:'text'},
-              {label:'商品编号',name:'goods_no',type:'text'},
-              {label:'上架状态',name:'goods_status',type:'select',data:[{label:'上架',value:1},{label:'下架',value:0}]},
-              {label:'审核状态',name:'goods_verify',type:'select',data:[{label:'已审核',value:1},{label:'未审核',value:0}]},
-              {label:'商品品牌',name:'brand_id',type:'text'},
-              {label:'商品分类',name:'class_id',type:'text'},
+            //   {label:'商品编号',name:'goods_no',type:'text'},
+              {label:'上架状态',name:'goods_status',type:'select',data:[{label:'全部',value:''},{label:'上架',value:1},{label:'下架',value:0}]},
+            //   {label:'审核状态',name:'goods_verify',type:'select',data:[{label:'已审核',value:1},{label:'未审核',value:0}]},
+            //   {label:'商品品牌',name:'brand_id',type:'text'},
+            //   {label:'商品分类',name:'class_id',type:'text'},
           ],
           selectedRowKeys:[], // 被选择的行
           columns:[
@@ -131,7 +131,7 @@ export default {
             });
         },
         to_nav(e){
-            this.params.goods_status = e;
+            this.params.goods_verify = e;
             this.params.page = 1;
             this.onload();
         },
