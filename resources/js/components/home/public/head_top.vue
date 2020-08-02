@@ -16,7 +16,7 @@
                 <ul>
                     <li v-show="!isLogin"><router-link to="/user/login">登录</router-link></li>
                     <li v-show="!isLogin"><router-link to="/user/register">注册</router-link></li>
-                    <li v-show="isLogin">欢迎您，<router-link to="/user/index" style="color:#ca151e">{{user_info.nickname}}</router-link></li>
+                    <li v-show="isLogin">欢迎您，<router-link to="/user/index" style="color:#ca151e">{{userInfo.nickname}}</router-link></li>
                     <li v-show="isLogin">|</li>
                     <li v-show="isLogin"><router-link to="/user/index" >个人中心</router-link></li>
                     <li v-show="isLogin">|</li>
@@ -34,22 +34,19 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
     components: {},
     props: {},
     data() {
       return {
-          isLogin:false,
-          user_info:{},
       };
     },
     watch: {},
-    computed: {},
+    computed: {...mapState('homeLogin',['isLogin','userInfo'])},
     methods: {
         logout:function(){
             this.$get(this.$api.homeLogout).then(()=>{
-                // console.log(res);
-                localStorage.removeItem('user_info');
                 localStorage.removeItem('token');
                 this.$router.push('/user/login');
 
@@ -57,11 +54,7 @@ export default {
         }
     },
     created() {
-        let user_info = localStorage.getItem('user_info');
-        if(!this.$isEmpty(user_info)){
-            this.isLogin = true;
-            this.user_info = JSON.parse(user_info);
-        }
+
     },
     mounted() {}
 };

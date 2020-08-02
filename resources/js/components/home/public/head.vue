@@ -26,7 +26,7 @@
             <div class="width_center_1200">
                 <div class="shop_top_nav_left" @mouseover="subnav_show?subnav:subnav=true" @mouseleave="subnav_show?subnav:subnav=false">
                     全部商品
-                    <transition name="el-zoom-in-top"><leftBar :change_color="change_color" v-show="subnav"></leftBar></transition>
+                    <transition name="el-zoom-in-top"><leftBar :goods_class="common.classes" :change_color="change_color" v-show="subnav"></leftBar></transition>
                 </div>
                 <div class="shop_top_nav_right">
                     <ul>
@@ -58,18 +58,48 @@
 <script>
 import headTop from '@/components/home/public/head_top'
 import leftBar from '@/components/home/public/leftbar'
+import {mapState} from 'vuex'
 export default {
     components: {headTop,leftBar},
     props: {},
     data() {
       return {
+          classes:[],
           cart_count:0,
+          subnav_show:true,
+          subnav:true,
+          change_color:false,
       };
     },
     watch: {},
-    computed: {},
-    methods: {},
-    created() {},
+    computed: {...mapState('homeLogin',['isLogin','userInfo']),...mapState('homeCommon',['common']),},
+    methods: {
+        get_common(){
+            this.$get(this.$api.homeCommon).then(res=>{
+                return this.$store.dispatch('homeCommon/set_common',res.data);
+            })
+        },
+        checkLogin(){
+            // 判断token是否失效
+            let token = localStorage.getItem('token');
+            if(!this.$isEmpty(token)){
+                this.$get(this.$api.homeCheckLogin).then(res=> {
+                    this.$store.dispatch('homeLogin/check_login',res);
+                });
+            }
+        },
+    },
+    created() {
+        this.get_common();
+        this.checkLogin();
+        
+        // 如果是不是首页则变成黑色 收缩模式
+        if(this.$route.name != 'home_index'){
+            this.change_color = true;
+            this.subnav_show = false;
+            this.subnav = false;
+        }
+    },
     mounted() {}
 };
 </script>

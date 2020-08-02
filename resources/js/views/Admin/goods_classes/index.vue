@@ -10,13 +10,16 @@
         </div>
         <div class="admin_table_list">
             <a-table :columns="columns" :data-source="list" :pagination="false" :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" row-key="id">
-                <span slot="expand"></span>
+                <span slot="expand"><!-- -> --></span>
                 <span slot="name" slot-scope="rows">
                     <div class="admin_pic_txt">
                         <div class="img"><img v-if="rows.thumb" :src="rows.thumb"><a-icon v-else type="picture" /></div>
                         <div class="text">{{rows.name}}</div>
                         <div class="clear"></div>
                     </div>
+                </span>
+                <span slot="is_sort" slot-scope="rows">
+                    <a-input type="number" @blur="sortChange(rows)" v-model="rows.is_sort" />
                 </span>
                 <span slot="action" slot-scope="rows">
                     <a-button icon="edit" @click="$router.push('/Admin/goods_classes/form/'+rows.id)">编辑</a-button>
@@ -36,7 +39,7 @@ export default {
           columns:[
               {title:'#',key:'id',fixed:'left',scopedSlots: { customRender: 'expand' }},
               {title:'分类名称',key:'id',fixed:'left',scopedSlots: { customRender: 'name' }},
-            //   {title:'链接',dataIndex:'link'},
+              {title:'排序',fixed:'right',width:'120px',scopedSlots: { customRender: 'is_sort' }},
               {title:'操作',key:'id',fixed:'right',scopedSlots: { customRender: 'action' }},
           ],
           list:[],
@@ -85,6 +88,19 @@ export default {
                 this.list = res.data;
             });
         },
+        // 排序移动
+        sortChange(rows){
+            let api = this.$apiHandle(this.$api.adminGoodsClasses,rows.id);
+            this.$put(api.url,rows).then(res=>{
+                if(res.code == 200){
+                    this.onload();
+                    return this.$message.success(res.msg)
+                }else{
+                    return this.$message.error(res.msg)
+                }
+            })
+            
+        }
     },
     created() {
         this.onload();

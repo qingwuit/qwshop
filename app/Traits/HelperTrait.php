@@ -49,4 +49,18 @@ trait HelperTrait{
         }
         return $arr;
     }
+
+    /**
+     * 
+     * 获取图片的缩略图
+     * @author 青梧系统 <www.qwsystem.com>
+     * 
+     */
+
+    public function thumb($path,$size='300'){
+        $len = strripos($path,'.');
+        $ext = substr($path,$len);
+        $name = substr($path,0,$len);
+        return $name.'_'.$size.$ext;
+    }
 }

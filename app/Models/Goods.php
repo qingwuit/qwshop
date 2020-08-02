@@ -20,4 +20,7 @@ class Goods extends Model
     public function goods_skus(){
         return $this->hasMany('App\Models\GoodsSku','goods_id','id');
     }
+    public function stores(){
+        return $this->hasMany('App\Models\Store','id','store_id');
+    }
 }

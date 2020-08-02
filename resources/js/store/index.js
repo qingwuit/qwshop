@@ -7,6 +7,7 @@ import sellerLogin from '@/store/modules/seller/login'
 // PC端
 import homeLogin from '@/store/modules/home/login' // 登录
 import homeStore from '@/store/modules/home/store' // 商家
+import homeCommon from '@/store/modules/home/common' // 公共信息
 
 Vue.use(Vuex)
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
 
         homeLogin,
         homeStore,
+        homeCommon,
     },
     strict: false,
 })

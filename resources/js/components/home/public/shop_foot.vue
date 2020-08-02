@@ -9,7 +9,7 @@
         </ul>
         <div class="foot_copyright">
             <p>448家维修网点 全国联保 隐私政策 服务协议 Copyright © 2012-2016 VMALL.COM 版权所有 保留一切权利</p>
-            <p>公安备案 苏公网安备 32011402010009号 | 苏ICP备09062682号-9 | 增值电信业务经营许可证：苏B2-20130048 | 网络文化经营许可证：苏网文[2015] 1599-026号</p>
+            <p>公安备案 苏公网安备 32011402010009号 | {{common.common.icp}} | 增值电信业务经营许可证：苏B2-20130048 | 网络文化经营许可证：苏网文[2015] 1599-026号</p>
         </div>
         <a-back-top />
     </div>
@@ -17,7 +17,7 @@
 
 <script>
 // import ShopIndexAdv from "@/components/home/public/shop_index_adv.vue"
-import {mapState,mapActions} from 'vuex'
+import {mapState} from 'vuex'
 export default {
     components: {
         // ShopIndexAdv,
@@ -31,25 +31,12 @@ export default {
     },
     watch: {},
     computed: {
-        ...mapState('homeLogin',['isLogin','userInfo']),
+        ...mapState('homeCommon',['common'])
     },
     methods: {
-        get_foot_info:function(){
-            // this.$get(this.$api.homeGetFootInfo).then(res=>{
-            //     this.adv = res.data.adv.adv[0];
-            //     this.info = res.data.info;
-            // });
-        },
-        checkLogin(){
-            // 判断token是否失效
-            this.$get(this.$api.homeCheckLogin).then(res=> {
-                this.$store.dispatch('homeLogin/check_login',res);
-            });
-        },
+        
     },
     created() {
-        this.checkLogin();
-        this.get_foot_info();
     },
     mounted() {}
 };

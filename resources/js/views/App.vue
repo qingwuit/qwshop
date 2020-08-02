@@ -13,7 +13,7 @@ export default {
     watch: {},
     computed: {},
     methods: {},
-    created() {console.log('app')},
+    created() {console.log('青梧系统： https//:www.qwsystem.com  QQ群：1062159788')},
     mounted() {}
 };
 </script>

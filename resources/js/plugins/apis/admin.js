@@ -53,6 +53,10 @@ export default
     // 商品管理
     'adminGoods' : baseUrl + 'Admin/goods', // 商品列表
 
+    // 物流管理
+    'adminAreas' : baseUrl + 'Admin/areas', // 全国地址
+    'adminAreasClearCache' : baseUrl + 'Admin/areas/cache/clear', // 清空商品分类缓存
+
     // 广告管理
     'adminAdvPositions' : baseUrl + 'Admin/adv_positions',  // 广告位
     'adminAdvs' : baseUrl + 'Admin/advs',  // 广告管理

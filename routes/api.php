@@ -132,8 +132,14 @@ Route::namespace('Home')->group(function(){
     // 获取站点协议
     Route::get('/agreement/{ename}','AgreementController@show'); 
 
+    // 网站公共配置获取
+    Route::get('/common','CommonController@common'); 
+
     // 获取商品栏目
     Route::get('/goods_classes','GoodsClassController@goods_classes'); 
+
+    // PC端首页
+    Route::get('/index','IndexController@index'); 
 
      
     Route::group(['middleware'=>'jwt.user'],function(){

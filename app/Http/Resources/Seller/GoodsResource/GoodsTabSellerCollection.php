@@ -4,6 +4,7 @@ namespace App\Http\Resources\Seller\GoodsResource;
 
 use App\Models\GoodsClass;
 use App\Services\GoodsService;
+use App\Traits\HelperTrait;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class GoodsTabSellerCollection extends ResourceCollection
@@ -14,11 +15,13 @@ class GoodsTabSellerCollection extends ResourceCollection
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
+    use HelperTrait;
     public function toArray($request)
     {
         $goods_service = new GoodsService();
         return [
             'data'=>$this->collection->map(function($item){
+                
                 $goods_class = new GoodsClass();
                 $goods_price = $item->goods_price;
                 $goods_stock = $item->goods_stock;
@@ -41,7 +44,7 @@ class GoodsTabSellerCollection extends ResourceCollection
                     'goods_price'           =>  $goods_price,
                     'goods_stock'           =>  $goods_stock,
                     'goods_sale'            =>  $item->goods_sale,
-                    'goods_master_image'    =>  $item->goods_master_image,
+                    'goods_master_image'    =>  $this->thumb($item->goods_master_image,150),
                     'brand_name'            =>  $item->goods_brand->name,
                     'class_name'            =>  $item->goods_class->name,
                     'class_id'              =>  [$goods_class->where('id',$item->goods_class->pid)->first()['pid'],$item->goods_class->pid,$item->goods_class->id],

@@ -11,7 +11,7 @@
                 <div class="subbar">
                     <div class="subbar_top">
                         <ul>
-                            <li v-for="(tag_item,tag_key) in v.tags.split(',')" :key="tag_key"><router-link :to="'/goods/params/class_id.'+v.id">{{tag_item}}</router-link></li>
+                            <!-- <li v-for="(tag_item,tag_key) in v.tags.split(',')" :key="tag_key"><router-link :to="'/goods/params/class_id.'+v.id">{{tag_item}}</router-link></li> -->
                         </ul>
                     </div>
                     <div class="subbar_right">
@@ -19,7 +19,7 @@
                             <li v-for="(goods_brand_item,goods_brand_key) in goods_brand" :key="goods_brand_key"><img width="100px" height="50px" :src="goods_brand_item.thumb" alt=""></li>
                         </ul>
                         <div class="subbar_right_adv">
-                            <router-link :to="goods_brand_adv['adv'][0]['adv_link']"><img width="203px" height="96" :src="goods_brand_adv['adv'][0]['adv_image']" :alt="goods_brand_adv['adv'][0]['adv_title']"></router-link>
+                            <!-- <router-link :to="goods_brand_adv['adv'][0]['adv_link']"><img width="203px" height="96" :src="goods_brand_adv['adv'][0]['adv_image']" :alt="goods_brand_adv['adv'][0]['adv_title']"></router-link> -->
                         </div>
                     </div>
                     <div class="subbar_subnav">
@@ -45,11 +45,14 @@ export default {
         change_color:{
             type:Boolean,
             default:false,
+        },
+        goods_class:{
+            type:Array,
+            default:[],
         }
     },
     data() {
       return {
-          goods_class:[],
           goods_brand:[],
           goods_brand_adv:{},
       };
