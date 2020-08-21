@@ -34,6 +34,16 @@ class StoreService extends BaseService{
         return $this->format($store_info);
     }
 
+    // 获取店铺信息
+    public function get_store_info($store_id){
+        $stores_model = new Store();
+        $store_info = $stores_model->find($store_id);
+        if(empty($store_info)){
+            return $this->format_error(__('stores.store_not_defined'));
+        }
+        return $this->format($store_info);
+    }
+
     // 获取商家拥有的栏目信息
     public function store_goods_classes($store_id){
         // 店铺分类

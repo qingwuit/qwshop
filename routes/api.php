@@ -141,6 +141,9 @@ Route::namespace('Home')->group(function(){
     // PC端首页
     Route::get('/index','IndexController@index'); 
 
+    // 商品
+    Route::get('/goods/{id}','GoodsController@goods_info'); // 商家状态
+
      
     Route::group(['middleware'=>'jwt.user'],function(){
 
@@ -151,6 +154,8 @@ Route::namespace('Home')->group(function(){
 
         // 全国省市区地址获取
         Route::get('/areas','AreaController@areas'); // 商家状态
+
+        
     });
 
 

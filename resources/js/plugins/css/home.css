@@ -1,7 +1,22 @@
 .home .shop_head{
     position: relative;
+    /* height: 205px; */
+}
+.home .shop_head3{
+    position: relative;
     height: 205px;
+}
+.home .shop_head2{
+    position: relative;
+    height: 70px;
 }
 .home .store_join{
     margin-top: 40px;
+}
+.w1200{
+    width: 1200px;
+    margin:0 auto;
+}
+.home a:hover{
+    color:#ca151e;
 }

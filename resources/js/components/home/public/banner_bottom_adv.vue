@@ -30,7 +30,7 @@
         </div>
         <div class="shop_right_on">
             <ul>
-                <li v-for="(v,k) in index_adv" :key="k"><router-link :to="v.adv_link"><img v-lazy="v.adv_image" width="312px" height="160px" :alt="v.adv_title" /></router-link></li>
+                <li v-for="(v,k) in index_adv" :key="k"><router-link :to="v.url"><img v-lazy="v.image_url" width="312px" height="160px" :alt="v.name" /></router-link></li>
             </ul>
         </div>
     </div>
@@ -59,6 +59,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .banner_bottom_adv{
+    margin-bottom: 22px;
     margin-top:22px;
     .shop_left_on{
         float: left;

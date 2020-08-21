@@ -6,11 +6,13 @@ use App\Models\GoodsAttr;
 use App\Models\GoodsBrand;
 use App\Models\GoodsSku;
 use App\Models\GoodsSpec;
+use App\Models\Store;
+use App\Traits\HelperTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class GoodsService extends BaseService{
-    
+    use HelperTrait;
     protected $status = ['goods_status'=>1,'goods_verify'=>1];
     public function add(){
         $goods_model = new Goods();
@@ -206,6 +208,7 @@ class GoodsService extends BaseService{
         $store_id = $this->get_store(true);
         $goods_info = $goods_model->with('goods_brand')->where('store_id',$store_id)->where('id',$id)->first();
         $goods_info['goods_images'] = explode(',',$goods_info['goods_images']);
+        
         // 获取处理后的规格信息
         $sku = $goods_skus_model->where('goods_id',$id)->get()->toArray();
         if(!empty($sku)){
@@ -233,6 +236,61 @@ class GoodsService extends BaseService{
                     }
                 }
             }
+            $goods_info['attrList'] = $goods_attr;
+            $goods_info['skuList'] = $skuList;
+        }
+        return $this->format($goods_info);
+    }
+
+    // 获取商品详情
+    public function goods_info($id){
+        $goods_model = new Goods;
+        $store_service = new StoreService();
+        $goods_skus_model = new GoodsSku();
+        $goods_attr_model = new GoodsAttr();
+        $goods_spec_model = new GoodsSpec();
+        $goods_info = $goods_model->with('goods_brand')->where($this->status)->where('id',$id)->first();
+
+        if(empty($goods_info)){
+            return $this->format_error(__('goods.goods_not_found'));
+        }
+
+        $store_info = $store_service->get_store_info($goods_info['store_id']);
+
+        if(!$store_info['status']){
+            return $this->format_error($store_info['msg']);
+        }
+        
+        if($store_info['data']['store_status']!=1 || $store_info['data']['store_verify']!=3){
+            return $this->format_error(__('stores.store_not_defined'));
+        }
+
+        $goods_info['goods_images'] = explode(',',$goods_info['goods_images']);
+        $goods_info['goods_images_thumb_150'] = $this->thumb_array($goods_info['goods_images'],150);
+        $goods_info['goods_images_thumb_400'] = $this->thumb_array($goods_info['goods_images'],400);
+        
+        // 获取处理后的规格信息
+        $sku = $goods_skus_model->where('goods_id',$id)->get()->toArray();
+        if(!empty($sku)){
+            $skuList = [];
+            $spec_id = [];
+            foreach($sku as $v){
+                $v['spec_id'] = explode(',',$v['spec_id']);
+                $v['sku_name'] = explode(',',$v['sku_name']);
+                $spec_id = array_merge($spec_id,$v['spec_id']);
+                $skuList[] = $v;
+            }
+            $spec_id = array_unique($spec_id);
+            $goods_spec = $goods_spec_model->whereIn('id',$spec_id)->orderBy('id','desc')->get()->toArray();
+            $attr_id = [];
+            foreach($goods_spec as $v){
+                if(!in_array($v['attr_id'],$attr_id)){
+                    $attr_id[] = $v['attr_id'];
+                }
+            }
+            $goods_attr = $goods_attr_model->whereIn('id',$attr_id)->with('specs')->orderBy('id','desc')->get()->toArray();
+            $goods_info['goods_price'] = $sku[0]['goods_price'];
+            $goods_info['goods_price'] = $sku[0]['goods_stock'];
             $goods_info['attrList'] = $goods_attr;
             $goods_info['skuList'] = $skuList;
         }

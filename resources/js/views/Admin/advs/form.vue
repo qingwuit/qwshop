@@ -24,7 +24,7 @@
                         :data="{token:$getSession('token_type')}"
                         @change="upload"
                     >
-                        <img v-if="info.image_url" :src="info.image_url" />
+                        <img style="max-width:600px" v-if="info.image_url" :src="info.image_url" />
                         <div v-else>
                             <a-font v-if="!loading" type='iconplus' />
                             <a-icon v-else type="loading" />
@@ -131,6 +131,7 @@ export default {
         time_format(val){
             this.info.adv_start = moment(val[0]._d).format("YYYY-MM-DD HH:mm:ss")
             this.info.adv_end = moment(val[1]._d).format("YYYY-MM-DD HH:mm:ss")
+            this.$forceUpdate();
         },
         upload(e){
             if(e.file.status == 'done'){

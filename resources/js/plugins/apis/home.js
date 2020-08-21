@@ -22,6 +22,9 @@ export default
     // PC端首页获取信息
     'homeIndex' : baseUrl + 'index',
 
+    // 商品
+    'homeGoods' : baseUrl + 'goods',
+
     // 商家入驻
     'homeStoreVerify' : baseUrl + 'store/store_verify',  // 商家审核状态
     'homeStoreJoin' : baseUrl + 'store/store_join',  // 商家审核状态

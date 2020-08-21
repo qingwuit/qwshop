@@ -3,7 +3,7 @@
         <head-top></head-top>
 
         <!-- logo and search -->
-        <div class="center_top width_center_1200" v-show="true">
+        <div class="center_top width_center_1200" v-show="center_top">
             <div class="shop_logo float_left">
                 <router-link to="/"><img width="180px" height="55px" :src="require('@/asset/pc/logo.png')" ></router-link>
             </div>
@@ -61,7 +61,12 @@ import leftBar from '@/components/home/public/leftbar'
 import {mapState} from 'vuex'
 export default {
     components: {headTop,leftBar},
-    props: {},
+    props: {
+        subnav_show:{
+            type:Boolean,
+            default:true,
+        },
+    },
     data() {
       return {
           classes:[],
@@ -69,9 +74,14 @@ export default {
           subnav_show:true,
           subnav:true,
           change_color:false,
+          center_top:true,
       };
     },
-    watch: {},
+    watch: {
+        subnav_show:function(val){
+            this.subnav = val;
+        },
+    },
     computed: {...mapState('homeLogin',['isLogin','userInfo']),...mapState('homeCommon',['common']),},
     methods: {
         get_common(){
@@ -99,6 +109,15 @@ export default {
             this.subnav_show = false;
             this.subnav = false;
         }
+        // 监听滚动条
+        window.addEventListener('scroll', ()=>{
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+            if(scrollTop>205){
+                this.center_top = false;
+            }else{
+                this.center_top = true;
+            }
+        }, true);
     },
     mounted() {}
 };

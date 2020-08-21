@@ -63,4 +63,23 @@ trait HelperTrait{
         $name = substr($path,0,$len);
         return $name.'_'.$size.$ext;
     }
+
+    /**
+     * 
+     * 获取图片的缩略图
+     * @author 青梧系统 <www.qwsystem.com>
+     * 
+     */
+
+    public function thumb_array($arr,$size='150'){
+        $data = [];
+        foreach($arr as $path){
+            $len = strripos($path,'.');
+            $ext = substr($path,$len);
+            $name = substr($path,0,$len);
+            $data[] = $name.'_'.$size.$ext;
+        }
+        return $data;
+        
+    }
 }
