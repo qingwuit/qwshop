@@ -8,5 +8,6 @@ return [
     'del_error'                             =>  '非法删除.',
 
     'goods_not_found'                       =>  '商品不存在.',
+    'search_error'                          =>  '搜索失败.',
 
 ];

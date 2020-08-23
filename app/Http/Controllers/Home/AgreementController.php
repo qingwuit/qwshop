@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class AgreementController extends Controller
 {
     public function show(AgreementService $agreement_service,$ename){
-        $info = $agreement_service->get_agreement($ename);
+        $info = $agreement_service->getAgreement($ename);
         if($info['status']){
             return $this->success($info['data']);
         }else{

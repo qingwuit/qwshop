@@ -1,12 +1,11 @@
 <?php
 namespace App\Services;
 
+use App\Http\Resources\Home\GoodsResource\GoodsSearchCollection;
 use App\Models\Goods;
 use App\Models\GoodsAttr;
-use App\Models\GoodsBrand;
 use App\Models\GoodsSku;
 use App\Models\GoodsSpec;
-use App\Models\Store;
 use App\Traits\HelperTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -37,7 +36,7 @@ class GoodsService extends BaseService{
         ];
 
         // 判断是否开启添加商品审核
-        if(!empty($config_service->get_format_config('goods_verify'))){
+        if(!empty($config_service->getFormatConfig('goods_verify'))){
             $data['goods_verify'] = 2;
         }
 
@@ -135,7 +134,7 @@ class GoodsService extends BaseService{
         }
 
         // 判断是否开启添加商品审核
-        if(!empty($config_service->get_format_config('goods_verify'))){
+        if(!empty($config_service->getFormatConfig('goods_verify'))){
             // 如果是内容标题修改则进行审核（暂时不写）
             $goods_model->goods_verify = 2;
         }
@@ -200,7 +199,7 @@ class GoodsService extends BaseService{
     }
 
     // 获取商家的商品详情
-    public function store_goods_info($id){
+    public function getStoreGoodsInfo($id){
         $goods_model = new Goods;
         $goods_skus_model = new GoodsSku();
         $goods_attr_model = new GoodsAttr();
@@ -243,7 +242,7 @@ class GoodsService extends BaseService{
     }
 
     // 获取商品详情
-    public function goods_info($id){
+    public function getGoodsInfo($id){
         $goods_model = new Goods;
         $store_service = new StoreService();
         $goods_skus_model = new GoodsSku();
@@ -255,7 +254,7 @@ class GoodsService extends BaseService{
             return $this->format_error(__('goods.goods_not_found'));
         }
 
-        $store_info = $store_service->get_store_info($goods_info['store_id']);
+        $store_info = $store_service->getStoreInfo($goods_info['store_id']);
 
         if(!$store_info['status']){
             return $this->format_error($store_info['msg']);
@@ -294,11 +293,16 @@ class GoodsService extends BaseService{
             $goods_info['attrList'] = $goods_attr;
             $goods_info['skuList'] = $skuList;
         }
+
+        $goods_class_service = new GoodsClassService;
+        $goods_info['goods_class'] = $goods_class_service->getGoodsClassByGoodsId($id)['data'];
+        
+
         return $this->format($goods_info);
     }
 
     // 获取统计数据
-    public function get_count(){
+    public function getCount(){
         $goods_model = new Goods();
         $store_id = $this->get_store(true);
         $data = [
@@ -306,5 +310,53 @@ class GoodsService extends BaseService{
             'refuse'  =>  $goods_model->where('goods_verify',0)->where('store_id',$store_id)->count(),
         ];
         return $data;
+    }
+
+    // 搜索
+    public function goodsSearch(){
+        $goods_model = new Goods;
+        $params = request()->params??'';
+        try{
+            if(!empty($params)){
+                $params_array = json_decode(base64_decode($params),true);
+                
+                // 品牌
+                if(isset($params_array['brand_id']) && !empty($params_array['brand_id'])){
+                    $goods_model = $goods_model->whereIn('brand_id',$params_array['brand_id']);
+                }
+    
+                // 栏目
+                if(isset($params_array['class_id']) && !empty($params_array['class_id'])){
+                    $goods_model = $goods_model->whereIn('class_id',$params_array['class_id']);
+                }
+    
+                // 关键词
+                if(isset($params_array['keywords']) && !empty($params_array['keywords'])){
+                    $params_array['keywords'] = urldecode($params_array['keywords']);
+                    $goods_model = $goods_model->where('goods_name','like','%'.$params_array['keywords'].'%');
+                }
+    
+                // 排序
+                if(isset($params_array['sort_type']) && !empty($params_array['sort_type'])){
+                    $goods_model = $goods_model->orderBy($params['order_type'],$params_array['sort_order']);
+                }else{
+                    $goods_model = $goods_model->orderBy('id','desc')->orderBy('goods_sale','desc');
+                }
+            }
+    
+            $list = $goods_model->where($this->status)
+                        ->with(['goods_sku'=>function($q){
+                            return $q->select('goods_id','goods_price','goods_stock')->orderBy('goods_price','asc');
+                        }])
+                        ->whereHas('store',function($q){
+                            return $q->where(['store_status'=>1,'store_verify'=>3]);
+                        })
+                        ->paginate(request()->per_page??30);
+        }catch(\Exception $e){
+            Log::channel('qwlog')->debug($e->getMessage());
+            return $this->format_error(__('goods.search_error'));
+        }
+        return $this->format(new GoodsSearchCollection($list));
+
     }
 }

@@ -7,24 +7,26 @@
         <!-- 分类商品列表 -->
         <div class="index_bg">
             <div class="goods_class_list w1200" v-for="(v,k) in list.goods" :key="k">
-`                <!-- <div class="adv_width_1200"><img v-lazy="v.image_url" :alt="v.name"></div>   -->
-                <div class="title">{{v.name||'加载中...'}}<span><router-link to="#">查看更多</router-link></span></div>
-                <div class="index_adv_goods_left"><img v-lazy="v.image_url||''" :alt="v.name"></div>
-                <div class="index_class_goods_right">
-                    <ul>
-                        <li><router-link :to="'/goods/'+vo.id" v-for="(vo,key) in v.goods" :key="key">
-                            <div class="product_act_in">
-                                <dl>
-                                    <dt><img v-lazy="vo.goods_master_image||''" :alt="vo.goods_name" /></dt>
-                                    <dd class="product_title" :title="vo.goods_name">{{vo.goods_name}}</dd>
-                                    <dd class="product_subtitle">{{vo.goods_subname}}</dd>
-                                    <dd class="product_price">￥{{vo.goods_price}}<span>{{vo.goods_market_price}}元</span></dd>
-                                </dl>
-                            </div>
-                        </router-link></li>
-                        
-                    </ul>
+                <div v-if="v.goods.length>0">
+                    <!-- <div class="adv_width_1200"><img v-lazy="v.image_url" :alt="v.name"></div>   -->
+                    <div class="title">{{v.name||'加载中...'}}<span><router-link to="#">查看更多</router-link></span></div>
+                    <div class="index_adv_goods_left"><img v-lazy="v.image_url||''" :alt="v.name"></div>
+                    <div class="index_class_goods_right">
+                        <ul>
+                            <li><router-link :to="'/goods/'+vo.id" v-for="(vo,key) in v.goods" :key="key">
+                                <div class="product_act_in">
+                                    <dl>
+                                        <dt><img v-lazy="vo.goods_master_image||''" :alt="vo.goods_name" /></dt>
+                                        <dd class="product_title" :title="vo.goods_name">{{vo.goods_name}}</dd>
+                                        <dd class="product_subtitle">{{vo.goods_subname}}</dd>
+                                        <dd class="product_price">￥{{vo.goods_price}}<span>{{vo.goods_market_price}}元</span></dd>
+                                    </dl>
+                                </div>
+                            </router-link></li>
+                        </ul>
+                    </div>
                 </div>
+`                
             </div>`
         </div>
         

@@ -16,7 +16,7 @@ class AreaController extends Controller
      */
     public function index(AreaService $area_service)
     {
-        $list = $area_service->get_areas()['data'];
+        $list = $area_service->getAreas()['data'];
         return $this->success($list);
     }
 
@@ -86,7 +86,7 @@ class AreaController extends Controller
 
     public function clear_cache(){
         $area_service = new AreaService();
-        $area_service->clear_cache();
+        $area_service->clearCache();
         return $this->success([],__('base.success'));
     }
 }

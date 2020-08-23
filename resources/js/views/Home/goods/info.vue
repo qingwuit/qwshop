@@ -5,9 +5,8 @@
         <div class="mbx w1200">
             <a-breadcrumb>
                 <a-breadcrumb-item><a href="/">首页</a></a-breadcrumb-item>
-                <a-breadcrumb-item><a href="#">手机</a></a-breadcrumb-item>
-                <a-breadcrumb-item><a href="#">华为手机</a></a-breadcrumb-item>
-                <a-breadcrumb-item>麒麟980全网通版8GB+128GB 冰岛幻境</a-breadcrumb-item>
+                <a-breadcrumb-item v-for="(v,k) in goods_info.goods_class" :key="k"><a href="#">{{v.name}}</a></a-breadcrumb-item>
+                <a-breadcrumb-item>{{goods_info.goods_name}}</a-breadcrumb-item>
             </a-breadcrumb>
         </div>
 
@@ -74,6 +73,7 @@
                     <div v-show="goods_info.is_groupbuy==1" class="goods_info_add_groupbuy" @click="group_buy()"><i class="icon iconfont">&#xe601;</i>选择团购</div>
                     <div class="goods_info_buy" @click="buy()"><a-font type="iconchanpin1" />立即购买</div>
                     <div class="goods_info_add_cart" @click="add_cart()"><a-font type="icongouwuche1" />加入购物车</div>
+                    <router-link to="/goods/16">123</router-link>
                 </div>
 
             </div>
@@ -115,7 +115,7 @@ export default {
                     this.buy_num = this.goods_info.goods_num;
                 }
             }
-        }
+        },
     },
     computed: {},
     methods: {
@@ -129,7 +129,7 @@ export default {
                     }
                 }else{
                     this.$message.error(res.msg);
-                    this.$route.go(-1);
+                    this.$router.go(-1);
                 }
             })
         },
@@ -272,6 +272,10 @@ export default {
                 this.chose_img_pos += 1;
             }
         },
+        // 点击缩略图幻灯片图片
+        click_silde_img:function(e){
+            this.chose_img_pos = e;
+        },
         // 购买数量修改
         change_buy_num:function(type){
             if(type){
@@ -291,13 +295,21 @@ export default {
         this.goods_id = this.$route.params.id;
         this.get_goods_info();
     },
-    mounted() {}
+    mounted() {},
+    beforeRouteUpdate (to, from, next) {
+        console.log(to,from);
+        if(from.params.id != to.params.id){
+            this.goods_id = to.params.id;
+            this.get_goods_info();
+        }
+        next();
+        // react to route changes...
+        // don't forget to call next()
+    }
 };
 </script>
 <style lang="scss" scoped>
-.mbx{
-    margin: 30px auto;
-}
+
 .goods_info_top_right{
     float: left;
     width: 770px;

@@ -16,7 +16,7 @@ class MenuController extends Controller
     public function index()
     {
         $menu_service = new MenuService;
-        $list = $menu_service->get_menus(true)['data'];
+        $list = $menu_service->getMenus(true)['data'];
         return $this->success($list);
     }
 

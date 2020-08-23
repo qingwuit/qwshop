@@ -3,7 +3,8 @@ export default [
     {path: '/',name: 'home_index',component: () => import('@/views/Home/index')},
 
     // 商品
-    {path: '/goods/:id',name: 'home_goods_info',component: () => import('@/views/Home/goods/info')},
+    {path: '/goods/:id',name: 'home_goods_info',component: () => import('@/views/Home/goods/info')}, // 详情
+    {path: '/s/:params?',name: 'home_goods_list',component: () => import('@/views/Home/goods/list')}, // 列表
 
     // 商家入驻
     {path: '/store/join/index',name: 'home_store_join_index',component: () => import('@/views/Home/store/join/index'),children:[

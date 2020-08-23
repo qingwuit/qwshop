@@ -58,7 +58,7 @@ class StoreController extends Controller
      */
     public function update(Request $request,StoreService $store_service, $id)
     {
-        $store_verify_status = $store_service->edit_store_status($id,['store_verify'=>$request->store_verify,'store_status'=>$request->store_status,'store_refuse_info'=>$request->store_refuse_info]);
+        $store_verify_status = $store_service->editStoreStatus($id,['store_verify'=>$request->store_verify,'store_status'=>$request->store_status,'store_refuse_info'=>$request->store_refuse_info]);
         return $store_verify_status['status']?$this->success($store_verify_status['data'],__('stores.store_success')):$this->error($store_verify_status['msg']);
     }
 

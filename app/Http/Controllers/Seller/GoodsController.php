@@ -76,7 +76,7 @@ class GoodsController extends Controller
     public function show(GoodsService $goods_service,$id)
     {
         $store_id = $this->get_store(true);
-        $info = $goods_service->store_goods_info($id);
+        $info = $goods_service->getStoreGoodsInfo($id);
         if($info['status']){
             return $this->success($info['data']);
         }
@@ -123,7 +123,7 @@ class GoodsController extends Controller
 
     // 商家拥有商品栏目信息
     public function store_goods_classes(StoreService $store_service){
-        $goods_classes = $store_service->store_goods_classes($this->get_store(true));
+        $goods_classes = $store_service->getStoreGoodsClasses($this->get_store(true));
         return $this->success($goods_classes['data']);
     }
 

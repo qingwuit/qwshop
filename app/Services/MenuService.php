@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Cache;
 
 class MenuService extends BaseService{
     use HelperTrait;
-    public function get_menus($isSeller=false){
+    public function getMenus($isSeller=false){
         $is_type = request()->get('is_type')??0;
         if($isSeller){
             $is_type = 1;
@@ -25,7 +25,7 @@ class MenuService extends BaseService{
     }
 
     // 清空缓存
-    public function clear_cache(){
+    public function clearCache(){
         $rs = Cache::forget('admin_menus_cache');
         $rs = Cache::forget('seller_menus_cache');
         return $this->format($rs);

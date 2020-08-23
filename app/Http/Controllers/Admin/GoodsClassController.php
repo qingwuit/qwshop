@@ -17,7 +17,7 @@ class GoodsClassController extends Controller
      */
     public function index(GoodsClassService $goods_class_service)
     {
-        $list = $goods_class_service->get_goods_classes()['data'];
+        $list = $goods_class_service->getGoodsClasses()['data'];
         return $this->success($list);
     }
 
@@ -100,7 +100,7 @@ class GoodsClassController extends Controller
 
     public function clear_cache(){
         $goods_class_service = new GoodsClassService();
-        $goods_class_service->clear_cache();
+        $goods_class_service->clearCache();
         return $this->success([],__('base.success'));
     }
 }

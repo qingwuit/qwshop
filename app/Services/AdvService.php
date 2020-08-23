@@ -8,7 +8,7 @@ use App\Models\AdvPosition;
 class AdvService extends BaseService{
     
     // 获取指定名称广告
-    public function get_adv_list($name=''){
+    public function getAdvList($name=''){
         $adv_position_model = new AdvPosition();
         $postionInfo = $adv_position_model->where('ap_name',$name)->first();
         $adv_model = new Adv();

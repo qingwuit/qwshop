@@ -142,7 +142,8 @@ Route::namespace('Home')->group(function(){
     Route::get('/index','IndexController@index'); 
 
     // 商品
-    Route::get('/goods/{id}','GoodsController@goods_info'); // 商家状态
+    Route::get('/goods/{id}','GoodsController@goods_info'); // 获取商品详情
+    Route::post('/goods/search/all','GoodsController@goods_search'); // 搜索商品列表
 
      
     Route::group(['middleware'=>'jwt.user'],function(){

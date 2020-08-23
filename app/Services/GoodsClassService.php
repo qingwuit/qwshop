@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 class GoodsClassService extends BaseService{
     use HelperTrait;
     public $cache_name = 'goods_classes_cache';
-    public function get_goods_classes(){
+    public function getGoodsClasses(){
         $goods_class_model = new GoodsClass();
         $cache_name = $this->cache_name;
         $list = [];
@@ -25,7 +25,7 @@ class GoodsClassService extends BaseService{
     }
 
     // 清空缓存
-    public function clear_cache(){
+    public function clearCache(){
         $rs = Cache::forget($this->cache_name);
         return $this->format($rs);
     }
@@ -33,7 +33,7 @@ class GoodsClassService extends BaseService{
     // 获取一级栏目下所有商品信息 is_matser = 1  $goods_num ,获取数量
     public function is_master($goods_num = 6){
         $goods_model = new Goods();
-        $goods_class_list = $this->get_goods_classes()['data'];
+        $goods_class_list = $this->getGoodsClasses()['data'];
         $class_goods = [];
         foreach($goods_class_list as $k=>$v){
             $class_goods[$k]['name'] = $v['name'];
@@ -51,7 +51,7 @@ class GoodsClassService extends BaseService{
         }
 
         foreach($class_goods as &$v){
-            $v['goods'] = new GoodsListCollection($goods_model->whereHas('stores',function($q){
+            $v['goods'] = new GoodsListCollection($goods_model->whereHas('store',function($q){
                 return $q->where(['store_status'=>1,'store_verify'=>3]);
             })->with(['goods_skus'=>function($q){
                 return $q->orderBy('goods_price','asc');
@@ -60,5 +60,17 @@ class GoodsClassService extends BaseService{
         }
 
         return $this->format($class_goods);
+    }
+
+    // 根据商品ID 获取分类信息
+    public function getGoodsClassByGoodsId($id){
+        $goods_model = new Goods;
+        $goods_class_model = new GoodsClass;
+        $goods_info = $goods_model->find($id);
+        $first_class = $goods_class_model->select('id','pid','name')->where('id',$goods_info['class_id'])->first();
+        $sec_class = $goods_class_model->select('id','pid','name')->where('id',$first_class['pid'])->first();
+        $tr_class = $goods_class_model->select('id','pid','name')->where('id',$sec_class['pid'])->first();
+        $data = [$tr_class,$sec_class,$first_class];
+        return $this->format($data);
     }
 }

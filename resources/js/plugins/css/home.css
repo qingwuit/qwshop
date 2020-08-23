@@ -20,3 +20,86 @@
 .home a:hover{
     color:#ca151e;
 }
+.home .mbx{
+    margin: 30px auto;
+}
+.home .s_goods_list{
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+.home .s_goods_list .item{
+    float: left;
+    width: 224px;
+    height: 364px;
+    box-sizing: border-box;
+    margin: 0 20px 20px 0;
+}
+.home .s_goods_list .item dl{
+    border: 1px solid #efefef;
+    box-sizing: border-box;
+    width: 224px;
+    height: 364px;
+    transition: all 0.2s linear;
+}
+.home .s_goods_list .item dl dt{
+    padding-top: 26px;
+    padding-bottom: 26px;
+    text-align: center;
+}
+.home .s_goods_list .item:hover dl{
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    margin-top:-3px;
+}
+.home .s_goods_list .item dl dd.title{
+    color: #000;
+    height: 38px;
+    text-align: center;
+    padding: 0 15px;
+    overflow: hidden;
+}
+.home .s_goods_list .item dl dd.price{
+    color: #e01d20;
+    line-height: 50px;
+    text-align: center;
+    padding: 0 15px;
+    font-size: 20px;
+    overflow: hidden;
+}
+.home .s_goods_list .item dl dd span{
+    width: 50%;
+    display: block;
+    border-top: 1px solid #efefef;
+    float: left;
+    line-height: 41px;
+    text-align: center;
+}
+.home .s_goods_list .item dl dd span:first-child{
+    box-sizing: border-box;
+    border-right: 1px solid #efefef;
+}
+.home .s_goods_list .item dl dd span:first-child:hover{
+    color:#fff;
+    background: #ca151e;
+}
+/* 分页 */
+.home .fy .ant-pagination-item-active{
+    border-color:#ca151e;
+}
+.home .fy .ant-pagination-item-active a{
+    color:#ca151e;
+}
+.home .fy .ant-pagination-item:hover{
+    border-color:#ca151e;
+}
+.ant-pagination-jump-next, .ant-pagination-jump-prev, .ant-pagination-next, .ant-pagination-prev{
+    border-color:#ca151e;
+    color:#ca151e;
+}
+
+.home .fy .ant-pagination-next:focus .ant-pagination-item-link,.home .fy .ant-pagination-next:hover .ant-pagination-item-link,.home .fy .ant-pagination-prev:focus .ant-pagination-item-link,.home .fy .ant-pagination-prev:hover .ant-pagination-item-link {
+	color:#ca151e;
+	border-color:#ca151e
+}
+.home .fy .ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-link-icon,.home .fy  .ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-link-icon{
+    color:#ca151e;
+}

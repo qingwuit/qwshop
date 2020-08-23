@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cache;
 class AreaService extends BaseService{
     use HelperTrait;
     public $cache_name = 'areas_cache';
-    public function get_areas(){
+    public function getAreas(){
         $area_model = new Area();
         $cache_name = $this->cache_name;
         $list = [];
@@ -23,7 +23,7 @@ class AreaService extends BaseService{
     }
 
     // 清空缓存
-    public function clear_cache(){
+    public function clearCache(){
         $rs = Cache::forget($this->cache_name);
         return $this->format($rs);
     }

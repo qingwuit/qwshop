@@ -57,11 +57,11 @@ class GoodsTabSellerCollection extends ResourceCollection
                     'updated_at'            =>  $item->updated_at->format('Y-m-d H:i:s'),
                 ];
             }),
-            'tatal'=>$this->total(), // 总页码
+            'total'=>$this->total(), // 数据总数
             'per_page'=>$this->perPage(), // 每页数量
             'current_page'=>$this->currentPage(), // 当前页码
             // 统计
-            'count'=>$goods_service->get_count(),
+            'count'=>$goods_service->getCount(),
         ];
     }
 }

@@ -75,6 +75,7 @@ export default {
           subnav:true,
           change_color:false,
           center_top:true,
+          keywords:'',
       };
     },
     watch: {
@@ -98,6 +99,11 @@ export default {
                 });
             }
         },
+        search(){
+            let params = {};
+            params.keywords = encodeURIComponent(this.keywords);
+            this.$router.push('/s/'+window.btoa(JSON.stringify(params)))
+        }
     },
     created() {
         this.get_common();

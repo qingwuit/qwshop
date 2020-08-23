@@ -2,10 +2,10 @@
     <div :class="change_color?'leftbar2':'leftbar'">
         <ul>
             <li class="left_bar_block" v-for="(v,k) in goods_class" :key="k">
-                <div class="class_1"><router-link :to="'/goods/params/class_id.'+v.id">{{v.name}}</router-link></div>
+                <div class="class_1"><a @click="to_nav(v.id,v)" href="javascript:;">{{v.name}}</a></div>
                 <div class="class_2">
                     <ul>
-                        <li v-for="(vo,key) in v.children" :key="key" v-show="key<3"><router-link :to="'/goods/params/class_id.'+vo.id">{{vo.name}}</router-link></li>
+                        <li v-for="(vo,key) in v.children" :key="key" v-show="key<3"><a @click="to_nav(v.id,vo,1)">{{vo.name}}</a></li>
                     </ul>
                 </div>
                 <div class="subbar">
@@ -26,7 +26,7 @@
                         <div class="class2_title"  v-for="(vo,key) in v.children" :key="key">
                             <h4>{{vo.name}}</h4>
                             <ul>
-                                <li v-for="(item,index) in vo.children" :key="index"><router-link :to="'/goods/params/class_id.'+item.id">{{item.name}}</router-link></li>
+                                <li v-for="(item,index) in vo.children" :key="index"><a @click="to_nav(v.id,item,2)">{{item.name}}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -67,6 +67,34 @@ export default {
             //     this.goods_brand = res.data.goods_brand;
             //     this.goods_brand_adv = res.data.goods_brand_adv;
             // });
+        },
+        to_nav(id,info,deep=0){
+            let params = {};
+            params.pid = id; // 顶级栏目ID
+            params.class_id = [];
+            if(deep == 0){
+                info.children.forEach(item=>{
+                    if(!this.$isEmpty(item.children)){
+                        item.children.forEach(item2=>{
+                            params.class_id.push(item2.id);
+                        })
+                    }
+                })
+            }
+            if(deep == 1){
+                params.sid = info.id;
+                if(!this.$isEmpty(info.children)){
+                    info.children.forEach(item=>{
+                        params.class_id.push(item.id);
+                    })
+                }
+            }
+            if(deep == 2){
+                params.sid = info.pid;
+                params.tid = info.id;
+                params.class_id.push(info.id);
+            }
+            this.$router.push('/s/'+window.btoa(JSON.stringify(params)))
         }
     },
     created() {

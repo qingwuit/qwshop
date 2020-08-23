@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 class StoreService extends BaseService{
 
     // 入驻时获取店铺状态
-    public function store_verify($auth='user'){
+    public function getStoreVerify($auth='user'){
         $store_model = new Store();
         $store_info = $store_model->where('user_id',auth($auth)->id())->first();
         if(empty($store_info)){
@@ -19,7 +19,7 @@ class StoreService extends BaseService{
     }
 
     // 登录用户获取店铺信息
-    public function get_auth_store_info($where=""){
+    public function getAuthStoreInfo($where=""){
         $store_info = $this->get_store(false,$where);
         if(empty($store_info)){
             return $this->format_error(__('stores.store_not_defined'));
@@ -29,13 +29,13 @@ class StoreService extends BaseService{
         $store_info['area_id'] = [$store_info['province_id'],$store_info['city_id'],$store_info['region_id']];
 
         // 店铺分类
-        $choseStoreClasses = $this->store_goods_classes($store_info['id'])['data'];
+        $choseStoreClasses = $this->getStoreGoodsClasses($store_info['id'])['data'];
         $store_info['chose_store_classes'] = $choseStoreClasses;
         return $this->format($store_info);
     }
 
     // 获取店铺信息
-    public function get_store_info($store_id){
+    public function getStoreInfo($store_id){
         $stores_model = new Store();
         $store_info = $stores_model->find($store_id);
         if(empty($store_info)){
@@ -45,7 +45,7 @@ class StoreService extends BaseService{
     }
 
     // 获取商家拥有的栏目信息
-    public function store_goods_classes($store_id){
+    public function getStoreGoodsClasses($store_id){
         // 店铺分类
         $store_classes_model = new StoreClass();
         $store_classes = $store_classes_model->where('store_id',$store_id)->first();
@@ -63,7 +63,7 @@ class StoreService extends BaseService{
     }
 
     // 建立店铺
-    public function create_store($auth='user'){
+    public function createStore($auth='user'){
         $store_model = new Store();
         $user_id = auth($auth)->id();
         if($store_model->where('user_id',$user_id)->exists()){
@@ -77,7 +77,7 @@ class StoreService extends BaseService{
     }
 
     // 编辑店铺
-    public function edit_store($store_id){
+    public function editStore($store_id){
         $store_model = new Store();
         $store_model = $store_model->find($store_id);
 
@@ -214,7 +214,7 @@ class StoreService extends BaseService{
 
 
     // 编辑店铺状态
-    public function edit_store_status($store_id,$data = []){
+    public function editStoreStatus($store_id,$data = []){
         $store_model = new Store();
         $store_model = $store_model->find($store_id);
 

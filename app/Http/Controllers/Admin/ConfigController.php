@@ -18,7 +18,7 @@ class ConfigController extends Controller
      */
     public function index(ConfigService $config_service)
     {
-        $list = $config_service->get_format_config();
+        $list = $config_service->getFormatConfig();
         return $this->success($list);
     }
 

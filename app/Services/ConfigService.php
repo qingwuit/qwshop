@@ -7,7 +7,7 @@ use App\Models\SmsLog;
 class ConfigService extends BaseService{
     
     // 获取格式化配置
-    public function get_format_config($name=''){
+    public function getFormatConfig($name=''){
         $config_model = new Config;
         $list = $config_model->get();
         $data = [];
@@ -23,10 +23,10 @@ class ConfigService extends BaseService{
     }
 
     // 获取短信配置信息
-    public function get_sms_config($name='register'){
+    public function getSmsConfig($name='register'){
         $sms_log_model = new SmsLog();
         $sign_info = $sms_log_model->where('name',$name)->first();
-        $info = json_decode($this->get_format_config('alisms'),true);
+        $info = json_decode($this->getFormatConfig('alisms'),true);
         $info['sign_name'] = $sign_info->val;
         return $info;
     }

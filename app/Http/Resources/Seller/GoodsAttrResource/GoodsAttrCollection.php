@@ -27,7 +27,7 @@ class GoodsAttrCollection extends ResourceCollection
                                                 }),
                 ];
             }),
-            'tatal'=>$this->total(), // 总页码
+            'total'=>$this->total(), // 数据总数
             'per_page'=>$this->perPage(), // 每页数量
             'current_page'=>$this->currentPage(), // 当前页码
         ];

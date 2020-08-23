@@ -53,7 +53,7 @@ class UserService extends BaseService{
     }
 
     // 检测用户是否登陆
-    public function check_login($auth='user',$seller = false){
+    public function checkLogin($auth='user',$seller = false){
 
         // 查看是否携带token
         if(!auth($auth)->parser()->setRequest(request())->hasToken()){

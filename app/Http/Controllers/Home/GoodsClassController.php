@@ -10,7 +10,7 @@ class GoodsClassController extends Controller
 {
     // 获取商品分类
     public function goods_classes(GoodsClassService $goods_class_service){
-        $rs = $goods_class_service->get_goods_classes();
+        $rs = $goods_class_service->getGoodsClasses();
         return $this->success($rs['data']);
     }
 }

@@ -17,7 +17,7 @@ class MenuController extends Controller
     public function index()
     {
         $menu_service = new MenuService;
-        $list = $menu_service->get_menus()['data'];
+        $list = $menu_service->getMenus()['data'];
         return $this->success($list);
     }
 
@@ -93,7 +93,7 @@ class MenuController extends Controller
     // 清除菜单缓存
     public function clear_cache(){
         $menu_service = new MenuService;
-        $menu_service->clear_cache();
+        $menu_service->clearCache();
         return $this->success([],__('base.success'));
     }
 }
