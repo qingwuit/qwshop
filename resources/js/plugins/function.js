@@ -1,3 +1,4 @@
+import {message} from 'ant-design-vue';
 export function formatDate (date, fmt) {
     if (/(y+)/.test(fmt)) {
         fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
@@ -21,6 +22,14 @@ export function formatDate (date, fmt) {
 export function getSession(name){
     let token_type = sessionStorage.getItem(name);
     return localStorage.getItem(token_type);
+}
+
+export function returnInfo(res){
+    if(res.code == 200){
+        return message.success(res.msg);
+    }else{
+        return message.error(res.msg)
+    }
 }
  
 function padLeftZero (str) {

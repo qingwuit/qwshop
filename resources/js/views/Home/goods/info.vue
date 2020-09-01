@@ -73,7 +73,6 @@
                     <div v-show="goods_info.is_groupbuy==1" class="goods_info_add_groupbuy" @click="group_buy()"><i class="icon iconfont">&#xe601;</i>选择团购</div>
                     <div class="goods_info_buy" @click="buy()"><a-font type="iconchanpin1" />立即购买</div>
                     <div class="goods_info_add_cart" @click="add_cart()"><a-font type="icongouwuche1" />加入购物车</div>
-                    <router-link to="/goods/16">123</router-link>
                 </div>
 
             </div>
@@ -109,10 +108,10 @@ export default {
     watch: {
         // 监听选择购买数量
         buy_num:function(e){
-            if(e>this.goods_info.goods_num || e<=0){
-                if(this.goods_info.goods_num != 0){
+            if(e>this.goods_info.goods_stock || e<=0){
+                if(this.goods_info.goods_stock != 0){
                     this.$message.error('请认真填写购买数量');
-                    this.buy_num = this.goods_info.goods_num;
+                    this.buy_num = this.goods_info.goods_stock;
                 }
             }
         },
@@ -149,25 +148,17 @@ export default {
         },
         // 加入购物车
         add_cart:function(){
-            if(!this.$isEmpty(this.goods_info.chose_attr) && this.chose_spec.length != this.goods_info.spec_list.length){
-                return this.$message.error('请认真选择属性');
-            }
-            
-            if(this.goods_info.spec.length>0){
-                this.goods_info['spec_id'] = this.chose_spec_info['id'];
-                this.goods_info['goods_spec_name'] = this.chose_spec_info.spec_name;
-            }
-            this.goods_info['buy_num'] = this.buy_num;
-            this.$post(this.$api.homeAddCart,this.goods_info).then(res=>{
-                if(res.code == 200){
-                    this.get_goods_info();
-                    this.cart_change += 1; // 修改购物车数据
-                    return this.$message.success('加入购物车成功');
-                }else{
-                    return this.$message.error(res.msg);
-                }
-            });
-
+            let params = {
+                goods_id:this.goods_info.id, // 商品ID
+                sku_id:this.sku_id, // SKUid 没有则为0
+                buy_num:this.buy_num, // 购买数量
+            };
+            this.$post(this.$api.homeCarts,params).then(res=>{
+                this.$returnInfo(res);
+            })
+            // this.$get(this.$api.homeCarts).then(res=>{
+            //     this.$returnInfo(res);
+            // })
         },
 
         // 属性被选择点击
@@ -279,7 +270,7 @@ export default {
         // 购买数量修改
         change_buy_num:function(type){
             if(type){
-                if(this.buy_num+1>this.goods_info.goods_num){
+                if(this.buy_num+1>this.goods_info.goods_stock){
                     return this.$message.error('库存不足');
                 }
                 this.buy_num += 1;

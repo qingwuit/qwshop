@@ -148,6 +148,9 @@ Route::namespace('Home')->group(function(){
      
     Route::group(['middleware'=>'jwt.user'],function(){
 
+        // 购物车
+        Route::apiResource('carts','CartController')->except(['show']);
+
         // 商家入驻
         Route::get('/store/store_verify','StoreController@store_verify'); // 商家状态
         Route::match(['get','post'],'/store/store_join','StoreController@store_join');// 商家入驻

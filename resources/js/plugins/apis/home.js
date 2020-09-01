@@ -25,6 +25,9 @@ export default
     // 商品
     'homeGoods' : baseUrl + 'goods',
 
+    // 购物车
+    'homeCarts' : baseUrl + 'carts',
+
     // 商家入驻
     'homeStoreVerify' : baseUrl + 'store/store_verify',  // 商家审核状态
     'homeStoreJoin' : baseUrl + 'store/store_join',  // 商家审核状态

@@ -40,6 +40,7 @@ export default {
     props: {},
     data() {
       return {
+          amapUrl:'https://restapi.amap.com/v3/geocode/regeo?&key=79f3a628c906e1fc7384a6f19d478ae3&location=',
       };
     },
     watch: {},
@@ -51,10 +52,26 @@ export default {
                 this.$router.push('/user/login');
 
             });
+        },
+        get_position(){
+            //判断是否支持 获取本地位置
+            let _this = this;
+            if (navigator.geolocation) {
+                var n = navigator.geolocation.getCurrentPosition(function(res){
+                    let lat = res.coords.latitude;
+                    let lng = res.coords.longitude;
+                    _this.$get(_this.amapUrl+lng+','+lat).then(item=>{
+                        console.log(item)
+                    })
+                    // console.log(res); // 需要的坐标地址就在res中
+                });
+            } else {
+                this.$message.error('该浏览器不支持定位');
+            }
         }
     },
     created() {
-
+        // this.get_position();
     },
     mounted() {}
 };
