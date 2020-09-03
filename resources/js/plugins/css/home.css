@@ -103,3 +103,38 @@
 .home .fy .ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-link-icon,.home .fy  .ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-link-icon{
     color:#ca151e;
 }
+
+.home .step_bar .step{
+    height: 46px;
+    line-height: 46px;
+    background: #F5F7FA;
+    margin-bottom: 50px;
+}
+.home .step_bar .step .item{
+    font-size: 16px;
+    color:#C0C4CC;
+    float: left;
+    width: 25%;
+    text-align: center;
+    border-right: 4px solid #fff;
+}
+.home .step_bar .step .item.check{
+    color:#333;
+    font-weight: bold;
+}
+
+.home .step_bar .step .item.success{
+    color:#67C23A;
+    font-weight: bold;
+}
+.home .step_bar .step .item.error{
+    color:#f5222d;
+    font-weight: bold;
+}
+.home .step_bar .step .item i{
+    margin-right: 6px;
+}
+.home .step_bar .step .item:last-child{
+    margin-right: 0px;
+}
+

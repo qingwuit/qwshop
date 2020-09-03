@@ -1,7 +1,5 @@
 <template>
-    <div class="home">
-        <div class="shop_head3"><shop-head /></div>
-        
+    <div class="goods_info_temp">
         <div class="mbx w1200">
             <a-breadcrumb>
                 <a-breadcrumb-item><a href="/">首页</a></a-breadcrumb-item>
@@ -78,18 +76,13 @@
             </div>
             <div class="clear"></div>
         </div>
-
-        <!-- 底部 -->
-        <shop-foot />
     </div>
 </template>
 
 <script>
-import ShopHead from '@/components/home/public/head'
-import ShopFoot from "@/components/home/public/shop_foot"
 import PicZoom from '@/components/home/goods/vue-piczoom.vue' // 放大镜组件 
 export default {
-    components: {ShopHead,ShopFoot,PicZoom},
+    components: {PicZoom},
     props: {},
     data() {
       return {
@@ -134,16 +127,13 @@ export default {
         },
         // 立即购买
         buy:function(){
-            if(!this.$isEmpty(this.goods_info.chose_attr) && this.chose_spec.length != this.goods_info.spec_list.length){
-                return this.$message.error('请认真选择属性');
-            }
-            let info = {ifcar:false,goods_id:this.goods_id,buy_num:this.buy_num,store_id:this.goods_info.store_id};
-            // let str = this.goods_info.id+'|'+this.goods_info.store_info.id+'|'+this.buy_num;
-            if(this.sku_id>0){
-                info.sku_id = this.sku_id;
-            }
-            let str = window.btoa(JSON.stringify(info)); 
-            
+            let params = {
+                goods_id:this.goods_info.id, // 商品ID
+                sku_id:this.sku_id, // SKUid 没有则为0
+                buy_num:this.buy_num, // 购买数量
+                ifcart:0, // 是否购物车
+            };
+            let str = window.btoa(JSON.stringify(params)); 
             this.$router.push("/order/create_order/"+str);
         },
         // 加入购物车

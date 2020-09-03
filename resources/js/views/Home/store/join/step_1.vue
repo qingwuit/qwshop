@@ -81,32 +81,5 @@ export default {
     padding:20px;
     height: 600px;
 }
-.step{
-    height: 46px;
-    line-height: 46px;
-    background: #F5F7FA;
-    margin-bottom: 50px;
-    .item{
-        font-size: 16px;
-        color:#C0C4CC;
-        float: left;
-        width: 25%;
-        text-align: center;
-        border-right: 4px solid #fff;
-        i{
-            margin-right: 10px;
-        }
-        &.check{
-            color:#333;
-            font-weight: bold;
-        }
-        &.success{
-            color:#67C23A;
-            font-weight: bold;
-        }
-        &:last-child{
-            margin-right: 0px;
-        }
-    }
-}
+
 </style>

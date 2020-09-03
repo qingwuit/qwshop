@@ -1,0 +1,284 @@
+<template>
+    <div class="create_order_1 w1200">
+        <div class="step_bar">
+            <div class="step">
+                <div class="item check"><a-icon type="shopping-cart" />我的购物车</div>
+                <div class="item check"><a-icon type="car" />物流地址</div>
+                <div class="item"><a-icon type="account-book" />选择支付</div>
+                <div class="item"><a-icon type="check-circle" />支付成功</div>
+            </div>
+        </div>
+
+        <!-- 地址信息选择 S -->
+        <div class="block">
+            <div class="title">选择送货地址</div>
+            <div class="address_list">
+                <ul>
+                    <li class="red">
+                        <div class="receive_name">
+                            皇宫
+                            <span>(15073010917)</span>
+                        </div>
+                        <div class="area_info">北京市 市辖区 东城区 东门大街402号</div>
+                        <div class="cmarker"><a-font type="iconcmarker"></a-font></div>
+                    </li>
+                    <li>
+                        <div class="receive_name">
+                            皇宫
+                            <span>(15073010917)</span>
+                        </div>
+                        <div class="area_info">北京市 市辖区 东城区 东门大街402号</div>
+                        <div class="cmarker"><a-font type="iconcmarker"></a-font></div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="empty_address">
+                没有设置收货地址，请先前往<router-link to="/users/address">设置</router-link>
+            </div>
+        </div>
+        <!-- 地址信息选择 E -->
+
+        <!-- 预生成订单信息 S -->
+        <div class="block">
+            <div class="title">选择送货地址</div>
+            <div class="goods_list">
+                <div class="goods_th">
+                    <a-row>
+                        <a-col :span="10">商品信息</a-col>
+                        <a-col :span="4">属性信息</a-col>
+                        <a-col :span="4">单价</a-col>
+                        <a-col :span="2">数量</a-col>
+                        <a-col :span="2">优惠</a-col>
+                        <a-col :span="2">小计</a-col>
+                    </a-row>
+                </div>
+
+                <div class="store_list">
+                    <div class="store_title">
+                        <router-link to="#">
+                            <img :src="''||require('@/asset/store/default_store_image.png')" alt="">
+                            <span>青梧商城</span>
+                        </router-link>
+
+                        <div class="og_list">
+                            <ul>
+                                <li>
+                                    <a-row>
+                                        <a-col :span="10">
+                                            <dl>
+                                                <dt><img src="" alt=""></dt>
+                                                <dd title="">荣耀20 PRO 荣耀最强拍照手机 4800万全焦段AI四摄 麒麟980全网通版8GB+128GB 冰岛幻境</dd>
+                                            </dl>
+                                        </a-col>
+                                        <a-col :span="4"><div class="goods_info_th">-</div></a-col>
+                                        <a-col :span="4"><div class="goods_info_th">-</div></a-col>
+                                        <a-col :span="2"><div class="goods_info_th">-</div></a-col>
+                                        <a-col :span="2"><div class="goods_info_th">-</div></a-col>
+                                        <a-col :span="2"><div class="goods_info_th red">-</div></a-col>
+                                    </a-row>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="remark">
+                <div class="goods_th">备注</div>
+                <div class="remark_input">
+                    <textarea cols="60" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="sum_block">
+                <div class="total">结算：<span>￥2699</span>( 不包含运费 )</div>
+                <div class="btn">创建订单</div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <!-- 预生成订单信息 E -->
+    </div>
+</template>
+
+<script>
+
+export default {
+    components: {},
+    props: {},
+    data() {
+      return {
+      };
+    },
+    watch: {},
+    computed: {},
+    methods: {},
+    created() {},
+    mounted() {}
+};
+</script>
+<style lang="scss" scoped>
+.step_bar{
+    margin:40px 0;
+}
+.block{
+    .title{
+        font-size: 16px;
+        clear: both;
+        font-weight: bold;
+        padding-bottom: 20px;
+    }
+    .store_list{
+        margin-top: 20px;
+        .og_list{
+            margin-top: 20px;
+            color: #666;
+            font-size: 12px;
+            border: 1px solid #efefef;
+            padding: 20px 0;
+            line-height: 40px;
+            .red{
+                color:#ca151e;
+            }
+            dl{
+                &:after{
+                    clear:both;
+                    display: block;
+                    content:''
+                }
+                dt{
+                    width: 40px;
+                    height: 40px;
+                    display: block;
+                    float: left;
+                    background: #f8f8f8;
+                    margin-right: 15px;
+                    margin-left: 20px;
+                }
+                dd{
+                    float: left;
+                    width: 400px;
+                    height: 40px;
+                    text-overflow: hidden;
+                    line-height: 20px;
+                }
+            }
+            .goods_info_th{
+                text-indent: 20px;
+            }
+        }
+        .store_title{
+            img{
+                width: 35px;
+                height: 35px;
+                margin-right: 10px;
+                margin-left: 20px;
+                border-radius: 50%;
+            }
+            span{
+                line-height: 35px;
+            }
+        }
+    }
+    .sum_block{
+        text-align: right;
+        .total{
+            line-height: 60px;
+            span{
+                font-size: 28px;
+                color: #ca151e;
+                margin-right: 16px;
+            }
+        }
+        .btn{
+            background: #ca151e;
+            color:#fff;
+            border-radius: 3px;
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            display: block;
+            float:right;
+        }
+    }
+    .goods_th{
+        background: #f2f2f2;
+        line-height: 40px;
+        text-indent: 20px;
+    }
+    .remark{
+        margin-top: 40px;
+        .remark_input{
+            margin:20px 0;
+            textarea{
+                border-color:#cfcfcf;
+                outline: none;
+                border-radius: 4px;
+                padding:8px;
+            }
+        }
+    }
+    .empty_address{
+        margin-bottom: 80px;
+        line-height: 100px;
+        border: 3px solid #efefef;
+        border-radius: 3px;
+        text-align: center;
+        width: 292px;
+        height: 105px;
+        a{
+            font-weight: bold;
+            color:#ca151e;
+        }
+    }
+    .address_list{
+        margin-bottom: 30px;
+        ul{
+            &:after{
+                clear:both;
+                content:'';
+                display: block;
+            }
+            li{
+                float: left;
+                box-sizing: border-box;
+                width: 292px;
+                height: 105px;
+                border-radius: 3px;
+                border: 2px solid #efefef;
+                margin-right: 10px;
+                margin-bottom: 10px;
+                padding: 20px;
+                position: relative;
+                color:#666;
+                &:nth-child(4n){
+                    margin-right: 0;
+                }
+                .receive_name{
+                    margin-bottom: 10px;
+                    font-weight: bold;
+                    line-height: 18px;
+                    color:#333;
+                    span{
+                        font-weight: normal;
+                    }
+                }
+                .cmarker{
+                    position: absolute;
+                    right: -10px;
+                    bottom: -17px;
+                    font-size: 30px;
+                    color:#333;
+                }
+                &.red{
+                    border-color:#ca151e;
+                    .cmarker{
+                        color:#ca151e;
+                    }
+                }
+            }
+        }
+    }
+}
+</style>

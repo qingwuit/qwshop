@@ -1,6 +1,5 @@
 <template>
-    <div class="home">
-        <div class="shop_head3"><shop-head /></div>
+    <div class="goods_list_temp">
         <div class="mbx w1200">
             <a-breadcrumb>
                 <a-breadcrumb-item><a href="/">首页</a></a-breadcrumb-item>
@@ -113,21 +112,14 @@
             </div>
         </div>
         <a-empty style="margin-top:40px" v-else />
-        
-        
-        
-
-        <!-- 底部 -->
-        <shop-foot />
+ 
     </div>
 </template>
 
 <script>
-import ShopHead from '@/components/home/public/head'
-import ShopFoot from "@/components/home/public/shop_foot"
 import {mapState} from 'vuex'
 export default {
-    components: {ShopHead,ShopFoot},
+    components: {},
     props: {},
     data() {
       return {

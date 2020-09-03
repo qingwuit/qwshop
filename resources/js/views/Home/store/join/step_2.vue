@@ -1,10 +1,12 @@
 <template>
     <div class="store_join width_center_1200">
-        <div class="step">
-            <div class="item success"><a-icon type="read" />阅读协议</div>
-            <div class="item check"><a-icon type="edit" />填写资料</div>
-            <div class="item"><a-icon type="coffee" />等待审核</div>
-            <div class="item"><a-icon type="check-circle" />审核通过</div>
+        <div class="step_bar">
+            <div class="step">
+                <div class="item success"><a-icon type="read" />阅读协议</div>
+                <div class="item check"><a-icon type="edit" />填写资料</div>
+                <div class="item"><a-icon type="coffee" />等待审核</div>
+                <div class="item"><a-icon type="check-circle" />审核通过</div>
+            </div>
         </div>
         <a-divider><font style="font-size:20px">入驻资料填写</font></a-divider>
         <div class="store_join_form">
@@ -284,31 +286,5 @@ export default {
 .store_join_form{
     margin-top: 60px;
 }
-.step{
-    height: 46px;
-    line-height: 46px;
-    background: #F5F7FA;
-    margin-bottom: 50px;
-    .item{
-        font-size: 16px;
-        color:#C0C4CC;
-        float: left;
-        width: 25%;
-        text-align: center;
-        border-right: 4px solid #fff;
-        i{
-            margin-right: 10px;
-        }
-        &.check{
-            color:#333;
-            font-weight: bold;
-        }
-        &.success{
-            color:#67C23A;
-        }
-        &:last-child{
-            margin-right: 0px;
-        }
-    }
-}
+
 </style>

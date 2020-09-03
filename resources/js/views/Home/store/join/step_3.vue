@@ -1,10 +1,12 @@
 <template>
     <div class="store_join width_center_1200">
-        <div class="step">
-            <div class="item success"><a-icon type="read" />阅读协议</div>
-            <div class="item success"><a-icon type="edit" />填写资料</div>
-            <div :class="info.store_verify==2?'item check':(info.store_verify==3?'item success':'item error')"><a-icon :type="info.store_verify==0?'close-circle':'coffee'" />{{info.store_verify==0?'审核失败':'等待审核'}}</div>
-            <div :class="info.store_verify==3?'item success':'item'"><a-icon type="check-circle" />审核通过</div>
+        <div class="step_bar">
+            <div class="step">
+                <div class="item success"><a-icon type="read" />阅读协议</div>
+                <div class="item success"><a-icon type="edit" />填写资料</div>
+                <div :class="info.store_verify==2?'item check':(info.store_verify==3?'item success':'item error')"><a-icon :type="info.store_verify==0?'close-circle':'coffee'" />{{info.store_verify==0?'审核失败':'等待审核'}}</div>
+                <div :class="info.store_verify==3?'item success':'item'"><a-icon type="check-circle" />审核通过</div>
+            </div>
         </div>
         <a-result :title="info.store_verify==2?'已提交资料，等待管理员审核':(info.store_verify==3?'审核成功，前往店铺设置':'审核失败，是否重新填写资料')"  :status="info.store_verify==2?'info':(info.store_verify==3?'success':'error')">
             <template #extra>
@@ -69,35 +71,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.step{
-    height: 46px;
-    line-height: 46px;
-    background: #F5F7FA;
-    margin-bottom: 50px;
-    .item{
-        font-size: 16px;
-        color:#C0C4CC;
-        float: left;
-        width: 25%;
-        text-align: center;
-        border-right: 4px solid #fff;
-        i{
-            margin-right: 10px;
-        }
-        &.check{
-            color:#333;
-            font-weight: bold;
-        }
-        &.success{
-            color:#67C23A;
-        }
-        &.error{
-            color:#f5222d;
-            font-weight: bold;
-        }
-        &:last-child{
-            margin-right: 0px;
-        }
-    }
-}
+
 </style>
