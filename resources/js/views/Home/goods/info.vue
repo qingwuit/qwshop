@@ -128,9 +128,13 @@ export default {
         // 立即购买
         buy:function(){
             let params = {
-                goods_id:this.goods_info.id, // 商品ID
-                sku_id:this.sku_id, // SKUid 没有则为0
-                buy_num:this.buy_num, // 购买数量
+                order:[
+                    {
+                        goods_id:this.goods_info.id, // 商品ID
+                        sku_id:this.sku_id, // SKUid 没有则为0
+                        buy_num:this.buy_num, // 购买数量
+                    },
+                ],
                 ifcart:0, // 是否购物车
             };
             let str = window.btoa(JSON.stringify(params)); 

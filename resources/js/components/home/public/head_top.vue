@@ -16,9 +16,9 @@
                 <ul>
                     <li v-show="!isLogin"><router-link to="/user/login">登录</router-link></li>
                     <li v-show="!isLogin"><router-link to="/user/register">注册</router-link></li>
-                    <li v-show="isLogin">欢迎您，<router-link to="/user/index" style="color:#ca151e">{{userInfo.nickname}}</router-link></li>
+                    <li v-show="isLogin">欢迎您，<router-link to="/user" style="color:#ca151e">{{userInfo.nickname}}</router-link></li>
                     <li v-show="isLogin">|</li>
-                    <li v-show="isLogin"><router-link to="/user/index" >个人中心</router-link></li>
+                    <li v-show="isLogin"><router-link to="/user" >个人中心</router-link></li>
                     <li v-show="isLogin">|</li>
                     <li v-show="isLogin" @click="logout()">注销账号</li>
                     <li>|</li>

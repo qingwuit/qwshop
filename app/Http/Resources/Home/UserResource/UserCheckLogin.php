@@ -17,6 +17,7 @@ class UserCheckLogin extends JsonResource
         return [
             'id'            =>  $this->id,
             'nickname'      =>  $this->nickname,
+            'money'         =>  $this->money,
         ];
     }
 }

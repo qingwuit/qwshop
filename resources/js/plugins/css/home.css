@@ -138,3 +138,55 @@
     margin-right: 0px;
 }
 
+/* 用户中心usermain */
+.user_main{
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.user_main .block_title{
+    font-size: 16px;
+    border-left: 3px solid #ca151e;
+    padding-left: 20px;
+}
+.user_main .block_title:after{
+    clear: both;
+    content:'';
+    display: block;
+}
+.user_main .block_title span a{
+    color:#666;
+    float: right;
+    font-size: 12px;
+}
+.user_main .block_title span .btn{
+    float: right;
+    background:#ca151e;
+    color:#fff;
+    cursor: pointer;
+    padding: 4px 10px;
+    font-size: 12px;
+}
+.x20{
+    height: 1px;
+    background:#efefef;
+    margin:20px 0;
+}
+
+/* 公共按钮 */
+.home .submit_btn{
+    background:#ca151e;
+    color:#fff;
+    cursor: pointer;
+    width: 90px;
+    line-height: 35px;
+    text-align: center;
+    border-radius: 3px;
+}
+/* 开关 */
+.home .ant-switch-checked{
+    background-color: #ca151e;
+}
+/* .home .ant-switch:focus{
+    box-shadow: 0 0 0 2px rgba(255, 24, 62, 0.5);
+} */

@@ -12,36 +12,28 @@
         <!-- 地址信息选择 S -->
         <div class="block">
             <div class="title">选择送货地址</div>
-            <div class="address_list">
+            <div class="address_list" v-if="address.length>0">
                 <ul>
-                    <li class="red">
+                    <li :class="v.is_default==1?'red':''" v-for="(v,k) in address" :key="k" @click="addressChange(v.id)">
                         <div class="receive_name">
-                            皇宫
-                            <span>(15073010917)</span>
+                            {{v.receive_name}}
+                            <span>({{v.receive_tel}})</span>
                         </div>
-                        <div class="area_info">北京市 市辖区 东城区 东门大街402号</div>
-                        <div class="cmarker"><a-font type="iconcmarker"></a-font></div>
-                    </li>
-                    <li>
-                        <div class="receive_name">
-                            皇宫
-                            <span>(15073010917)</span>
-                        </div>
-                        <div class="area_info">北京市 市辖区 东城区 东门大街402号</div>
+                        <div class="area_info">{{v.area_info+' '+v.address}}</div>
                         <div class="cmarker"><a-font type="iconcmarker"></a-font></div>
                     </li>
                 </ul>
             </div>
 
-            <div class="empty_address">
-                没有设置收货地址，请先前往<router-link to="/users/address">设置</router-link>
+            <div class="empty_address" v-else>
+                没有设置收货地址，请先前往<router-link to="/user/address">设置</router-link>
             </div>
         </div>
         <!-- 地址信息选择 E -->
 
         <!-- 预生成订单信息 S -->
         <div class="block">
-            <div class="title">选择送货地址</div>
+            <div class="title">商品信息</div>
             <div class="goods_list">
                 <div class="goods_th">
                     <a-row>
@@ -54,28 +46,28 @@
                     </a-row>
                 </div>
 
-                <div class="store_list">
+                <div class="store_list" v-for="(v,k) in order" :key="k">
                     <div class="store_title">
-                        <router-link to="#">
-                            <img :src="''||require('@/asset/store/default_store_image.png')" alt="">
-                            <span>青梧商城</span>
+                        <router-link :to="'/store/'+v.store_info.id">
+                            <img :src="v.store_info.store_logo||require('@/asset/store/default_store_image.png')" :alt="v.store_info.store_name">
+                            <span>{{v.store_info.store_name}}</span>
                         </router-link>
 
                         <div class="og_list">
                             <ul>
-                                <li>
+                                <li v-for="(vo,key) in v.goods_list" :key="key">
                                     <a-row>
                                         <a-col :span="10">
                                             <dl>
-                                                <dt><img src="" alt=""></dt>
-                                                <dd title="">荣耀20 PRO 荣耀最强拍照手机 4800万全焦段AI四摄 麒麟980全网通版8GB+128GB 冰岛幻境</dd>
+                                                <dt><img :src="vo.goods_master_image" :alt="vo.goods_name"></dt>
+                                                <dd :title="vo.goods_name">{{vo.goods_name}}</dd>
                                             </dl>
                                         </a-col>
-                                        <a-col :span="4"><div class="goods_info_th">-</div></a-col>
-                                        <a-col :span="4"><div class="goods_info_th">-</div></a-col>
+                                        <a-col :span="4"><div class="goods_info_th">{{vo.sku_name}}</div></a-col>
+                                        <a-col :span="4"><div class="goods_info_th">{{vo.goods_price}}</div></a-col>
+                                        <a-col :span="2"><div class="goods_info_th">{{vo.buy_num}}</div></a-col>
                                         <a-col :span="2"><div class="goods_info_th">-</div></a-col>
-                                        <a-col :span="2"><div class="goods_info_th">-</div></a-col>
-                                        <a-col :span="2"><div class="goods_info_th red">-</div></a-col>
+                                        <a-col :span="2"><div class="goods_info_th red">￥{{vo.total}}</div></a-col>
                                     </a-row>
                                 </li>
                             </ul>
@@ -87,13 +79,13 @@
             <div class="remark">
                 <div class="goods_th">备注</div>
                 <div class="remark_input">
-                    <textarea cols="60" rows="3"></textarea>
+                    <textarea cols="60" rows="3" v-model="remark"></textarea>
                 </div>
             </div>
 
             <div class="sum_block">
-                <div class="total">结算：<span>￥2699</span>( 不包含运费 )</div>
-                <div class="btn">创建订单</div>
+                <div class="total">总金额：<span>￥{{total}}</span>( 不包含运费 )</div>
+                <div :class="loading?'btn hide':'btn'" @click="create_order">{{loading?'加载中..':'创建订单'}}</div>
                 <div class="clear"></div>
             </div>
         </div>
@@ -108,12 +100,79 @@ export default {
     props: {},
     data() {
       return {
+          address:[],
+          order:[],
+          address_id:0,
+          total:0,
+          remark:'',
+          loading:false,
       };
     },
     watch: {},
     computed: {},
-    methods: {},
-    created() {},
+    methods: {
+        onload(){
+            this.get_address();
+            this.create_order_before();
+        },
+        // 获取地址
+        get_address(){
+            this.$get(this.$api.homeAddress).then(res=>{
+                res.data.forEach(item=>{
+                    if(item.is_default==1){
+                        this.address_id = item.id;
+                    }
+                })
+                this.address = res.data;
+            })
+        },
+        // 地址选择
+        addressChange(id){
+            this.$put(this.$api.homeAddress+'/default/set',{id:id}).then(res=>{
+                if(res.code == 200){
+                    this.get_address();
+                    this.$message.success('设置地址成功');
+                    this.address_id = id;
+                }else{
+                    this.$message.error(res.msg)
+                }
+            })
+        },
+        // 订单建立前预览商品信息
+        create_order_before(){
+            this.$get(this.$api.homeOrder+'/create_order_before',{params:this.$route.params.params}).then(res=>{
+
+                res.data.forEach(item=>{
+                    item.goods_list.forEach(item2=>{
+                        this.total += item2.total;
+                    })
+                })
+                this.order = res.data;
+            })
+        },
+        // 创建订单
+        create_order(){
+
+            if(this.loading){
+                return this.$message.error('请耐心等待，不要重复下单');
+            }
+
+            let params = {
+                params:this.$route.params.params,
+                address_id:this.address_id,
+                remark:this.remark,
+            }
+            this.loading = true;
+            this.$post(this.$api.homeOrder+'/create_order',params).then(res=>{
+                this.loading = false;
+                let str = window.btoa(JSON.stringify(res.data)); 
+                this.$router.push("/order/order_pay/"+str);
+            });
+        }
+    },
+    created() {
+        this.onload(); 
+    },
     mounted() {}
 };
 </script>
@@ -154,6 +213,14 @@ export default {
                     background: #f8f8f8;
                     margin-right: 15px;
                     margin-left: 20px;
+                    border:1px solid #efefef;
+                    img{
+                        margin:0;
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 0;
+                        vertical-align:unset;
+                    }
                 }
                 dd{
                     float: left;
@@ -200,6 +267,12 @@ export default {
             text-align: center;
             display: block;
             float:right;
+            cursor: pointer;
+            &.hide{
+                background: #ccc;
+                cursor: not-allowed;
+                color:#666;
+            }
         }
     }
     .goods_th{

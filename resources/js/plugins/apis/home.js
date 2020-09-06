@@ -28,6 +28,12 @@ export default
     // 购物车
     'homeCarts' : baseUrl + 'carts',
 
+    // 收货地址
+    'homeAddress' : baseUrl + 'addresses',
+
+    // 订单处理
+    'homeOrder' : baseUrl + 'order',
+
     // 商家入驻
     'homeStoreVerify' : baseUrl + 'store/store_verify',  // 商家审核状态
     'homeStoreJoin' : baseUrl + 'store/store_join',  // 商家审核状态

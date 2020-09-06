@@ -151,6 +151,16 @@ Route::namespace('Home')->group(function(){
         // 购物车
         Route::apiResource('carts','CartController')->except(['show']);
 
+        // 用户收货地址
+        Route::apiResource('addresses','AddressController');
+        Route::put('/addresses/default/set','AddressController@set_default'); // 设置默认地址
+        Route::get('/addresses/default/get','AddressController@get_default'); // 获取默认地址
+
+        // 订单处理
+        Route::get('/order/create_order_before','OrderController@create_order_before'); // 生成订单前处理
+        Route::get('/order/create_order_after','OrderController@create_order_after'); // 生成订单后处理
+        Route::post('/order/create_order','OrderController@create_order'); // 生成订单
+
         // 商家入驻
         Route::get('/store/store_verify','StoreController@store_verify'); // 商家状态
         Route::match(['get','post'],'/store/store_join','StoreController@store_join');// 商家入驻
