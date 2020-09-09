@@ -24,8 +24,10 @@ class CreateOrdersTable extends Migration
             $table->unsignedDecimal('order_price',9,2)->default(0.00)->comment('订单计算金额');
             $table->unsignedDecimal('order_balance',9,2)->default(0.00)->comment('余额支付金额');
             $table->unsignedDecimal('freight_money',5,2)->default(0.00)->comment('运费金额');
-            $table->unsignedTinyInteger('order_status')->default(1)->comment('订单支付 0 取消 1 待支付 2待发货 3确认收货 4订单完成 5售后');
+            $table->unsignedTinyInteger('order_status')->default(1)->comment('订单支付 0 取消 1 等待支付 2等待发货 3等待收货 4确认收货 5等待评论 6售后 7订单完成');
+            $table->unsignedTinyInteger('refund_status')->default(0)->comment('0 退款 1退货 2 处理结束');
             $table->string('delivery_no',20)->default('')->comment('快递订单号');
+            $table->string('delivery_code',10)->default('')->comment('快递公司编码');
             $table->string('receive_name',15)->default('')->comment('收件人名');
             $table->string('receive_tel',11)->default('')->comment('收件人手机');
             $table->string('receive_area',140)->default('')->comment('地址信息');

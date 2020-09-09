@@ -11,4 +11,14 @@ class Order extends Model
     public function order_goods(){
         return $this->hasMany('App\Models\OrderGoods','order_id','id');
     }
+
+    // 获取店铺信息
+    public function store(){
+        return $this->hasOne('App\Models\Store','id','store_id');
+    }
+
+    // 获取店铺信息
+    public function user(){
+        return $this->hasOne('App\Models\User','id','user_id');
+    }
 }

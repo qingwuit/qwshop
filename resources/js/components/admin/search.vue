@@ -10,7 +10,7 @@
                             <a-select-option v-for="(vo,key) in v.data" :key="key" :value="vo.value">{{vo.label}}</a-select-option>
                         </a-select>
                         <a-time-picker v-if="v.type=='time_picker'" v-model="params[v.name]" />
-                        <a-range-picker style="width:100%" v-if="v.type=='date_picker'" v-model="params[v.name]" format="YYYY-MM-DD HH:mm:ss" show-time></a-range-picker>
+                        <a-range-picker style="width:100%" v-if="v.type=='date_picker'" v-model="params[v.name]" format="YYYY-MM-DD HH:mm:ss" show-time :allow-clear="false"></a-range-picker>
                     </a-form-item>
                 </a-col>
                 
@@ -22,7 +22,7 @@
                                 <a-select-option v-for="(vo,key) in v.data" :key="key" :value="vo.value">{{vo.label}}</a-select-option>
                             </a-select>
                             <a-time-picker v-if="v.type=='time_picker'" v-model="params[v.name]" />
-                            <a-range-picker style="width:100%" v-if="v.type=='date_picker'" v-model="params[v.name]" format="YYYY-MM-DD HH:mm:ss" show-time></a-range-picker>
+                            <a-range-picker style="width:100%" v-if="v.type=='date_picker'" v-model="params[v.name]" format="YYYY-MM-DD HH:mm:ss" show-time :allow-clear="false"></a-range-picker>
                         </a-form-item>
                     </a-col>
                 </template>
@@ -73,9 +73,12 @@ export default {
     methods: {
         // 点击搜索
         search(){
-            // console.log(this.params)
             this.$emit('searchParams',this.params);
-        }
+        },
+        timeFormat(times){
+            return moment(times).format('YYYY-MM-DD HH:mm:ss');
+        },
+
     },
     created() {
         if(this.searchConfig.length<=0){

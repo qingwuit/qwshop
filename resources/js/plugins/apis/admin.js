@@ -8,6 +8,7 @@ export default
      */
 
     "adminLogin" : baseUrl + "Admin/login", // 登录
+    "adminCheckLogin" : baseUrl + "Admin/check_login", // 登录
 
     'adminAdmins' : baseUrl + 'Admin/admins', // 后台管理员
     
@@ -26,6 +27,9 @@ export default
 
     // 站点协议
     'adminAgreements' : baseUrl + 'Admin/agreements', 
+
+    // 物流公司
+    'adminExpresses' : baseUrl + 'Admin/expresses', 
     
     // 编辑器上传
     'adminEditor' : baseUrl + 'Admin/editor/upload',
@@ -61,4 +65,7 @@ export default
     'adminAdvPositions' : baseUrl + 'Admin/adv_positions',  // 广告位
     'adminAdvs' : baseUrl + 'Admin/advs',  // 广告管理
     'adminAdvsUploadThumb' : baseUrl + 'Admin/advs/upload/thumb', // 品牌缩略图上传
+
+    // 订单管理
+    'adminOrders' : baseUrl + 'Admin/orders',  
 };

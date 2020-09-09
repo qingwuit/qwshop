@@ -49,6 +49,9 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
 
         Route::apiResource('agreements','AgreementController'); // 站点协议 
 
+        // 物流公司
+        Route::apiResource('expresses','ExpressController');
+
         // 编辑器上传图片接口
         Route::post('/editor/upload','EditorController@editor'); 
 
@@ -79,6 +82,9 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
         Route::apiResource('adv_positions','AdvPositionController');
         Route::apiResource('advs','AdvController');
         Route::post('/advs/upload/thumb','AdvController@adv_upload'); // 缩略图上传
+
+        // 订单管理 
+        Route::apiResource('orders','OrderController')->except(['store']);
     });
 
     

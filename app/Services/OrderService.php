@@ -7,6 +7,7 @@ use App\Models\Goods;
 use App\Models\GoodsSku;
 use App\Models\Order;
 use App\Models\OrderGoods;
+use App\Models\Store;
 use App\Traits\HelperTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -241,6 +242,121 @@ class OrderService extends BaseService{
             return $this->format_error(_('orders.error').'2');
         }
         return $this->format($params);
+    }
+
+    // 获取订单
+    public function getOrders($type="user"){
+        $order_model = new Order();
+
+        if($type == 'user'){
+            $user_service = new UserService;
+            $user_info = $user_service->getUserInfo();
+            $order_model = $order_model->where('user_id',$user_info['id']);
+        }
+        if($type == 'store'){
+            $user_service = new UserService;
+            $user_info = $user_service->getUserInfo();
+            $store_model = new Store();
+            $store_info = $store_model->where('user_id',$user_info['id'])->first();
+            $order_model = $order_model->where('store_id',$store_info['id']);
+        }
+        
+        $order_model = $order_model->with(['store'=>function($q){
+             return $q->select('id','store_name');
+        },'user'=>function($q){
+            return $q->select('id','username');
+        }]);
+        
+        // 订单号
+        $order_no  = request()->order_no;
+        if(!empty($order_no)){
+            $order_model = $order_model->where('order_no','like','%'.$order_no.'%');
+        }
+
+        // 用户ID
+        $user_id = request()->user_id;
+        if(!empty($user_id)){
+            $order_model = $order_model->where('user_id',$user_id);
+        }
+
+        // 店铺ID
+        $store_id = request()->store_id;
+        if(!empty($store_id)){
+            $order_model = $order_model->where('store_id',$store_id);
+        }
+
+        // 下单时间
+        $created_at = request()->created_at;
+        if(!empty($created_at)){
+            $order_model = $order_model->whereBetween('created_at',[$created_at[0],$created_at[1]]);
+        }
+
+        // 订单状态
+        if(isset(request()->order_status)){
+            $order_model = $order_model->where('order_status',request()->order_status);
+        }
+
+        $order_model = $order_model->orderBy('id','desc')
+                    ->paginate(request()->per_page??30);
+        return $this->format($order_model);
+    }
+
+    // 获取订单信息通过订单ID 默认是需要用用户
+    public function getOrderInfoById($id,$auth='user'){
+        $order_model = new Order();
+
+        if($auth=='user'){
+            $user_service = new UserService;
+            $user_info = $user_service->getUserInfo();
+            $order_model = $order_model->where('user_id',$user_info['id']);
+        }
+
+        if($auth=='store'){
+            $store_id = $this->get_store(true);
+            $order_model = $order_model->where('store_id',$store_id);
+        }
+
+        $order_info = $order_model->with('order_goods')->where('id',$id)->first();
+        return $this->format($order_info);
+    }
+
+    // 获取订单状态 
+    public function getOrderStatusCn($order_info){
+        $cn = '未知订单';
+        switch($order_info['order_status']){
+            case 0:
+                $cn = __('admins.order_cancel');
+                break;
+            case 1:
+                $cn = __('admins.wait_pay');
+                break;
+            case 2:
+                $cn = __('admins.wait_send');
+                break;
+            case 3:
+                $cn = __('admins.wait_rec');
+                break;
+            case 4:
+                $cn = __('admins.order_confirm');
+                break;
+            case 5:
+                $cn = __('admins.wait_comment');
+                break;
+            case 6:
+                if($order_info['refund_type'] == 0){
+                    $cn = __('admins.order_refund');
+                }elseif($order_info['refund_type'] == 1){
+                    $cn = __('admins.order_returned');
+                }else{
+                    $cn = __('admins.order_refund_over');
+                }
+                
+                break;
+            case 7:
+                $cn = __('admins.order_completion');
+                break;
+        }
+        return $cn;
     }
     
     

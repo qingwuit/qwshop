@@ -79,7 +79,7 @@ export default {
     created: function() {
         var _this = this;
         // 判断token是否失效
-        this.$get(this.$api.checkUserLogin).then(function(res) {
+        this.$get(this.$api.adminCheckLogin).then(function(res) {
             // console.log(res);
             if (res.code == 200) {
                 _this.$router.push({ name: "admin_default" });

@@ -2,68 +2,112 @@
     <div class="qingwu">
         <div class="admin_table_page_title">
             <a-button @click="$router.back()" class="float_right" icon="arrow-left">返回</a-button>
-            商品编辑
+            订单详情
         </div>
         <div class="unline underm"></div>
         <div class="admin_form">
-            <a-form-model :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
-                <a-form-model-item label="商品标题">
-                    <a-input v-model="info.goods_name" />
-                </a-form-model-item>
-                <a-form-model-item label="商品副标题">
-                    <a-textarea :auto-size="{ minRows: 2, maxRows: 6 }" v-model="info.description" />
-                </a-form-model-item>
-                <a-form-model-item label="商品编号">
-                    <a-input v-model="info.goods_name" />
-                </a-form-model-item>
-                <a-form-model-item label="商品品牌">
-                    <a-select>
-                        <a-select-option key="" value="">测试</a-select-option>
-                    </a-select>
-                </a-form-model-item>
-                <a-form-model-item label="商品分类">
-                    <a-select>
-                        <a-select-option key="" value="">测试</a-select-option>
-                    </a-select>
-                </a-form-model-item>
-                <a-form-model-item label="商品图片">
-                    <a-select>
-                        <a-select-option key="" value="">测试</a-select-option>
-                    </a-select>
-                </a-form-model-item>
-                <a-form-model-item label="平台价格">
-                    <a-input v-model="info.goods_price" type="number" suffix="￥" />
-                </a-form-model-item>
-                <a-form-model-item label="市场价格">
-                    <a-input v-model="info.goods_market_price" type="number" suffix="￥" />
-                </a-form-model-item>
-                <a-form-model-item label="商品重量">
-                    <a-input v-model="info.goods_weight" type="number" suffix="Kg" />
-                </a-form-model-item>
-                <a-form-model-item label="商品库存">
-                    <a-input v-model="info.goods_stock" type="number">
-                        <a-icon slot="suffix" type="stock"></a-icon>
-                    </a-input>
-                </a-form-model-item>
-                <a-form-model-item label="规格属性(SKU)">
-                   
-                </a-form-model-item>
-                <a-form-model-item label="商品详情">
-                    <div>
-                        <span class="admin_editor_span check">PC端</span>
-                        <span class="admin_editor_span">Mobile端</span>
-                        <wang-editor />
-                    </div>
-                </a-form-model-item>
-                <a-form-model-item label="上架状态">
-                    <a-switch  v-model="info.goods_status" />
-                </a-form-model-item>
-                
-                <a-form-model-item :wrapper-col="{ span: 12, offset: 5 }">
-                    <a-button type="primary" @click="handleSubmit">提交</a-button>
-                </a-form-model-item>
-            </a-form-model>
+            <div class="order_info_list">
+                <a-row>
+                    <a-col :span="8">
+                        订单号：<span class="content">{{info.order_no}}</span>
+                    </a-col>
+                    <a-col :span="8">
+                        状态：
+                        <span class="content">
+                            <a-tag color="red" v-if="info.order_status==0">{{info.order_status_cn}}</a-tag>
+                            <a-tag color="orange" v-if="info.order_status==1">{{info.order_status_cn}}</a-tag>
+                            <a-tag color="blue" v-if="info.order_status>1&&info.order_status<6">{{info.order_status_cn}}</a-tag>
+                            <a-tag color="cyan" v-if="info.order_status==6">{{info.order_status_cn}}</a-tag>
+                            <a-tag color="green" v-if="info.order_status>=7">{{info.order_status_cn}}</a-tag>
+                        </span>
+                    </a-col>
+                    <a-col :span="8">
+                        操作：<span class="content">-</span>
+                    </a-col>
+                </a-row>
+            </div>
             
+            <div class="order_info_list">
+                <a-row>
+                    <a-col :span="8">
+                        支付方式：<span class="content">{{info.payment_name||'-'}}</span>
+                    </a-col>
+                    <a-col :span="8">
+                        支付时间：<span class="content">{{info.pay_time||'-'}}</span>
+                    </a-col>
+                    <a-col :span="8">
+                        快递单号：<span class="content">{{info.delivery_no||'-'}}</span>
+                    </a-col>
+                </a-row>
+            </div>
+            <div class="order_info_list">
+                <a-row>
+                    <a-col :span="24">
+                        备注：<span class="content">{{info.remark||'-'}}</span>
+                    </a-col>
+                </a-row>
+            </div>
+
+            <div style="margin-top:40px"><span style="font-size: 14px;font-weight: bold;">物流地址</span></div>
+            <div class="unline underm"></div>
+
+            <div class="order_info_list">
+                <a-row>
+                    <a-col :span="8">
+                        用户：<span class="content">{{info.receive_name}}</span>
+                    </a-col>
+                    <a-col :span="8">
+                        联系电话：<span class="content">{{info.receive_tel}}</span>
+                    </a-col>
+                    <a-col :span="8">
+                        取货地址：<span class="content">{{info.receive_area+info.receive_address}}</span>
+                    </a-col>
+                </a-row>
+            </div>
+
+            <div style="margin-top:40px"><span style="font-size: 14px;font-weight: bold;">商品信息</span></div>
+            <div class="unline underm"></div>
+
+            <div class="admin_table_list">
+                <a-table :columns="columns" :data-source="info.order_goods" :pagination="false"  >
+                    <span slot="name" slot-scope="rows">
+                        <div class="admin_pic_txt">
+                            <div class="img"><img v-if="rows.goods_image" :src="rows.goods_image"><a-icon v-else type="picture" /></div>
+                            <div class="text">{{rows.goods_name}}</div>
+                            <div class="clear"></div>
+                        </div>
+                    </span>
+                    <span slot="buy_num" slot-scope="rows">
+                        x {{rows.buy_num}}
+                    </span>
+                    <span slot="goods_price" slot-scope="rows">
+                        <font color="#ca151e">￥{{rows.goods_price}}</font>
+                    </span>
+                </a-table>
+            </div>
+
+
+            <div class="order_info_right_price">总计：￥ {{info.total_price}}<span data-v-01d38243="">（运费：{{info.freight_money}}）</span></div>
+
+            <div style="margin-top:40px"><span style="font-size: 14px;font-weight: bold;">快递信息</span></div>
+            <div class="unline underm"></div>
+
+            <div class="order_info_kd">
+                <a-timeline v-if="list.length>0">
+                    <a-timeline-item color="red">
+                    <p>Solve initial network problems 1</p>
+                    </a-timeline-item>
+                    <a-timeline-item color="gray">
+                    <p>Technical testing 1</p>
+                    </a-timeline-item>
+                    <a-timeline-item color="gray">
+                    <p>Technical testing 1</p>
+                    </a-timeline-item>
+                </a-timeline>
+                <a-empty v-else />
+            </div>
+            <br>
+            <!-- <a-button type="primary" @click="handleSubmit">提交</a-button> -->
         </div>
     </div>
 </template>
@@ -76,10 +120,16 @@ export default {
     data() {
       return {
           info:{
-              pid:0,
           },
           list:[],
           id:0,
+          columns:[
+            //   {title:'#',dataIndex:'id',fixed:'left'},
+              {title:'商品名称',key:'id',fixed:'left',scopedSlots: { customRender: 'name' }},
+              {title:'规格属性',dataIndex:'sku_name'},
+              {title:'购买数量',key:'id',scopedSlots: { customRender: 'buy_num'}},
+              {title:'商品价格',key:'id',scopedSlots: { customRender: 'goods_price'} },
+          ],
           loading:false,
       };
     },
@@ -89,12 +139,12 @@ export default {
         handleSubmit(){
 
             // 验证代码处
-            if(this.$isEmpty(this.info.name)){
-                return this.$message.error('分类名不能为空');
-            }
+            // if(this.$isEmpty(this.info.name)){
+            //     return this.$message.error('分类名不能为空');
+            // }
 
             
-            let api = this.$apiHandle(this.$api.adminGoodsBrands,this.id);
+            let api = this.$apiHandle(this.$api.adminOrders,this.id);
             if(api.status){
                 this.$put(api.url,this.info).then(res=>{
                     if(res.code == 200){
@@ -118,18 +168,12 @@ export default {
             
         },
         get_info(){
-            this.$get(this.$api.adminGoodsBrands+'/'+this.id).then(res=>{
+            this.$get(this.$api.adminOrders+'/'+this.id).then(res=>{
                 this.info = res.data;
             })
         },
         // 获取菜单列表
         onload(){
-            let is_type = this.$route.query.is_type;
-            let params = {};
-            if(!this.$isEmpty(is_type)){
-                params.is_type = is_type;
-                this.info.is_type = parseInt(is_type);
-            }
 
             // 判断你是否是编辑
             if(!this.$isEmpty(this.$route.params.id)){
@@ -137,24 +181,11 @@ export default {
                 this.get_info();
             }
 
-            this.$get(this.$api.adminGoodsBrands,params).then(res=>{
+            this.$get(this.$api.adminOrders,params).then(res=>{
                 this.list = res.data;
             });
         },
-        upload(e){
-            if(e.file.status == 'done'){
-                this.loading = false;
-                let rs = e.file.response;
-                if(rs.code == 200){
-                    this.$set(this.info,'thumb',rs.data);
-                }else{
-                    return this.$message.error(rs.msg);
-                }
-            }else{
-                this.loading = true;
-            }
-            
-        }
+
         
     },
     created() {

@@ -287,3 +287,21 @@ opacity: 0;
     line-height: 50px;
     /* height: 50px; */
 }
+/* 订单详情 */
+.admin_form .order_info_list{
+    margin-bottom: 20px;
+}
+.admin_form .order_info_list .content{
+    color:#999;
+}
+.order_info_right_price{
+    text-align: right;
+    color: #ca151e;
+    padding: 20px 20px 40px 20px;
+    font-size: 18px;
+}
+.order_info_right_price span{
+    color: #999;
+    font-size: 12px;
+    margin-left: 20px;
+}

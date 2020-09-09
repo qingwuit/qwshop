@@ -89,6 +89,15 @@ class ConfigService extends BaseService{
         }else{
             $data['alisms'] = json_decode($data['alisms'],true);
         }
+
+        if(empty($data['kuaibao'])){
+            $data['kuaibao'] = [
+                'app_id'=>'',
+                'app_key'=>'',
+            ];
+        }else{
+            $data['kuaibao'] = json_decode($data['kuaibao'],true);
+        }
         return $data;
     }
 
