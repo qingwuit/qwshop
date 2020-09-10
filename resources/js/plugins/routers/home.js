@@ -6,6 +6,12 @@ export default [
 
     // 所有父视图
     {path: '/store/join/index',name: 'home_base_view',component: () => import('@/views/Home/default'),children:[
+
+        // 登录注册
+        {path: '/user/login',name: 'home_user_login',component: () => import('@/views/Home/auth/login')}, // 登录
+        {path: '/user/register',name: 'home_user_register',component: () => import('@/views/Home/auth/register')}, // 注册
+        {path: '/user/forget_password',name: 'home_user_forget_password',component: () => import('@/views/Home/auth/forget_password')}, // 忘记密码
+
         // 商家入驻
         {path: '/store/join/index',name: 'home_store_join_default',component: () => import('@/views/Home/store/join/default')}, // 入驻页面
         {path: '/store/join/step_1',name: 'home_store_join_step_1',component: () => import('@/views/Home/store/join/step_1')}, // 入驻协议
@@ -20,7 +26,6 @@ export default [
         {path: '/order/create_order/:params',name: 'home_create_order',component: () => import('@/views/Home/orders/index')}, // 创建订单
         {path: '/order/order_pay/:params',name: 'home_order_pay',component: () => import('@/views/Home/orders/order_pay')}, // 支付订单
         {path: '/order/pay_success',name: 'home_pay_success',component: () => import('@/views/Home/orders/pay_success')}, // 支付成功
-
 
         // 用户中心
         {path: '/user',name: 'home_user',component: () => import('@/views/Home/users/index'),children:[

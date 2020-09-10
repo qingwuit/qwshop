@@ -30,6 +30,7 @@ class SmsSignController extends Controller
     {
         $sms_sign_model->name = $request->name??'';
         $sms_sign_model->val = $request->val??'';
+        $sms_sign_model->code = $request->code??'';
         $sms_sign_model->content = $request->content??'';
         $sms_sign_model->save();
         return $this->success([],__('base.success'));
@@ -59,6 +60,7 @@ class SmsSignController extends Controller
         $sms_sign_model = $sms_sign_model->find($id);
         $sms_sign_model->name = $request->name??'';
         $sms_sign_model->val = $request->val??'';
+        $sms_sign_model->code = $request->code??'';
         $sms_sign_model->content = $request->content??'';
         $sms_sign_model->save();
         return $this->success([],__('base.success'));

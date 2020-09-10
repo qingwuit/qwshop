@@ -2,7 +2,7 @@
 namespace App\Services;
 
 use App\Models\Config;
-use App\Models\SmsLog;
+use App\Models\SmsSign;
 
 class ConfigService extends BaseService{
     
@@ -24,10 +24,11 @@ class ConfigService extends BaseService{
 
     // 获取短信配置信息
     public function getSmsConfig($name='register'){
-        $sms_log_model = new SmsLog();
-        $sign_info = $sms_log_model->where('name',$name)->first();
-        $info = json_decode($this->getFormatConfig('alisms'),true);
+        $sms_sign_model = new SmsSign();
+        $sign_info = $sms_sign_model->where('name',$name)->first();
+        $info = $this->getFormatConfig('alisms');
         $info['sign_name'] = $sign_info->val;
+        $info['code'] = $sign_info->code;
         return $info;
     }
 

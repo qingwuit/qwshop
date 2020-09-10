@@ -12,10 +12,10 @@
                     </div>
                     <div class="unline" style="margin-bottom:30px;"></div>
                     <div class="form-group">
-                        <a-input v-model="username" @keyup.enter.native="login"></a-input>
+                        <a-input v-model="username" @keyup.enter="login"></a-input>
                     </div>
                     <div class="form-group">
-                        <a-input v-model="password" type="password" @keyup.enter.native="login"></a-input>
+                        <a-input v-model="password" type="password" @keyup.enter="login"></a-input>
                     </div>
                     <div class="form-group" style="font-size:12px;">
                         <a-checkbox name="isCheck" v-model="isCheck" label="1">

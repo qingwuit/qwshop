@@ -12,10 +12,10 @@
                     <a-button @click="$router.push('/Admin/sms_logs/index')"><a-font type="iconemail" />短信日志</a-button>
                 </a-form-model-item>
                 <a-form-model-item label="KEY">
-                    <a-input v-model="info.access_id"></a-input>
+                    <a-input v-model="info.key"></a-input>
                 </a-form-model-item>
                 <a-form-model-item label="SECRET">
-                    <a-input v-model="info.access_key"></a-input>
+                    <a-input v-model="info.secret"></a-input>
                 </a-form-model-item>
 
                 <a-form-model-item :wrapper-col="{ span: 12, offset: 4 }">

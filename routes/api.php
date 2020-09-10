@@ -33,6 +33,7 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
         
         Route::apiResources([
             'admins'=>'AdminController', // 超级管理员
+            'users'=>'UserController', // 平台用户
             'roles'=>'RoleController', // 用户角色
             'menus'=>'MenuController', // 用户菜单
             'permissions'=>'PermissionController', // 角色权限
@@ -132,8 +133,11 @@ Route::namespace('Seller')->prefix('Seller')->group(function(){
 Route::namespace('Home')->group(function(){
 
     Route::post('/login','LoginController@login'); // 登陆
+    Route::post('/register','LoginController@register'); // 注册
+    Route::post('/forget_password','LoginController@forget_password'); // 忘记密码
     Route::get('/logout','LoginController@logout'); // 退出账号
     Route::get('/check_login','LoginController@check_login'); // 检测登陆
+    Route::get('/send_sms','LoginController@send_sms'); // 发送短信
 
     // 获取站点协议
     Route::get('/agreement/{ename}','AgreementController@show'); 

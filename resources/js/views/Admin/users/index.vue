@@ -1,11 +1,10 @@
 <template>
     <div class="qingwu">
-        <div class="admin_table_page_title">用户管理</div>
+        <div class="admin_table_page_title">平台用户列表</div>
         <div class="unline underm"></div>
-        <admin-search :searchConfig="searchConfig" @searchParams="search"></admin-search>
 
         <div class="admin_table_handle_btn">
-            <a-button type="primary" icon="plus">添加</a-button>
+            <a-button @click="$router.push('/Admin/users/form')" type="primary" icon="plus">添加</a-button>
             <a-button class="admin_delete_btn" type="danger" icon="delete" @click="del">批量删除</a-button>
         </div>
         <div class="admin_table_list">
@@ -22,11 +21,8 @@
 </template>
 
 <script>
-import adminSearch from '@/components/admin/search'
 export default {
-    components: {
-        adminSearch,
-    },
+    components: {},
     props: {},
     data() {
       return {
@@ -35,42 +31,27 @@ export default {
               per_page:30,
           },
           total:0, //总页数
-          searchConfig:[
-            //   {label:'编号',name:'id',type:'text'},
-            //   {label:'编号',name:'id2',type:'time_picker'},
-              {label:'编号',name:'id3',type:'date_picker'},
-              {label:'地区',name:'area',type:'select',data:[{label:'全部',value:''}]},
-              {label:'昵称',name:'nickname',type:'text'},
-              {label:'时间',name:'time',type:'text'},
-              {label:'单号',name:'no',type:'text'},
-              {label:'开始',name:'start',type:'text'},
-          ],
           selectedRowKeys:[], // 被选择的行
           columns:[
               {title:'#',dataIndex:'id',fixed:'left'},
-              {title:'名称',dataIndex:'name'},
+              {title:'昵称',dataIndex:'nickname'},
+              {title:'手机',dataIndex:'phone'},
+              {title:'用户名',dataIndex:'username'},
+              {title:'登陆IP',dataIndex:'ip'},
+              {title:'登陆时间',dataIndex:'login_time'},
+              {title:'上次登陆',dataIndex:'last_login_time'},
+              {title:'创建时间',dataIndex:'created_at'},
               {title:'操作',key:'id',fixed:'right',scopedSlots: { customRender: 'action' }},
           ],
-          list:[{id:'4',name:'123'},{id:'5',name:123}],
+          list:[],
       };
     },
     watch: {},
     computed: {},
     methods: {
-        search(params){
-            let page = this.params.page;
-            let per_page = this.params.per_page;
-            this.params = params;
-            this.params.page = page;
-            this.params.per_page = per_page;
-        },
         // 选择框被点击
         onSelectChange(selectedRowKeys) {
             this.selectedRowKeys = selectedRowKeys;
-        },
-        // 选择分页
-        onChange(e){
-            this.params.page = e;
         },
         // 删除
         del(){
@@ -84,13 +65,30 @@ export default {
                 okType: 'danger',
                 cancelText: '取消',
                 onOk:()=> {
-                    console.log('OK');
-                    this.$message.success('删除成功');
+                    let ids = this.selectedRowKeys.join(',');
+                    this.$delete(this.$api.adminUsers+'/'+ids).then(res=>{
+                        if(res.code == 200){
+                            this.onload();
+                            this.$message.success('删除成功');
+                        }else{
+                            this.$message.error(res.msg)
+                        }
+                    });
+                    
                 },
             });
         },
+ 
+        onload(){
+            this.$get(this.$api.adminUsers,this.params).then(res=>{
+                this.total = res.data.total;
+                this.list = res.data.data;
+            });
+        },
     },
-    created() {},
+    created() {
+        this.onload();
+    },
     mounted() {}
 };
 </script>

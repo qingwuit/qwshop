@@ -9,7 +9,7 @@
             <div class="goods_class_list w1200" v-for="(v,k) in list.goods" :key="k">
                 <div v-if="v.goods.length>0">
                     <!-- <div class="adv_width_1200"><img v-lazy="v.image_url" :alt="v.name"></div>   -->
-                    <div class="title">{{v.name||'加载中...'}}<span><router-link to="#">查看更多</router-link></span></div>
+                    <div class="title">{{v.name||'加载中...'}}<span><router-link to="/s/eyJrZXl3b3JkcyI6IiJ9">查看更多</router-link></span></div>
                     <div class="index_adv_goods_left"><img v-lazy="v.image_url||''" :alt="v.name"></div>
                     <div class="index_class_goods_right">
                         <ul>

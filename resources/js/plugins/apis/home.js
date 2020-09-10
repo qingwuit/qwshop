@@ -9,8 +9,11 @@ export default
 
     // 登录验证
     "homeLogin" : baseUrl + "login", // 登录
+    "homeRegister" : baseUrl + "register", // 注册
+    "homeForgetPassword" : baseUrl + "forget_password", // 忘记密码
     "homeLogout" : baseUrl + "logout", // 登出
     "homeCheckLogin" : baseUrl + "check_login", // 检测是否登录
+    "homeSendSms" : baseUrl + "send_sms", // 发送短信
 
     'homeCommon' : baseUrl + 'common',  // pC公共数据获取
     'homeAgreement' : baseUrl + 'agreement',  // 站点协议

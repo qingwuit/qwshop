@@ -19,6 +19,7 @@ class CreateSmsLogsTable extends Migration
             $table->string('name',30)->default('')->comment('短信类型名称');
             $table->string('content',10)->default('')->comment('短信内容');
             $table->unsignedTinyInteger('status')->default(0)->comment('发送状态');
+            $table->ipAddress('ip')->default('0.0.0.0')->comment('发送IP');
             $table->string('error_msg',50)->default('')->comment('错误信息');
             $table->timestamps();
         });

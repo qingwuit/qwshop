@@ -22,7 +22,7 @@
                     <li v-show="isLogin">|</li>
                     <li v-show="isLogin" @click="logout()">注销账号</li>
                     <li>|</li>
-                    <li><router-link to="/store/join" style="color:#ca151e">商家入驻</router-link></li>
+                    <li><router-link to="/store/join/index" style="color:#ca151e">商家入驻</router-link></li>
                     <li>|</li>
                     <li><router-link to="/">手机端</router-link></li>
                     <li>|</li>
@@ -49,6 +49,7 @@ export default {
         logout:function(){
             this.$get(this.$api.homeLogout).then(()=>{
                 localStorage.removeItem('token');
+                this.$store.dispatch('homeLogin/clear_login');
                 this.$router.push('/user/login');
 
             });

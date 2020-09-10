@@ -17,6 +17,9 @@
                     <div :class="rows.status?'green_round':'red_round'"></div>
                 </span>
             </a-table>
+            <div class="admin_pagination" v-if="total>0">
+                <a-pagination v-model="params.page" :page-size.sync="params.per_page" :total="total" @change="onChange" show-less-items />
+            </div>
         </div>
     </div>
 </template>
@@ -43,9 +46,7 @@ export default {
               {title:'类型',dataIndex:'name'},
               {title:'发送状态',key:'id',scopedSlots: { customRender: 'status' }},
               {title:'错误原因',dataIndex:'error_msg'},
-              {title:'修改时间',dataIndex:'updated_at'},
               {title:'创建时间',dataIndex:'created_at'},
-              {title:'操作',key:'id',fixed:'right',scopedSlots: { customRender: 'action' }},
           ],
           list:[],
       };
@@ -92,6 +93,7 @@ export default {
         },
         onload(){
             this.$get(this.$api.adminSmsLogs,this.params).then(res=>{
+                this.total = res.data.total;
                 this.list = res.data.data;
             });
         },

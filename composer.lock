@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "92670f154c7905cd732650fa3a74083f",
+    "content-hash": "6c7f15979beb5c6075aa72ebb10deba9",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -1715,6 +1715,54 @@
                 "serialize"
             ],
             "time": "2020-05-25T09:32:45+00:00"
+        },
+        {
+            "name": "overtrue/easy-sms",
+            "version": "1.1.24",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/overtrue/easy-sms.git",
+                "reference": "b60a5453250de1b812faa407145c4c9392183e39"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/overtrue/easy-sms/zipball/b60a5453250de1b812faa407145c4c9392183e39",
+                "reference": "b60a5453250de1b812faa407145c4c9392183e39",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^6.2 || ^7.0",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "mockery/mockery": "1.3.1",
+                "phpunit/phpunit": "^5.7 || ^7.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Overtrue\\EasySms\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "overtrue",
+                    "email": "i@overtrue.me"
+                }
+            ],
+            "description": "The easiest way to send short message.",
+            "time": "2020-08-04T08:19:26+00:00"
         },
         {
             "name": "phpoption/phpoption",

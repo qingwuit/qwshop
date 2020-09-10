@@ -77,6 +77,7 @@ class OrderService extends BaseService{
                         'receive_tel'               =>  $address_info['receive_tel'], // 收件人电话
                         'receive_area'              =>  $address_info['area_info'], // 收件人地区
                         'receive_address'           =>  $address_info['address'], // 详细地址
+                        'remark'                    =>  request()->remark??'', // 备注
                     ];
 
                     $order_info = $order_model->create($order_data); // 订单数据插入数据库

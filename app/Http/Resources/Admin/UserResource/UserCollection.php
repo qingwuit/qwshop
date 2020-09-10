@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Admin\SmsLogResource;
+namespace App\Http\Resources\Admin\UserResource;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class SmsLogCollection extends ResourceCollection
+class UserCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -18,11 +18,13 @@ class SmsLogCollection extends ResourceCollection
             'data'=>$this->collection->map(function($item){
                 return [
                     'id'                    =>  $item->id,
-                    'name'                  =>  $item->name,
+                    'username'              =>  $item->username,
+                    'nickname'              =>  $item->nickname,
                     'phone'                 =>  $item->phone,
-                    'content'               =>  $item->content,
-                    'status'                =>  $item->status==0?false:true,
-                    'error_msg'             =>  empty($item->error_msg)?'-':$item->error_msg,
+                    'avatar'                =>  $item->avatar,
+                    'ip'                    =>  $item->ip,
+                    'login_time'            =>  $item->login_time,
+                    'last_login_time'       =>  $item->last_login_time,
                     'created_at'            =>  $item->created_at->format('Y-m-d H:i:s'),
                     'updated_at'            =>  $item->updated_at->format('Y-m-d H:i:s'),
                 ];

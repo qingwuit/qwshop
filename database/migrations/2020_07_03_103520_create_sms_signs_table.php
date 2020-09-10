@@ -17,7 +17,8 @@ class CreateSmsSignsTable extends Migration
             $table->increments('id');
             $table->string('name',20)->default('')->comment('名称');
             $table->string('val',20)->default('')->comment('内容');
-            $table->string('content',30)->default('')->comment('描述');
+            $table->string('code',20)->default('')->comment('模版');
+            $table->string('content',40)->default('')->comment('描述');
             $table->timestamps();
         });
     }

@@ -21,8 +21,8 @@
             <div class="title">选择支付方式</div>
             <div class="pay">
                 <ul>
-                    <li><img :src="require('@/asset/order/pc_money_pay.png')" alt="alipay"></li>
-                    <li><img :src="require('@/asset/order/pc_wxpay.jpg')" alt="alipay"></li>
+                    <li><img :src="require('@/asset/order/pc_money_pay.png')" alt="mpay"></li>
+                    <li><img :src="require('@/asset/order/pc_wxpay.jpg')" alt="wechatpay"></li>
                     <li><img :src="require('@/asset/order/pc_alipay.jpg')" alt="alipay"></li>
                 </ul>
             </div>
@@ -131,6 +131,7 @@ export default {
         }
         ul li{
             float: left;
+            cursor: pointer;
             width: 294px;
             height: 107px;
             border-radius: 3px;

@@ -9,6 +9,7 @@ export default [
 
         // 用户管理
         {path:"/Admin/users",name:"admin_users",component:()=>import("@/views/Admin/users/index")}, 
+        {path:"/Admin/users/form/:id?",name:"admin_users_form",component:()=>import("@/views/Admin/users/form")},
 
         // 后台管理员
         {path:"/Admin/admins",name:"admin_admins",component:()=>import("@/views/Admin/admins/index")}, 

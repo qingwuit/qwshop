@@ -11,6 +11,8 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
     protected $table = 'users';
+    protected $guarded = [];
+
 
     public function getJWTIdentifier(){
         return $this->getKey();

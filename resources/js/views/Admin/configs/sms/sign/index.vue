@@ -31,6 +31,7 @@ export default {
               {title:'#',dataIndex:'id',fixed:'left'},
               {title:'签名名称',dataIndex:'name'},
               {title:'签名内容',dataIndex:'val'},
+              {title:'签名模版',dataIndex:'code'},
               {title:'签名描述',dataIndex:'content'},
               {title:'修改时间',dataIndex:'updated_at'},
               {title:'创建时间',dataIndex:'created_at'},

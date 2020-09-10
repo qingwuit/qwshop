@@ -20,6 +20,7 @@ class SmsSignCollection extends ResourceCollection
                     'id'                    =>  $item->id,
                     'name'                  =>  $item->name,
                     'val'                   =>  $item->val,
+                    'code'                  =>  $item->code,
                     'content'               =>  $item->content,
                     'created_at'            =>  $item->created_at->format('Y-m-d H:i:s'),
                     'updated_at'            =>  $item->updated_at->format('Y-m-d H:i:s'),

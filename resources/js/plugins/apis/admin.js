@@ -11,6 +11,7 @@ export default
     "adminCheckLogin" : baseUrl + "Admin/check_login", // 登录
 
     'adminAdmins' : baseUrl + 'Admin/admins', // 后台管理员
+    'adminUsers' : baseUrl + 'Admin/users', // 平台用户
     
     'adminRoles' : baseUrl + 'Admin/roles', // 角色管理
     'adminPermissionGroups' : baseUrl + 'Admin/permission_groups', // 后台接口分组
