@@ -7,6 +7,7 @@ use App\Models\Goods;
 use App\Models\GoodsSku;
 use App\Models\Order;
 use App\Models\OrderGoods;
+use App\Models\OrderPay;
 use App\Models\Store;
 use App\Traits\HelperTrait;
 use Illuminate\Support\Facades\DB;
@@ -168,6 +169,98 @@ class OrderService extends BaseService{
         }catch(\Exception $e){
             throw new \Exception(__('base.error').' - stock');
         }
+        
+    }
+
+    // 支付订单
+    public function payOrder(){
+        $order_id = request()->order_id;
+        $payment_name = request()->payment_name??'';
+
+        // 检查支付方式是否传过来
+        if(empty($payment_name)){
+            return $this->format_error(__('orders.empty_payment'));
+        }
+
+        // 判断订单号是否为空
+        if(empty($order_id)){
+            return $this->format_error(__('orders.error').' - pay');
+        }
+        $order_arr = explode(',',$order_id); // 转化为数组
+        $order_str = implode('',$order_arr); // 转化为字符串生成支付订单号
+
+        // 获取用户信息
+        $user_service = UserService();
+        $user_info = $user_service->getUserInfo();
+        if(empty($user_info)){
+            return $this->format_error(__('user.no_token'));
+        }
+
+        // 判断是否订单是该用户的并且订单是否有支付成功过
+        $order_model = new Order();
+        // 判断是否存在 指定订单
+        if(!$order_model->whereIn('id',$order_arr)->where('user_id',$user_info['id'])->exists()){
+            return $this->format_error(__('orders.error').' - pay2');
+        } 
+        // 判断是否已经支付过了
+        $order_list = $order_model->whereIn('id',$order_arr)->where('user_id',$user_info['id'])->where('order_status',1)->get();
+        if(empty($order_list)){
+            return $this->format_error(__('orders.order_pay'));
+        }
+
+        $pay_no = date('YmdHi').$order_str; // 订单支付号
+        $rs = $this->createPayOrder(false,$pay_no,$order_list);
+
+        // 创建支付订单失败
+        if(!$rs['status']){
+            return $this->format_error($rs['msg']);
+        }
+
+        // 获取支付信息,调取第三方支付
+        
+
+    }
+
+    // 创建支付订单
+    // @param bool $recharge_pay 是否是充值 还是订单
+    // @param string $pay_no 支付订单号
+    protected function createPayOrder($recharge_pay = false,$pay_no='',$order_list=[]){
+        // 创建支付订单
+        $create_data = [];
+        if($recharge_pay){
+            $pay_no = date('YmdHis').mt_rand(10000,99999);
+            $create_data = [
+                'pay_no'                =>  $pay_no,
+                'pay_type'              =>  'r',
+                'total_price'           =>  abs(request()->total??1), // 充值金额
+            ];
+        }else{
+            $order_ids = [];
+            $total_price = 0;
+            $order_balance = 0;
+            foreach($order_list as $v){
+                $order_ids[] = $v['id'];
+                $total_price += $total_price; 
+                $order_balance += $order_balance; 
+            }
+            $create_data = [
+                'pay_no'                    =>  $pay_no,
+                'order_ids'                 =>  implode(',',$order_ids),
+                'pay_type'                  =>  'o',
+                'total_price'               =>  $total_price, // 订单总金额
+                'order_balance'             =>  $order_balance, // 余额支付金额
+            ];
+        }
+        $order_pay_model = new OrderPay();
+        
+        try{
+            $order_pay_info = $order_pay_model->create($create_data);
+        }catch(\Exception $e){
+            Log::channel('qwlog')->debug($e->getMessage());
+            return $this->format_error(__('orders.payment_failed'));
+        }
+
+        return $this->format($order_pay_info);
         
     }
 

@@ -10,5 +10,9 @@ return [
 
     'stock_error'                        =>  '创建订单失败,库存不足.',
     'no_address'                         =>  '没有选择收货地址.',
+
+    'order_pay'                          =>  '订单已经支付.',
+    'payment_failed'                     =>  '支付失败.',
+    'empty_payment'                      =>  '请选择支付方式.',
     
 ];
