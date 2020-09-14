@@ -21,9 +21,9 @@
             <div class="title">选择支付方式</div>
             <div class="pay">
                 <ul>
-                    <li><img :src="require('@/asset/order/pc_money_pay.png')" alt="mpay"></li>
-                    <li><img :src="require('@/asset/order/pc_wxpay.jpg')" alt="wechatpay"></li>
-                    <li><img :src="require('@/asset/order/pc_alipay.jpg')" alt="alipay"></li>
+                    <li @click="pay('balance')"><img :src="require('@/asset/order/pc_money_pay.png')" alt="mpay"></li>
+                    <li @click="pay('wechat_scan')"><img :src="require('@/asset/order/pc_wxpay.jpg')" alt="wechatpay"></li>
+                    <li @click="pay('ali_scan')"><img :src="require('@/asset/order/pc_alipay.jpg')" alt="alipay"></li>
                 </ul>
             </div>
         </div>
@@ -104,6 +104,32 @@ export default {
                 this.order = res.data;                
             })
         },
+        pay(payment_name){
+            let params = JSON.parse(window.atob(this.$route.params.params));
+            let order_id = params.order_id.join(',');
+            this.$post(this.$api.homeOrder+'/pay',{order_id:order_id,payment_name:payment_name}).then(res=>{
+                if(res.code==200){
+                    if(payment_name == 'wechat_scan'){
+                        this.qr_code = res.data.qr_code;
+                        this.dialogVisible = true;
+                        this.timeObj = setInterval(()=>{
+                            this.check_pay(this.$route.params.order_no+'|'+payment_name);
+                        },1000);
+                    }else if(payment_name == 'ali_scan'){
+                        // var newwindow = window.open("#","_blank");
+                        // newwindow.document.write(res.data); // 打开新页面
+                        const div = document.createElement('div') // 创建div
+                        div.innerHTML = res.data // 将返回的form 放入div
+                        document.body.appendChild(div)
+                        document.forms[0].submit()
+                    }else{
+                        
+                    }
+                }else{
+                    this.$message.error(res.msg);
+                }
+            })
+        }
     },
     created() {
         this.create_order_before();

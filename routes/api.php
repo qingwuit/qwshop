@@ -170,6 +170,7 @@ Route::namespace('Home')->group(function(){
         Route::get('/order/create_order_before','OrderController@create_order_before'); // 生成订单前处理
         Route::get('/order/create_order_after','OrderController@create_order_after'); // 生成订单后处理
         Route::post('/order/create_order','OrderController@create_order'); // 生成订单
+        Route::post('/order/pay','OrderController@pay'); // 订单支付
 
         // 商家入驻
         Route::get('/store/store_verify','StoreController@store_verify'); // 商家状态

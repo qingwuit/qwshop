@@ -219,7 +219,7 @@ class OrderService extends BaseService{
         }
 
         $pay_no = date('YmdHi').$order_str; // 订单支付号
-        $rs = $this->createPayOrder(false,$pay_no,$user_info,$order_list);
+        $rs = $this->createPayOrder(false,$user_info,$pay_no,$order_list);
 
         // 创建支付订单失败
         if(!$rs['status']){
@@ -228,7 +228,8 @@ class OrderService extends BaseService{
 
         // 获取支付信息,调取第三方支付
         $payment_model = new PayMentService();
-        $payment_model->pay($payment_name,$rs['data']);
+        $rs = $payment_model->pay($payment_name,$rs['data']);
+        return $rs['status']?$this->format($rs['data']):$this->format_error($rs['msg']);
 
     }
 
@@ -252,8 +253,8 @@ class OrderService extends BaseService{
             $order_balance = 0;
             foreach($order_list as $v){
                 $order_ids[] = $v['id'];
-                $total_price += $total_price; 
-                $order_balance += $order_balance; 
+                $total_price += $v['total_price']; 
+                $order_balance += $v['order_balance']; 
             }
             $create_data = [
                 'user_id'                   =>  $user_info['id'],

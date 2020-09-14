@@ -206,10 +206,10 @@ class PayMentService extends BaseService{
                 break;
             case 'wechat_scan': // pc 扫码
                 // 配置支付密钥
-                $this->wx_config['app_id'] = $config_info['appid'];
-                $this->wx_config['mch_id'] = trim($config_info['mchid']);
-                $this->wx_config['key'] = $config_info['key'];
-                $this->wx_config['notify_url'] = $config_info['notify_url'];
+                $this->wx_config['app_id'] = $config_info[$payment_name]['app_id'];
+                $this->wx_config['mch_id'] = trim($config_info[$payment_name]['mch_id']);
+                $this->wx_config['key'] = $config_info[$payment_name]['key'];
+                $this->wx_config['notify_url'] = $config_info[$payment_name]['notify_url'];
                 break;
       
             // 阿里支付
@@ -221,11 +221,11 @@ class PayMentService extends BaseService{
                 break;
             case 'ali_scan':
                 // 配置支付密钥
-                $this->ali_config['app_id'] = $config_info['appid'];
-                $this->ali_config['ali_public_key'] = $config_info['public_key'];
-                $this->ali_config['private_key'] = $config_info['private_key'];
-                $this->ali_config['notify_url'] = $config_info['notify_url'];
-                $this->ali_config['return_url'] = $config_info['return_url'];
+                $this->ali_config['app_id'] = $config_info[$payment_name]['app_id'];
+                $this->ali_config['ali_public_key'] = $config_info[$payment_name]['public_key'];
+                $this->ali_config['private_key'] = $config_info[$payment_name]['private_key'];
+                $this->ali_config['notify_url'] = $config_info[$payment_name]['notify_url'];
+                $this->ali_config['return_url'] = $config_info[$payment_name]['return_url'];
                 break;
         }
         return $this->format($payment_arr[0]);
@@ -243,9 +243,10 @@ class PayMentService extends BaseService{
      */
     public function payHandle($payment_name,$out_trade_no='',$notify_info=[]){
         $trade_no = ''; // 平台支付流水号
+        $pay_no = str_replace(['A','W','R'],'',$trade_no); // 得到正常得到pay_no
         // 实例化orderPay模型
         $order_pay_model = new OrderPay();
-        $order_pay_model = $order_pay_model->where('pay_no',$out_trade_no)->first();
+        $order_pay_model = $order_pay_model->where('pay_no',$pay_no)->first();
         $order_ids = $order_pay_model->order_ids; // 订单ID
         $user_id = $order_pay_model->user_id; // 用户ID
         $oid_arr = [];

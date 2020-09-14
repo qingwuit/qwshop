@@ -54,7 +54,7 @@ class ConfigService extends BaseService{
         if(empty($data['ali_pay'])){
             $info = [
                 'app_id'=>'',
-                'ali_public_key'=>'',
+                'public_key'=>'',
                 'private_key'=>'',
                 'return_url'=>'',
                 'notify_url'=>'',

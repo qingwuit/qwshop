@@ -30,4 +30,11 @@ class OrderController extends Controller
         $rs = $order_service->createOrderAfter();
         return $rs['status']?$this->format($rs['data']):$this->format_error($rs['msg']);
     }
+
+    // 支付订单
+    public function pay(){
+        $order_service = new OrderService();
+        $rs = $order_service->payOrder();
+        return $rs['status']?$this->success($rs['data']):$this->error($rs['msg']);
+    }
 }
