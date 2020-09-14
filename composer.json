@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2.5",
         "aliyuncs/oss-sdk-php": "^2.3",
+        "endroid/qr-code": "^3.9",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^6.3",
@@ -17,7 +18,8 @@
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "overtrue/easy-sms": "^1.1",
-        "tymon/jwt-auth": "1.*@rc"
+        "tymon/jwt-auth": "1.*@rc",
+        "yansongda/pay": "^2.9"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

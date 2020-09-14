@@ -7,6 +7,7 @@
         <div class="unline underm"></div>
         <div class="admin_form">
             <a-tabs :default-active-key="0" tab-position="left">
+                
                 <a-tab-pane :key="0" tab="微信H5(wap)">
                     <wechat-h5 />
                 </a-tab-pane>

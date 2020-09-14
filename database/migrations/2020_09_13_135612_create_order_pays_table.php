@@ -15,8 +15,9 @@ class CreateOrderPaysTable extends Migration
     {
         Schema::create('order_pays', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('user_id')->default(0)->comment('用户ID');
             $table->string('pay_no',30)->default('')->comment('支付号')->unique();
-            $table->string('out_trade_no',30)->default('')->comment(' 支付平台单号');
+            $table->string('trade_no',30)->default('')->comment(' 支付平台单号');
             $table->text('order_ids')->comment('订单ID 逗号隔开');
             $table->string('payment_name',20)->default('')->comment('支付方式');
             $table->string('pay_type',10)->default('o')->comment('支付类型 o订单 r充值');

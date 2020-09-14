@@ -172,7 +172,17 @@ class OrderService extends BaseService{
         
     }
 
-    // 支付订单
+    /**
+     * // 支付订单 function
+     *
+     * @param string $order_id 如：10,12,13
+     * @param string $payment_name 如：wechat_scan|balance|wechat_h5
+     * @param string $pay_password 如：123456 （非必填,payment_name=balance则需要填写)
+     * @param string $recharge 如：1 （非必填）
+     * @return void
+     * @Description
+     * @author hg <www.qingwuit.com>
+     */
     public function payOrder(){
         $order_id = request()->order_id;
         $payment_name = request()->payment_name??'';
@@ -190,7 +200,7 @@ class OrderService extends BaseService{
         $order_str = implode('',$order_arr); // 转化为字符串生成支付订单号
 
         // 获取用户信息
-        $user_service = UserService();
+        $user_service = new UserService();
         $user_info = $user_service->getUserInfo();
         if(empty($user_info)){
             return $this->format_error(__('user.no_token'));
@@ -209,7 +219,7 @@ class OrderService extends BaseService{
         }
 
         $pay_no = date('YmdHi').$order_str; // 订单支付号
-        $rs = $this->createPayOrder(false,$pay_no,$order_list);
+        $rs = $this->createPayOrder(false,$pay_no,$user_info,$order_list);
 
         // 创建支付订单失败
         if(!$rs['status']){
@@ -217,19 +227,21 @@ class OrderService extends BaseService{
         }
 
         // 获取支付信息,调取第三方支付
-        
+        $payment_model = new PayMentService();
+        $payment_model->pay($payment_name,$rs['data']);
 
     }
 
     // 创建支付订单
     // @param bool $recharge_pay 是否是充值 还是订单
     // @param string $pay_no 支付订单号
-    protected function createPayOrder($recharge_pay = false,$pay_no='',$order_list=[]){
+    protected function createPayOrder($recharge_pay = false,$user_info,$pay_no='',$order_list=[]){
         // 创建支付订单
         $create_data = [];
         if($recharge_pay){
             $pay_no = date('YmdHis').mt_rand(10000,99999);
             $create_data = [
+                'user_id'               =>  $user_info['id'],
                 'pay_no'                =>  $pay_no,
                 'pay_type'              =>  'r',
                 'total_price'           =>  abs(request()->total??1), // 充值金额
@@ -244,6 +256,7 @@ class OrderService extends BaseService{
                 $order_balance += $order_balance; 
             }
             $create_data = [
+                'user_id'                   =>  $user_info['id'],
                 'pay_no'                    =>  $pay_no,
                 'order_ids'                 =>  implode(',',$order_ids),
                 'pay_type'                  =>  'o',

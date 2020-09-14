@@ -185,3 +185,16 @@ Route::namespace('Home')->group(function(){
 
     
 });
+
+
+/**
+ * 
+ * @author hg <364825702@qq.com>
+ * 商城支付回调|其他回调 路由
+ * 
+ */
+Route::namespace('PayCallBack')->group(function(){
+
+    Route::any('/payment/{name}','PaymentController@payment'); // 回调地址  [/api/payment/wechat] | [/api/payment/ali]
+    
+});

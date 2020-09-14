@@ -14,5 +14,10 @@ return [
     'order_pay'                          =>  '订单已经支付.',
     'payment_failed'                     =>  '支付失败.',
     'empty_payment'                      =>  '请选择支付方式.',
+    'pay_password_error'                 =>  '支付密码错误.',
+    'balance_insufficient'               =>  '余额不足,请先充值.',
+
+    'payment_call_error'                 =>  '支付回调失败.',
+
     
 ];
