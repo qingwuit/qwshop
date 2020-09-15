@@ -280,6 +280,44 @@ class OrderService extends BaseService{
         
     }
 
+    /**
+     * 订单状态修改 function
+     *
+     * @param [type] $order_id 订单ID
+     * @param [type] $order_status 订单状态
+     * @return void
+     * @Description
+     * @author hg <www.qingwuit.com>
+     */
+    public function editOrderStatus($order_id,$order_status){
+        $order_model = Order::find($order_id);
+        switch($order_status){
+            case 0: // 取消订单
+                if($order_model->order_status != 1){ // 只有待支付的订单能取消
+                    return $this->format_error(__('base.error').' - 0');
+                }
+            break;
+            case 1: // 等待支付
+            break;
+            case 2: // 等待发货
+            break;
+            case 3: // 确认收货
+                if(empty($order_model->delivery_no)|| empty($order_model->delivery_code)){ // 只有待支付的订单能取消
+                    return $this->format_error(__('base.error').' - 3');
+                }
+            break;
+            case 4: // 等待评论
+            break;
+            case 5: // 5售后
+            break;
+            case 6: // 6订单完成
+            break;
+        }
+        $order_model->order_status = $order_status;
+        $order_model->save();
+        return $this->format([]);
+    }
+
     // 地址验证
     protected function checkAddress(){
         $id = request()->address_id??0;

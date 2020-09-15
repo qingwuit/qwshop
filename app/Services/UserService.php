@@ -178,5 +178,84 @@ class UserService extends BaseService{
         return $this->format(new UserCheckLogin($this->getUserInfo($auth)));
         
     }
+
+    /**
+     * 修改用户资料 function
+     *
+     * @param string $auth 前端允许修改和后台允许修改
+     * @return void
+     * @Description
+     * @author hg <www.qingwuit.com>
+     */
+    public function editUser($auth='user'){
+        $user_service = new UserService();
+        $user_info = $user_service->getUserInfo();
+
+        $user_model = User::find($user_info['id']);
+
+        // 昵称
+        if(isset(request()->nickname)){
+            $user_model->nickname = request()->nickname;
+        }
+        // 头像
+        if(isset(request()->avatar)){
+            $user_model->avatar = request()->avatar;
+        }
+        // 用户名
+        if(isset(request()->username)){
+            $user_model->username = request()->username;
+        }
+        // 性别
+        if(isset(request()->sex)){
+            $user_model->sex = abs(intval(request()->sex));
+        }
+        // 密码
+        if(
+            (isset(request()->password) && !empty(request()->password)) ||
+            (isset(request()->pay_password) && !empty(request()->pay_password)) ||
+            (isset(request()->phone) && !empty(request()->phone))
+        ){
+            // 判断
+            if($auth == 'user'){
+                if(!isset(request()->code) || empty(request()->code)){
+                    return $this->format_error(__('users.edit_code_error'));
+                }
+
+                $sms_log_model = new SmsLog();
+                if(empty($smsInfo = $sms_log_model->where([
+                    'ip'    =>  request()->getClientIp(),
+                    'content'    =>  request()->code,
+                    'status'    =>  1,
+                    'phone'   =>  $user_model->phone,
+                ])->first())){
+                    return $this->format_error(__('auth.sms_error'));
+                }
+
+                // 验证码失效 十分钟
+                $ct = strtotime($smsInfo->created_at->format('Y-m-d H:i:s'));
+                if(($ct+600)<time()){
+                    return $this->format_error(__('auth.sms_invalid'));
+                }
+            }
+            
+            if(isset(request()->password) || !empty(request()->password)){
+                $user_model->password = Hash::make(request()->password);
+            }
+            if(isset(request()->pay_password) || !empty(request()->pay_password)){
+                $user_model->pay_password = md5($user_model->id.request()->pay_password);
+            }
+            if(isset(request()->phone) || !empty(request()->phone)){
+                $sms_service = new SmsService();
+                $phone_check = $sms_service->check_phone(request()->phone);
+                if(!$phone_check){
+                    return $this->format_error(__('sms.phone_error'));
+                }
+                $user_model->phone = md5($user_model->id.request()->phone);
+            }
+
+        }
+        $user_model->save();
+        return $this->format([]);
+    }
     
 }

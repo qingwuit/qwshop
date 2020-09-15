@@ -166,6 +166,10 @@ Route::namespace('Home')->group(function(){
         Route::put('/addresses/default/set','AddressController@set_default'); // 设置默认地址
         Route::get('/addresses/default/get','AddressController@get_default'); // 获取默认地址
 
+        // 用户资料
+        Route::get('/users/info','UserController@user_info'); // 获取用户资料
+        Route::get('/users/edit_user','UserController@edit_user'); // 修改用户资料
+
         // 订单处理
         Route::get('/order/create_order_before','OrderController@create_order_before'); // 生成订单前处理
         Route::get('/order/create_order_after','OrderController@create_order_after'); // 生成订单后处理
