@@ -168,7 +168,8 @@ Route::namespace('Home')->group(function(){
 
         // 用户资料
         Route::get('/users/info','UserController@user_info'); // 获取用户资料
-        Route::get('/users/edit_user','UserController@edit_user'); // 修改用户资料
+        Route::match(['get','put'],'/users/edit_user','UserController@edit_user'); // 修改用户资料
+        Route::post('/users/avatar_upload','UserController@avatar_upload'); // 用户头像上传
 
         // 订单处理
         Route::get('/order/create_order_before','OrderController@create_order_before'); // 生成订单前处理

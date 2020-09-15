@@ -37,6 +37,9 @@ export default
     // 订单处理
     'homeOrder' : baseUrl + 'order',
 
+    // 用户中心
+    'homeUser' : baseUrl + 'users',
+
     // 商家入驻
     'homeStoreVerify' : baseUrl + 'store/store_verify',  // 商家审核状态
     'homeStoreJoin' : baseUrl + 'store/store_join',  // 商家审核状态

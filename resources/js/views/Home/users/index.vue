@@ -5,18 +5,18 @@
             <div class="user_left">
                 <div class="user_info_block">
                     <dl>
-                        <dt><img :src="''||require('@/asset/user/user_default.png')" alt=""></dt>
-                        <dd>神秘人2</dd>
-                        <dd class="edit_user_info"><router-link to="#">编辑信息</router-link></dd>
+                        <dt><img :src="user_info.avatar||require('@/asset/user/user_default.png')" alt=""></dt>
+                        <dd>{{user_info.nickname||'加载中...'}}</dd>
+                        <dd class="edit_user_info"><router-link to="/user/user_info">编辑信息</router-link></dd>
                     </dl>
                     <div class="user_stepbar">
-                        <span>账号资料：</span><a-progress class="progress" :percent="70" size="small" stroke-color="#ca151e" />
+                        <span>账号资料：</span><a-progress class="progress" :percent="user_info.completion" size="small" stroke-color="#ca151e" />
                     </div>
                     <div class="user_safe">
                         <span>账户安全：</span>
                         <span class="safe_icon">
-                            <a-font :class="''" type="iconshouji"></a-font>
-                            <a-font type="iconnamecard"></a-font>
+                            <a-font :class="user_info.phone!=''?'success':''" type="iconshouji"></a-font>
+                            <a-font :class="user_info.user_check?'success':''" type="iconnamecard"></a-font>
                         </span>
                     </div>
                 </div>
@@ -60,8 +60,8 @@ export default {
                     name:'会员中心',
                     icon:'iconchengyuan',
                     children:[
-                        {name:'个人中心',url:'#'},
-                        {name:'用户资料',url:'#'},
+                        {name:'个人中心',url:'/user'},
+                        {name:'用户资料',url:'/user/user_info'},
                         {name:'账户安全',url:'#'},
                         {name:'账号绑定',url:'#'},
                         {name:'资金提现',url:'#'},
@@ -102,13 +102,22 @@ export default {
                         {name:'关于我们',url:'#'},
                     ],
                 },
-            ]
+            ],
+            user_info:{},
         };
     },
     watch: {},
     computed: {},
-    methods: {},
-    created() {},
+    methods: {
+        get_user_info(){
+            this.$get(this.$api.homeUser+'/info').then(res=>{
+                this.user_info = res.data;
+            })
+        },
+    },
+    created() {
+        this.get_user_info();
+    },
     mounted() {}
 };
 </script>

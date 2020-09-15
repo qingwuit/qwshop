@@ -25,6 +25,8 @@ class UserResource extends JsonResource
             'frozen_money'      =>  $this->frozen_money,
             'integral'          =>  $this->integral,
             'inviter_id'        =>  $this->inviter_id,
+            'completion'        =>  $this->completion,
+            'user_check'        =>  $this->user_check,
         ];
     }
 }

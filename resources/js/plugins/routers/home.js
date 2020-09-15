@@ -32,6 +32,7 @@ export default [
             {path: '/user',name: 'home_user_default',component: () => import('@/views/Home/users/default')}, // 用户中心首页
             {path: '/user/address',name: 'home_user_address',component: () => import('@/views/Home/users/address/index')}, // 用户收货地址列表
             {path: '/user/address/form/:id?',name: 'home_user_address_form',component: () => import('@/views/Home/users/address/form')}, // 用户收货地址编辑
+            {path: '/user/user_info',name: 'home_user_user_info',component: () => import('@/views/Home/users/user_info')}, // 用户资料编辑
         ]}, 
     ]},
 

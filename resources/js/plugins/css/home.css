@@ -190,3 +190,12 @@
 /* .home .ant-switch:focus{
     box-shadow: 0 0 0 2px rgba(255, 24, 62, 0.5);
 } */
+/* 单选框 */
+.home .ant-radio-checked .ant-radio-inner{
+    border-color:#666;
+}
+.home .ant-radio-inner:after{
+    background-color: #666;
+}
+.home .ant-radio-input:focus+.ant-radio-inner,.ant-radio-wrapper:hover .ant-radio,.ant-radio:hover .ant-radio-inner{border-color:#666}
+.home .ant-radio-input:focus+.ant-radio-inner{box-shadow:0 0 0 3px rgba(59, 59, 59, 0.08)}
