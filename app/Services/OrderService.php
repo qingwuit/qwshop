@@ -218,7 +218,9 @@ class OrderService extends BaseService{
             return $this->format_error(__('orders.order_pay'));
         }
 
-        $pay_no = date('YmdHi').$order_str; // 订单支付号
+        // 十秒钟不能重复支付 设计订单支付号 当前时间到秒的十位+用户ID+订单ID号
+        $second = substr(date('YmdHis'),0,13);
+        $pay_no = $second.$user_info['id'].$order_str; // 订单支付号
         $rs = $this->createPayOrder(false,$user_info,$pay_no,$order_list);
 
         // 创建支付订单失败

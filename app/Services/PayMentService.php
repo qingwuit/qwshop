@@ -94,6 +94,12 @@ class PayMentService extends BaseService{
             if($order_pay->total_price>$user_info->money){
                 return $this->format_error(__('orders.balance_insufficient'));
             }
+            // 金额日志 用户账户变更
+            $ml_service = new MoneyLogService();
+            $ml_info = $ml_service->editMoney(__('users.money_log_order'),$order_pay->user_id,-$order_pay->total_price);
+            if(!$ml_info['status']){
+                return $this->format_error($ml_info['msg']);
+            }
         }else{
             // 是否是在线充值
             $isRecharge=false;
@@ -288,6 +294,11 @@ class PayMentService extends BaseService{
             // 如果不是充值则取修改订单状态
             if(!$isRecharge){
                 // 金额日志 用户账户变更
+                $ml_service = new MoneyLogService();
+                $ml_info = $ml_service->editMoney(__('users.money_log_recharge'),$user_id,$order_pay_model->total_price);
+                if(!$ml_info['status']){
+                    throw new \Exception($ml_info['msg']);
+                }
             }else{
                 $order_model = new Order();
                 $rs = $order_model->whereIn('id',$oid_arr)->update([
@@ -296,6 +307,11 @@ class PayMentService extends BaseService{
                     'payment_name'  =>  $payment_name,
                 ]);
                 // 金额日志 用户账户变更
+                $ml_service = new MoneyLogService();
+                $ml_info = $ml_service->editMoney(__('users.money_log_order'),$user_id,-$order_pay_model->total_price);
+                if(!$ml_info['status']){
+                    throw new \Exception($ml_info['msg']);
+                }
             }
             DB::commit();
             return $this->format($rs);

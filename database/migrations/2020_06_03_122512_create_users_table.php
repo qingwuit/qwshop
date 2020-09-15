@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('phone',15)->default('')->comment('电话');
             $table->string('email',15)->default('')->comment('邮箱');
             $table->unsignedDecimal('money','9','2')->default(0.00)->comment('余额');
+            $table->unsignedDecimal('frozen_money','9','2')->default(0.00)->comment('冻结资金');
             $table->unsignedDecimal('integral','9','2')->default(0.00)->comment('积分');
             $table->unsignedInteger('inviter_id')->default(0)->comment('邀请人ID');
             $table->ipAddress('ip')->default('0.0.0.0')->comment('登陆IP');
