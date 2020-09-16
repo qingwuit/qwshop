@@ -171,6 +171,9 @@ Route::namespace('Home')->group(function(){
         Route::match(['get','put'],'/users/edit_user','UserController@edit_user'); // 修改用户资料
         Route::post('/users/avatar_upload','UserController@avatar_upload'); // 用户头像上传
 
+        // 收藏/关注
+        Route::apiResource('favorites','FavoriteController')->except(['update']);
+
         // 订单处理
         Route::get('/order/create_order_before','OrderController@create_order_before'); // 生成订单前处理
         Route::get('/order/create_order_after','OrderController@create_order_after'); // 生成订单后处理

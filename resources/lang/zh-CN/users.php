@@ -18,5 +18,6 @@ return [
     // 资金日志名称
     'money_log_order'                            =>  '订单支付',
     'money_log_recharge'                         =>  '在线充值',
+
     
 ];
