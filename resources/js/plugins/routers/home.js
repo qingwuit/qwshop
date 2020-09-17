@@ -33,6 +33,9 @@ export default [
             {path: '/user/address',name: 'home_user_address',component: () => import('@/views/Home/users/address/index')}, // 用户收货地址列表
             {path: '/user/address/form/:id?',name: 'home_user_address_form',component: () => import('@/views/Home/users/address/form')}, // 用户收货地址编辑
             {path: '/user/user_info',name: 'home_user_user_info',component: () => import('@/views/Home/users/user_info')}, // 用户资料编辑
+            {path: '/user/safe',name: 'home_user_safe',component: () => import('@/views/Home/users/safe/index')}, // 用户安全
+            {path: '/user/oauth',name: 'home_user_oauth',component: () => import('@/views/Home/users/oauth/index')}, // 用户账户绑定
+            {path: '/user/order',name: 'home_user_order',component: () => import('@/views/Home/users/order/index')}, // 用户订单
         ]}, 
     ]},
 

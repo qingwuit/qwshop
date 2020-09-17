@@ -103,6 +103,10 @@ export default {
         onSelectChange(selectedRowKeys) {
             this.selectedRowKeys = selectedRowKeys;
         },
+        // 选择分页
+        onChange(e){
+            this.params.page = e;
+        },
         // 删除
         del(){
             if(this.selectedRowKeys.length==0){

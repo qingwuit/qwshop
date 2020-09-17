@@ -37,9 +37,9 @@ class FavoriteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request,FavoriteService $fav_service,$id)
+    public function show(FavoriteService $fav_service,$id)
     {
-        $rs = $fav_service->isFav($request->id);
+        $rs = $fav_service->isFav($id);
         return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
     }
 

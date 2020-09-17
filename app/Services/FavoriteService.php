@@ -15,7 +15,7 @@ class FavoriteService extends BaseService{
         $fav_model = $fav_model->where(['user_id'=>$user_info['id'],'is_type'=>$type]);
         if($type==0){
             $fav_model = $fav_model->with(['goods'=>function($q){
-                return $q->select('id','goods_master_image','goods_name','goods_subname')->with('sku');
+                return $q->select('id','goods_master_image','goods_price','goods_name','goods_subname')->with('goods_sku');
             }]);
         }else{
             $fav_model = $fav_model->with(['store'=>function($q){
@@ -75,7 +75,7 @@ class FavoriteService extends BaseService{
 
         $fav_model = new Favorite();
         $fav_info = $fav_model->where(['user_id'=>$user_info['id'],'out_id'=>$out_id,'is_type'=>request()->is_type])->first();
-        if(!empty($fav_info)){
+        if(empty($fav_info)){
             return $this->format_error();
         }
         return $this->format($fav_info);

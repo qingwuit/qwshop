@@ -101,6 +101,10 @@ ul,li,ol{
     margin-top: 20px;
     margin-bottom: 20px;
 }
+.home_pagination{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 /* 后台 条件框 lable */
 .admin_table_page_where .ant-form-inline .ant-form-item>.ant-form-item-label{
     width: auto;

@@ -51,7 +51,7 @@ export default {
                     name:'订单中心',
                     icon:'icondingdan',
                     children:[
-                        {name:'我的订单',url:'#'},
+                        {name:'我的订单',url:'/user/order'},
                         {name:'收货地址',url:'/user/address'},
                         {name:'评论列表',url:'#'},
                     ],
@@ -62,8 +62,8 @@ export default {
                     children:[
                         {name:'个人中心',url:'/user'},
                         {name:'用户资料',url:'/user/user_info'},
-                        {name:'账户安全',url:'#'},
-                        {name:'账号绑定',url:'#'},
+                        {name:'账户安全',url:'/user/safe'},
+                        {name:'账号绑定',url:'/user/oauth'},
                         {name:'资金提现',url:'#'},
                         {name:'收藏/关注',url:'#'},
                     ],

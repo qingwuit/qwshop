@@ -3,12 +3,19 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Home\OrderResource\OrderCollection;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     
+    // 获取订单列表
+    public function get_orders(){
+        $order_service = new OrderService();
+        $list = $order_service->getOrders()['data'];
+        return $this->success(new OrderCollection($list));
+    }
 
     // 创建订单
     public function create_order(){

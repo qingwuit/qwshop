@@ -199,3 +199,4 @@
 }
 .home .ant-radio-input:focus+.ant-radio-inner,.ant-radio-wrapper:hover .ant-radio,.ant-radio:hover .ant-radio-inner{border-color:#666}
 .home .ant-radio-input:focus+.ant-radio-inner{box-shadow:0 0 0 3px rgba(59, 59, 59, 0.08)}
+.home .ant-upload.ant-upload-select-picture-card:hover{border-color:#666}

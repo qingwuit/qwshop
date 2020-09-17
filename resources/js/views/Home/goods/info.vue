@@ -29,7 +29,7 @@
             <div class="goods_info_top_right" >
                 <div class="goods_info_title">{{goods_info.goods_name||'加载中...'}}
                     <p>{{goods_info.goods_subname||'加载中...'}}</p>
-                    <div :class="is_fav?'goods_info_sc red_color':'goods_info_sc'" @click="goods_fav()">{{is_fav?'已收藏':'收藏'}}<a-icon type="like" /></div>
+                    <div :class="isFav?'goods_info_sc red_color':'goods_info_sc'" @click="goods_fav()">{{isFav?'已收藏':'收藏'}}<a-icon type="like" /></div>
                 </div>
                 <div class="goods_info_group">
                     <div class="goods_info_price"><span>商城价：</span>￥{{goods_info.goods_price||'0.00'}}</div>
@@ -96,6 +96,8 @@ export default {
           chose_img_pos:0,
           chose_spec:[],
           sku_id:0,
+          isFav:false,
+          save_history:true,
       };
     },
     watch: {
@@ -115,6 +117,7 @@ export default {
             this.$get(this.$api.homeGoods+'/'+this.goods_id).then(res=>{
                 if(res.code == 200){
                     this.goods_info = res.data;
+                    this.is_fav(res.data.id); // 获取收藏情况
                     // 存储游览记录
                     if(this.save_history){
                         this.save_history_fun(this.goods_info);
@@ -229,7 +232,6 @@ export default {
                     }
                 })
             }
-            // console.log(goods_list)
             
             if(!have_his){
                 goods_list.push({id:goods_info.id,goods_name:goods_info.goods_name,goods_price:goods_info.goods_price,image:goods_info.goods_master_image});
@@ -275,6 +277,35 @@ export default {
                 this.buy_num -= 1
             }
         },
+        goods_fav(){
+            if(this.isFav){
+                return this.del_fav(this.goods_info.id);
+            }else{
+                return this.add_fav(this.goods_info.id);
+            }
+        },
+        // 添加收藏
+        add_fav(id){
+            this.$post(this.$api.homeFav,{id:id,is_type:0}).then(res=>{
+                return this.is_fav(id);
+            })
+        },
+        // 删除收藏
+        del_fav(id){
+            this.$delete(this.$api.homeFav+'/'+id,{is_type:0}).then(res=>{
+                return this.is_fav(id);
+            })
+        },
+        // 判断是否收藏该产品
+        is_fav(id){
+            this.$get(this.$api.homeFav+'/'+id,{is_type:0}).then(res=>{
+                if(res.code == 200){
+                    return this.isFav = true;
+                }else{
+                    return this.isFav = false;
+                }
+            })
+        }
     },
     created() {
         this.goods_id = this.$route.params.id;
@@ -551,6 +582,7 @@ export default {
     top:0;
     right: 8px;
     padding:0 10px;
+    cursor: pointer;
     i{
         margin-left: 6px;
         font-size: 12px;

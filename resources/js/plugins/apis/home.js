@@ -28,6 +28,9 @@ export default
     // 商品
     'homeGoods' : baseUrl + 'goods',
 
+    // 收藏关注
+    'homeFav'   : baseUrl + 'favorites',
+
     // 购物车
     'homeCarts' : baseUrl + 'carts',
 

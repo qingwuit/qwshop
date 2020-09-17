@@ -27,6 +27,7 @@ class UserResource extends JsonResource
             'inviter_id'        =>  $this->inviter_id,
             'completion'        =>  $this->completion,
             'user_check'        =>  $this->user_check,
+            'wechat_check'      =>  $this->wechat_check,
         ];
     }
 }

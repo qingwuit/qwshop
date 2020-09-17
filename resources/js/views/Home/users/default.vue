@@ -4,17 +4,17 @@
             <dl class="item1">
                 <dt><a-font type="iconyue"></a-font></dt>
                 <dd class="title">账号余额</dd>
-                <dd>10.00 元</dd>
+                <dd>{{user_info.money||'0.00'}} 元</dd>
             </dl>
             <dl class="item2">
                 <dt><a-font type="iconjifen"></a-font></dt>
                 <dd class="title">账号积分</dd>
-                <dd>20.00 积分</dd>
+                <dd>{{user_info.integral||'0.00'}} 积分</dd>
             </dl>
             <dl class="item3">
                 <dt><a-font type="iconyue"></a-font></dt>
                 <dd class="title">冻结资金</dd>
-                <dd>0.00 元</dd>
+                <dd>{{user_info.frozen_money||'0.00'}} 元</dd>
             </dl>
             <div class="clear"></div>
         </div>
@@ -25,31 +25,31 @@
                 <li>
                     <router-link to="#">
                     <a-font type="icondengdaifh"></a-font>
-                    <span><a-badge count="5" :offset="[11,-7]">待支付</a-badge></span>
+                    <span><a-badge :count="count[0]" :offset="[11,-7]">待支付</a-badge></span>
                     </router-link>
                 </li>
                 <li>
                     <router-link to="#">
                     <a-font type="iconwuliu"></a-font>
-                    <span><a-badge count="5" :offset="[11,-7]">待发货</a-badge></span>
+                    <span><a-badge :count="count[1]" :offset="[11,-7]">待发货</a-badge></span>
                     </router-link>
                 </li>
                 <li>
                     <router-link to="#">
                     <a-font type="iconchanpin1"></a-font>
-                    <span><a-badge count="0" :offset="[11,-7]">待收货</a-badge></span>
+                    <span><a-badge :count="count[2]" :offset="[11,-7]">待收货</a-badge></span>
                     </router-link>
                 </li>
                 <li>
                     <router-link to="#">
                     <a-font type="iconpinglun"></a-font>
-                    <span><a-badge count="0" :offset="[11,-7]">待评论</a-badge></span>
+                    <span><a-badge :count="count[3]" :offset="[11,-7]">待评论</a-badge></span>
                     </router-link>
                 </li>
                 <li>
                     <router-link to="#">
                     <a-font type="iconshouhou"></a-font>
-                    <span><a-badge count="0" :offset="[11,-7]">售后处理</a-badge></span>
+                    <span><a-badge :count="count[4]" :offset="[11,-7]">售后处理</a-badge></span>
                     </router-link>
                 </li>
             </ul>
@@ -61,27 +61,20 @@
                 近期订单
             </div>
             <div class="x20"></div>
-            <div class="order_list" v-if="order.length>0||true">
-                <div class="order_item">
+            <div class="order_list" v-if="order.length>0">
+                <div class="order_item" v-for="(v,k) in order" :key="k">
                     <div class="order_item_title">
-                        <span>2020-01-06 15:11<font color="#ca151e">等待发货</font></span>
-                        订单号：202001071215136783
+                        <span>{{v.created_at}}<font :color="v.order_status==6?'#42b983':'#ca151e'">{{v.order_status_cn||'-'}}</font></span>
+                        订单号：{{v.order_no||'-'}}
                     </div>
                     <div class="order_item_list">
                         <ul>
-                            <li><router-link to="">
-                                <div class="order_thumb"><img :src="''||require('@/asset/order/default.png')" alt=""></div>
-                                <div class="order_list_title">三星C24F396FH曲面显示器23.5英寸电脑显示器24液晶显示屏幕超22</div>
-                                <div class="order_list_attr">-</div>
-                                <div class="order_list_num">X 1</div>
-                                <div class="order_list_price">￥2500.00</div>
-                            </router-link></li>
-                            <li><router-link to="">
-                                <div class="order_thumb"><img :src="''||require('@/asset/order/default.png')" alt=""></div>
-                                <div class="order_list_title">三星C24F396FH曲面显示器23.5英寸电脑显示器24液晶显示屏幕超22</div>
-                                <div class="order_list_attr">-</div>
-                                <div class="order_list_num">X 1</div>
-                                <div class="order_list_price">￥2500.00</div>
+                            <li v-for="(vo,key) in v.order_goods" :key="key"><router-link to="">
+                                <div class="order_thumb"><img :src="vo.goods_image||require('@/asset/order/default.png')" :alt="vo.goods_name"></div>
+                                <div class="order_list_title">{{vo.goods_name||'-'}}</div>
+                                <div class="order_list_attr">{{vo.sku_name||'-'}}</div>
+                                <div class="order_list_num">X {{vo.buy_num||'1'}}</div>
+                                <div class="order_list_price">￥{{vo.total_price||'0.00'}}</div>
                             </router-link></li>
                         </ul>
                     </div>
@@ -96,28 +89,12 @@
                 近期收藏
             </div>
             <div class="x20"></div>
-            <div class="fav_item_list" v-if="true">
-                <dl><router-link to="">
-                    <dt><img src="" alt=""></dt>
-                    <dd class="title">Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体</dd>
-                    <dd class="price">￥250.00</dd>
+            <div class="fav_item_list" v-if="fav.length>0">
+                <dl v-for="(v,k) in fav" :key="k"><router-link :to="'/goods/'+v.out_id">
+                    <dt><img :src="v.goods_master_image" :alt="v.goods_name"></dt>
+                    <dd class="title">{{v.goods_name}}</dd>
+                    <dd class="price">￥{{v.goods_price}}</dd>
                 </router-link></dl>
-                <dl><router-link to="">
-                    <dt><img src="" alt=""></dt>
-                    <dd class="title">Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体</dd>
-                    <dd class="price">￥250.00</dd>
-                </router-link></dl>
-                <dl><router-link to="">
-                    <dt><img src="" alt=""></dt>
-                    <dd class="title">Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体</dd>
-                    <dd class="price">￥250.00</dd>
-                </router-link></dl>
-                <dl><router-link to="">
-                    <dt><img src="" alt=""></dt>
-                    <dd class="title">Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体</dd>
-                    <dd class="price">￥250.00</dd>
-                </router-link></dl>
-       
             </div>
             <a-empty v-else />
         </div>
@@ -127,11 +104,11 @@
                 游览历史
             </div>
             <div class="x20"></div>
-            <div class="fav_item_list" v-if="false">
-                <dl><router-link to="">
-                    <dt><img src="" alt=""></dt>
-                    <dd class="title">Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体</dd>
-                    <dd class="price">￥250.00</dd>
+            <div class="fav_item_list" v-if="history.length>0">
+                <dl v-for="(v,k) in history" :key="k"><router-link :to="'/goods/'+v.id">
+                    <dt><img :src="v.image" :alt="v.goods_name"></dt>
+                    <dd class="title">{{v.goods_name}}</dd>
+                    <dd class="price">￥{{v.goods_price}}</dd>
                 </router-link></dl>
             </div>
             <a-empty v-else />
@@ -148,12 +125,31 @@ export default {
           order:[],
           fav:[],
           history:[],
+          count:[],
+          user_info:{},
       };
     },
     watch: {},
     computed: {},
-    methods: {},
-    created() {},
+    methods: {
+        get_info(){
+            this.$get(this.$api.homeUser+'/default',{per_page:4,is_type:0}).then(res=>{
+                this.user_info = res.data.user;
+                this.order = res.data.order.data;
+                this.fav = res.data.fav.data;
+                this.count = res.data.count;
+            })
+        },
+
+    },
+    created() {
+        this.get_info();
+        let history = localStorage.getItem('shop_goods_historys')
+        if(!this.$isEmpty(history)){
+            this.history = JSON.parse(history) 
+        }
+        
+    },
     mounted() {}
 };
 </script>

@@ -166,6 +166,9 @@ Route::namespace('Home')->group(function(){
         Route::put('/addresses/default/set','AddressController@set_default'); // 设置默认地址
         Route::get('/addresses/default/get','AddressController@get_default'); // 获取默认地址
 
+        // 个人中心首页
+        Route::get('/users/default','UserController@default'); // 默认页面
+
         // 用户资料
         Route::get('/users/info','UserController@user_info'); // 获取用户资料
         Route::match(['get','put'],'/users/edit_user','UserController@edit_user'); // 修改用户资料
@@ -173,6 +176,9 @@ Route::namespace('Home')->group(function(){
 
         // 收藏/关注
         Route::apiResource('favorites','FavoriteController')->except(['update']);
+
+        // 订单列表
+        Route::get('/order','OrderController@get_orders'); // 获取订单列表
 
         // 订单处理
         Route::get('/order/create_order_before','OrderController@create_order_before'); // 生成订单前处理

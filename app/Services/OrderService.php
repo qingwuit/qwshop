@@ -413,7 +413,7 @@ class OrderService extends BaseService{
              return $q->select('id','store_name');
         },'user'=>function($q){
             return $q->select('id','username');
-        }]);
+        },'order_goods']);
         
         // 订单号
         $order_no  = request()->order_no;
@@ -482,15 +482,12 @@ class OrderService extends BaseService{
                 $cn = __('admins.wait_send');
                 break;
             case 3:
-                $cn = __('admins.wait_rec');
-                break;
-            case 4:
                 $cn = __('admins.order_confirm');
                 break;
-            case 5:
+            case 4:
                 $cn = __('admins.wait_comment');
                 break;
-            case 6:
+            case 5:
                 if($order_info['refund_type'] == 0){
                     $cn = __('admins.order_refund');
                 }elseif($order_info['refund_type'] == 1){
@@ -500,7 +497,7 @@ class OrderService extends BaseService{
                 }
                 
                 break;
-            case 7:
+            case 6:
                 $cn = __('admins.order_completion');
                 break;
         }
