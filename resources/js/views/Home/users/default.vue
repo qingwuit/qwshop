@@ -57,7 +57,7 @@
 
         <div class="user_main">
             <div class="block_title">
-                <span><router-link to="#">查看更多</router-link></span>
+                <span><router-link to="/user/order">查看更多</router-link></span>
                 近期订单
             </div>
             <div class="x20"></div>
@@ -85,7 +85,7 @@
 
         <div class="user_main">
             <div class="block_title">
-                <span><router-link to="#">查看更多</router-link></span>
+                <span><router-link to="/user/favorite">查看更多</router-link></span>
                 近期收藏
             </div>
             <div class="x20"></div>
