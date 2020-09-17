@@ -200,8 +200,8 @@ export default {
             content:'';
         }
         .order_thumb{
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             background: #efefef;
             border:1px solid #efefef;
             box-sizing: border-box;

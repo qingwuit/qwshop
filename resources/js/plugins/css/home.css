@@ -183,6 +183,59 @@
     text-align: center;
     border-radius: 3px;
 }
+
+/* 公共按钮2 */
+.home .default_btn{
+    background: #fff;
+    color:#666;
+    border-radius: 3px;
+    box-sizing: border-box;
+    padding: 5px 15px;
+    display: inline;
+    cursor: pointer;
+    box-shadow: 0 2px 0 rgba(0,0,0,.015);
+    border: 1px solid #d9d9d9;
+}
+.home .error_btn{
+    background: #ca151e;
+    color:#fff;
+    border-radius: 3px;
+    box-sizing: border-box;
+    padding: 5px 15px;
+    display: inline;
+    cursor: pointer;
+    box-shadow: 0 2px 0 rgba(0,0,0,.015);
+}
+.home .warn_btn{
+    background: #e6a23c;
+    color:#fff;
+    border-radius: 3px;
+    box-sizing: border-box;
+    padding: 5px 15px;
+    display: inline;
+    cursor: pointer;
+    box-shadow: 0 2px 0 rgba(0,0,0,.015);
+}
+.home .success_btn{
+    background:#67c23a;
+    color:#fff;
+    border-radius: 3px;
+    box-sizing: border-box;
+    padding: 5px 15px;
+    display: inline;
+    cursor: pointer;
+    box-shadow: 0 2px 0 rgba(0,0,0,.015);
+}
+.home .gray_btn{
+    background:#909399;
+    color:#fff;
+    border-radius: 3px;
+    box-sizing: border-box;
+    padding: 5px 15px;
+    display: inline;
+    cursor: pointer;
+    box-shadow: 0 2px 0 rgba(0,0,0,.015);
+}
 /* 开关 */
 .home .ant-switch-checked{
     background-color: #ca151e;

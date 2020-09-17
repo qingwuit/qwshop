@@ -25,11 +25,11 @@
                     </div>
 
                     <div class="order_item_btn" v-if="v.order_status!=6 || v.order_status !=0">
-                        <div class="close">取消订单</div>
-                        <div class="pay">立即支付</div>
-                        <div class="confirm">确定收货</div>
-                        <div class="comment">前往评论</div>
-                        <div class="refund">申请售后</div>
+                        <div class="default_btn" v-if="v.order_status=1" >取消订单</div>
+                        <div class="success_btn" v-if="v.order_status=1">立即支付</div>
+                        <div class="error_btn" v-if="v.order_status=3">确定收货</div>
+                        <div class="gray_btn" v-if="v.order_status=4">前往评论</div>
+                        <div class="warn_btn" v-if="v.order_status>3 && v.order_status !=5">申请售后</div>
                     </div>
                 </div>
                 <div class="fy" v-if="total>0">
@@ -77,6 +77,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.order_item_btn{
+    text-align: right;
+    margin-top: 20px;
+}
 .order_item_title{
     background: #f6f6f6;
     line-height: 40px;
@@ -150,8 +154,8 @@ export default {
             content:'';
         }
         .order_thumb{
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             background: #efefef;
             border:1px solid #efefef;
             box-sizing: border-box;
