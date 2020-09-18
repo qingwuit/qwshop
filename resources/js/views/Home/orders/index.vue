@@ -141,13 +141,18 @@ export default {
         // 订单建立前预览商品信息
         create_order_before(){
             this.$get(this.$api.homeOrder+'/create_order_before',{params:this.$route.params.params}).then(res=>{
-
-                res.data.forEach(item=>{
-                    item.goods_list.forEach(item2=>{
-                        this.total += item2.total;
+                if(res.code == 200){
+                    res.data.forEach(item=>{
+                        item.goods_list.forEach(item2=>{
+                            this.total += item2.total;
+                        })
                     })
-                })
-                this.order = res.data;
+                    this.order = res.data;
+                }else{
+                    this.$message.error(res.msg)
+                    return this.$router.go(-1)
+                }
+                
             })
         },
         // 创建订单

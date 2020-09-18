@@ -31,6 +31,9 @@ export default
     // 收藏关注
     'homeFav'   : baseUrl + 'favorites',
 
+    // 资金日志
+    'homeMoneyLog'   : baseUrl + 'money_logs',
+
     // 购物车
     'homeCarts' : baseUrl + 'carts',
 

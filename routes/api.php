@@ -177,6 +177,9 @@ Route::namespace('Home')->group(function(){
         // 收藏/关注
         Route::apiResource('favorites','FavoriteController')->except(['update']);
 
+        // 资金日志
+        Route::apiResource('money_logs','MoneyLogController')->except(['update','show','store','destroy']);
+
         // 订单列表
         Route::get('/order','OrderController@get_orders'); // 获取订单列表
 

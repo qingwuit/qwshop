@@ -34,8 +34,16 @@ export default [
             {path: '/user/address/form/:id?',name: 'home_user_address_form',component: () => import('@/views/Home/users/address/form')}, // 用户收货地址编辑
             {path: '/user/user_info',name: 'home_user_user_info',component: () => import('@/views/Home/users/user_info')}, // 用户资料编辑
             {path: '/user/safe',name: 'home_user_safe',component: () => import('@/views/Home/users/safe/index')}, // 用户安全
+            {path: '/user/safe/edit_password',name: 'home_user_safe_edit_password',component: () => import('@/views/Home/users/safe/edit_password')}, // 用户安全
+            {path: '/user/safe/edit_pay_password',name: 'home_user_safe_edit_pay_password',component: () => import('@/views/Home/users/safe/edit_pay_password')}, // 用户安全
+            {path: '/user/safe/edit_phone',name: 'home_user_safe_edit_phone',component: () => import('@/views/Home/users/safe/edit_password')}, // 用户安全
             {path: '/user/oauth',name: 'home_user_oauth',component: () => import('@/views/Home/users/oauth/index')}, // 用户账户绑定
             {path: '/user/order',name: 'home_user_order',component: () => import('@/views/Home/users/order/index')}, // 用户订单
+            {path: '/user/favorite',name: 'home_user_favorite',component: () => import('@/views/Home/users/favorite/index')}, // 用户收藏
+            {path: '/user/follows',name: 'home_user_follows',component: () => import('@/views/Home/users/favorite/follows')}, // 用户关注店铺
+            {path: '/user/money',name: 'home_user_money',component: () => import('@/views/Home/users/money_log/money')}, // 用户资金日志
+            {path: '/user/frozen_money',name: 'home_user_frozen_money',component: () => import('@/views/Home/users/money_log/frozen_money')}, // 用户冻结资金日志
+            {path: '/user/integral',name: 'home_user_integral',component: () => import('@/views/Home/users/money_log/integral')}, // 用户积分日志
         ]}, 
     ]},
 

@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Http\Resources\Home\FavoriteResource\FavoriteCollection;
+use App\Http\Resources\Home\FavoriteResource\FollowCollection;
 use App\Models\Favorite;
 
 class FavoriteService extends BaseService{
@@ -17,13 +18,16 @@ class FavoriteService extends BaseService{
             $fav_model = $fav_model->with(['goods'=>function($q){
                 return $q->select('id','goods_master_image','goods_price','goods_name','goods_subname')->with('goods_sku');
             }]);
+            $fav_list = $fav_model->paginate(request()->per_page??30);
+            return $this->format(new FavoriteCollection($fav_list));
         }else{
             $fav_model = $fav_model->with(['store'=>function($q){
-                return $q->select('store_name','store_logo');
+                return $q->select('id','store_name','store_logo');
             }]);
+            $fav_list = $fav_model->paginate(request()->per_page??30);
+            return $this->format(new FollowCollection($fav_list));
         }
-        $fav_list = $fav_model->paginate(request()->per_page??30);
-        return new FavoriteCollection($fav_list);
+        
         
     }
 

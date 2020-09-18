@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Home\FavoriteResource;
+namespace App\Http\Resources\Home\MoneyLogResource;
 
-use App\Traits\HelperTrait;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class FavoriteCollection extends ResourceCollection
+class MoneyLogCollection extends ResourceCollection
 {
-    use HelperTrait;
     /**
      * Transform the resource collection into an array.
      *
@@ -17,13 +15,14 @@ class FavoriteCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item){
+            'data'=>$this->collection->map(function($item) {
                 return [
                     'id'                    =>  $item->id,
-                    'out_id'                =>  $item->out_id,
-                    'goods_name'            =>  $item->goods->goods_name,
-                    'goods_master_image'    =>  $this->thumb($item->goods->goods_master_image),
-                    'goods_price'           =>  empty($item->goods->goods_sku)?$item->goods->goods_price:$item->goods->goods_sku->goods_price,
+                    'name'                  =>  $item->name,
+                    'money'                 =>  $item->money,
+                    'is_type'               =>  $item->is_type,
+                    'info'                  =>  $item->info,
+                    'created_at'            =>  $item->created_at->format('Y-m-d H:i:s'),
                 ];
             }),
             // 'data'=>$this->collection,

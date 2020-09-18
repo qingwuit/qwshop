@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Http\Resources\Home\MoneyLogResource\MoneyLogCollection;
 use App\Models\MoneyLog;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -47,7 +48,21 @@ class MoneyLogService extends BaseService{
             DB::rollBack();
             return $this->format_error(__('users.money_log_error'));
         }
-        
+    }
 
+    // 获取日志列表
+    public function getMoneyLog($auth="user"){
+        $money_log_model = new MoneyLog();
+        if($auth == 'user'){
+            $user_service = new UserService;
+            $user_info = $user_service->getUserInfo();
+            $money_log_model = $money_log_model->where('user_id',$user_info['id']);
+        }
+        $list = $money_log_model->where('is_type',request()->is_type??0)->paginate(request()->per_page??30);
+
+        if($auth == 'user'){
+            return $this->format(new MoneyLogCollection($list));
+        }
+        
     }
 }

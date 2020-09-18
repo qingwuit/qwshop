@@ -65,7 +65,7 @@ export default {
                         {name:'账户安全',url:'/user/safe'},
                         {name:'账号绑定',url:'/user/oauth'},
                         {name:'资金提现',url:'#'},
-                        {name:'收藏/关注',url:'#'},
+                        {name:'收藏/关注',url:'/user/favorite'},
                     ],
                 },
                 {
@@ -79,9 +79,9 @@ export default {
                     name:'资产记录',
                     icon:'iconyue',
                     children:[
-                        {name:'平台余额',url:'#'},
-                        {name:'冻结余额',url:'#'},
-                        {name:'平台积分',url:'#'},
+                        {name:'平台余额',url:'/user/money'},
+                        {name:'冻结资金',url:'/user/frozen_money'},
+                        {name:'平台积分',url:'/user/integral'},
                     ],
                 },
                 {

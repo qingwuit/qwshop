@@ -5,6 +5,22 @@
                 我的订单
             </div>
             <div class="x20"></div>
+
+            <div class="home_search_block">
+                <a-form layout="inline">
+                    <!-- <a-form-item label="起始时间"><a-range-picker  v-model="params['created_at']" format="YYYY-MM-DD HH:mm:ss" show-time :allow-clear="false" /></a-form-item><br> -->
+                    <a-form-item label="订单号码">
+                        <a-input v-model="params['order_no']" :placeholder="'2020091418433488438'"/>
+                    </a-form-item>
+                    <a-form-item label="订单状态">
+                        <a-select  v-model="params['order_status']" >
+                            <a-select-option v-for="(vo,key) in searchConfig[1].data" :key="key" :value="vo.value">{{vo.label}}</a-select-option>
+                        </a-select>
+                    </a-form-item>
+                    <span class="default_btn" style="margin-top:5px;display:inline-block;padding:4px 15px;" @click="search()"><a-icon type="search" />&nbsp;查询</span>
+                </a-form>
+            </div>
+
             <div class="safe_block" >
               <div class="order_list" v-if="list.length>0">
                 <div class="order_item" v-for="(v,k) in list" :key="k">
@@ -24,11 +40,11 @@
                         </ul>
                     </div>
 
-                    <div class="order_item_btn" v-if="v.order_status!=6 || v.order_status !=0">
-                        <div class="default_btn" v-if="v.order_status=1" >取消订单</div>
-                        <div class="success_btn" v-if="v.order_status=1">立即支付</div>
-                        <div class="error_btn" v-if="v.order_status=3">确定收货</div>
-                        <div class="gray_btn" v-if="v.order_status=4">前往评论</div>
+                    <div class="order_item_btn" v-show="v.order_status!=6 || v.order_status !=0">
+                        <div class="default_btn" v-if="v.order_status==1" >取消订单</div>
+                        <div class="success_btn" v-if="v.order_status==1">立即支付</div>
+                        <div class="error_btn" v-if="v.order_status==3">确定收货</div>
+                        <div class="gray_btn" v-if="v.order_status==4">前往评论</div>
                         <div class="warn_btn" v-if="v.order_status>3 && v.order_status !=5">申请售后</div>
                     </div>
                 </div>
@@ -43,17 +59,32 @@
 </template>
 
 <script>
+import adminSearch from '@/components/admin/search'
 export default {
-    components: {},
+    components: {adminSearch},
     props: {},
     data() {
       return {
           params:{
               page:1,
               per_page:20,
+              order_status:'',
           },
           total:0, //总页数
           list:[],
+          searchConfig:[
+              {label:'订单号',name:'order_no',type:'text'},
+              {label:'订单状态',name:'order_status',type:'select',data:[
+                  {label:'全部订单',value:''},
+                  {label:'订单取消',value:0},
+                  {label:'等待支付',value:1},
+                  {label:'等待发货',value:2},
+                  {label:'确认收货',value:3},
+                  {label:'等待评论',value:4},
+                  {label:'售后订单',value:5},
+                  {label:'订单完成',value:6},
+              ]},
+          ],
       };
     },
     watch: {},
@@ -62,6 +93,20 @@ export default {
         // 选择分页
         onChange(e){
             this.params.page = e;
+        },
+        search(params){
+            let page = this.params.page;
+            let per_page = this.params.per_page;
+
+            // 事件需要格式化，后面再看看有没有更好得到办法
+            if(!this.$isEmpty(params.created_at) && !this.$isEmpty(params.created_at[0])){
+                params.created_at[0] = moment(params.created_at[0]).format('YYYY-MM-DD HH:mm:ss');
+                params.created_at[1] = moment(params.created_at[1]).format('YYYY-MM-DD HH:mm:ss');
+            }
+            this.params = params;
+            this.params.page = page;
+            this.params.per_page = per_page;
+            this.onload();
         },
         onload(){
             this.$get(this.$api.homeOrder,this.params).then(res=>{
@@ -197,4 +242,5 @@ export default {
         }
     }
 }
+
 </style>

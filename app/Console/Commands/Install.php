@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 class Install extends Command
 {
@@ -51,26 +52,48 @@ class Install extends Command
         if(empty($mysqlHost) || empty($dbPort) || empty($dbName) || empty($dbUserName)){
             return $this->error('Setting Mysql Error.');
         }
-        $bar = $this->output->createProgressBar(3);
+        $bar = $this->output->createProgressBar(2);
 
         // 执行migrate
-        Artisan::call('migrate');
+        // Artisan::call('migrate'); // 原本想使用这个太麻烦
+        DB::unprepared(file_get_contents(base_path('qwshop.sql'))); // 直接执行sql文件
         $bar->advance(); // 第一步
 
         // 执行seeder
-        Artisan::call('db:seed --class=AdminSeeder');
-        Artisan::call('db:seed --class=ConfigSeeder');
-        Artisan::call('db:seed --class=MenuSeeder');
-        $bar->advance(); // 第二步
+        // Artisan::call('db:seed --class=AdminSeeder');
+        // Artisan::call('db:seed --class=ConfigSeeder');
+        // Artisan::call('db:seed --class=MenuSeeder');
+        // $bar->advance(); // 第二步
 
         // 创建软链接链接storage
         Artisan::call('storage:link');
-        $bar->advance(); // 第三步
+        $bar->advance(); // 第二步
         $bar->finish();
 
         $this->line('');
         $this->line('');
         return $this->info('Install Success , Welcome Qwshop.');
         
+    }
+
+    // 修改env
+    function modifyEnv(array $data){
+        $envPath = base_path() . DIRECTORY_SEPARATOR . '.env';
+        
+        $contentArray = collect(file($envPath, FILE_IGNORE_NEW_LINES));
+        
+        $contentArray->transform(function ($item) use ($data){
+        foreach ($data as $key => $value){
+            if(str_contains($item, $key)){
+            return $key . '=' . $value;
+            }
+        }
+        
+        return $item;
+        });
+        
+        // $content = implode($contentArray->toArray(), "\n");
+        
+        // file_put_contents($envPath, $content);
     }
 }

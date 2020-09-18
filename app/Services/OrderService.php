@@ -363,7 +363,7 @@ class OrderService extends BaseService{
 
             // 判断是否库存足够
             if($v['buy_num']>$data['goods_stock']){
-                return $this->format_error(_('orders.stock_error'));
+                return $this->format_error(__('orders.stock_error'));
             }
 
         }
@@ -438,7 +438,7 @@ class OrderService extends BaseService{
         if(!empty($created_at)){
             $order_model = $order_model->whereBetween('created_at',[$created_at[0],$created_at[1]]);
         }
-
+        
         // 订单状态
         if(isset(request()->order_status)){
             $order_model = $order_model->where('order_status',request()->order_status);

@@ -21,21 +21,21 @@ class OrderController extends Controller
     public function create_order(){
         $order_service = new OrderService;
         $rs = $order_service->createOrder();
-        return $rs['status']?$this->format($rs['data']):$this->format_error($rs['msg']);
+        return $rs['status']?$this->success($rs['data']):$this->error($rs['msg']);
     }
 
     // 创建订单前
     public function create_order_before(){
         $order_service = new OrderService;
         $rs = $order_service->createOrderBefore();
-        return $rs['status']?$this->format($rs['data']):$this->format_error($rs['msg']);
+        return $rs['status']?$this->success($rs['data']):$this->error($rs['msg']);
     }
 
     // 创建订单后
     public function create_order_after(){
         $order_service = new OrderService;
         $rs = $order_service->createOrderAfter();
-        return $rs['status']?$this->format($rs['data']):$this->format_error($rs['msg']);
+        return $rs['status']?$this->success($rs['data']):$this->error($rs['msg']);
     }
 
     // 支付订单

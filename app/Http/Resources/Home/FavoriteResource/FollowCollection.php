@@ -2,12 +2,10 @@
 
 namespace App\Http\Resources\Home\FavoriteResource;
 
-use App\Traits\HelperTrait;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class FavoriteCollection extends ResourceCollection
+class FollowCollection extends ResourceCollection
 {
-    use HelperTrait;
     /**
      * Transform the resource collection into an array.
      *
@@ -21,9 +19,8 @@ class FavoriteCollection extends ResourceCollection
                 return [
                     'id'                    =>  $item->id,
                     'out_id'                =>  $item->out_id,
-                    'goods_name'            =>  $item->goods->goods_name,
-                    'goods_master_image'    =>  $this->thumb($item->goods->goods_master_image),
-                    'goods_price'           =>  empty($item->goods->goods_sku)?$item->goods->goods_price:$item->goods->goods_sku->goods_price,
+                    'store_name'            =>  $item->store->store_name,
+                    'store_logo'            =>  $item->store->store_logo,
                 ];
             }),
             // 'data'=>$this->collection,
