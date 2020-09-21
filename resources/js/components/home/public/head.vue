@@ -14,7 +14,7 @@
                     <li>
                         <div class="index_my_car">
                             <span @click="to_my_store()">我的商城<a-font type="icondianpu" /></span>
-                            <span><router-link to="/cart/index">我的购物车<a-font type="icongouwuche1" /></router-link><div class="shop_car_dot">{{cart_count}}</div></span>
+                            <span><router-link to="/cart">我的购物车<a-font type="icongouwuche1" /></router-link><div class="shop_car_dot">{{cart_count}}</div></span>
                         </div>
                     </li>
                 </ul>

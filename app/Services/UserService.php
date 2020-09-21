@@ -242,6 +242,9 @@ class UserService extends BaseService{
                 $user_model->password = Hash::make(request()->password);
             }
             if(isset(request()->pay_password) || !empty(request()->pay_password)){
+                if(strlen(request()->pay_password)!=6){
+                    return $this->format_error(__('users.pay_password_len'));
+                }
                 $user_model->pay_password = md5($user_model->id.request()->pay_password);
             }
             if(isset(request()->phone) || !empty(request()->phone)){

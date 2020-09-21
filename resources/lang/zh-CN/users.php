@@ -12,6 +12,9 @@ return [
     'edit_success'                               =>  '资料修改成功.',
     'edit_error'                                 =>  '资料修改失败.',
 
+    // 支付密码为6位字符
+    'pay_password_len'                           =>  '支付密码为6位字符',
+
     // 资金日志修改失败
     'money_log_error'                            =>  '资金日志修改失败.',
 

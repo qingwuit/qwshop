@@ -27,6 +27,9 @@ export default [
         {path: '/order/order_pay/:params',name: 'home_order_pay',component: () => import('@/views/Home/orders/order_pay')}, // 支付订单
         {path: '/order/pay_success',name: 'home_pay_success',component: () => import('@/views/Home/orders/pay_success')}, // 支付成功
 
+        // 购物车
+        {path: '/cart',name: 'home_pay_success',component: () => import('@/views/Home/carts/index')}, 
+
         // 用户中心
         {path: '/user',name: 'home_user',component: () => import('@/views/Home/users/index'),children:[
             {path: '/user',name: 'home_user_default',component: () => import('@/views/Home/users/default')}, // 用户中心首页
