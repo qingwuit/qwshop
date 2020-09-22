@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Http\Resources\Home\OrderResource\CreateOrderAfterCollection;
 use App\Models\Address;
+use App\Models\Cart;
 use App\Models\Goods;
 use App\Models\GoodsSku;
 use App\Models\Order;
@@ -12,10 +13,13 @@ use App\Models\Store;
 use App\Traits\HelperTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use phpDocumentor\Reflection\DocBlock\Tags\Throws;
 
 class OrderService extends BaseService{
 
     use HelperTrait;
+    // 要删除的购物车数据
+    protected $cartId = [];
 
     // 获取创建订单前处理订单
     public function createOrderBefore(){
@@ -123,6 +127,9 @@ class OrderService extends BaseService{
                     $resp_data['order_id'][] = $order_info->id;
                     $resp_data['order_no'][] = $make_rand;
                 }
+
+                // 执行成功则删除购物车
+                $this->delCart();
             DB::commit();
             return $this->format($resp_data);
         }catch(\Exception $e){
@@ -131,7 +138,18 @@ class OrderService extends BaseService{
         }
         
 
+    }
 
+    // 如果是购物车订单，则删除购物车
+    private function delCart(){
+        if(!empty($this->cartId)){
+            $cart_model = new Cart();
+            try{
+                $cart_model->whereIn('id',$this->cartId)->delete();
+            }catch(\Exception $e){
+                throw new \Exception(__('orders.order_cart_del_error'));
+            }
+        }
     }
 
 
@@ -340,6 +358,7 @@ class OrderService extends BaseService{
         $goods_model = new Goods();
         $goods_sku_model = new GoodsSku();
         $list = [];
+        $this->cartId = []; // 购物车ID 初始化
         foreach($params['order'] as $v){
             $data = [];
             $data = $goods_model->with(['store'=>function($q){
@@ -364,6 +383,11 @@ class OrderService extends BaseService{
             // 判断是否库存足够
             if($v['buy_num']>$data['goods_stock']){
                 return $this->format_error(__('orders.stock_error'));
+            }
+
+            // 判断是否是购物车
+            if(!empty($params['ifcart'])){
+                $this->cartId[] = $v['cart_id'];
             }
 
         }

@@ -31,6 +31,19 @@ export function returnInfo(res){
         return message.error(res.msg)
     }
 }
+
+export function formatFloat(value,length=2){  
+    let tempNum = 0;  
+    let s,temp;  
+    let s1 = value + "";  
+    let start = s1.indexOf(".");  
+    if(s1.substr(start+length+1,1)>=5){
+        tempNum=1;  
+    }
+    temp = Math.pow(10,length);  
+    s = Math.floor(value * temp) + tempNum;  
+    return s/temp;  
+}
  
 function padLeftZero (str) {
     return ('00' + str).substr(str.length);

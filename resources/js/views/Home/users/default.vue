@@ -73,7 +73,7 @@
                                 <div class="order_thumb"><img :src="vo.goods_image||require('@/asset/order/default.png')" :alt="vo.goods_name"></div>
                                 <div class="order_list_title">{{vo.goods_name||'-'}}</div>
                                 <div class="order_list_attr">{{vo.sku_name||'-'}}</div>
-                                <div class="order_list_num">X {{vo.buy_num||'1'}}</div>
+                                <div class="order_list_num">x {{vo.buy_num||'1'}}</div>
                                 <div class="order_list_price">￥{{vo.total_price||'0.00'}}</div>
                             </router-link></li>
                         </ul>

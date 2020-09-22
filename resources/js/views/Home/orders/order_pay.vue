@@ -21,7 +21,7 @@
             <div class="title">选择支付方式</div>
             <div class="pay">
                 <ul>
-                    <li @click="pay('balance')"><img :src="require('@/asset/order/pc_money_pay.png')" alt="mpay"></li>
+                    <li @click="visible=true;"><img :src="require('@/asset/order/pc_money_pay.png')" alt="mpay"></li>
                     <li @click="pay('wechat_scan')"><img :src="require('@/asset/order/pc_wxpay.jpg')" alt="wechatpay"></li>
                     <li @click="pay('ali_scan')"><img :src="require('@/asset/order/pc_alipay.jpg')" alt="alipay"></li>
                 </ul>
@@ -78,6 +78,18 @@
             </div>
         </div>
         <!-- 预生成订单信息 E -->
+
+        <!-- 支付密码输入 pay('balance') -->
+        <a-modal centered v-model="visible" title="输入6位支付密码" > 
+            <template slot="footer">
+                <div style="padding:15px 0">
+                    <div class="default_btn" @click="visible=false">取消</div>
+                    <div class="error_btn" @click="pay('balance')">确定支付</div>
+                </div>
+                
+            </template>
+            <input class="pay_password" type="password" v-model="pay_password" placeholder="pay password" />
+        </a-modal>
     </div>
 </template>
 
@@ -90,6 +102,9 @@ export default {
       return {
           order:[],
           total:0,
+          visible:false,
+          pay_password:'',
+          loading: false,
       };
     },
     watch: {},
@@ -107,7 +122,11 @@ export default {
         pay(payment_name){
             let params = JSON.parse(window.atob(this.$route.params.params));
             let order_id = params.order_id.join(',');
-            this.$post(this.$api.homeOrder+'/pay',{order_id:order_id,payment_name:payment_name}).then(res=>{
+            let sendData = {order_id:order_id,payment_name:payment_name};
+            if(payment_name == 'balance'){
+                sendData.pay_password = this.pay_password;
+            }
+            this.$post(this.$api.homeOrder+'/pay',sendData).then(res=>{
                 if(res.code==200){
                     if(payment_name == 'wechat_scan'){
                         this.qr_code = res.data.qr_code;
@@ -123,7 +142,7 @@ export default {
                         document.body.appendChild(div)
                         document.forms[0].submit()
                     }else{
-                        
+                        this.$router.push('/order/pay_success')
                     }
                 }else{
                     this.$message.error(res.msg);
@@ -140,6 +159,38 @@ export default {
 <style lang="scss" scoped>
 .step_bar{
     margin:40px 0;
+}
+.pay_password{
+    width: 100%;
+    border:1px solid #efefef;
+    border-radius: 3px;
+    height: 40px;
+    box-sizing: border-box;
+    padding:15px;
+    outline: #ccc;
+}
+.default_btn{
+    background: #fff;
+    color:#666;
+    border-radius: 3px;
+    box-sizing: border-box;
+    padding: 8px 15px;
+    display: inline;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 0 rgba(0,0,0,.015);
+    border: 1px solid #d9d9d9;
+}
+.error_btn{
+    background: #ca151e;
+    color:#fff;
+    border-radius: 3px;
+    box-sizing: border-box;
+    font-size: 14px;
+    padding: 8px 15px;
+    display: inline;
+    cursor: pointer;
+    box-shadow: 0 2px 0 rgba(0,0,0,.015);
 }
 .block{
     .title{
@@ -178,6 +229,16 @@ export default {
             border: 1px solid #efefef;
             padding: 20px 0;
             line-height: 40px;
+            li{
+                margin-bottom: 15px;
+                padding-bottom: 15px;
+                border-bottom: 1px solid #efefef;
+                &:last-child{
+                    margin-bottom: 0;
+                    padding-bottom: 0;
+                    border-bottom: none;
+                }
+            }
             .red{
                 color:#ca151e;
             }

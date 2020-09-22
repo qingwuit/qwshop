@@ -151,11 +151,19 @@ export default {
                 buy_num:this.buy_num, // 购买数量
             };
             this.$post(this.$api.homeCarts,params).then(res=>{
+                this.cart_count();
                 this.$returnInfo(res);
             })
             // this.$get(this.$api.homeCarts).then(res=>{
             //     this.$returnInfo(res);
             // })
+        },
+        cart_count(){
+            this.$get(this.$api.homeCarts+'/cart_count').then(res=> {
+                if(res.code == 200){
+                    this.$store.dispatch('homeCart/set_cart_num',res.data);
+                }
+            });
         },
 
         // 属性被选择点击

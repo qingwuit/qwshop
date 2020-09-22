@@ -14,7 +14,7 @@
                     <li>
                         <div class="index_my_car">
                             <span @click="to_my_store()">我的商城<a-font type="icondianpu" /></span>
-                            <span><router-link to="/cart">我的购物车<a-font type="icongouwuche1" /></router-link><div class="shop_car_dot">{{cart_count}}</div></span>
+                            <span><router-link to="/cart">我的购物车<a-font type="icongouwuche1" /></router-link><div class="shop_car_dot">{{cart_num||0}}</div></span>
                         </div>
                     </li>
                 </ul>
@@ -70,7 +70,6 @@ export default {
     data() {
       return {
           classes:[],
-          cart_count:0,
           subnav_show:true,
           subnav:true,
           change_color:false,
@@ -83,7 +82,7 @@ export default {
             this.subnav = val;
         },
     },
-    computed: {...mapState('homeLogin',['isLogin','userInfo']),...mapState('homeCommon',['common']),},
+    computed: {...mapState('homeLogin',['isLogin','userInfo']),...mapState('homeCommon',['common']),...mapState('homeCart',['cart_num'])},
     methods: {
         get_common(){
             this.$get(this.$api.homeCommon).then(res=>{
@@ -99,6 +98,13 @@ export default {
                 });
             }
         },
+        cart_count(){
+            this.$get(this.$api.homeCarts+'/cart_count').then(res=> {
+                if(res.code == 200){
+                    this.$store.dispatch('homeCart/set_cart_num',res.data);
+                }
+            });
+        },
         search(){
             let params = {};
             params.keywords = encodeURIComponent(this.keywords);
@@ -108,6 +114,7 @@ export default {
     created() {
         this.get_common();
         this.checkLogin();
+        this.cart_count(); // 购物车
         
         // 如果是不是首页则变成黑色 收缩模式
         if(this.$route.name != 'home_index'){

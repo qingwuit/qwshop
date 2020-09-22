@@ -46,4 +46,11 @@ class CartController extends Controller
         $cart_model->whereIn('id',$idArray)->where('user_id',$user_info['id'])->delete();
         return $this->success([],__('base.success'));
     }
+
+    // 获取购物车数量
+    public function cart_count(){
+        $cart_service = new CartService;
+        $rs = $cart_service->getCount();
+        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
+    }
 }

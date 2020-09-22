@@ -201,6 +201,16 @@ export default {
             border: 1px solid #efefef;
             padding: 20px 0;
             line-height: 40px;
+            li{
+                margin-bottom: 15px;
+                padding-bottom: 15px;
+                border-bottom: 1px solid #efefef;
+                &:last-child{
+                    margin-bottom: 0;
+                    padding-bottom: 0;
+                    border-bottom: none;
+                }
+            }
             .red{
                 color:#ca151e;
             }

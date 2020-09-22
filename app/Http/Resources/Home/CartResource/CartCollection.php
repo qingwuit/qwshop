@@ -20,8 +20,11 @@ class CartCollection extends ResourceCollection
             'data'=>$this->collection->map(function($item){
                 return [
                     'store_id'              =>  $item->store->id,
+                    'user_id'               =>  $item->user_id,
                     'store_name'            =>  $item->store->store_name,
                     'store_logo'            =>  $item->store->store_logo,
+                    'checked'               =>  false,
+                    'css'                   =>  false,
                     'cart_list'             =>  $item->carts->map(function($cartItem){
 
                                                     // 是否存在sku 
@@ -41,6 +44,7 @@ class CartCollection extends ResourceCollection
                                                         'goods_image'           =>  $goods_image,
                                                         'goods_price'           =>  $goods_price,
                                                         'sku_name'              =>  $sku_name,
+                                                        'checked'               =>  false,
                                                     ];
                                                 }),
                 ];

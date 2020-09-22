@@ -19,13 +19,13 @@ class CartService extends BaseService{
         if(!$user_info = $user_service->getUserInfo()){
             return $this->format_error(__('carts.add_error').'4'); // 获取用户失败
         }
-
+        
         $cart_list = $cart_model->where(['user_id'=>$user_info['id']])
                                 // 获取店铺信息
                                 ->with(['store'=>function($q){
                                     return $q->select('id','store_name','store_logo');
-                                },'carts'=>function($q){// 获取同一店铺的购物车数据
-                                    return $q->with(['goods'=>function($query){
+                                },'carts'=>function($q) use($user_info){// 获取同一店铺的购物车数据
+                                    return $q->where('user_id',$user_info['id'])->with(['goods'=>function($query){
                                         $query->select('id','goods_name','goods_master_image','goods_price');
                                     },'goods_sku'=>function($query){
                                         $query->select('id','sku_name','goods_image','goods_price');
@@ -34,6 +34,22 @@ class CartService extends BaseService{
                                 ->groupBy('store_id')
                                 ->paginate(request()->per_page??30);
         return $this->format(new CartCollection($cart_list));
+    }
+
+    // 获取购物车数量
+    public function getCount(){
+        $cart_model = new Cart();
+
+        // 获取当前用户user_id
+        $user_service = new UserService;
+        if(!$user_info = $user_service->getUserInfo()){
+            return $this->format_error(__('carts.add_error').'4'); // 获取用户失败
+        }
+        
+        $cart_count = $cart_model->where(['user_id'=>$user_info['id']])
+                                ->groupBy('store_id')
+                                ->count();
+        return $this->format($cart_count);
     }
 
     // 加入购物车
@@ -131,7 +147,7 @@ class CartService extends BaseService{
         }
 
         // 判断是否修改数量大于0
-        if(!empty($buy_num)){
+        if(!empty($buy_num) && $buy_num>1){
             $cart_info->buy_num = $buy_num;
             $cart_info->save();
             return $this->format([],__('carts.edit_success'));

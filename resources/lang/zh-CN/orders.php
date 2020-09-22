@@ -19,5 +19,7 @@ return [
 
     'payment_call_error'                 =>  '支付回调失败.',
 
+    'order_cart_del_error'               =>  '创建订单购物车删除失败.',
+
     
 ];

@@ -160,6 +160,8 @@ Route::namespace('Home')->group(function(){
 
         // 购物车
         Route::apiResource('carts','CartController')->except(['show']);
+        Route::get('/carts/cart_count','CartController@cart_count'); // 获取默认地址
+
 
         // 用户收货地址
         Route::apiResource('addresses','AddressController');

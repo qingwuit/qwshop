@@ -9,8 +9,8 @@
             </div>
         </div>
 
-        <div class="cart_th">
-            <a-checkbox :indeterminate="indeterminate">全选</a-checkbox>
+        <div class="cart_th" v-if="params.total>0">
+            <a-checkbox :indeterminate="indeterminate" :checked="checkAll" @change="onCheckAllChange">全选</a-checkbox>
             <span class="goods">商品</span>
             <span class="attr">规格</span>
             <span class="price">单价（元）</span>
@@ -19,65 +19,48 @@
             <span class="handle">操作</span>
         </div>
 
-        <div class="cart_table">
-            <div class="store_list">
-                <div class="store_title"><a-checkbox :indeterminate="indeterminate">青梧商城</a-checkbox><span class="open_store">进入店铺</span></div>
+        <div class="cart_table" v-if="params.total>0">
+            <div class="store_list" v-for="(v,k) in list" :key="k">
+                <div class="store_title"><a-checkbox :indeterminate="v.css" :checked='v.checked' @change="onCheckAllStoreChange(k)">{{v.store_name}}</a-checkbox><span class="open_store" @click="$router.push('/store/'+v.store_id)">进入店铺</span></div>
                 <div class="goods_list">
                     <ul>
-                        <li>
-                            <span class="checkbox_goods"><a-checkbox :indeterminate="indeterminate" /></span>
-                            <router-link :to="'#'"><dl class="goods_item">
-                                <dt><img src="http://api.qingwuit.com/Uploads/goods/2020_01_14/15789867525935_200.png" alt=""></dt>
-                                <dd>荣耀20 PRO 荣耀最强拍照手机 4800万全焦段AI四摄 麒麟980全网通版8GB+128GB 冰岛幻境</dd>
+                        <li v-for="(vo,key) in v.cart_list" :key="key">
+                            <span class="checkbox_goods"><a-checkbox :indeterminate="false" :checked='vo.checked' @change="onChange(k,key)" /></span>
+                            <router-link :to="'/goods/'+vo.goods_id"><dl class="goods_item">
+                                <dt><img :src="vo.goods_image||require('@/asset/order/default.png')" :alt="vo.goods_name"></dt>
+                                <dd>{{vo.goods_name}}</dd>
                             </dl></router-link>
-                            <span class="attr">-</span>
-                            <span class="price">￥20.00</span>
+                            <span class="attr">{{vo.sku_name||'-'}}</span>
+                            <span class="price">￥{{vo.goods_price}}</span>
                             <span class="num">
-                                <font><a-icon type="minus" /></font>
-                                <input type="text" disabled>
-                                <font><a-icon type="plus" /></font>
+                                <font @click="edit(vo.cart_id,0)"><a-icon type="minus" /></font>
+                                <input type="text" disabled v-model="vo.buy_num">
+                                <font @click="edit(vo.cart_id,1)"><a-icon type="plus" /></font>
                             </span>
-                            <span class="total">￥40.00</span>
-                            <span class="handle">移除</span>
+                            <span class="total">￥{{$formatFloat(vo.goods_price*vo.buy_num,2)}}</span>
+                            <span class="handle" @click="del(vo.cart_id)">移除</span>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="store_list">
-                <div class="store_title"><a-checkbox :indeterminate="indeterminate">青梧商城</a-checkbox><span class="open_store">进入店铺</span></div>
-                <div class="goods_list">
-                    <ul>
-                        <li>
-                            <span class="checkbox_goods"><a-checkbox :indeterminate="indeterminate" /></span>
-                            <router-link :to="'#'"><dl class="goods_item">
-                                <dt><img src="http://api.qingwuit.com/Uploads/goods/2020_01_14/15789867525935_200.png" alt=""></dt>
-                                <dd>荣耀20 PRO 荣耀最强拍照手机 4800万全焦段AI四摄 麒麟980全网通版8GB+128GB 冰岛幻境</dd>
-                            </dl></router-link>
-                            <span class="attr">-</span>
-                            <span class="price">￥20.00</span>
-                            <span class="num">
-                                <font><a-icon type="minus" /></font>
-                                <input type="text" disabled>
-                                <font><a-icon type="plus" /></font>
-                            </span>
-                            <span class="total">￥40.00</span>
-                            <span class="handle">移除</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+           
         </div>
 
 
-        <div class="cart_th">
-            <a-checkbox :indeterminate="indeterminate">全选</a-checkbox>
+        <div class="cart_th" v-if="params.total>0">
+            <a-checkbox :indeterminate="indeterminate" :checked="checkAll" @change="onCheckAllChange">全选</a-checkbox>
             <span class="goods"></span>
             <span class="attr"></span>
             <span class="price"></span>
             <span class="num"></span>
-            <span class="total" >已选择 <font color="#ca151e">0</font> 件</span>
-            <span class="handle" style="width:140px;text-align:right;"><div class="error_btn" style="padding:5px 30px;">结算</div></span>
+            <span class="total" >已选择 <font color="#ca151e">{{allCount}}</font> 件，总计 <font color="#ca151e">{{allPrice}} </font>元</span>
+            <span class="handle" style="width:140px;text-align:right;"><div class="error_btn" style="padding:5px 30px;" @click="buy">结算</div></span>
         </div>
+
+        <div style="min-height:600px;padding-top:100px" v-else>
+            <a-empty />
+        </div>
+        
 
 
     </div>
@@ -89,12 +72,151 @@ export default {
     props: {},
     data() {
       return {
+          params:{
+              page:1,
+              per_page:100,
+              total:0,
+          },
+          list:[],
+          indeterminate:false,
+          checkAll:false,
+          allCount:0,// 选中商品数量
+          allPrice:0.00,// 选中商品价格
       };
     },
     watch: {},
     computed: {},
-    methods: {},
-    created() {},
+    methods: {
+        onload(){
+            this.$get(this.$api.homeCarts,this.params).then(res=>{
+                this.params.total = res.data.total;
+                this.params.per_page = res.data.per_page;
+                this.params.current_page = res.data.current_page;
+                this.list = res.data.data;
+                this.list.forEach(item=>{
+
+                })
+            })
+        },
+       
+        del(id){
+            this.$delete(this.$api.homeCarts+'/'+id).then(res=>{
+                this.onload();
+                this.cart_count();
+                return this.$returnInfo(res);
+            })
+        },
+        edit(id,type){
+            this.$put(this.$api.homeCarts+'/'+id,{is_type:type,buy_num:1}).then(res=>{
+                this.onload();
+                this.cart_count();
+                return this.$returnInfo(res);
+            })
+        },
+        cart_count(){
+            this.$get(this.$api.homeCarts+'/cart_count').then(res=> {
+                if(res.code == 200){
+                    this.$store.dispatch('homeCart/set_cart_num',res.data);
+                }
+            });
+        },
+        onChange(k,key){
+            this.$set(this.list[k].cart_list[key],'checked',!this.list[k].cart_list[key].checked)
+            let count = 0;
+            this.list[k].cart_list.forEach(item=>{
+                if(item.checked){
+                    count++;
+                }
+            })
+            // console.log(count,this.list[k].cart_list.length);
+            if(count==this.list[k].cart_list.length){
+                this.$set(this.list[k],'css',false);
+                this.$set(this.list[k],'checked',true);
+                
+            }else if(count==0){
+                this.$set(this.list[k],'css',false);
+                this.$set(this.list[k],'checked',false);
+            }else{
+                this.$set(this.list[k],'css',true);
+                this.$set(this.list[k],'checked',false);
+            }
+
+            this.onCheckConst();
+        },
+        onCheckAllStoreChange(k){
+            this.list[k].css = false;
+            this.list[k].checked = !this.list[k].checked;
+            this.list[k].cart_list.forEach(item=>{
+                item.checked = this.list[k].checked;
+            })
+            this.onCheckConst();
+        },
+        onCheckAllChange(){
+            this.indeterminate = false;
+            let checkAll = !this.checkAll;
+            this.checkAll = checkAll;
+            this.list.forEach(item=>{
+                item.checked = checkAll;
+                item.cart_list.forEach(item2=>{
+                    item2.checked = checkAll;
+                })
+            })
+            this.onCheckConst();
+        },
+        // 最外层checkbox状态修改 加上统计数据价格商品数量
+        onCheckConst(){
+            this.allPrice = 0;
+            let allCount = 0;
+            let all = 0;
+            this.list.forEach(item=>{
+                item.cart_list.forEach(item2=>{
+                    all++;
+                    if(item2.checked){
+                        this.allPrice += item2.buy_num*item2.goods_price;
+                        allCount++;
+                    }
+                })
+            })
+            if(allCount == all){
+                this.indeterminate = false;
+                this.checkAll = true;
+            }else if(allCount==0){
+                this.indeterminate = false;
+                this.checkAll = false;
+            }else{
+                this.indeterminate = true;
+                this.checkAll = false;
+            }
+            this.allCount = allCount;
+            this.allPrice = this.$formatFloat(this.allPrice);
+        },
+        // 立即购买
+        buy(){
+            let params = {
+                order:[],
+                ifcart:1, // 是否购物车
+            };
+            this.list.forEach(item=>{
+                item.cart_list.forEach(item2=>{
+                    if(item2.checked){
+                        params.order.push(
+                            {
+                                goods_id:item2.goods_id, // 商品ID
+                                sku_id:item2.sku_id, // SKUid 没有则为0
+                                buy_num:item2.buy_num, // 购买数量
+                                cart_id:item2.cart_id, // 购物车ID
+                            },
+                        );
+                    }
+                })
+            })
+            let str = window.btoa(JSON.stringify(params)); 
+            this.$router.push("/order/create_order/"+str);
+        },
+    },
+    created() {
+        this.onload();
+    },
     mounted() {}
 };
 </script>
@@ -218,11 +340,11 @@ export default {
         width: 110px;
     }
     .num{
-        width: 160px;
+        width: 80px;
         padding-left: 20px;
     }
     .total{
-        width: 80px;
+        width: 160px;
     }
     .handle{
         text-align: center;
