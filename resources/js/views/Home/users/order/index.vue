@@ -42,7 +42,7 @@
 
                     <div class="order_item_btn" v-show="v.order_status!=6 || v.order_status !=0">
                         <div class="default_btn" v-if="v.order_status==1" >取消订单</div>
-                        <div class="success_btn" v-if="v.order_status==1">立即支付</div>
+                        <div class="success_btn" v-if="v.order_status==1" @click="pay_order(v.id)">立即支付</div>
                         <div class="default_btn" v-if="v.order_status==3">查看物流</div>
                         <div class="error_btn" v-if="v.order_status==3">确定收货</div>
                         <div class="gray_btn" v-if="v.order_status==4">前往评论</div>
@@ -116,6 +116,10 @@ export default {
                 this.list = res.data.data;
                 this.total = res.data.total;
             })
+        },
+        pay_order(order_id){
+            let str = window.btoa(JSON.stringify({order_id:[order_id]})); 
+            this.$router.push("/order/order_pay/"+str);
         }
     },
     created() {

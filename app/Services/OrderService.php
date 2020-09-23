@@ -190,6 +190,22 @@ class OrderService extends BaseService{
         
     }
 
+    // 销量消减增加 is_type 0 减少  1增加
+    public function orderSale($goods_id,$num,$is_type=0){
+        
+        try{
+            $goods_model = new Goods;
+            if(empty($is_type)){
+                $goods_model->where('id',$goods_id)->decrement('goods_sale',$num);
+            }else{
+                $goods_model->where('id',$goods_id)->increment('goods_sale',$num);
+            }
+        }catch(\Exception $e){
+            throw new \Exception(__('base.error').' - stock');
+        }
+        
+    }
+
     /**
      * // 支付订单 function
      *
@@ -303,17 +319,39 @@ class OrderService extends BaseService{
      *
      * @param [type] $order_id 订单ID
      * @param [type] $order_status 订单状态
+     * @param [type] $auth 用户操作还是管理员操作 user|admin
      * @return void
      * @Description
      * @author hg <www.qingwuit.com>
      */
-    public function editOrderStatus($order_id,$order_status){
-        $order_model = Order::find($order_id);
+    public function editOrderStatus($order_id,$order_status,$auth="user"){
+        $order_model = new Order;
+        $order_model = $order_model->where('id',$order_id);
+        if($auth == 'user'){
+            $user_service = new UserService;
+            $user_info = $user_service->getUserInfo();
+            if(empty($user_info)){
+                return $this->format_error(__('users.no_token'));
+            }
+            $order_model = $order_model->where('user_id',$user_info['id']);
+        }
+        $order_model = $order_model->first();
+
+        if(empty($order_model)){
+            return $this->format_error(__('users.error_token'));
+        }
+
         switch($order_status){
             case 0: // 取消订单
                 if($order_model->order_status != 1){ // 只有待支付的订单能取消
                     return $this->format_error(__('base.error').' - 0');
                 }
+                $og_model = new OrderGoods();
+                $og_list = $og_model->select('goods_id','sku_id','buy_num')->where('order_id',$order_id)->get();
+                foreach($og_list as $v){
+                    $this->orderStock($v['goods_id'],$v['sku_id'],$v['buy_num'],1);
+                }
+                // 库存修改
             break;
             case 1: // 等待支付
             break;
@@ -527,6 +565,22 @@ class OrderService extends BaseService{
         }
         return $cn;
     }
-    
+
+    // 获取支付类型
+    public function getOrderPayMentCn($payment_name){
+        $cn = '未知支付';
+        switch($payment_name){
+            case 'wechat':
+                $cn = __('admins.payment_wechat');
+                break;
+            case 'ali':
+                $cn = __('admins.payment_ali');
+                break;
+            case 'money':
+                $cn = __('admins.payment_money');
+                break;
+        }
+        return $cn;
+    }
     
 }

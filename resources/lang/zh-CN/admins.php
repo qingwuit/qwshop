@@ -28,4 +28,9 @@ return [
     'order_refund_over'                             =>   '售后完成',
     'order_completion'                              =>   '订单完成',
 
+    // 支付类型
+    'payment_wechat'                                =>   '微信支付',
+    'payment_ali'                                   =>   '支付宝支付',
+    'payment_money'                                 =>   '余额支付',
+
 ];

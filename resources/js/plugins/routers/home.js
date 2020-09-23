@@ -38,8 +38,9 @@ export default [
             {path: '/user/user_info',name: 'home_user_user_info',component: () => import('@/views/Home/users/user_info')}, // 用户资料编辑
             {path: '/user/safe',name: 'home_user_safe',component: () => import('@/views/Home/users/safe/index')}, // 用户安全
             {path: '/user/safe/edit_password',name: 'home_user_safe_edit_password',component: () => import('@/views/Home/users/safe/edit_password')}, // 用户安全
-            {path: '/user/safe/edit_pay_password',name: 'home_user_safe_edit_pay_password',component: () => import('@/views/Home/users/safe/edit_pay_password')}, // 用户安全
-            {path: '/user/safe/edit_phone',name: 'home_user_safe_edit_phone',component: () => import('@/views/Home/users/safe/edit_password')}, // 用户安全
+            {path: '/user/safe/edit_pay_password',name: 'home_user_safe_edit_pay_password',component: () => import('@/views/Home/users/safe/edit_pay_password')}, // 支付密码
+            {path: '/user/safe/edit_phone',name: 'home_user_safe_edit_phone',component: () => import('@/views/Home/users/safe/edit_phone')}, // 手机修改
+            {path: '/user/safe/edit_check',name: 'home_user_safe_edit_check',component: () => import('@/views/Home/users/safe/edit_check')}, // 身份认证
             {path: '/user/oauth',name: 'home_user_oauth',component: () => import('@/views/Home/users/oauth/index')}, // 用户账户绑定
             {path: '/user/order',name: 'home_user_order',component: () => import('@/views/Home/users/order/index')}, // 用户订单
             {path: '/user/favorite',name: 'home_user_favorite',component: () => import('@/views/Home/users/favorite/index')}, // 用户收藏

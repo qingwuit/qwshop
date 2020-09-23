@@ -25,7 +25,7 @@
                     <li>
                         <div :class="user_info.user_check?'safe_icon success':'safe_icon'"><a-font type="iconnamecard" /></div>
                         <div class="safe_text">身份认证<p>您还未实名认证该账户，立即实名认证可加快提现速度。</p></div>
-                        <div class="safe_btn">{{user_info.user_check?'查看认证':'立即认证'}}</div>
+                        <div class="safe_btn" @click="$router.push('/user/safe/edit_check')">{{user_info.user_check?'查看认证':'立即认证'}}</div>
                     </li>
                 </ul>
             </div>

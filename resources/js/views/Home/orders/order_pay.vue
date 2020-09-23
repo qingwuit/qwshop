@@ -84,7 +84,7 @@
             <template slot="footer">
                 <div style="padding:15px 0">
                     <div class="default_btn" @click="visible=false">取消</div>
-                    <div class="error_btn" @click="pay('balance')">确定支付</div>
+                    <div class="error_btn" @click="pay('money')">确定支付</div>
                 </div>
                 
             </template>
@@ -123,7 +123,7 @@ export default {
             let params = JSON.parse(window.atob(this.$route.params.params));
             let order_id = params.order_id.join(',');
             let sendData = {order_id:order_id,payment_name:payment_name};
-            if(payment_name == 'balance'){
+            if(payment_name == 'money'){
                 sendData.pay_password = this.pay_password;
             }
             this.$post(this.$api.homeOrder+'/pay',sendData).then(res=>{

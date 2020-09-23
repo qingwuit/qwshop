@@ -24,6 +24,7 @@ class OrderResource extends JsonResource
             'receive_area'          =>  $this->receive_area,
             'receive_address'       =>  $this->receive_address,
             'payment_name'          =>  $this->payment_name,
+            'payment_name_cn'       =>  $order_service->getOrderPayMentCn($this->payment_name),
             'delivery_no'           =>  $this->delivery_no,
             'total_price'           =>  $this->total_price,
             'freight_money'         =>  $this->freight_money,

@@ -296,6 +296,20 @@ class UploadService extends BaseService{
     }
 
     /**
+     * 用户认证 图片上传
+     *
+     * @param integer $id 用户ID
+     * @author hg <www.qingwuit.com>
+     */
+    public function user_check($id=0){
+        $path = 'user_check';
+        if(!empty($id)){
+            $path = $path.'/'.$id;
+        }
+        return $this->uploadPhoto($path);
+    }
+
+    /**
      * 评论图片
      *
      * @param integer $id  用户ID

@@ -29,7 +29,7 @@
                     <a-tag color="green" v-if="rows.order_status>=7">{{rows.order_status_cn}}</a-tag>
                 </span>
                 <span slot="action" slot-scope="rows">
-                    <a-button icon="read" @click="$router.push('/Admin/goods/form/'+rows.id)">查看详情</a-button>
+                    <a-button icon="read" @click="$router.push('/Admin/orders/form/'+rows.id)">查看详情</a-button>
                 </span>
             </a-table>
             <div class="admin_pagination" v-if="total>0">

@@ -50,7 +50,7 @@ class PayMentService extends BaseService{
             if($payment_name == 'wechat'){
                 $wxpayObj = Pay::wechat($this->wx_config);
                 $notify_info = $wxpayObj->verify();
-                $rs = $this->payHandle($notify_info);
+                $rs = $this->payHandle($payment_name,$out_trade_no,$notify_info);
                 return $rs['status']?$this->format($wxpayObj->success()):$this->format_error($rs['msg']);
             }elseif($payment_name == 'ali'){
                 $alipayObj = Pay::alipay($this->ali_config);
@@ -81,7 +81,7 @@ class PayMentService extends BaseService{
         }
         
         // 判断是否是余额支付
-        if($payment_name == 'balance'){
+        if($payment_name == 'money'){
             $pay_password = request()->pay_password;
             if(empty($pay_password)){
                 return $this->format_error(__('orders.pay_password_error'));
@@ -99,6 +99,15 @@ class PayMentService extends BaseService{
             $ml_info = $ml_service->editMoney(__('users.money_log_order'),$order_pay->user_id,-$order_pay->total_price);
             if(!$ml_info['status']){
                 return $this->format_error($ml_info['msg']);
+            }else{
+                $order_model = new Order();
+                $oid_arr = explode(',',$order_pay->order_ids);
+                $rs = $order_model->whereIn('id',$oid_arr)->update([
+                    'order_status'  =>  2,
+                    'pay_time'      =>  now(),
+                    'payment_name'  =>  $payment_name,
+                ]);
+                return $this->format([],__('orders.balance_pay_success'));
             }
         }else{
             // 是否是在线充值
@@ -272,7 +281,7 @@ class PayMentService extends BaseService{
                 throw new \Exception(__('orders.payment_failed').':'.$out_trade_no);
             }
             $trade_no = $notify_info['trade_no']??'';
-        }elseif($payment_name == 'money'){
+        }elseif($payment_name == 'money'){ // 不记得做什么用的了，后续再看
             $trade_no = '';
         }
 
@@ -299,6 +308,7 @@ class PayMentService extends BaseService{
                 if(!$ml_info['status']){
                     throw new \Exception($ml_info['msg']);
                 }
+
             }else{
                 $order_model = new Order();
                 $rs = $order_model->whereIn('id',$oid_arr)->update([

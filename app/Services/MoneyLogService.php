@@ -44,6 +44,7 @@ class MoneyLogService extends BaseService{
             }
             $user_model->save();
             DB::commit();
+            return $this->format([]);
         }catch(\Exception $e){
             DB::rollBack();
             return $this->format_error(__('users.money_log_error'));

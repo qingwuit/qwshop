@@ -198,6 +198,20 @@ class GoodsService extends BaseService{
         
     }
 
+    // 修改商品的状态审核
+    public function editGoodsVerify($goods_id,$status=1,$msg=''){
+        $goods_model = new Goods;
+        $goods_model = $goods_model->where('id',$goods_id);
+        $data = [
+            'goods_verify'      =>  $status,
+        ];
+        if($status == 0){
+            $data['refuse_info'] = $msg;
+        }
+        $rs = $goods_model->update($data);
+        return $this->format($rs);
+    }
+
     // 获取商家的商品详情
     public function getStoreGoodsInfo($id){
         $goods_model = new Goods;
@@ -242,13 +256,16 @@ class GoodsService extends BaseService{
     }
 
     // 获取商品详情
-    public function getGoodsInfo($id){
+    public function getGoodsInfo($id,$auth='user'){
         $goods_model = new Goods;
         $store_service = new StoreService();
         $goods_skus_model = new GoodsSku();
         $goods_attr_model = new GoodsAttr();
         $goods_spec_model = new GoodsSpec();
-        $goods_info = $goods_model->with('goods_brand')->where($this->status)->where('id',$id)->first();
+        if($auth != 'admin'){
+            $goods_model = $goods_model->where($this->status);
+        }
+        $goods_info = $goods_model->with('goods_brand')->where('id',$id)->first();
 
         if(empty($goods_info)){
             return $this->format_error(__('goods.goods_not_found'));
@@ -302,13 +319,22 @@ class GoodsService extends BaseService{
     }
 
     // 获取统计数据
-    public function getCount(){
+    public function getCount($auth="seller"){
         $goods_model = new Goods();
-        $store_id = $this->get_store(true);
-        $data = [
-            'wait'  =>  $goods_model->where('goods_verify',2)->where('store_id',$store_id)->count(),
-            'refuse'  =>  $goods_model->where('goods_verify',0)->where('store_id',$store_id)->count(),
-        ];
+
+        if($auth == 'seller'){
+            $store_id = $this->get_store(true);
+            $data = [
+                'wait'  =>  $goods_model->where('goods_verify',2)->where('store_id',$store_id)->count(),
+                'refuse'  =>  $goods_model->where('goods_verify',0)->where('store_id',$store_id)->count(),
+            ];
+        }else{
+            $data = [
+                'wait'  =>  $goods_model->where('goods_verify',2)->count(),
+                'refuse'  =>  $goods_model->where('goods_verify',0)->count(),
+            ];
+        }
+        
         return $data;
     }
 

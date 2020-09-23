@@ -75,7 +75,6 @@ class GoodsController extends Controller
      */
     public function show(GoodsService $goods_service,$id)
     {
-        $store_id = $this->get_store(true);
         $info = $goods_service->getStoreGoodsInfo($id);
         if($info['status']){
             return $this->success($info['data']);

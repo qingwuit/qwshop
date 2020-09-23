@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Goods;
 use App\Http\Resources\Admin\GoodsResource\GoodsTabAdminCollection;
+use App\Services\GoodsService;
 
 class GoodsController extends Controller
 {
@@ -17,7 +18,7 @@ class GoodsController extends Controller
     public function index(Request $request,Goods $goods_model)
     {
         // 条件筛选
-        $goods_params = ['goods_verify'=>1,'goods_status'=>1]; // 商品后台审核 还有上架
+        $goods_params = ['goods_verify'=>1]; // 商品后台审核 还有上架 ,'goods_status'=>1 'goods_verify'=>1
         if(!empty($request->goods_name)){
             $goods_model = $goods_model->where('name','like','%'.$request->goods_name.'%');
         }
@@ -38,7 +39,9 @@ class GoodsController extends Controller
         }
         
         $list = $goods_model->where($goods_params)
-                            ->with(['goods_class','goods_brand'])
+                            ->with(['goods_class','goods_brand','goods_skus'=>function($q){
+                                return $q->select('goods_id','goods_price','goods_stock')->orderBy('goods_price','asc');
+                            }])
                             ->orderBy('id','desc')
                             ->paginate($request->per_page??30);
         return $this->success(new GoodsTabAdminCollection($list));
@@ -61,9 +64,13 @@ class GoodsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(GoodsService $goods_service,$id)
     {
-        //
+        $info = $goods_service->getGoodsInfo($id,'admin');
+        if($info['status']){
+            return $this->success($info['data']);
+        }
+        return $this->error(__('goods.add_error'));
     }
 
     /**
@@ -73,9 +80,10 @@ class GoodsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,GoodsService $goods_service, $id)
     {
-        //
+        $goods_service->editGoodsVerify($id,$request->goods_verify,$request->refuse_info);
+        return $this->success([],__('base.success'));
     }
 
     /**

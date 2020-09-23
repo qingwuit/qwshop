@@ -160,7 +160,7 @@ Route::namespace('Home')->group(function(){
 
         // 购物车
         Route::apiResource('carts','CartController')->except(['show']);
-        Route::get('/carts/cart_count','CartController@cart_count'); // 获取默认地址
+        Route::get('/carts/cart_count','CartController@cart_count'); // 获取购物车商品数量
 
 
         // 用户收货地址
@@ -176,6 +176,11 @@ Route::namespace('Home')->group(function(){
         Route::match(['get','put'],'/users/edit_user','UserController@edit_user'); // 修改用户资料
         Route::post('/users/avatar_upload','UserController@avatar_upload'); // 用户头像上传
 
+        // 用户认证
+        Route::get('/users/user_check','UserCheckController@user_check'); // 获取用户认证资料
+        Route::post('/users/edit_user_check','UserCheckController@edit_user_check'); // 修改用户认证资料
+        Route::post('/users/user_check_upload','UserCheckController@user_check_upload'); // 用户认证图片上传
+
         // 收藏/关注
         Route::apiResource('favorites','FavoriteController')->except(['update']);
 
@@ -190,6 +195,9 @@ Route::namespace('Home')->group(function(){
         Route::get('/order/create_order_after','OrderController@create_order_after'); // 生成订单后处理
         Route::post('/order/create_order','OrderController@create_order'); // 生成订单
         Route::post('/order/pay','OrderController@pay'); // 订单支付
+
+        // 评论管理
+        Route::apiResource('order_comments','OrderCommentController')->except(['show','destroy']);
 
         // 商家入驻
         Route::get('/store/store_verify','StoreController@store_verify'); // 商家状态

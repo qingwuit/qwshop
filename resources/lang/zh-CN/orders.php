@@ -17,9 +17,14 @@ return [
     'pay_password_error'                 =>  '支付密码错误.',
     'balance_insufficient'               =>  '余额不足,请先充值.',
 
+    'balance_pay_success'                =>  '余额支付成功.',
     'payment_call_error'                 =>  '支付回调失败.',
 
     'order_cart_del_error'               =>  '创建订单购物车删除失败.',
+
+    // 没有需要评了的订单
+    'order_comment_error'                =>  '非法评论.',
+    'order_comment_success'              =>  '评论成功.',
 
     
 ];
