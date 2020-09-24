@@ -80,5 +80,9 @@ export default [
         // 订单管理
         {path:"/Admin/orders",name:"admin_orders",component:()=>import("@/views/Admin/orders/index")}, 
         {path:"/Admin/orders/form/:id?",name:"admin_orders_form",component:()=>import("@/views/Admin/orders/form")},
+
+        // 订单评论
+        {path:"/Admin/order_comments",name:"admin_order_comments",component:()=>import("@/views/Admin/order_comments/index")}, 
+        {path:"/Admin/order_comments/form/:id?",name:"admin_order_comments_form",component:()=>import("@/views/Admin/order_comments/form")},
     ]},
 ];

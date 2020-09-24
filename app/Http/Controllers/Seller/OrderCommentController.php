@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Seller\OrderCommentResource\OrderCommentCollection;
+use App\Http\Resources\Seller\OrderCommentResource\OrderCommentResource;
 use App\Models\OrderComment;
+use App\Services\OrderCommentService;
 use Illuminate\Http\Request;
 
 class OrderCommentController extends Controller
@@ -22,16 +24,7 @@ class OrderCommentController extends Controller
         return $this->success(new OrderCommentCollection($list));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+
 
     /**
      * Display the specified resource.
@@ -41,7 +34,12 @@ class OrderCommentController extends Controller
      */
     public function show($id)
     {
-        //
+        $oc_model = new OrderComment();
+        $list = $oc_model->with(['goods'=>function($q){
+            return $q->select('id','goods_name','goods_master_image');
+        }])->where('store_id',$this->get_store(true))->where('id',$id)->first();
+        return $this->success(new OrderCommentResource($list));
+        
     }
 
     /**
@@ -53,17 +51,10 @@ class OrderCommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $oc_service = new OrderCommentService();
+        $rs = $oc_service->edit($id,'seller');
+        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+
 }

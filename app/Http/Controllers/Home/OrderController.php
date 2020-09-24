@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Home\OrderResource\OrderCollection;
+use App\Http\Resources\Home\OrderResource\OrderResource;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 
@@ -43,5 +44,19 @@ class OrderController extends Controller
         $order_service = new OrderService();
         $rs = $order_service->payOrder();
         return $rs['status']?$this->success($rs['data']):$this->error($rs['msg']);
+    }
+
+    // 修改订单状态 // 用户只能操作取消订单
+    public function edit_order_status(Request $request){
+        $order_service = new OrderService();
+        $rs = $order_service->editOrderStatus($request->id,$request->order_status,'user');
+        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
+    }
+
+    // 获取订单详情
+    public function get_order_info($id){
+        $order_service = new OrderService();
+        $rs = $order_service->getOrderInfoById($id,'user');
+        return $rs['status']?$this->success(new OrderResource($rs['data']),$rs['msg']):$this->error($rs['msg']);
     }
 }

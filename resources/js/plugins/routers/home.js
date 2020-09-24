@@ -43,6 +43,11 @@ export default [
             {path: '/user/safe/edit_check',name: 'home_user_safe_edit_check',component: () => import('@/views/Home/users/safe/edit_check')}, // 身份认证
             {path: '/user/oauth',name: 'home_user_oauth',component: () => import('@/views/Home/users/oauth/index')}, // 用户账户绑定
             {path: '/user/order',name: 'home_user_order',component: () => import('@/views/Home/users/order/index')}, // 用户订单
+            {path: '/user/comment/add/:id',name: 'home_user_order_comment',component: () => import('@/views/Home/users/order/comment')}, // 用户添加评论
+
+            {path:"/user/order_comments",name:"home_user_comments",component:()=>import("@/views/Home/users/comment/index")},  // 评论列表
+            {path:"/user/order_comments/form/:id",name:"home_user_comments_form",component:()=>import("@/views/Home/users/comment/form")}, // 评论修改
+
             {path: '/user/favorite',name: 'home_user_favorite',component: () => import('@/views/Home/users/favorite/index')}, // 用户收藏
             {path: '/user/follows',name: 'home_user_follows',component: () => import('@/views/Home/users/favorite/follows')}, // 用户关注店铺
             {path: '/user/money',name: 'home_user_money',component: () => import('@/views/Home/users/money_log/money')}, // 用户资金日志

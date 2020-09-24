@@ -53,7 +53,7 @@ export default {
                     children:[
                         {name:'我的订单',url:'/user/order'},
                         {name:'收货地址',url:'/user/address'},
-                        {name:'评论列表',url:'#'},
+                        {name:'评论列表',url:'/user/order_comments'},
                     ],
                 },
                 {

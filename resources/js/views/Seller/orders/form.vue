@@ -22,7 +22,11 @@
                         </span>
                     </a-col>
                     <a-col :span="8">
-                        操作：<span class="content">-</span>
+                        操作：
+                        <span class="content">
+                            <a-button v-if="info.order_status==2" type="primary" @click="edit_express()"><a-icon type="edit"  />点击发货</a-button>
+                            <a-button v-if="info.order_status==3" @click="edit_express()"><a-icon type="edit" />编辑物流</a-button>
+                        </span>
                     </a-col>
                 </a-row>
             </div>
@@ -103,6 +107,16 @@
             <br>
             <!-- <a-button type="primary" @click="handleSubmit">提交</a-button> -->
         </div>
+
+        <!-- 修改物流 -->
+        <a-modal v-model="visible" title="编辑物流" ok-text="确认" cancel-text="取消" @ok="handleSubmit">
+            <a-input-group compact>
+                <a-select style="width: 25%" :value="info.delivery_code||'yd'">
+                    <a-select-option :value="v.code" v-for="(v,k) in express" :key="k">{{v.name}}</a-select-option>
+                </a-select>
+                <a-input style="width: 75%" placeholder="输入快递单号发货" v-model="info.delivery_no" />
+            </a-input-group>
+        </a-modal>
     </div>
 </template>
 
@@ -114,8 +128,10 @@ export default {
     data() {
       return {
           info:{
+              delivery_code:'yd',
           },
           list:[],
+          express:[],
           id:0,
           columns:[
             //   {title:'#',dataIndex:'id',fixed:'left'},
@@ -124,57 +140,62 @@ export default {
               {title:'购买数量',key:'id',scopedSlots: { customRender: 'buy_num'}},
               {title:'商品价格',key:'id',scopedSlots: { customRender: 'goods_price'} },
           ],
-          loading:false,
+          visible:false,
       };
     },
     watch: {},
     computed: {},
     methods: {
         handleSubmit(){
-
+            
             // 验证代码处
             // if(this.$isEmpty(this.info.name)){
             //     return this.$message.error('分类名不能为空');
             // }
 
             
-            let api = this.$apiHandle(this.$api.adminOrders,this.id);
-            if(api.status){
-                this.$put(api.url,this.info).then(res=>{
-                    if(res.code == 200){
-                        this.$message.success(res.msg)
-                        return this.$router.back();
-                    }else{
-                        return this.$message.error(res.msg)
-                    }
-                })
-            }else{
-                this.$post(api.url,this.info).then(res=>{
-                    if(res.code == 200){
-                        this.$message.success(res.msg)
-                        return this.$router.back();
-                    }else{
-                        return this.$message.error(res.msg)
-                    }
-                })
-            }
+            let api = this.$apiHandle(this.$api.sellerOrders,this.id);
+            this.$put(api.url,{delivery_code:this.info.delivery_code,delivery_no:this.info.delivery_no}).then(res=>{
+                if(res.code == 200){
+                    this.$message.success(res.msg)
+                    this.get_info();
+                    this.visible = false;
+                }else{
+                    return this.$message.error(res.msg)
+                }
+            })
+           
    
             
         },
+        edit_express(e){
+            this.visible = true;
+            this.get_express();
+        },
         get_info(){
-            this.$get(this.$api.adminOrders+'/'+this.id).then(res=>{
+            this.$get(this.$api.sellerOrders+'/'+this.id).then(res=>{
+                if(res.data.delivery_no != ''){
+                    this.get_delivery();
+                }
                 this.info = res.data;
             })
         },
-        // 获取菜单列表
+        get_express(){
+            this.$get(this.$api.sellerExpresses).then(res=>{
+                this.express = res.data;
+            })
+        },
+        // 获取物流信息
+        get_delivery(){
+            this.$get(this.$api.sellerExpresses+'/'+this.id).then(res=>{
+                this.list = res.data;
+            })
+        },
+        // 获列表
         onload(){
-
             // 判断你是否是编辑
-            if(!this.$isEmpty(this.$route.params.id)){
-                this.id = this.$route.params.id;
-                this.get_info();
-            }
-
+            this.id = this.$route.params.id;
+            this.get_info();
         },
 
         

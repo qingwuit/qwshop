@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\OrderCommentResource\OrderCommentCollection;
+use App\Http\Resources\Admin\OrderCommentResource\OrderCommentResource;
 use App\Models\OrderComment;
 use Illuminate\Http\Request;
 
@@ -22,37 +23,15 @@ class OrderCommentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(OrderComment $oc_model,$id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        $info = $oc_model->find($id);
+        return $this->success(new OrderCommentResource($info));
     }
 
     /**
@@ -61,8 +40,13 @@ class OrderCommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(OrderComment $oc_model,$id)
     {
-        //
+        $idArray = array_filter(explode(',',$id),function($item){
+            return is_numeric($item);
+        });
+   
+        $oc_model->destroy($idArray);
+        return $this->success([],__('base.success'));
     }
 }

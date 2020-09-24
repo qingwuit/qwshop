@@ -36,8 +36,7 @@ class OrderCommentService extends BaseService{
             });
             $order_list = $order_model->with('order_goods')->whereIn('id',$idArray)->where('user_id',$user_info['id'])->where('order_status',4)->get();
         }
-        
-        if(empty($order_list)){
+        if(empty($order_list->count())){
             return $this->format_error(__('orders.order_comment_error'));
         }
 
@@ -47,19 +46,21 @@ class OrderCommentService extends BaseService{
         $service = request()->service??5.00;
         $speed = request()->speed??5.00;
         $content = request()->content??'非常好！';
-        $image = request()->image??'';
+        $image = request()->image??[];
         foreach($order_list as $v){
             foreach($v['order_goods'] as $vo){
                 $comment = [];
                 $comment['user_id'] = $user_info['id'];
                 $comment['goods_id'] = $vo['goods_id'];
                 $comment['order_id'] = $v['id'];
+                $comment['store_id'] = $v['store_id'];
                 $comment['score'] = $score;
                 $comment['agree'] = $agree;
                 $comment['service'] = $service;
                 $comment['service'] = $speed;
                 $comment['content'] = $content;
-                $comment['image'] = $image;
+                $comment['image'] = empty($image)?'':implode(',',$image);
+                $comment['created_at'] = now();
                 $data[] = $comment;
             }
         }
@@ -87,8 +88,9 @@ class OrderCommentService extends BaseService{
             $store_id = $this->get_store(true);
             $oc_model = OrderComment::where('id',$id)->where('store_id',$store_id)->first();
             $oc_model->reply = request()->reply??'';
+            $oc_model->reply_time = now();
             $oc_model->save();
-            return $this->format(__('orders.order_comment_success'));
+            return $this->format([],__('orders.order_comment_success'));
         }
         if($auth == 'user'){
             $user_service = new UserService();
@@ -105,9 +107,9 @@ class OrderCommentService extends BaseService{
             $oc_model->service = $service;
             $oc_model->speed = $speed;
             $oc_model->content = $content;
-            $oc_model->image = $image;
+            $oc_model->image = empty($image)?'':implode(',',$image);
             $oc_model->save();
-            return $this->format(__('orders.order_comment_success'));
+            return $this->format([],__('orders.order_comment_success'));
         }
         
     }

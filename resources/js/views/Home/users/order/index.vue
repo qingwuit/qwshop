@@ -41,11 +41,11 @@
                     </div>
 
                     <div class="order_item_btn" v-show="v.order_status!=6 || v.order_status !=0">
-                        <div class="default_btn" v-if="v.order_status==1" >取消订单</div>
+                        <div class="default_btn" v-if="v.order_status==1" @click="edit_order_status(v.id)">取消订单</div>
                         <div class="success_btn" v-if="v.order_status==1" @click="pay_order(v.id)">立即支付</div>
-                        <div class="default_btn" v-if="v.order_status==3">查看物流</div>
-                        <div class="error_btn" v-if="v.order_status==3">确定收货</div>
-                        <div class="gray_btn" v-if="v.order_status==4">前往评论</div>
+                        <div class="default_btn" v-if="v.order_status==3" @click="get_order_info(v.id)">查看物流</div>
+                        <div class="error_btn" v-if="v.order_status==3" @click="edit_order_status(v.id,4)">确定收货</div>
+                        <div class="gray_btn" v-if="v.order_status==4" @click="$router.push('/user/comment/add/'+v.id)">前往评论</div>
                         <div class="warn_btn" v-if="v.order_status>3 && v.order_status !=5">申请售后</div>
                     </div>
                 </div>
@@ -58,6 +58,16 @@
             </div>
             </div>
         </div>
+
+        <!-- 物流 -->
+        <a-modal v-model="visible" title="物流信息" :footer="null">
+            <a-timeline v-if="order_info.delivery_list.length>0">
+                <a-timeline-item  v-for="(v,k) in order_info.delivery_list" :key="k" :color="k==0?'red':'gray'">
+                <p>{{v.context+' '+v.time}}</p>
+                </a-timeline-item>
+            </a-timeline>
+            <a-empty v-else />
+        </a-modal>
     </div>
 </template>
 
@@ -88,6 +98,10 @@ export default {
                   {label:'订单完成',value:6},
               ]},
           ],
+          order_info:{
+              delivery_list:[],
+          },
+          visible:false,
       };
     },
     watch: {},
@@ -117,10 +131,22 @@ export default {
                 this.total = res.data.total;
             })
         },
+        get_order_info(id){
+            this.$get(this.$api.homeOrder+'/get_order_info/'+id).then(res=>{
+                this.visible = true;
+                this.order_info = res.data;
+            })
+        },
         pay_order(order_id){
             let str = window.btoa(JSON.stringify({order_id:[order_id]})); 
             this.$router.push("/order/order_pay/"+str);
-        }
+        },
+        edit_order_status(id,order_status=0){
+            this.$put(this.$api.homeOrder+'/'+'edit_order_status',{id:id,order_status:order_status}).then(res=>{
+                this.onload();
+                return this.$returnInfo(res)
+            })
+        },
     },
     created() {
         this.onload()

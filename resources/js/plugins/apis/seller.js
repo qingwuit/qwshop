@@ -26,4 +26,13 @@ export default
     // 品牌管理
     'sellerGoodsBrands' : baseUrl + 'Seller/goods_brands', 
 
+    // 订单管理
+    'sellerOrders' : baseUrl + 'Seller/orders',
+
+    // 物流公司
+    'sellerExpresses' : baseUrl + 'Seller/expresses',
+
+    // 订单评论
+    'sellerOrderComments' : baseUrl + 'Seller/order_comments',
+
 };

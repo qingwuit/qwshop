@@ -1,7 +1,6 @@
 <?php
 namespace App\Services;
 
-use App\Models\Config;
 use GuzzleHttp\Client;
 
 /**
@@ -13,8 +12,8 @@ use GuzzleHttp\Client;
 class KuaibaoService extends BaseService{
     
     public function getExpressInfo($delivery_no,$delivery_code,$phone){
-        $config_service = new Config();
-        $info = json_decode($config_service->getFormatConfig('kuaibao'),true);
+        $config_service = new ConfigService();
+        $info = $config_service->getFormatConfig('kuaibao');
         $url = 'https://kop.kuaidihelp.com/api';
         $appkey = $info['app_key'];
         $data['method'] = 'express.info.get';
@@ -30,7 +29,7 @@ class KuaibaoService extends BaseService{
         $data['data'] = json_encode($data2);
         $info = $this->http_send($url,$data,'POST');
         $infos = $info->getContents();
-        $data = json_decode($infos,true);
+        $data = json_decode($infos,true)['data'][0]['data'];
         return $data;
     }
 

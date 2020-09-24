@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Home\OrderCommentResource;
 
+use App\Traits\HelperTrait;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class OrderCommentCollection extends ResourceCollection
@@ -12,6 +13,7 @@ class OrderCommentCollection extends ResourceCollection
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
+    use HelperTrait;
     public function toArray($request)
     {
         return [
@@ -22,6 +24,11 @@ class OrderCommentCollection extends ResourceCollection
                     'agree'                         =>  $item->agree,
                     'service'                       =>  $item->service,
                     'speed'                         =>  $item->speed,
+                    'goods'                         =>  [
+                                                            'id'                    =>  $item->goods->id,
+                                                            'goods_name'            =>  $item->goods->goods_name,
+                                                            'goods_master_image'    =>  $this->thumb($item->goods->goods_master_image),
+                                                        ],
                     'content'                       =>  $item->content,
                     'image'                         =>  empty($item->image)?[]:explode(',',$item->image),
                     'reply'                         =>  $item->reply,

@@ -86,6 +86,9 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
 
         // 订单管理 
         Route::apiResource('orders','OrderController')->except(['store']);
+
+        // 订单评论
+        Route::apiResource('order_comments','OrderCommentController')->except(['store','update']);
     });
 
     
@@ -119,6 +122,15 @@ Route::namespace('Seller')->prefix('Seller')->group(function(){
 
         // 商品品牌
         Route::apiResource('goods_brands','GoodsBrandController')->except(['update','show','store','destroy']);
+
+        // 订单管理 
+        Route::apiResource('orders','OrderController')->except(['store','destroy']);
+
+        // 订单评论
+        Route::apiResource('order_comments','OrderCommentController')->except(['store','destroy']);
+
+        // 物流公司
+        Route::apiResource('expresses','ExpressController')->except(['update','store','destroy']);
     });
 
     
@@ -195,9 +207,12 @@ Route::namespace('Home')->group(function(){
         Route::get('/order/create_order_after','OrderController@create_order_after'); // 生成订单后处理
         Route::post('/order/create_order','OrderController@create_order'); // 生成订单
         Route::post('/order/pay','OrderController@pay'); // 订单支付
+        Route::put('/order/edit_order_status','OrderController@edit_order_status'); // 取消订单
+        Route::get('/order/get_order_info/{id}','OrderController@get_order_info'); // 查看订单信息
 
         // 评论管理
-        Route::apiResource('order_comments','OrderCommentController')->except(['show','destroy']);
+        Route::apiResource('order_comments','OrderCommentController')->except(['destroy']);
+        Route::post('/order_comments/thumb/upload','OrderCommentController@comment_upload'); // 评论管理图片上传
 
         // 商家入驻
         Route::get('/store/store_verify','StoreController@store_verify'); // 商家状态

@@ -333,6 +333,10 @@ class OrderService extends BaseService{
             if(empty($user_info)){
                 return $this->format_error(__('users.no_token'));
             }
+            // 用户不允许随意操作状态，只能修改 取消订单和确定订单
+            if($order_status !=0 && $order_status !=4){
+                return $this->format_error(__('base.error'));
+            }
             $order_model = $order_model->where('user_id',$user_info['id']);
         }
         $order_model = $order_model->first();
@@ -358,7 +362,7 @@ class OrderService extends BaseService{
             case 2: // 等待发货
             break;
             case 3: // 确认收货
-                if(empty($order_model->delivery_no)|| empty($order_model->delivery_code)){ // 只有待支付的订单能取消
+                if(empty($order_model->delivery_no) || empty($order_model->delivery_code)){ // 只有待支付的订单能取消
                     return $this->format_error(__('base.error').' - 3');
                 }
             break;
@@ -371,7 +375,7 @@ class OrderService extends BaseService{
         }
         $order_model->order_status = $order_status;
         $order_model->save();
-        return $this->format([]);
+        return $this->format([$order_status],__('base.success'));
     }
 
     // 地址验证
@@ -463,12 +467,9 @@ class OrderService extends BaseService{
             $user_info = $user_service->getUserInfo();
             $order_model = $order_model->where('user_id',$user_info['id']);
         }
-        if($type == 'store'){
-            $user_service = new UserService;
-            $user_info = $user_service->getUserInfo();
-            $store_model = new Store();
-            $store_info = $store_model->where('user_id',$user_info['id'])->first();
-            $order_model = $order_model->where('store_id',$store_info['id']);
+        if($type == 'seller'){
+            $store_id = $this->get_store(true);
+            $order_model = $order_model->where('store_id',$store_id);
         }
         
         $order_model = $order_model->with(['store'=>function($q){
@@ -521,7 +522,7 @@ class OrderService extends BaseService{
             $order_model = $order_model->where('user_id',$user_info['id']);
         }
 
-        if($auth=='store'){
+        if($auth=='seller'){
             $store_id = $this->get_store(true);
             $order_model = $order_model->where('store_id',$store_id);
         }
@@ -568,7 +569,7 @@ class OrderService extends BaseService{
 
     // 获取支付类型
     public function getOrderPayMentCn($payment_name){
-        $cn = '未知支付';
+        $cn = '未支付';
         switch($payment_name){
             case 'wechat':
                 $cn = __('admins.payment_wechat');

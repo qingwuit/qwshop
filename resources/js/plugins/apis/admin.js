@@ -68,5 +68,8 @@ export default
     'adminAdvsUploadThumb' : baseUrl + 'Admin/advs/upload/thumb', // 品牌缩略图上传
 
     // 订单管理
-    'adminOrders' : baseUrl + 'Admin/orders',  
+    'adminOrders' : baseUrl + 'Admin/orders', 
+    
+    // 订单评论
+    'adminOrderComments' : baseUrl + 'Admin/order_comments',  
 };
