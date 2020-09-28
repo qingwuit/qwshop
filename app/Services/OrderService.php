@@ -507,6 +507,16 @@ class OrderService extends BaseService{
             $order_model = $order_model->where('order_status',request()->order_status);
         }
 
+        // 获取退款订单
+        if(isset(request()->is_refund)){
+            $order_model = $order_model->where('order_status',5)->where('refund_status',0);
+        }
+
+        // 获取退货订单
+        if(isset(request()->is_return)){
+            $order_model = $order_model->where('order_status',5)->where('refund_status',1);
+        }
+
         $order_model = $order_model->orderBy('id','desc')
                     ->paginate(request()->per_page??30);
         return $this->format($order_model);

@@ -26,5 +26,9 @@ return [
     'order_comment_error'                =>  '非法评论.',
     'order_comment_success'              =>  '评论成功.',
 
+    // 该订单已经申请过售后
+    'order_refund_handle'                =>  '该订单已经申请过售后.',
+    'order_refund_success'               =>  '申请成功等待管理员审核.',
+
     
 ];

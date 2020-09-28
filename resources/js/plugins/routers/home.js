@@ -45,6 +45,10 @@ export default [
             {path: '/user/order',name: 'home_user_order',component: () => import('@/views/Home/users/order/index')}, // 用户订单
             {path: '/user/comment/add/:id',name: 'home_user_order_comment',component: () => import('@/views/Home/users/order/comment')}, // 用户添加评论
 
+            // 申请售后
+            {path: '/user/refund/:id',name: 'home_user_refund',component: () => import('@/views/Home/users/refund/index')}, // 申请售后
+            {path: '/user/refund/form/:id',name: 'home_user_refund_form',component: () => import('@/views/Home/users/refund/form')}, // 售后信息查看
+
             {path:"/user/order_comments",name:"home_user_comments",component:()=>import("@/views/Home/users/comment/index")},  // 评论列表
             {path:"/user/order_comments/form/:id",name:"home_user_comments_form",component:()=>import("@/views/Home/users/comment/form")}, // 评论修改
 

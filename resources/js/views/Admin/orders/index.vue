@@ -133,6 +133,12 @@ export default {
         },
  
         onload(){
+            if(!this.$isEmpty(this.$route.query.is_refund)){
+                this.params.is_refund = 1;
+            }
+            if(!this.$isEmpty(this.$route.query.is_return)){
+                this.params.is_return = 1;
+            }
             this.$get(this.$api.adminOrders,this.params).then(res=>{
                 this.total = res.data.total;
                 this.list = res.data.data;

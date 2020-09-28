@@ -24,8 +24,9 @@ class OrderCollection extends ResourceCollection
                     'order_price'           =>  $item->order_price,
                     'total_price'           =>  $item->total_price,
                     'order_status'          =>  $item->order_status,
-                    'order_status_cn'       =>  $order_service->getOrderStatusCn(['order_status'=>$item->order_status]),
+                    'order_status_cn'       =>  $order_service->getOrderStatusCn($item),
                     'store'                 =>  $item->store,
+                    'refund_status'         =>  $item->refund_status,
                     'user'                  =>  $item->user,
                     'created_at'            =>  $item->created_at->format('Y-m-d H:i'),
                     'order_goods'           =>  $item->order_goods->map(function($v){

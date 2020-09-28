@@ -129,6 +129,9 @@ Route::namespace('Seller')->prefix('Seller')->group(function(){
         // 订单评论
         Route::apiResource('order_comments','OrderCommentController')->except(['store','destroy']);
 
+        // 订单售后
+        Route::apiResource('refunds','RefundController')->except(['index','store','destroy']);
+
         // 物流公司
         Route::apiResource('expresses','ExpressController')->except(['update','store','destroy']);
     });
@@ -201,6 +204,9 @@ Route::namespace('Home')->group(function(){
 
         // 订单列表
         Route::get('/order','OrderController@get_orders'); // 获取订单列表
+
+        // 订单售后
+        Route::apiResource('refunds','RefundController')->except(['index','destroy']);
 
         // 订单处理
         Route::get('/order/create_order_before','OrderController@create_order_before'); // 生成订单前处理

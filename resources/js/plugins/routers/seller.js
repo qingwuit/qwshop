@@ -20,6 +20,9 @@ export default [
         {path:"/Seller/orders",name:"seller_orders",component:()=>import("@/views/Seller/orders/index")}, 
         {path:"/Seller/orders/form/:id?",name:"seller_orders_form",component:()=>import("@/views/Seller/orders/form")},
 
+        // 售后管理
+        {path:"/Seller/orders/refund/:id",name:"seller_refunds_form",component:()=>import("@/views/Seller/refunds/index")},
+
         // 订单评论
         {path:"/Seller/order_comments",name:"seller_order_comments",component:()=>import("@/views/Seller/order_comments/index")}, 
         {path:"/Seller/order_comments/form/:id?",name:"seller_order_comments_form",component:()=>import("@/views/Seller/order_comments/form")},

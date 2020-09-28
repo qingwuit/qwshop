@@ -59,7 +59,7 @@ class MoneyLogService extends BaseService{
             $user_info = $user_service->getUserInfo();
             $money_log_model = $money_log_model->where('user_id',$user_info['id']);
         }
-        $list = $money_log_model->where('is_type',request()->is_type??0)->paginate(request()->per_page??30);
+        $list = $money_log_model->where('is_type',request()->is_type??0)->orderBy('id','desc')->paginate(request()->per_page??30);
 
         if($auth == 'user'){
             return $this->format(new MoneyLogCollection($list));

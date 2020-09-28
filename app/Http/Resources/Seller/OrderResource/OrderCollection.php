@@ -30,6 +30,7 @@ class OrderCollection extends ResourceCollection
                     'order_status_cn'       =>  $order_service->getOrderStatusCn($item),
      
              
+                    'refund_status'         =>  $item->refund_status,
                     'pay_time'              =>  $item->pay_time,
                     'delivery_time'         =>  $item->delivery_time,
                     'receipt_time'          =>  $item->receipt_time,

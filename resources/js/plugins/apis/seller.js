@@ -29,6 +29,9 @@ export default
     // 订单管理
     'sellerOrders' : baseUrl + 'Seller/orders',
 
+    // 订单售后
+    'sellerRefunds' : baseUrl + 'Seller/refunds',
+
     // 物流公司
     'sellerExpresses' : baseUrl + 'Seller/expresses',
 

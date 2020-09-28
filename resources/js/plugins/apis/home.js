@@ -46,6 +46,9 @@ export default
     // 订单评论
     'homeOrderComments' : baseUrl + 'order_comments',
 
+    // 订单售后
+    'homeRefunds' : baseUrl + 'refunds',
+
     // 用户中心
     'homeUser' : baseUrl + 'users',
 
