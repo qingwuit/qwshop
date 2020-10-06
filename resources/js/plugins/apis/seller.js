@@ -38,4 +38,10 @@ export default
     // 订单评论
     'sellerOrderComments' : baseUrl + 'Seller/order_comments',
 
+    // 配置中心处理
+    'sellerConfigs' : baseUrl + 'Seller/configs',
+
+    // 全国省市区获取
+    'sellerAreas' : baseUrl + 'Seller/areas',
+
 };

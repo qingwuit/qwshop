@@ -134,6 +134,15 @@ Route::namespace('Seller')->prefix('Seller')->group(function(){
 
         // 物流公司
         Route::apiResource('expresses','ExpressController')->except(['update','store','destroy']);
+
+        // 商家配置
+        Route::get('configs','ConfigController@show');
+        Route::put('configs','ConfigController@update'); // 修改
+        Route::post('configs/upload/images','ConfigController@config_upload'); // 配置上传图片
+
+        // 全国省市区地址获取
+        Route::get('/areas','AreaController@areas'); // 商家状态
+
     });
 
     
@@ -201,6 +210,9 @@ Route::namespace('Home')->group(function(){
 
         // 资金日志
         Route::apiResource('money_logs','MoneyLogController')->except(['update','show','store','destroy']);
+
+        // 资金提现
+        Route::apiResource('cashes','CashController')->except(['update','show','destroy']);
 
         // 订单列表
         Route::get('/order','OrderController@get_orders'); // 获取订单列表

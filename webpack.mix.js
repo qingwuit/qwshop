@@ -28,6 +28,7 @@ mix.js('resources/js/app.js', 'public/dist/js')
             'vue-router': 'VueRouter',
             'ant-design-vue': 'antd',
             'moment': 'moment',
+            'vue-amap':'VueAMap',
             // 'element-ui': 'ELEMENT',//这个比较坑　一开始我还以为是ElementUI结果就报错了XD
         },
         output: {

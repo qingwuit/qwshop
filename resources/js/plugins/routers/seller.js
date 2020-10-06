@@ -7,6 +7,9 @@ export default [
 
         {path:"/Seller/index",name:"seller_default",component:()=>import("@/views/Seller/default")}, // 打开默认页面
 
+        // 配置中心
+        {path:"/Seller/configs",name:"seller_configs",component:()=>import("@/views/Seller/configs/index")},
+
         // 商品管理
         {path:"/Seller/goods",name:"seller_goods",component:()=>import("@/views/Seller/goods/index")}, // 商品列表
         {path:"/Seller/goods/chose_class",name:"seller_goods_chose_class",component:()=>import("@/views/Seller/goods/chose_class")}, // 商品分类选择

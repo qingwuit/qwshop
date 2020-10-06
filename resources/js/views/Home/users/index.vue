@@ -64,7 +64,7 @@ export default {
                         {name:'用户资料',url:'/user/user_info'},
                         {name:'账户安全',url:'/user/safe'},
                         {name:'账号绑定',url:'/user/oauth'},
-                        {name:'资金提现',url:'#'},
+                        {name:'资金提现',url:'/user/cash'},
                         {name:'收藏/关注',url:'/user/favorite'},
                     ],
                 },

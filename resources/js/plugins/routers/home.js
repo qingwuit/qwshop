@@ -57,6 +57,10 @@ export default [
             {path: '/user/money',name: 'home_user_money',component: () => import('@/views/Home/users/money_log/money')}, // 用户资金日志
             {path: '/user/frozen_money',name: 'home_user_frozen_money',component: () => import('@/views/Home/users/money_log/frozen_money')}, // 用户冻结资金日志
             {path: '/user/integral',name: 'home_user_integral',component: () => import('@/views/Home/users/money_log/integral')}, // 用户积分日志
+
+            // 提现
+            {path: '/user/cash',name: 'home_user_cash',component: () => import('@/views/Home/users/cash/index')}, // 提现列表
+            {path: '/user/cash/form',name: 'home_user_cash_form',component: () => import('@/views/Home/users/cash/form')}, // 提现列表
         ]}, 
     ]},
 

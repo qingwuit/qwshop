@@ -1,19 +1,33 @@
 <?php
 namespace App\Services;
 
+use App\Http\Resources\Home\CashResource\CashCollection;
 use App\Models\Cash;
 use App\Models\UserCheck;
 
 class CashService extends BaseService{
 
+
+    // 获取提现列表
+    public function getCash($auth='user'){
+        $cash_model = new Cash();
+        if($auth == 'user'){
+            $cash_model = $cash_model->where('user_id','>',0)->where('store_id',0);
+        }else{
+            $cash_model = $cash_model->where('user_id',0)->where('store_id','>',0);
+        }
+        $list = $cash_model->orderBy('id','desc')->paginate(request()->per_page??30);
+        return $this->format(new CashCollection($list));
+    }
+
     // money
     public function add($auth = 'user'){
         $cash_model = new Cash();
-        $money = abs(request()->money);
+        $money = abs(request()->money)+0;
 
         // 金额不能小于100
         if($money<100){
-            return $this->format_error(_('users.cash_money_gt100'));
+            return $this->format_error(__('users.cash_money_gt100'));
         }
         if($auth == 'user'){
             $user_service = new UserService;
@@ -21,7 +35,7 @@ class CashService extends BaseService{
             $uc_model = new UserCheck();
 
             if($money>$user_info['money']){
-                return $this->format_error(_('users.cash_money_insufficient'));
+                return $this->format_error(__('users.cash_money_insufficient'));
             }
 
             $uc_info = $uc_model->where('user_id',$user_info['id'])->first();
@@ -33,6 +47,11 @@ class CashService extends BaseService{
             $cash_model->name = $uc_info->name;
             $cash_model->card_no = $uc_info->card_no;
             $cash_model->bank_name = $uc_info->bank_name;
+
+            // 资金冻结处理
+            $ml_service = new MoneyLogService();
+            $ml_service->editMoney('资金提现',$user_info['id'],-$money);
+            $ml_service->editMoney('资金提现',$user_info['id'],$money,1);
         }
 
         // 店铺提现

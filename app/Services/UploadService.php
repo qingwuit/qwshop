@@ -153,6 +153,37 @@ class UploadService extends BaseService{
     }
 
     /**
+     * 商家Logo上传
+     *
+     * @param integer $id 用户ID
+     * @author hg <www.qingwuit.com>
+     */
+    public function store_logo($id=0){
+        $path = 'store_logo';
+        $opt = [
+            'width'=>140,
+            'height'=>140,
+        ]; // 配置文件
+        if(!empty($id)){
+            $path = $path.'/'.$id;
+        }
+        return $this->uploadPhoto($path,$opt);
+    }
+    /**
+     * 商家幻灯片门面上传
+     *
+     * @param integer $id 用户ID
+     * @author hg <www.qingwuit.com>
+     */
+    public function store_slide($id=0){
+        $path = 'store_slide';
+        if(!empty($id)){
+            $path = $path.'/'.$id;
+        }
+        return $this->uploadPhoto($path);
+    }
+
+    /**
      * 配置中心图片上传
      *
      * @param integer $id 用户ID

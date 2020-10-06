@@ -44,6 +44,7 @@ class CreateStoresTable extends Migration
             $table->unsignedTinyInteger('store_status')->default(1)->comment('店铺状态');
             $table->unsignedTinyInteger('store_verify')->default(0)->comment('店铺审核状态');
             $table->string('store_refuse_info',20)->comment('拒绝原因');
+            $table->text('after_sale_service')->comment('售后服务');
             $table->timestamps();
         });
     }

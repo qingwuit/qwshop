@@ -52,6 +52,9 @@ export default
     // 用户中心
     'homeUser' : baseUrl + 'users',
 
+    // 资金提现
+    'homeCash' : baseUrl + 'cashes',
+
     // 商家入驻
     'homeStoreVerify' : baseUrl + 'store/store_verify',  // 商家审核状态
     'homeStoreJoin' : baseUrl + 'store/store_join',  // 商家审核状态

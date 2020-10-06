@@ -10,6 +10,8 @@
                     <li><router-link to="/">联系方式</router-link></li>
                     <li>|</li>
                     <li><router-link to="/">关于我们</router-link></li>
+                    <li>|</li>
+                    <li><router-link style="color:#ca151e" to="/"><img width="16px" :src="require('@/asset/order/address_pos3.png')" >{{' '+city+' '||' - '}}</router-link></li>
                 </ul>
             </div>
             <div class="top_shop_right">
@@ -34,13 +36,19 @@
 </template>
 
 <script>
+window.VueAMap.initAMapApiLoader({
+  // 高德key
+  key: 'f7619d49a4aea5cb76631ce884ea1817',
+  // 插件集合 （插件按需引入）
+  plugin: ['AMap.Geolocation', 'AMap.ToolBar','AMap.Geocoder']
+});
 import {mapState} from 'vuex'
 export default {
     components: {},
     props: {},
     data() {
       return {
-          amapUrl:'https://restapi.amap.com/v3/geocode/regeo?&key=79f3a628c906e1fc7384a6f19d478ae3&location=',
+          city:'',
       };
     },
     watch: {},
@@ -55,6 +63,31 @@ export default {
             });
         },
         get_position(){
+            // 修改地址
+            var self = this;
+            window.VueAMap.lazyAMapApiLoaderInstance.load().then(() => {
+               
+                AMap.plugin('AMap.Geolocation',  ()=> {
+                    var geolocation  = new AMap.Geolocation();
+                    geolocation.getCurrentPosition()
+                    AMap.event.addListener(geolocation, 'complete', onComplete)
+                    AMap.event.addListener(geolocation, 'error', onError)
+                    // 定位成功
+                    function onComplete (data) {
+                        let city = data.addressComponent.city
+                        let lng = data.position.lng
+                        let lat = data.position.lat
+                        self.city = city;
+                        sessionStorage.setItem('qw_city',city);
+                        sessionStorage.setItem('qw_lng',lng);
+                        sessionStorage.setItem('qw_lat',lat);
+                    }
+                    // 定位出错
+                    function onError (data) {
+                        console.log(data)
+                    }
+                })
+            });
             //判断是否支持 获取本地位置
             let _this = this;
             if (navigator.geolocation) {
@@ -72,7 +105,7 @@ export default {
         }
     },
     created() {
-        // this.get_position();
+        this.get_position();
     },
     mounted() {}
 };

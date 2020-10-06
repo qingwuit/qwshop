@@ -14,6 +14,7 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.2.0/vue-router.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/ant-design-vue@1.6.2/dist/antd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-amap@0.5.10/dist/index.min.js"></script>
  
 </head>
 
