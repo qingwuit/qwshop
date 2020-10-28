@@ -179,13 +179,12 @@ Route::namespace('Home')->group(function(){
     Route::get('/goods/{id}','GoodsController@goods_info'); // 获取商品详情
     Route::post('/goods/search/all','GoodsController@goods_search'); // 搜索商品列表
 
-     
-    Route::group(['middleware'=>'jwt.user'],function(){
+    // 购物车
+    Route::get('/carts/cart_count','CartController@cart_count'); // 获取购物车商品数量
 
+    Route::group(['middleware'=>'jwt.user'],function(){
         // 购物车
         Route::apiResource('carts','CartController')->except(['show']);
-        Route::get('/carts/cart_count','CartController@cart_count'); // 获取购物车商品数量
-
 
         // 用户收货地址
         Route::apiResource('addresses','AddressController');

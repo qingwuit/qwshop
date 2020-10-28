@@ -9,7 +9,6 @@
         </div>
 
         <div class="goods_info_top w1200">
-            
             <div class="goods_info_top_left" >
                 <div class="goods_image_item">
                     <pic-zoom :url="goods_info.goods_images_thumb_400[chose_img_pos]" :highUrl="goods_info.goods_images[chose_img_pos]"></pic-zoom>
@@ -76,6 +75,103 @@
             </div>
             <div class="clear"></div>
         </div>
+        <div class="goods_info_content w1200">
+            <div class="left_item">
+                <div class="store_info">
+                    <div class="store_title">
+                        <span class="tip">店铺</span>
+                        <span class="title">青梧商城</span>
+                    </div>
+                    <div class="rate">
+                        <span style="float:left;padding-top:2px;margin-right:10px">综合评分</span>
+                        <a-rate style="font-size:14px;float:left" v-model="value" :tooltips="desc" disabled />
+                        <span style="float:left;padding-top:2px;" class="ant-rate-text">{{ desc[value - 1] }}</span>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="store_rate">
+                        <div class="title">店铺评分：</div>
+                        <div class="item">
+                            <span style="float:left;padding-top:2px;margin-right:10px">描述相符</span>
+                            <a-rate style="font-size:14px;float:left" v-model="value" :tooltips="desc" disabled />
+                            <span style="float:left;padding-top:2px;" class="ant-rate-text">{{ desc[value - 1] }}</span>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="item">
+                            <span style="float:left;padding-top:2px;margin-right:10px">服务态度</span>
+                            <a-rate style="font-size:14px;float:left" v-model="value" :tooltips="desc" disabled />
+                            <span style="float:left;padding-top:2px;" class="ant-rate-text">{{ desc[value - 1] }}</span>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="item">
+                            <span style="float:left;padding-top:2px;margin-right:10px">发货速度</span>
+                            <a-rate style="font-size:14px;float:left" v-model="value" :tooltips="desc" disabled />
+                            <span style="float:left;padding-top:2px;" class="ant-rate-text">{{ desc[value - 1] }}</span>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="store_com" style="margin-top:10px">公司名称：<font color="#999">青梧信息科技有限公司</font></div>
+                    <div class="store_com" style="margin-bottom:10px">公司地址：<font color="#999">北京市 市辖区 东城区天心小区 四季春天 2087</font></div>
+                    <div class="btn">
+                        <span class="navstore">进入店铺</span>
+                        <span class="contact">联系客服</span>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <!-- // 销售排行 -->
+                <div class="store_info">
+                    <div class="store_title"><span class="title">销售排行</span></div>
+                    <div class="goods_list">
+                        <dl><a href="">
+                            <dt><img v-lazy="'http://api.qingwuit.com/Uploads/goods/2020_01_14/15789844297080_200.jpg'" alt=""></dt>
+                            <dd class="info">
+                                <div class="title">Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体</div>
+                                <div class="price">￥6819.00</div>
+                                <div class="round">1</div>
+                            </dd></a>
+                        </dl>
+                        <dl><a href="">
+                            <dt><img v-lazy="'http://api.qingwuit.com/Uploads/goods/2020_01_14/15789844297080_200.jpg'" alt=""></dt>
+                            <dd class="info">
+                                <div class="title">Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体</div>
+                                <div class="price">￥6819.00</div>
+                                <div class="round">2</div>
+                            </dd></a>
+                        </dl>
+                        <dl><a href="">
+                            <dt><img v-lazy="'http://api.qingwuit.com/Uploads/goods/2020_01_14/15789844297080_200.jpg'" alt=""></dt>
+                            <dd class="info">
+                                <div class="title">Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体</div>
+                                <div class="price">￥6819.00</div>
+                                <div class="round">3</div>
+                            </dd></a>
+                        </dl>
+                        <dl><a href="">
+                            <dt><img v-lazy="'http://api.qingwuit.com/Uploads/goods/2020_01_14/15789844297080_200.jpg'" alt=""></dt>
+                            <dd class="info">
+                                <div class="title">Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体</div>
+                                <div class="price">￥6819.00</div>
+                                <div class="round">4</div>
+                            </dd></a>
+                        </dl>
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="right_item">
+                 <a-tabs default-active-key="1" >
+                <a-tab-pane key="1" tab="商品详情" force-render>
+                    <div v-html="goods_info.goods_content||''"></div>
+                </a-tab-pane>
+                <a-tab-pane key="2" tab="用户评价 (0)" force-render>
+                    Content of Tab Pane 2
+                </a-tab-pane>
+                <a-tab-pane key="3" tab="售后服务" force-render>
+                    Content of Tab Pane 3
+                </a-tab-pane>
+                </a-tabs>
+            </div>
+            <div class="clear"></div>
+        </div>
     </div>
 </template>
 
@@ -98,6 +194,8 @@ export default {
           sku_id:0,
           isFav:false,
           save_history:true,
+          value:5,
+          desc: ['1.0分', '2.0分', '3.0分', '4.0分', '5.0分'],
       };
     },
     watch: {
@@ -313,7 +411,8 @@ export default {
                     return this.isFav = false;
                 }
             })
-        }
+        },
+        
     },
     created() {
         this.goods_id = this.$route.params.id;
@@ -333,7 +432,145 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.goods_info_content{
+    .right_item{
+        border:1px solid #efefef;
+        padding:20px;
+        box-sizing: border-box;
+        width: 946px;
+        float: left;
+    }
+    .left_item{
+        width: 234px;
+        float: left;
+        margin-right: 20px;
+        .store_info{
+            width: 100%;
+            border:1px solid #efefef;
+            margin-bottom: 20px;
+            .goods_list{
+                dl{
+                    border-bottom: 1px solid #efefef;
+                    padding: 20px 10px;
+                    &:last-child{
+                        border-bottom: none;
+                    }
+                    &:after{
+                        clear: both;
+                        display: block;
+                        content:'';
+                    }
+                    .info{
+                        display: flex;
+                        flex-direction:column;
+                        float: left;
+                        position: relative;
+                        .title{
+                            width: 120px;
+                            height: 45px;
+                            overflow: hidden;
+                        }
+                        .price{
+                            color:#ca151e;
+                            margin-top: 5px;
+                        }
+                        .round{
+                            background: #333;
+                            color:#fff;
+                            width: 16px;
+                            height: 16px;
+                            text-align: center;
+                            line-height: 16px;
+                            border-radius: 50%;
+                            position: absolute;
+                            font-size: 12px;
+                            top:-15px;
+                            left:-95px;
 
+                        }
+                    }
+                    &:nth-child(1) .round,&:nth-child(2) .round,&:nth-child(3) .round{
+                        background: #ca151e;
+                    }
+                }
+                
+                dt{
+                    width: 80px;
+                    height: 80px;
+                    margin-right: 10px;
+                    float: left;
+                    img{
+                       width: 80px;
+                        height: 80px; 
+                    }
+                }
+                
+            }
+            .btn{
+                border-top: 1px solid #efefef;
+                span:hover{
+                    background: #ca151e;
+                    color:#fff;
+                }
+                span{
+                    text-align: center;
+                    width: 50%;
+                    box-sizing: border-box;
+                    height: 40px;
+                    line-height: 40px;
+                    display: block;
+                    float: left;
+                    cursor: pointer;
+                    &:first-child{
+                        border-right: 1px solid #efefef;
+                    }
+                }
+            }
+            .store_com{
+                padding:3px 10px;
+            }
+            .store_rate{
+                padding-left:10px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #efefef;
+                .item{
+                    line-height: 30px;
+                }
+                .title{
+                    color:#000;
+                    line-height: 35px;
+                }
+            }
+            .rate{
+                line-height: 35px;
+                font-size: 14px;
+                padding-left:10px;
+                border-bottom: 1px solid #efefef;
+            }
+            .store_title{
+                background: #fafafa;
+                height: 35px;
+                padding:0 10px;
+                padding-top: 6px;
+                box-sizing: border-box;
+                border-bottom: 1px solid #efefef;
+                .tip{
+                    background: #ca151e;
+                    color:#fff;
+                    text-align: center;
+                    line-height: 24px;
+                    border-radius: 3px;
+                    margin-right: 10px;
+                    padding:2px 10px;
+                }
+                .title{
+                    color:#000;
+                }
+            }
+        }
+    }
+    margin-top: 60px;
+}
 .goods_info_top_right{
     float: left;
     width: 770px;

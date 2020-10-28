@@ -42,6 +42,7 @@ class CartService extends BaseService{
 
         // 获取当前用户user_id
         $user_service = new UserService;
+ 
         if(!$user_info = $user_service->getUserInfo()){
             return $this->format_error(__('carts.add_error').'4'); // 获取用户失败
         }

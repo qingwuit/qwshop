@@ -49,6 +49,7 @@ export default {
     data() {
       return {
           city:'',
+          amapUrl:'',
       };
     },
     watch: {},
@@ -89,19 +90,20 @@ export default {
                 })
             });
             //判断是否支持 获取本地位置
-            let _this = this;
-            if (navigator.geolocation) {
-                var n = navigator.geolocation.getCurrentPosition(function(res){
-                    let lat = res.coords.latitude;
-                    let lng = res.coords.longitude;
-                    _this.$get(_this.amapUrl+lng+','+lat).then(item=>{
-                        console.log(item)
-                    })
-                    // console.log(res); // 需要的坐标地址就在res中
-                });
-            } else {
-                this.$message.error('该浏览器不支持定位');
-            }
+            // let _this = this;
+            // if (navigator.geolocation) {
+            //     var n = navigator.geolocation.getCurrentPosition(function(res){
+            //         let lat = res.coords.latitude;
+            //         let lng = res.coords.longitude;
+            //         console.log(_this.amapUrl+lng+','+lat)
+            //         _this.$get(_this.amapUrl+lng+','+lat).then(item=>{
+            //             // console.log(item)
+            //         })
+            //         // console.log(res); // 需要的坐标地址就在res中
+            //     });
+            // } else {
+            //     this.$message.error('该浏览器不支持定位');
+            // }
         }
     },
     created() {

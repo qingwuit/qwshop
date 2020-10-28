@@ -257,10 +257,13 @@
 .home .ant-radio-inner:after{
     background-color: #666;
 }
-.home .ant-radio-input:focus+.ant-radio-inner,.ant-radio-wrapper:hover .ant-radio,.ant-radio:hover .ant-radio-inner{border-color:#666}
+.home .ant-radio-input:focus+.ant-radio-inner,.home .ant-radio-wrapper:hover .ant-radio,.home .ant-radio:hover .ant-radio-inner{border-color:#666}
 .home .ant-radio-input:focus+.ant-radio-inner{box-shadow:0 0 0 3px rgba(59, 59, 59, 0.08)}
 .home .ant-upload.ant-upload-select-picture-card:hover{border-color:#666}
-.home .ant-checkbox-input:focus+.ant-checkbox-inner,.ant-checkbox-wrapper:hover .ant-checkbox-inner,.ant-checkbox:hover .ant-checkbox-inner{border-color:#ca151e}
+.home .ant-checkbox-input:focus+.ant-checkbox-inner,.home .ant-checkbox-wrapper:hover .ant-checkbox-inner,.home .ant-checkbox:hover .ant-checkbox-inner{border-color:#ca151e}
 .home .ant-checkbox-checked:after{border-color:#ca151e}
 .home .ant-checkbox-checked .ant-checkbox-inner{background-color:#ca151e;border-color:#ca151e}
 .home .ant-checkbox-indeterminate .ant-checkbox-inner:after{background-color: #ca151e;}
+.home .ant-tabs-nav .ant-tabs-tab-active{color:#ca151e}
+.home .ant-tabs-ink-bar{background-color: #ca151e;}
+.home .ant-tabs-nav .ant-tabs-tab:hover{color:#ca151e}
