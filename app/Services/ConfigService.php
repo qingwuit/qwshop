@@ -99,7 +99,72 @@ class ConfigService extends BaseService{
         }else{
             $data['kuaibao'] = json_decode($data['kuaibao'],true);
         }
+
+        // 自动任务
+        if(empty($data['task'])){
+            $data['task'] = [
+                'confirm'=>'5', // 完成订单
+                'cancel'=>'1', // 取消
+                'settlement'=>'7', // 结算
+            ];
+        }else{
+            $data['task'] = json_decode($data['task'],true);
+        }
+
+        // 积分配置
+        if(empty($data['integral'])){
+            $data['integral'] = [
+                'login'=>[
+                    'status'=>true,
+                    'integral'=>1,
+                ], 
+                'register'=>[
+                    'status'=>false,
+                    'integral'=>1,
+                ], 
+                'inviter'=>[
+                    'status'=>false,
+                    'integral'=>1,
+                ], 
+                'order'=>[
+                    'status'=>false,
+                    'integral'=>1,
+                ], 
+              
+            ];
+        }else{
+            $data['integral'] = json_decode($data['integral'],true);
+        }
+
+        // oauth 第三方登录
+        if(empty($data['oauth'])){
+            $data['oauth'] = [
+                'weixinweb'=>[
+                    'client_id'=>'',
+                    'client_secret'=>'',
+                    'redirect'=>'',
+                ], 
+            ];
+        }else{
+            $data['oauth'] = json_decode($data['oauth'],true);
+        }
+
         return $data;
+    }
+
+
+    // 积分配送
+    public function giveIntegral($name='login'){
+
+        $info = $this->getFormatConfig('integral')[$name];
+        if(!$info['status']){
+            return false;
+        }
+        $user_service = new UserService;
+        $userInfo = $user_service->getUserInfo();
+        $ml_service = new MoneyLogService();
+        $rs = $ml_service->editMoney(__('users.money_log_integral_'.$name),$userInfo['id'],$info['integral'],2);
+        return $rs;
     }
 
 }

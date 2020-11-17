@@ -13,6 +13,9 @@
                 <a-tab-pane :key="1" tab="店铺配置">
                     <store-config></store-config>
                 </a-tab-pane>
+                <a-tab-pane :key="2" tab="积分配置">
+                    <integral-config></integral-config>
+                </a-tab-pane>
             </a-tabs>
             
             
@@ -23,7 +26,8 @@
 <script>
 import webConfig from "./web.vue"
 import storeConfig from "./store.vue"
+import integralConfig from "./integral.vue"
 export default {
-    components: {webConfig,storeConfig},
+    components: {webConfig,storeConfig,integralConfig},
 };
 </script>

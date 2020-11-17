@@ -1,7 +1,10 @@
 <?php
 namespace App\Services;
 
+use App\Http\Resources\Home\GoodsResource\GoodsListCollection;
 use App\Http\Resources\Home\GoodsResource\GoodsSearchCollection;
+use App\Http\Resources\Home\GoodsResource\SeckillGoodsCollection;
+use App\Http\Resources\Home\GoodsResource\StoreGoodsListCollection;
 use App\Models\Goods;
 use App\Models\GoodsAttr;
 use App\Models\GoodsSku;
@@ -32,6 +35,7 @@ class GoodsService extends BaseService{
             'goods_content'         => request()->goods_content??'',                  // 商品内容详情
             'goods_content_mobile'  => request()->goods_content_mobile??'',           // 商品内容详情（手机）
             'goods_status'          => abs(request()->goods_status)??0,               // 商品上架状态
+            'freight_id'            => abs(request()->freight_id)??0,                 // 运费模版ID
             'goods_images'          => implode(',',request()->goods_images??[]),
         ];
 
@@ -127,6 +131,10 @@ class GoodsService extends BaseService{
         // 商品上架状态
         if(isset(request()->goods_status)){
             $goods_model->goods_status = abs(request()->goods_status??0);
+        }
+        // 商品上架状态
+        if(isset(request()->freight_id)){
+            $goods_model->freight_id = abs(request()->freight_id??0);
         }
         // 商品图片
         if(isset(request()->goods_images) && !empty(request()->goods_images)){
@@ -348,12 +356,17 @@ class GoodsService extends BaseService{
                 
                 // 品牌
                 if(isset($params_array['brand_id']) && !empty($params_array['brand_id'])){
-                    $goods_model = $goods_model->whereIn('brand_id',$params_array['brand_id']);
+                    $goods_model = $goods_model->where('brand_id',$params_array['brand_id']);
                 }
     
                 // 栏目
                 if(isset($params_array['class_id']) && !empty($params_array['class_id'])){
                     $goods_model = $goods_model->whereIn('class_id',$params_array['class_id']);
+                }
+
+                // 商家
+                if(isset($params_array['store_id']) && !empty($params_array['store_id'])){
+                    $goods_model = $goods_model->where('store_id',$params_array['store_id']);
                 }
     
                 // 关键词
@@ -364,7 +377,7 @@ class GoodsService extends BaseService{
     
                 // 排序
                 if(isset($params_array['sort_type']) && !empty($params_array['sort_type'])){
-                    $goods_model = $goods_model->orderBy($params['order_type'],$params_array['sort_order']);
+                    $goods_model = $goods_model->orderBy($params_array['sort_type'],$params_array['sort_order']);
                 }else{
                     $goods_model = $goods_model->orderBy('id','desc')->orderBy('goods_sale','desc');
                 }
@@ -374,6 +387,7 @@ class GoodsService extends BaseService{
                         ->with(['goods_sku'=>function($q){
                             return $q->select('goods_id','goods_price','goods_stock')->orderBy('goods_price','asc');
                         }])
+                        ->withCount('order_comment')
                         ->whereHas('store',function($q){
                             return $q->where(['store_status'=>1,'store_verify'=>3]);
                         })
@@ -384,5 +398,61 @@ class GoodsService extends BaseService{
         }
         return $this->format(new GoodsSearchCollection($list));
 
+    }
+
+    // 获取指定条件销售排行
+    public function getSaleSortGoods($where,$take=6){
+        $goods_model = new Goods();
+        $list = $goods_model->whereHas('store',function($q){
+            return $q->where(['store_status'=>1,'store_verify'=>3]);
+        })->with(['goods_skus'=>function($q){
+            return $q->orderBy('goods_price','asc');
+        }])->where($where)->where($this->status)->take($take)->orderBy('goods_sale','desc')->get();
+        return $this->format(new GoodsListCollection($list) );
+
+    }
+
+    // 商家首页获取商品列表
+    public function getHomeStoreGoods($id){
+        $goods_model = new Goods;
+        $params = request()->params??'';
+        try{
+            if(!empty($params)){
+                $params_array = json_decode(base64_decode($params),true);
+                // 排序
+                if(isset($params_array['sort_type']) && !empty($params_array['sort_type'])){
+                    $goods_model = $goods_model->orderBy($params_array['sort_type'],$params_array['sort_order']);
+                }else{
+                    $goods_model = $goods_model->orderBy('id','desc')->orderBy('goods_sale','desc');
+                }
+            }
+    
+            $list = $goods_model->where('store_id',$id)->where($this->status)
+                        ->with(['goods_sku'=>function($q){
+                            return $q->select('goods_id','goods_price','goods_stock','goods_market_price')->orderBy('goods_price','asc');
+                        }])
+                        ->paginate(request()->per_page??30);
+        }catch(\Exception $e){
+            Log::channel('qwlog')->debug($e->getMessage());
+            return $this->format_error(__('goods.search_error'));
+        }
+        return $this->format(new StoreGoodsListCollection($list));
+    }
+
+    // 获取首页秒杀商品
+    public function getHomeSeckillGoods(){
+        $goods_model = new Goods;
+        $list = $goods_model->where($this->status)
+                        ->with(['goods_sku'=>function($q){
+                            return $q->select('goods_id','goods_price','goods_stock','goods_market_price')->orderBy('goods_price','asc');
+                        }])
+                        ->whereHas('seckill',function($q){
+                            if(empty(request()->start_time)){
+                                $q->where('start_time',now()->format('Y-m-d H').':00');
+                            }
+                            $q->where('start_time',now()->addHours(request()->start_time)->format('Y-m-d H').':00');
+                        })
+                        ->paginate(request()->per_page??30);
+        return $this->format(new SeckillGoodsCollection($list));
     }
 }

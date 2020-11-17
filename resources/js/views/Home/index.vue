@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <div class="shop_head3"><shop-head :subnav_show="subnav_show" /></div>
-        <Banner :list="list.banner" />
+        <banner :list="list.banner" />
         <banner-bottom-adv :index_adv="list.banner_bottom_adv" />
 
         <!-- 分类商品列表 -->

@@ -22,6 +22,9 @@
                     <a-button icon="edit" @click="$router.push('/Admin/goods_brands/form/'+rows.id)">编辑</a-button>
                 </span>
             </a-table>
+            <div class="admin_pagination" v-if="total>0">
+                <a-pagination v-model="params.page" :page-size.sync="params.per_page" :total="total" @change="onChange" show-less-items />
+            </div>
         </div>
     </div>
 </template>
@@ -94,6 +97,7 @@ export default {
         onload(){
             this.$get(this.$api.adminGoodsBrands,this.params).then(res=>{
                 this.list = res.data.data;
+                this.total = res.data.total;
             });
         },
     },

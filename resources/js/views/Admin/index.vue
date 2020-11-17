@@ -6,7 +6,7 @@
             <a-layout-sider v-if="!subMenu" class="admin_menu" v-model="collapsed" :trigger="null" collapsible>
                     <div class="admin_menu_title"><img :src="require('@/asset/system_logo.png')" alt="logo"><span :class="collapsed?'hiddens':'shows'">青梧商城</span></div>
                     <a-menu mode="inline" theme="dark">
-                        <a-menu-item @click="to_nav('/Admin/default')"><a-font class="afont menu_icon" type="iconshouye" /><span>系统首页</span></a-menu-item>
+                        <a-menu-item @click="to_nav('/Admin/index')"><a-font class="afont menu_icon" type="iconshouye" /><span>系统首页</span></a-menu-item>
                         <a-sub-menu v-for="v in menus" :key="v.id">
                             <span slot="title"><a-font class="afont menu_icon" :type="v.icon||'iconshouye'" /><span>{{v.name}}</span></span>
                             <template v-for="vo in (v.children||[])">
@@ -39,7 +39,7 @@
                                     <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">青梧商城</a>
                                 </a-menu-item>
                                 <a-menu-divider />
-                                <a-menu-item key="3">
+                                <a-menu-item key="3" @click="logout">
                                     <a-icon style="color:red" type="logout"></a-icon>
                                     <font color="red">退出后台</font>
                                 </a-menu-item>
@@ -51,7 +51,12 @@
 
                 <!-- 主体内容 -->
                 <a-layout-content>
-                    <div :class="subMenu?'admin_content_view clear_m':'admin_content_view'">
+                    <div :class="subMenu?'admin_content_view clear_m':'admin_content_view'" v-if="!isAdminDefault">
+                        <transition name="slide-fade">
+                            <router-view v-if="isRefresh"></router-view>
+                        </transition>
+                    </div>
+                    <div :class="subMenu?'admin_content_view2 clear_m':'admin_content_view2'" v-if="isAdminDefault">
                         <transition name="slide-fade">
                             <router-view v-if="isRefresh"></router-view>
                         </transition>
@@ -65,7 +70,7 @@
                 <div class="admin_menu mobile">
                     <div class="admin_menu_title"><img :src="require('@/asset/system_logo.png')" alt="logo"><span :class="'shows'">青梧商城</span></div>
                         <a-menu mode="inline" theme="dark">
-                            <a-menu-item @click="to_nav('/Admin/default')"><a-font class="afont menu_icon" type="iconshouye" /><span>系统首页</span></a-menu-item>
+                            <a-menu-item @click="to_nav('/Admin/index')"><a-font class="afont menu_icon" type="iconshouye" /><span>系统首页</span></a-menu-item>
                             <a-sub-menu v-for="v in menus" :key="v.id">
                                 <span slot="title"><a-font class="afont menu_icon" :type="v.icon||'iconshouye'" /><span>{{v.name}}</span></span>
                                 <template v-for="vo in (v.children||[])">
@@ -91,6 +96,7 @@ export default {
     props: {},
     data() {
       return {
+          isAdminDefault:false, // 默认页面
           collapsed:false,
           subMenu:false,
           drawerShow:false,
@@ -126,7 +132,6 @@ export default {
         to_nav(path){
             this.reload()
             this.$router.push(path);
-            
         },
         // 判断是否宽度小于多少
         onScreenWidth(){
@@ -149,10 +154,24 @@ export default {
                 this.isRefresh= true
             })
         },
+        // 退出后台
+        logout(){
+            this.$get(this.$api.adminLogout).then(res=>{
+                this.$message.success(res.msg);
+                localStorage.removeItem('admin_token');
+                this.$router.push('/Admin/login');
+            })
+        },
 
     },
     created() {
         this.get_menus();
+        // console.log(this.$route.name)
+        if(this.$route.name == 'admin_default'){
+            this.isAdminDefault = true;
+        }else{
+            this.isAdminDefault = false;
+        }
     },
     mounted() {
         let _this = this
@@ -164,6 +183,15 @@ export default {
                 _this.onScreenWidth();
             })()
         }
+    },
+    beforeRouteUpdate (to, from, next) {
+        // console.log(to,from);
+        if(to.name == 'admin_default'){
+            this.isAdminDefault = true;
+        }else{
+            this.isAdminDefault = false;
+        }
+        next();
     }
 };
 </script>
@@ -230,6 +258,21 @@ export default {
         border-radius: 4px;
         height: auto;
         border:1px solid #e7eaec!important;
+        &:after{
+            content:'';
+            clear:both;
+            display: block;
+        }
+        &.clear_m{
+            margin: 72px 0 22px 0;;
+        }
+    }
+    .admin_content_view2{
+        position: relative;
+        margin: 62px 20px 22px 20px;
+        padding: 15px 20px;
+        // overflow: initial;
+        height: auto;
         &:after{
             content:'';
             clear:both;

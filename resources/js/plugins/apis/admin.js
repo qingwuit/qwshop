@@ -8,7 +8,8 @@ export default
      */
 
     "adminLogin" : baseUrl + "Admin/login", // 登录
-    "adminCheckLogin" : baseUrl + "Admin/check_login", // 登录
+    "adminLogout" : baseUrl + "Admin/logout", // 登出
+    "adminCheckLogin" : baseUrl + "Admin/check_login", // 验证是否登录
 
     'adminAdmins' : baseUrl + 'Admin/admins', // 后台管理员
     'adminUsers' : baseUrl + 'Admin/users', // 平台用户
@@ -28,6 +29,9 @@ export default
 
     // 站点协议
     'adminAgreements' : baseUrl + 'Admin/agreements', 
+
+    // 文章 帮助中心
+    'adminArticles' : baseUrl + 'Admin/articles', 
 
     // 物流公司
     'adminExpresses' : baseUrl + 'Admin/expresses', 
@@ -68,8 +72,31 @@ export default
     'adminAdvsUploadThumb' : baseUrl + 'Admin/advs/upload/thumb', // 品牌缩略图上传
 
     // 订单管理
-    'adminOrders' : baseUrl + 'Admin/orders', 
+    'adminOrders' : baseUrl + 'Admin/orders',
+    
+    // 积分订单管理
+    'adminIntegralOrders' : baseUrl + 'Admin/integral_orders',
     
     // 订单评论
     'adminOrderComments' : baseUrl + 'Admin/order_comments',  
+
+    // 分销日志
+    'adminDistributionLogs' : baseUrl + 'Admin/distribution_logs',
+
+    // 结算日志
+    'adminOrderSettlements' : baseUrl + 'Admin/order_settlements',
+
+    // 用户资金日志
+    'adminMoneyLogs' : baseUrl + 'Admin/money_logs',
+
+    // 资金提现
+    'adminCashes' : baseUrl + 'Admin/cashes',
+
+    // 积分商城
+    'adminIntegralGoodsClasses' : baseUrl + 'Admin/integral_goods_classes', // 商品分类
+    'adminIntegralGoods' : baseUrl + 'Admin/integral_goods', // 积分商品
+    'adminIntegralOrders' : baseUrl + 'Admin/integral_orders', // 积分订单
+
+    // 数据统计
+    'adminStatistics' : baseUrl + 'Admin/statistics', 
 };

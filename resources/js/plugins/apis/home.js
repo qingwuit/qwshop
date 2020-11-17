@@ -17,6 +17,7 @@ export default
 
     'homeCommon' : baseUrl + 'common',  // pC公共数据获取
     'homeAgreement' : baseUrl + 'agreement',  // 站点协议
+    'homeArticle' : baseUrl + 'article',  // 文章获取
     'homeGoodsClasses' : baseUrl + 'goods_classes',  // 商品分类获取
 
     // 全国省市区
@@ -33,6 +34,10 @@ export default
 
     // 资金日志
     'homeMoneyLog'   : baseUrl + 'money_logs',
+
+    // 分销日志
+    'homeDistributionLog'   : baseUrl + 'distribution_logs',
+    'homeDistributionUser'   : baseUrl + 'distribution/user',// 分销用户
 
     // 购物车
     'homeCarts' : baseUrl + 'carts',
@@ -56,9 +61,23 @@ export default
     'homeCash' : baseUrl + 'cashes',
 
     // 商家入驻
-    'homeStoreVerify' : baseUrl + 'store/store_verify',  // 商家审核状态
-    'homeStoreJoin' : baseUrl + 'store/store_join',  // 商家审核状态
+    'homeStoreVerify' : baseUrl + 'store/join/store_verify',  // 商家审核状态
+    'homeStoreJoin' : baseUrl + 'store/join/store_join',  // 商家审核状态
     'homeStoreJoinUpload' : baseUrl + 'store/join/upload',  // 商家入驻图片上传
+
+    // 商家列表
+    'homeStore' : baseUrl + 'store',  
+
+    // 积分商城
+    'homeIntegral' : baseUrl + 'integral',  
+    'homeIntegralOrder' : baseUrl + 'integral_order',  // 积分订单
+
+    // 优惠券
+    'homeCoupon' : baseUrl + 'coupons',  
+
+    // 秒杀
+    'homeSeckill' : baseUrl + 'seckills',  
+    
 
     
 };

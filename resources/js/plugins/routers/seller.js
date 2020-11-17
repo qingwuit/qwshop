@@ -29,5 +29,47 @@ export default [
         // 订单评论
         {path:"/Seller/order_comments",name:"seller_order_comments",component:()=>import("@/views/Seller/order_comments/index")}, 
         {path:"/Seller/order_comments/form/:id?",name:"seller_order_comments_form",component:()=>import("@/views/Seller/order_comments/form")},
+
+        // 配送运费
+        {path:"/Seller/freights/form",name:"seller_freights",component:()=>import("@/views/Seller/freights/form")}, 
+
+        // 分销活动
+        {path:"/Seller/distributions",name:"seller_distributions",component:()=>import("@/views/Seller/distributions/index")}, 
+        {path:"/Seller/distributions/form/:id?",name:"seller_distributions_form",component:()=>import("@/views/Seller/distributions/form")},
+
+        // 分销日志
+        {path:"/Seller/distribution_logs",name:"seller_distribution_logs",component:()=>import("@/views/Seller/distribution_logs/index")}, 
+
+        // 结算日志
+        {path:"/Seller/order_settlements",name:"seller_order_settlements",component:()=>import("@/views/Seller/order_settlements/index")}, 
+        {path:"/Seller/order_settlements/form/:id",name:"seller_order_settlements_form",component:()=>import("@/views/Seller/order_settlements/form")}, 
+
+        // 优惠券
+        {path:"/Seller/coupons",name:"seller_coupons",component:()=>import("@/views/Seller/coupons/index")}, 
+        {path:"/Seller/coupons/form/:id?",name:"seller_coupons_form",component:()=>import("@/views/Seller/coupons/form")},
+        {path:"/Seller/coupon_logs",name:"seller_coupon_logs",component:()=>import("@/views/Seller/coupon_logs/index")}, // 优惠券日志
+
+        // 满减
+        {path:"/Seller/full_reductions",name:"seller_full_reductions",component:()=>import("@/views/Seller/full_reductions/index")}, 
+        {path:"/Seller/full_reductions/form/:id?",name:"seller_full_reductionsform",component:()=>import("@/views/Seller/full_reductions/form")},
+
+        // 秒杀
+        {path:"/Seller/seckills",name:"seller_seckills",component:()=>import("@/views/Seller/seckills/index")}, 
+        {path:"/Seller/seckills/form/:id?",name:"seller_seckills_form",component:()=>import("@/views/Seller/seckills/form")},
+
+        // 拼团
+        {path:"/Seller/collectives",name:"seller_collectives",component:()=>import("@/views/Seller/collectives/index")}, 
+        {path:"/Seller/collectives/form/:id?",name:"seller_collectives_form",component:()=>import("@/views/Seller/collectives/form")},
+        {path:"/Seller/collective_logs/:collective_id",name:"seller_collective_logs",component:()=>import("@/views/Seller/collective_logs/index")}, 
+
+        // 店铺资金日志
+        {path:"/Seller/money_logs",name:"seller_money_logs",component:()=>import("@/views/Seller/money_logs/index")}, 
+
+        // 资金提现
+        {path:"/Seller/cashes",name:"seller_cashes",component:()=>import("@/views/Seller/cashes/index")}, 
+        {path:"/Seller/cashes/form",name:"seller_cashes_form",component:()=>import("@/views/Seller/cashes/form")}, 
+
+        // 数据统计
+        {path:"/Seller/statistics/order",name:"seller_statistics_order",component:()=>import("@/views/Seller/statistics/order")}, 
     ]},
 ];

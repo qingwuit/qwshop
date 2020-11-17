@@ -210,6 +210,7 @@ export default {
                     }
                 })
             })
+            this.cart_count();
             let str = window.btoa(JSON.stringify(params)); 
             this.$router.push("/order/create_order/"+str);
         },

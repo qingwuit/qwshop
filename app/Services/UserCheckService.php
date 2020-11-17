@@ -12,7 +12,7 @@ class UserCheckService extends BaseService{
         $user_info = $user_service->getUserInfo();
         $check_info = $uc_model->where('user_id',$user_info['id'])->first();
         if(empty($check_info)){
-            return $this->format_error();
+            return $this->format_error(__('users.user_check_error'));
         }
 
         // 判断是否是用户获取还是后台获取

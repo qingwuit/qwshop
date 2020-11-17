@@ -1,11 +1,45 @@
 <?php
 namespace App\Services;
+
+use App\Http\Resources\Home\StoreResource\StoreCollection;
 use App\Http\Resources\Home\StoreResource\StoreJoin;
+use App\Models\OrderComment;
 use App\Models\Store;
 use App\Models\StoreClass;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class StoreService extends BaseService{
+
+    // 获取店铺信息
+    public function getHomeStoreList(){
+        $store_model = new Store;
+        $params = request()->params??'';
+        $lat = request()->lat??'39.56';
+        $lng = request()->lng??'116.20'; // 默认北京的经纬度
+
+        $distance = "ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN(('$lat' * PI() / 180 - store_lat * PI() / 180) / 2),2) + COS(40.0497810000 * PI() / 180) * COS(store_lat * PI() / 180) * POW(SIN(('$lng' * PI() / 180 - store_lng * PI() / 180) / 2),2))) * 1000 )  AS distance ";
+
+        $store_model = $store_model->select(DB::raw('*,'.$distance))->withCount(['comments','comments as good_comment'=>function($q){
+            $q->whereRaw('(score+agree+speed+service)>=15');
+        }]);
+
+        try{
+            if(!empty($params)){
+                $params_array = json_decode(base64_decode($params),true);
+                // 排序
+                if(isset($params_array['sort_type']) && !empty($params_array['sort_type'])){
+                    $store_model = $store_model->orderBy($params_array['sort_type'],$params_array['sort_order']);
+                }else{
+                    $store_model = $store_model->orderBy('distance','desc')->orderBy('id','desc');
+                }
+            }
+            $list = $store_model->paginate(request()->per_page??30);
+            return $this->format(new StoreCollection($list) );
+        }catch(\Exception $e){
+            return $this->format_error($e->getMessage());
+        }
+    }
 
     // 入驻时获取店铺状态
     public function getStoreVerify($auth='user'){
@@ -35,12 +69,32 @@ class StoreService extends BaseService{
     }
 
     // 获取店铺信息
-    public function getStoreInfo($store_id){
+    public function getStoreInfo($store_id,$select=""){
         $stores_model = new Store();
+        if(!empty($select)){
+            $stores_model = $stores_model->select(DB::raw($select));
+        }
         $store_info = $stores_model->find($store_id);
         if(empty($store_info)){
             return $this->format_error(__('stores.store_not_defined'));
         }
+        return $this->format($store_info);
+    }
+
+    // 获取店铺信息和评分信息
+    public function getStoreInfoAndRate($store_id,$select=""){
+        $oc = new OrderComment();
+        $store_info = $this->getStoreInfo($store_id,$select)['data'];
+        $info = $oc->where('store_id',$store_id)->first([
+            DB::raw('avg(score) as scoreAll'),
+            DB::raw('avg(agree) as agreeAll'),
+            DB::raw('avg(service) as serviceAll'),
+            DB::raw('avg(speed) as speedAll'),
+        ])->toArray();
+        foreach($info as &$v){
+            $v = intval($v);
+        }
+        $store_info['rate'] = $info;
         return $this->format($store_info);
     }
 

@@ -37,7 +37,7 @@ trait ResourceTrait{
     protected function get_store($only_id = false,$select = ''){
         $stores_model = new Store();
         if(!empty($select)){
-            $stores_model->select(DB::raw($select));
+            $stores_model = $stores_model->select(DB::raw($select));
         }
         $store_info = $stores_model->where('user_id',auth()->id())->first();
         if($only_id){

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Goods;
 use App\Http\Resources\Admin\GoodsResource\GoodsTabAdminCollection;
+use App\Models\Freight;
 use App\Services\GoodsService;
 
 class GoodsController extends Controller
@@ -20,7 +21,7 @@ class GoodsController extends Controller
         // 条件筛选
         $goods_params = ['goods_verify'=>1]; // 商品后台审核 还有上架 ,'goods_status'=>1 'goods_verify'=>1
         if(!empty($request->goods_name)){
-            $goods_model = $goods_model->where('name','like','%'.$request->goods_name.'%');
+            $goods_model = $goods_model->where('goods_name','like','%'.$request->goods_name.'%');
         }
         if(!empty($request->brand_id)){
             $goods_model = $goods_model->where('brand_id',$request->brand_id);
@@ -64,10 +65,19 @@ class GoodsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(GoodsService $goods_service,$id)
+    public function show(GoodsService $goods_service,Freight $freight_model,$id)
     {
         $info = $goods_service->getGoodsInfo($id,'admin');
         if($info['status']){
+
+            // 获取快递运费模版详情 // 可以不要没什么用
+            // $freight_info = [];
+            // if($info['data']['freight_id'] == 0){
+            //     $freight_info = $freight_model->where('store_id',$info['data']['store_id'])->where('is_type',0)->first();
+            // }else{
+            //     $freight_info = $freight_model->where('store_id',$info['data']['store_id'])->where('is_type',1)->where('id',$info['data']['freight_id'])->first();
+            // }
+            // $info['data']['freight_info'] = $freight_info;
             return $this->success($info['data']);
         }
         return $this->error(__('goods.add_error'));

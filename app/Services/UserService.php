@@ -6,6 +6,8 @@ use App\Models\Admin;
 use App\Models\SmsLog;
 use App\Models\Store;
 use App\Models\User;
+use App\Models\UserWechat;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserService extends BaseService{
@@ -35,6 +37,10 @@ class UserService extends BaseService{
             $user_model->last_login_time = $userInfo['login_time'];
             $user_model->ip = request()->getClientIp();
             $user_model->save();
+
+            // 登录送积分
+            $config_service = new ConfigService();
+            $config_service->giveIntegral('login');
         }
 
         $data = [
@@ -43,6 +49,79 @@ class UserService extends BaseService{
         ];
 
         return $this->format($data);
+    }
+
+    // 第三方登录
+    public function oauthLogin($oauth,$oauth_name="weixinweb"){
+        $user_model = new User();
+        $auth = 'user';
+
+        try{
+            DB::beginTransaction();
+            // 判断是否存在该ID
+            if($oauth_name == 'weixinweb'){
+                $isLogin = false; // 登录还是注册
+                $uw_model = new UserWechat();
+                $uwInfo = $uw_model->where('unionid',$oauth['unionid'])->fisrt();
+                
+                // 不存在则开始创建
+                if(!$uwInfo){
+                    $user_model->username = 'wx'.date('Ymd').mt_rand(100,999);
+                    $user_model->nickname = $oauth['nickname'];
+                    $user_model->ip = request()->getClientIp();
+                    $user_model->inviter_id = request()->inviter_id??0;
+                    $user_model->password = Hash::make('123456');
+                    $user_model->pay_password = Hash::make('123456');
+                    $user_model->save();
+                    $user_id = $user_model->id;
+
+                    // 插入第三方表
+                    $uw_model->create([
+                        'openid'        =>  $oauth['id'],
+                        'nickname'      =>  $oauth['nickname'],
+                        'user_id'       =>  $user_id,
+                        'unionid'       =>  $oauth['unionid'],
+                        'headimgurl'    =>  $oauth['avatar'],
+                    ]);
+                }else{
+                    $isLogin = true;
+                    $user_id = $uw_model['user_id'];
+                }
+ 
+            }
+
+            $user_info = User::select('username','password')->where('id',$user_id)->first();
+
+            $user_model->login_time = now();
+            $user_model->last_login_time = $user_info['login_time'];
+            $user_model->ip = request()->getClientIp();
+            $user_model->save();
+           
+            if (! $token = auth($auth)->login($user_info)) {
+                return $this->format_error(__('auth.error'));
+            }
+            
+            if(!$userInfo = $this->getUserInfo($auth)){
+                return $this->format_error(__('auth.user_error'));
+            }
+
+            // 登录送积分
+            $config_service = new ConfigService();
+            $config_service->giveIntegral('login');
+
+            $data = [
+                'token' => $token,
+                'user_info'=>$userInfo,
+            ];
+
+            // 提交事务
+            DB::commit();
+            return $this->format($data);
+        }catch(\Exception $e){
+            return $this->format_error($e->getMessage());
+        }
+        
+        
     }
 
     // 注册
@@ -73,18 +152,22 @@ class UserService extends BaseService{
         $user_model->phone = $credentials[$username];
         $user_model->nickname = $randNickName;
         $user_model->ip = request()->getClientIp();
+        $user_model->inviter_id = request()->inviter_id??0;
         $user_model->password = Hash::make($credentials['password']);
         $user_model->pay_password = Hash::make($credentials['password']);
         $user_model->save();
         
-        $credentials2 = request([$username, 'password']);
-        if (! $token = auth($auth)->attempt($credentials2)) {
+        if (! $token = auth($auth)->login($user_model)) {
             return $this->format_error(__('auth.error'));
         }
         
         if(!$userInfo = $this->getUserInfo($auth)){
             return $this->format_error(__('auth.user_error'));
         }
+
+        // 登录送积分
+        $config_service = new ConfigService();
+        $config_service->giveIntegral('login');
 
         $data = [
             'token' => $token,
@@ -122,8 +205,8 @@ class UserService extends BaseService{
         $user_model->password = Hash::make($credentials['password']);
         $user_model->save();
         
-        $credentials2 = request([$username, 'password']);
-        if (! $token = auth($auth)->attempt($credentials2)) {
+        // $credentials2 = request([$username, 'password']);
+        if (! $token = auth($auth)->login($user_model)) {
             return $this->format_error(__('auth.error'));
         }
         
@@ -172,6 +255,9 @@ class UserService extends BaseService{
         if($seller){
             $stores_model = new Store();
             $store_info = $stores_model->select('id','store_name','store_logo')->where('user_id',auth($auth)->id())->first();
+            if(!$store_info){
+                return $this->format_error(__('auth.error_token'));
+            }
             return $this->format($store_info);
         }
 

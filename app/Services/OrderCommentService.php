@@ -1,8 +1,10 @@
 <?php
 namespace App\Services;
 
+use App\Http\Resources\Home\OrderCommentResource\GoodsInfoCommentCollection;
 use App\Models\Order;
 use App\Models\OrderComment;
+use Illuminate\Support\Facades\DB;
 
 class OrderCommentService extends BaseService{
     
@@ -66,12 +68,48 @@ class OrderCommentService extends BaseService{
         }
 
         if(!empty($ids)){
-            $order_model->whereIn('id',$idArray)->update(['order_status'=>6]);
+            $order_model->whereIn('id',$idArray)->update(['order_status'=>6,'comment_time'=>now()]);
         }else{
-            $order_model->whereIn('id',$idArray)->where('user_id',$user_info['id'])->update(['order_status'=>6]);
+            $order_model->whereIn('id',$idArray)->where('user_id',$user_info['id'])->update(['order_status'=>6,'comment_time'=>now()]);
         }
         $rs = OrderComment::insert($data);
         return $this->format($rs,__('orders.order_comment_success'));
+    }
+
+    // 定时任务系统添加评论
+    public function systemAdd($ids=[]){
+        $order_model = new Order();
+        $order_list = $order_model->with('order_goods')->whereIn('id',$ids)->get();
+        if($order_list->isEmpty()){
+            return $this->format_error('order_list is empty obj systemAdd.');
+        }
+        $data = [];
+        $score = 5.00;
+        $agree = 5.00;
+        $service = 5.00;
+        $speed = 5.00;
+        $content = '非常好！';
+        $image = [];
+        foreach($order_list as $v){
+            foreach($v['order_goods'] as $vo){
+                $comment = [];
+                $comment['user_id'] = $v['user_id'];
+                $comment['goods_id'] = $vo['goods_id'];
+                $comment['order_id'] = $v['id'];
+                $comment['store_id'] = $v['store_id'];
+                $comment['score'] = $score;
+                $comment['agree'] = $agree;
+                $comment['service'] = $service;
+                $comment['service'] = $speed;
+                $comment['content'] = $content;
+                $comment['image'] = empty($image)?'':implode(',',$image);
+                $comment['created_at'] = now();
+                $data[] = $comment;
+            }
+        }
+        $rs = OrderComment::insert($data);
+        $order_model->whereIn('id',$ids)->update(['order_status'=>6,'comment_time'=>now()]);
+        return $this->format($rs);
     }
 
     /**
@@ -112,5 +150,41 @@ class OrderCommentService extends BaseService{
             return $this->format([],__('orders.order_comment_success'));
         }
         
+    }
+
+    // 获取评论信息
+    public function getList($goods_id){
+        $oc_model = new OrderComment();
+        $oc_model = $oc_model->select(DB::raw("*,(score+agree+speed+service) as sum_rate"))->with('user')->where('goods_id',$goods_id)->orderBy('id','desc');
+        if(request('is_type')==1){
+            $oc_model = $oc_model->having('sum_rate','>=',15);
+        }
+        if(request('is_type')==2){
+            $oc_model = $oc_model->having('sum_rate','<',15)->having('sum_rate','>',10);
+        }
+        if(request('is_type')==3){
+            $oc_model = $oc_model->having('sum_rate','<=',10);
+        }
+        $list = $oc_model->paginate(request()->per_page??30);
+        return $this->format(new GoodsInfoCommentCollection($list));
+    }
+
+    // 获取评论类型数量
+    public function getCommentStatistics($goods_id){
+        $oc_model = new OrderComment();
+        $oc_model2 = new OrderComment();
+        $oc_model3 = new OrderComment();
+        $oc_model4 = new OrderComment();
+        $oc_model4 = $oc_model4->where('goods_id',$goods_id)->count();
+        $oc_model = $oc_model->whereRaw('(score+agree+speed+service)>=15')->where('goods_id',$goods_id)->count();
+        $oc_model2 = $oc_model2->whereRaw('(score+agree+speed+service)<15')->whereRaw('(score+agree+speed+service)>10')->where('goods_id',$goods_id)->count();
+        $oc_model3 = $oc_model3->whereRaw('(score+agree+speed+service)<=10')->where('goods_id',$goods_id)->count();
+        return $this->format([
+            'all'=>$oc_model4,
+            'good'=>$oc_model??0,
+            'commonly'=>$oc_model2??0,
+            'bad'=>$oc_model3??0,
+            'rate'=>$oc_model4==0?100:round((($oc_model??0)/$oc_model4)*100,2),
+        ]);
     }
 }

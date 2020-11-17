@@ -30,6 +30,19 @@ export default [
         // 购物车
         {path: '/cart',name: 'home_pay_success',component: () => import('@/views/Home/carts/index')}, 
 
+        // 店铺列表
+        {path: '/store',name: 'home_store',component: () => import('@/views/Home/store/index')}, 
+        {path: '/store/:id',name: 'home_store_info',component: () => import('@/views/Home/store/info')}, 
+
+        // 积分商城
+        {path: '/integral/index',name: 'home_integral',component: () => import('@/views/Home/integral/index')}, // 积分商城首页
+        {path: '/integral/goods/:id',name: 'home_integral_goods_info',component: () => import('@/views/Home/integral/info')},  // 积分商品详情
+        {path: '/integral/search/:params?',name: 'home_integral_goods_list',component: () => import('@/views/Home/integral/goods')},  // 积分商品列表
+        {path: '/integral/order/:id/:num',name: 'home_integral_order',component: () => import('@/views/Home/integral/order/index')},  // 创建订单
+
+        // 秒杀页面
+        {path: '/seckill',name: 'home_seckill',component: () => import('@/views/Home/seckills/index')}, // 秒杀首页
+
         // 用户中心
         {path: '/user',name: 'home_user',component: () => import('@/views/Home/users/index'),children:[
             {path: '/user',name: 'home_user_default',component: () => import('@/views/Home/users/default')}, // 用户中心首页
@@ -44,6 +57,9 @@ export default [
             {path: '/user/oauth',name: 'home_user_oauth',component: () => import('@/views/Home/users/oauth/index')}, // 用户账户绑定
             {path: '/user/order',name: 'home_user_order',component: () => import('@/views/Home/users/order/index')}, // 用户订单
             {path: '/user/comment/add/:id',name: 'home_user_order_comment',component: () => import('@/views/Home/users/order/comment')}, // 用户添加评论
+
+            // 积分订单
+            {path: '/user/integral_order',name: 'home_user_integral_order',component: () => import('@/views/Home/users/integral_order/index')}, // 用户订单
 
             // 申请售后
             {path: '/user/refund/:id',name: 'home_user_refund',component: () => import('@/views/Home/users/refund/index')}, // 申请售后
@@ -61,6 +77,15 @@ export default [
             // 提现
             {path: '/user/cash',name: 'home_user_cash',component: () => import('@/views/Home/users/cash/index')}, // 提现列表
             {path: '/user/cash/form',name: 'home_user_cash_form',component: () => import('@/views/Home/users/cash/form')}, // 提现列表
+
+            // 帮助中心
+            {path: '/user/article/:ename',name: 'home_user_article_form',component: () => import('@/views/Home/users/article/form')}, // 提现列表
+
+            // 分销日志
+            {path:"/user/distribution_logs",name:"home_user_distribution_logs",component:()=>import("@/views/Home/users/distribution_log/index")}, 
+            {path:"/user/distribution_users",name:"home_user_distribution_users",component:()=>import("@/views/Home/users/distribution_log/user")}, // 分销会员
+
+            {path:"/user/coupon",name:"home_user_coupon",component:()=>import("@/views/Home/users/coupon/index")}, 
         ]}, 
     ]},
 

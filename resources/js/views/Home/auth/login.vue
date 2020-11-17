@@ -21,7 +21,7 @@
                 </div>
 
                 <a-divider>其他登录方式</a-divider>
-                <div class="other_login_block">
+                <div class="other_login_block" @click="wechat_login()">
                     <a-font type="iconweixin" />
                     <p>微信登录</p>
                 </div>
@@ -68,6 +68,9 @@ export default {
                     vm.$message.error(res.msg);
                 }
             });
+        },
+        wechat_login(){
+            window.location.href="/api/oauth/weixinweb"
         }
     },
     created: function() {
@@ -97,6 +100,7 @@ export default {
         }
     }
     .other_login_block{
+        cursor: pointer;
         text-align: center;
         line-height: 30px;
         i{

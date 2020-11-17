@@ -34,19 +34,19 @@
                             <router-link to="/">首页</router-link>
                         </li>
                         <li>
-                            <router-link to="/goods/seckill">店铺街</router-link>
+                            <router-link to="/store">店铺街</router-link>
                         </li>
                         <li>
-                            <router-link to="/goods/seckill">秒杀</router-link>
+                            <router-link to="/seckill">秒杀</router-link>
                         </li>
                         <li>
-                            <router-link to="/groupbuy/list/keywords.">拼团</router-link>
+                            <router-link to="/collective">拼团</router-link>
                         </li>
                         <li>
                             <router-link to="/integral/index">积分商城</router-link>
                         </li>
                         <li>
-                            <router-link to="/integral/index">帮助中心</router-link>
+                            <router-link to="/user/article/help">帮助中心</router-link>
                         </li>
                     </ul>
                 </div>
@@ -109,7 +109,18 @@ export default {
             let params = {};
             params.keywords = encodeURIComponent(this.keywords);
             this.$router.push('/s/'+window.btoa(JSON.stringify(params)))
-        }
+        },
+        to_my_store(){
+            this.$get(this.$api.homeStoreVerify).then(res=>{
+                if(res.code == 200){
+                    if(res.data.store_verify == 3){
+                        this.$router.push('/store/'+res.data.id)
+                    }else{
+                        this.$message.error('您还不是入驻商家！')
+                    }
+                }
+            })
+        },
     },
     created() {
         this.get_common();

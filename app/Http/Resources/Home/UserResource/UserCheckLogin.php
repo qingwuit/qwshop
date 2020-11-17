@@ -18,6 +18,9 @@ class UserCheckLogin extends JsonResource
             'id'            =>  $this->id,
             'nickname'      =>  $this->nickname,
             'money'         =>  $this->money,
+            'avatar'        =>  $this->avatar,
+            'frozen_money'  =>  $this->frozen_money,
+            'integral'      =>  $this->integral,
         ];
     }
 }

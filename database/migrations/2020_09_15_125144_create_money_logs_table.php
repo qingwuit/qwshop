@@ -19,6 +19,7 @@ class CreateMoneyLogsTable extends Migration
             $table->string('name',20)->default('未知变动')->comment('名称');
             $table->decimal('money',9,2)->default(0.00)->comment('变动金额');
             $table->unsignedTinyInteger('is_type')->default(0)->comment('变动类型 0 余额 1冻结 2积分');
+            $table->unsignedTinyInteger('is_seller')->default(0)->comment('是否是商家日志');
             $table->text('info')->comment('原因');
             $table->timestamps();
         });

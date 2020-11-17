@@ -75,11 +75,11 @@
                                     <a-icon :class="((!$isEmpty(base64Decode.sort_order) && base64Decode.sort_order=='desc') && (!$isEmpty(base64Decode.sort_type)  &&  base64Decode.sort_type=='goods_sale'))?'caret red':'caret'" type="caret-down" />
                                 </div>
                             </li>
-                            <li @click="sortChange('goods_comment')" :class="(!$isEmpty(base64Decode.sort_type) && base64Decode.sort_type=='goods_comment')?'red':''">
+                            <li @click="sortChange('order_comment_count')" :class="(!$isEmpty(base64Decode.sort_type) && base64Decode.sort_type=='order_comment_count')?'red':''">
                                 评论
                                 <div class="sorts">
-                                    <a-icon :class="((!$isEmpty(base64Decode.sort_order) && base64Decode.sort_order=='asc') && (!$isEmpty(base64Decode.sort_type)  &&  base64Decode.sort_type=='goods_comment'))?'caret red':'caret'" type="caret-up" />
-                                    <a-icon :class="((!$isEmpty(base64Decode.sort_order) && base64Decode.sort_order=='desc') && (!$isEmpty(base64Decode.sort_type)  &&  base64Decode.sort_type=='goods_comment'))?'caret red':'caret'" type="caret-down" />
+                                    <a-icon :class="((!$isEmpty(base64Decode.sort_order) && base64Decode.sort_order=='asc') && (!$isEmpty(base64Decode.sort_type)  &&  base64Decode.sort_type=='order_comment_count'))?'caret red':'caret'" type="caret-up" />
+                                    <a-icon :class="((!$isEmpty(base64Decode.sort_order) && base64Decode.sort_order=='desc') && (!$isEmpty(base64Decode.sort_type)  &&  base64Decode.sort_type=='order_comment_count'))?'caret red':'caret'" type="caret-down" />
                                 </div>
                             </li>
                         </ul>
@@ -93,14 +93,14 @@
             <!-- 产品列表 S -->
             <div class="s_goods_list">
                 <div class="item" v-for="(v,k) in list" :key="k">
-                    <dl>
+                    <dl><router-link :to="'/goods/'+v.id">
                         <dt><img width="180px" height="180px" v-lazy="v.goods_master_image" :alt="v.goods_name"></dt>
                         <dd class="title">{{v.goods_name}}</dd>
                         <dd class="price">￥{{v.goods_price}}</dd>
                         <dd>
                             <span>立即购买</span>
-                            <span>0 人评论</span>
-                        </dd>
+                            <span>{{v.order_comment_count}} 人评论</span>
+                        </dd></router-link>
                     </dl>
                 </div>
                 <div class="clear"></div>
@@ -145,7 +145,7 @@ export default {
                     this.params.per_page = res.data.per_page;
                     this.params.current_page = res.data.current_page;
                     this.list = res.data.data;
-                    console.log(this.params);
+                    // console.log(this.params);
                 }else{
                     this.$message.error(res.msg);
                 }
@@ -178,6 +178,8 @@ export default {
                     info.children.forEach(item=>{
                         this.base64Decode.class_id.push(item.id);
                     })
+                }else{
+                    this.base64Decode.class_id = [0];
                 }
                 this.base64Decode.tid = undefined;
             }
@@ -230,7 +232,7 @@ export default {
         }
     },
     created() {
-        if(this.$route.params != undefined){
+        if(this.$route.params.params != undefined){
             this.base64Code = this.$route.params.params;
             this.base64Decode = JSON.parse(window.atob(this.base64Code));
             this.onload();

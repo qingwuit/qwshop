@@ -73,6 +73,14 @@
     line-height: 41px;
     text-align: center;
 }
+.home .s_goods_list .item dl dd span.integral{
+    width: 100%;
+    display: block;
+    border-top: 1px solid #efefef;
+    float: left;
+    line-height: 41px;
+    text-align: center;
+}
 .home .s_goods_list .item dl dd span:first-child{
     box-sizing: border-box;
     border-right: 1px solid #efefef;

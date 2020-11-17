@@ -31,25 +31,65 @@
                     <div :class="isFav?'goods_info_sc red_color':'goods_info_sc'" @click="goods_fav()">{{isFav?'已收藏':'收藏'}}<a-icon type="like" /></div>
                 </div>
                 <div class="goods_info_group">
-                    <div class="goods_info_price"><span>商城价：</span>￥{{goods_info.goods_price||'0.00'}}</div>
-                    <div class="goods_info_market_price"><span>市场价：</span><div class="overx_goods_info">￥{{goods_info.goods_market_price||'0.00'}}</div></div>
+                    <template v-if="seckills">
+                        <div class="goods_info_price"><span>秒杀价：</span>￥{{goods_info.goods_price*(1-seckills.discount/100)||'0.00'}}</div>
+                        <div class="goods_info_market_price"><span>市场价：</span><div class="overx_goods_info">￥{{goods_info.goods_market_price||'0.00'}}</div></div>
+                    </template>
+                    <template v-else>
+                        <div class="goods_info_price"><span>商城价：</span>￥{{goods_info.goods_price||'0.00'}}</div>
+                        <div class="goods_info_market_price"><span>市场价：</span><div class="overx_goods_info">￥{{goods_info.goods_market_price||'0.00'}}</div></div>
+                    </template>
+                
                     <!-- <div class="goods_info_active"><span>优惠：</span><font class="noy" v-if="goods_info.goods_freight<=0 && goods_info.freight_id<=0">包邮</font><font v-else-if="store_info.free_freight>0">满{{store_info.free_freight}}包邮</font><font class="noz" v-else>暂无优惠</font></div> -->
                     <div class="goods_info_sale_num">累计销量<font color="#ca151e">{{goods_info.goods_sale}}</font></div>
                     <div class="goods_info_phone_read">手机查看<a-icon style="font-size:16px" type="qrcode" /></div>
+
+                    <!-- 优惠券 S -->
+                    <div class="coupons_block" v-if="coupons.length>0">
+                        <ul>
+                            <li v-for="(v,k) in coupons" :key="k" @click="receiveCoupon(v.id)">
+                                <div class="price">￥{{v.money}} </div>
+                                <div class="block">
+                                    <div>优 惠 券</div>
+                                    <div>满￥{{v.use_money}}可用</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- 优惠券 E -->
+                    
                 </div>
                 <!-- 参加活动 -->
-                <!-- <div class="goods_info_active">
-                    <div class="goods_skill" v-show="goods_info.is_seckill == 1">
-                        <span><i class="icon iconfont">&#xe60c;</i></span>
+                <div class="goods_info_active">
+                    <div class="goods_skill" v-if="seckills">
+                        <span><a-icon type="history" /></span>
                         <span>参加秒杀活动</span>
-                        <span class="span_time">距离结束 {{seckill_hour}} 时 {{seckill_min}} 分 {{seckill_secs}} 秒</span>
+                        <span class="span_time">距离结束 {{seckills.format_time||'0 天 00 时 00 分 00 秒'}}</span>
                     </div>
-                    <div class="goods_skill tuan_active" v-show="goods_info.is_groupbuy==1">
-                        <span><i class="icon iconfont">&#xe8cc;</i></span>
-                        <span>参加团购活动</span>
-                        <span class="span_time">团购价：￥ {{goods_info.groupbuy_price}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 还差 {{goods_info.groupbuy_use}} / {{goods_info.groupbuy_num}} 人</span>
+                    <div class="goods_skill tuan_active" v-if="collectives"  @click="collective_id=-1;buy()">
+                        <span><a-icon type="usergroup-delete" /></span>
+                        <span>参加团购活动 <span style="font-weight:bold; margin-left:15px;" >( 点击开新团 )</span></span>
+                        <span class="span_time">团购价：￥ {{goods_info.goods_price*(1-collectives.discount/100)||'0.00'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 需要 {{collectives.need}} 人</span>
                     </div>
-                </div> -->
+                    <div class="tuan_list" v-if="collectives && collective_list.length>0">
+                        <a-carousel autoplay :autoplaySpeed="3000" speed="1000" :vertical="true" :dots="false">
+                            <div class="tuan_item" v-for="(v,k) in collective_list" :key="k">
+                                <img v-lazy="require('@/asset/user/user_default.png')">
+                                <div class="nickname">{{v.nickname}}</div>
+                                <div class="btn" @click="collective_id=v.id;buy()">参团</div>
+                                <div class="orders_count">已经参团 {{v.orders_count}} / {{v.need}} 人</div>
+                            </div>
+                        </a-carousel>
+                    </div>
+                </div>
+                
+                <!-- 满减 S -->
+                <div class="goods_info_full_reduction" v-if="full_reductions.length>0">
+                    <span class="title">活动：</span>
+                    <span class="act" v-for="(v,k) in full_reductions" :key="k"> 满￥{{v.use_money}}减￥{{v.money}}；</span>
+                </div>
+                <!-- 满减 E -->
+
                 <div class="goods_info_spec" v-show="!this.$isEmpty(goods_info.skuList)">
                     <div class="spec_list" v-for="(v,k) in goods_info.attrList" :key="k">
                         <span>{{v.name}}：</span>
@@ -58,6 +98,7 @@
                         </ul>
                     </div>
                 </div>
+                
                 <div class="goods_info_num">
                     <div class="goods_info_num_title">购买数量：</div>
                     <div class="goods_info_num_jian" @click="change_buy_num(false)"><a-icon type="minus" /></div>
@@ -67,9 +108,15 @@
                     <div class="clear"></div>
                 </div>
                 <div class="goods_info_btn">
-                    <div v-show="goods_info.is_groupbuy==1" class="goods_info_add_groupbuy" @click="group_buy()"><i class="icon iconfont">&#xe601;</i>选择团购</div>
-                    <div class="goods_info_buy" @click="buy()"><a-font type="iconchanpin1" />立即购买</div>
-                    <div class="goods_info_add_cart" @click="add_cart()"><a-font type="icongouwuche1" />加入购物车</div>
+                    <!-- <div v-show="goods_info.is_groupbuy==1" class="goods_info_add_groupbuy" @click="group_buy()"><i class="icon iconfont">&#xe601;</i>选择团购</div> -->
+                    <template v-if="seckills">
+                        <div class="goods_info_buy" @click="buy()"><a-font type="iconchanpin1" />立即抢购</div>
+                    </template>
+                    <template v-else>
+                        <div class="goods_info_buy" @click="buy()"><a-font type="iconchanpin1" />立即购买</div>
+                        <div class="goods_info_add_cart" @click="add_cart()"><a-font type="icongouwuche1" />加入购物车</div>
+                    </template>
+                    
                 </div>
 
             </div>
@@ -80,39 +127,39 @@
                 <div class="store_info">
                     <div class="store_title">
                         <span class="tip">店铺</span>
-                        <span class="title">青梧商城</span>
+                        <span class="title">{{store_info['store_name']||'加载中...'}}</span>
                     </div>
                     <div class="rate">
                         <span style="float:left;padding-top:2px;margin-right:10px">综合评分</span>
-                        <a-rate style="font-size:14px;float:left" v-model="value" :tooltips="desc" disabled />
-                        <span style="float:left;padding-top:2px;" class="ant-rate-text">{{ desc[value - 1] }}</span>
+                        <a-rate style="font-size:14px;float:left" :value="rate_info.scoreAll" :tooltips="desc" disabled />
+                        <span style="float:left;padding-top:2px;" class="ant-rate-text">{{ desc[rate_info.scoreAll - 1] }}</span>
                         <div class="clear"></div>
                     </div>
                     <div class="store_rate">
                         <div class="title">店铺评分：</div>
                         <div class="item">
                             <span style="float:left;padding-top:2px;margin-right:10px">描述相符</span>
-                            <a-rate style="font-size:14px;float:left" v-model="value" :tooltips="desc" disabled />
-                            <span style="float:left;padding-top:2px;" class="ant-rate-text">{{ desc[value - 1] }}</span>
+                            <a-rate style="font-size:14px;float:left" :value="rate_info.agreeAll" :tooltips="desc" disabled />
+                            <span style="float:left;padding-top:2px;" class="ant-rate-text">{{ desc[rate_info.scoreAll - 1] }}</span>
                             <div class="clear"></div>
                         </div>
                         <div class="item">
                             <span style="float:left;padding-top:2px;margin-right:10px">服务态度</span>
-                            <a-rate style="font-size:14px;float:left" v-model="value" :tooltips="desc" disabled />
-                            <span style="float:left;padding-top:2px;" class="ant-rate-text">{{ desc[value - 1] }}</span>
+                            <a-rate style="font-size:14px;float:left" :value="rate_info.serviceAll" :tooltips="desc" disabled />
+                            <span style="float:left;padding-top:2px;" class="ant-rate-text">{{ desc[rate_info.scoreAll - 1] }}</span>
                             <div class="clear"></div>
                         </div>
                         <div class="item">
                             <span style="float:left;padding-top:2px;margin-right:10px">发货速度</span>
-                            <a-rate style="font-size:14px;float:left" v-model="value" :tooltips="desc" disabled />
-                            <span style="float:left;padding-top:2px;" class="ant-rate-text">{{ desc[value - 1] }}</span>
+                            <a-rate style="font-size:14px;float:left" :value="rate_info.speedAll" :tooltips="desc" disabled />
+                            <span style="float:left;padding-top:2px;" class="ant-rate-text">{{ desc[rate_info.scoreAll - 1] }}</span>
                             <div class="clear"></div>
                         </div>
                     </div>
-                    <div class="store_com" style="margin-top:10px">公司名称：<font color="#999">青梧信息科技有限公司</font></div>
-                    <div class="store_com" style="margin-bottom:10px">公司地址：<font color="#999">北京市 市辖区 东城区天心小区 四季春天 2087</font></div>
+                    <div class="store_com" style="margin-top:10px">公司名称：<font color="#999">{{store_info.store_company_name}}</font></div>
+                    <div class="store_com" style="margin-bottom:10px">公司地址：<font color="#999">{{store_info.area_info+' '+store_info.store_address}}</font></div>
                     <div class="btn">
-                        <span class="navstore">进入店铺</span>
+                        <span class="navstore" @click="$router.push('/store/'+store_info.id)">进入店铺</span>
                         <span class="contact">联系客服</span>
                         <div class="clear"></div>
                     </div>
@@ -120,41 +167,17 @@
                 <!-- // 销售排行 -->
                 <div class="store_info">
                     <div class="store_title"><span class="title">销售排行</span></div>
-                    <div class="goods_list">
-                        <dl><a href="">
-                            <dt><img v-lazy="'http://api.qingwuit.com/Uploads/goods/2020_01_14/15789844297080_200.jpg'" alt=""></dt>
+                    <div class="goods_list" v-if="goods_info.sale_list.length>0">
+                        <dl v-for="(v,k) in goods_info.sale_list" :key="k"><a :href="'/goods/'+v.id">
+                            <dt><img v-lazy="v.goods_master_image" :alt="v.goods_name"></dt>
                             <dd class="info">
-                                <div class="title">Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体</div>
-                                <div class="price">￥6819.00</div>
-                                <div class="round">1</div>
+                                <div class="title">{{v.goods_name||''}}</div>
+                                <div class="price">￥{{v.goods_price}}</div>
+                                <div class="round">{{k+1}}</div>
                             </dd></a>
                         </dl>
-                        <dl><a href="">
-                            <dt><img v-lazy="'http://api.qingwuit.com/Uploads/goods/2020_01_14/15789844297080_200.jpg'" alt=""></dt>
-                            <dd class="info">
-                                <div class="title">Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体</div>
-                                <div class="price">￥6819.00</div>
-                                <div class="round">2</div>
-                            </dd></a>
-                        </dl>
-                        <dl><a href="">
-                            <dt><img v-lazy="'http://api.qingwuit.com/Uploads/goods/2020_01_14/15789844297080_200.jpg'" alt=""></dt>
-                            <dd class="info">
-                                <div class="title">Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体</div>
-                                <div class="price">￥6819.00</div>
-                                <div class="round">3</div>
-                            </dd></a>
-                        </dl>
-                        <dl><a href="">
-                            <dt><img v-lazy="'http://api.qingwuit.com/Uploads/goods/2020_01_14/15789844297080_200.jpg'" alt=""></dt>
-                            <dd class="info">
-                                <div class="title">Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体</div>
-                                <div class="price">￥6819.00</div>
-                                <div class="round">4</div>
-                            </dd></a>
-                        </dl>
-                       
                     </div>
+                    <div style="line-height:90px;text-align:center;color:#999;" v-else>暂时没有商品~~</div>
                 </div>
             </div>
             <div class="right_item">
@@ -162,11 +185,51 @@
                 <a-tab-pane key="1" tab="商品详情" force-render>
                     <div v-html="goods_info.goods_content||''"></div>
                 </a-tab-pane>
-                <a-tab-pane key="2" tab="用户评价 (0)" force-render>
-                    Content of Tab Pane 2
+                <a-tab-pane key="2" :tab="'用户评价 ('+(comment_statistics.all||0)+')'" force-render>
+                     <!-- 评论 -->
+                    <div class="comment_list_top">
+                        <div class="left_bfb">
+                            {{comment_statistics.rate||100}}<font style="font-size:20px">%</font>
+                            <span>好评率</span>
+                        </div>
+                        <div class="right_comment_list">
+                            <ul>
+                                <li :class="params.is_type==0?'red':''" @click="comment_type_click(0)">全部 ({{comment_statistics.all||0}})</li>
+                                <li :class="params.is_type==1?'red':''" @click="comment_type_click(1)">好评 ({{comment_statistics.good||0}})</li>
+                                <li :class="params.is_type==2?'red':''" @click="comment_type_click(2)">中评 ({{comment_statistics.commonly||0}})</li>
+                                <li :class="params.is_type==3?'red':''" @click="comment_type_click(3)">差评 ({{comment_statistics.bad||0}})</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="user_content_blcok_line"></div>
+                    <div class="comment_list_block">
+                        <a-list :data-source="comments">
+                            <a-list-item slot="renderItem" slot-scope="item">
+                                <a-comment :author="item.user.nickname" :avatar="item.user.avatar||require('@/asset/user/user_default.png')">
+                                    <!-- <template slot="actions">
+                                    </template> -->
+                                    {{ item.content }}
+                                    <a-tooltip slot="datetime" :title="item.created_at">
+                                    <span>{{item.created_at}}</span>
+                                    </a-tooltip>
+                                    <a-comment v-if="item.reply != ''" :author="'售后客服'" :avatar="item.user.avatar||require('@/asset/user/kefu.png')">
+                                        <font color="red">{{ item.reply }}</font>
+                                        <a-tooltip slot="datetime" :title="item.reply_time">
+                                        <span>{{item.reply_time}}</span>
+                                        </a-tooltip>
+                
+                                    </a-comment>
+                                </a-comment>
+                            </a-list-item>
+                        </a-list>
+                    </div>
+                    <div class="fy" v-if="comments.length>0" style="margin-top:20px">
+                        <a-pagination v-model="params.page" :default-page-size="params.per_page" :total="params.total" @change="onChange" />
+                    </div>
+                    
                 </a-tab-pane>
                 <a-tab-pane key="3" tab="售后服务" force-render>
-                    Content of Tab Pane 3
+                    <div v-html="store_info.after_sale_service"></div>
                 </a-tab-pane>
                 </a-tabs>
             </div>
@@ -186,7 +249,21 @@ export default {
               goods_images_thumb_400:[],
               goods_images_thumb_150:[],
               goods_images:[],
+              sale_list:[],
           },
+          params:{
+              page:1,
+              per_page:30,
+              total:0,
+              is_type:0,
+          },
+          comment_statistics:[],
+          comments:[],
+          store_info:{
+              area_info:'',
+              store_address:'',
+          },
+          rate_info:{},
           buy_num:1, // 购买数量
           goods_id:0,
           chose_img_pos:0,
@@ -194,8 +271,13 @@ export default {
           sku_id:0,
           isFav:false,
           save_history:true,
-          value:5,
           desc: ['1.0分', '2.0分', '3.0分', '4.0分', '5.0分'],
+          coupons:[], // 优惠券
+          full_reductions:[], // 满减
+          seckills:false, // 秒杀
+          collectives:false, // 拼团
+          collective_list:[], // 正在进行的团
+          collective_id:0,
       };
     },
     watch: {
@@ -215,6 +297,14 @@ export default {
             this.$get(this.$api.homeGoods+'/'+this.goods_id).then(res=>{
                 if(res.code == 200){
                     this.goods_info = res.data;
+                    this.store_info = res.data.store_info;
+                    this.rate_info = this.store_info.rate;
+                    this.coupons = res.data.coupons; // 优惠券
+                    this.full_reductions = res.data.full_reductions; // 满减
+                    this.seckills = res.data.seckills; // 秒杀
+                    this.timing(this.seckills); // 倒计时
+                    this.collectives = res.data.collectives; // 拼团
+
                     this.is_fav(res.data.id); // 获取收藏情况
                     // 存储游览记录
                     if(this.save_history){
@@ -226,23 +316,83 @@ export default {
                 }
             })
         },
+        // 定时器
+        timing(market){
+            if(market){
+                let obj = setInterval(()=>{
+                    let timeVal = moment(market.end_time).format('X') - moment().format('X');
+                    // 时间戳转换
+                    var d = Math.floor(timeVal / (24 * 3600));
+                    var h = Math.floor((timeVal - 24 * 3600 * d) / 3600);
+                    var m = Math.floor((timeVal - 24 * 3600 * d - h * 3600) / 60);
+                    var s = Math.floor((timeVal - 24 * 3600 * d - h * 3600 - m * 60));
+                    // console.log(d + '天' + hh + '时' + mm + '分' + ss + '秒'); // 打印出转换后的时间
+                    //  当时分秒小于10的时候补0
+                    var hh = h < 10 ? '0' + h : h;
+                    var mm = m < 10 ? '0' + m : m;
+                    var ss = s < 10 ? '0' + s : s;
+                    // this.seckills.format_time =  d + '天' + hh + '时' + mm + '分' + ss + '秒';
+                    this.$set(this.seckills,'format_time',d + ' 天 ' + hh + ' 时 ' + mm + ' 分 ' + ss + ' 秒')
+                    if(moment(market.end_time).valueOf()<moment().valueOf()){
+                        clearInterval(obj);
+                        this.$router.go(0);
+                    }
+                },1000)
+            }
+            
+        },
+        get_goods_comments(){
+            this.$get(this.$api.homeGoods+'/comments/'+this.goods_id,this.params).then(res=>{
+                if(res.code == 200){
+                    this.params.total = res.data.total;
+                    this.params.per_page = res.data.per_page;
+                    this.params.current_page = res.data.current_page;
+                    this.comments = res.data.data;
+                }else{
+                    this.$message.error(res.msg);
+                }
+            })
+        },
+        onChange(e){
+            this.params.page = e;
+            this.get_goods_comments();
+        },
+        comment_type_click(is_type){
+            this.params.page = 1;
+            this.params.is_type = is_type;
+            this.get_goods_comments();
+        },
+        get_goods_goods_comment_statistics(){
+            this.$get(this.$api.homeGoods+'/comment_statistics/'+this.goods_id).then(res=>{
+                if(res.code == 200){
+                    this.comment_statistics = res.data;
+                }else{
+                    this.$message.error(res.msg);
+                }
+            })
+        },
         // 立即购买
-        buy:function(){
+        buy(){
             let params = {
                 order:[
                     {
                         goods_id:this.goods_info.id, // 商品ID
                         sku_id:this.sku_id, // SKUid 没有则为0
                         buy_num:this.buy_num, // 购买数量
+                        collective_id:this.collective_id, // 拼团ID 非必传
                     },
                 ],
                 ifcart:0, // 是否购物车
             };
+
+            // 恢复 collective_id
+            this.collective_id = 0
+
             let str = window.btoa(JSON.stringify(params)); 
             this.$router.push("/order/create_order/"+str);
         },
         // 加入购物车
-        add_cart:function(){
+        add_cart(){
             let params = {
                 goods_id:this.goods_info.id, // 商品ID
                 sku_id:this.sku_id, // SKUid 没有则为0
@@ -412,11 +562,19 @@ export default {
                 }
             })
         },
+        // 领取优惠券
+        receiveCoupon(id){
+            this.$post(this.$api.homeCoupon+'/receive',{id:id}).then(res=>{
+                return this.$returnInfo(res)
+            })
+        }
         
     },
     created() {
         this.goods_id = this.$route.params.id;
         this.get_goods_info();
+        this.get_goods_comments();
+        this.get_goods_goods_comment_statistics();
     },
     mounted() {},
     beforeRouteUpdate (to, from, next) {
@@ -439,6 +597,66 @@ export default {
         box-sizing: border-box;
         width: 946px;
         float: left;
+        .user_content_blcok_line{
+            clear: both;
+            height: 1px;
+            background: #efefef;
+            margin: 15px 0;
+        }
+        .comment_list_top{
+            margin-bottom: 15px;
+            .left_bfb{
+                float: left;
+                font-size: 48px;
+                color:#ca151e;
+                line-height: 95px;
+                width: 225px;
+                text-align: center;
+                position: relative;
+                border-right: 1px solid #efefef;
+                padding-right: 35px;
+                span{
+                    font-size: 14px;
+                    color:#999;
+                    position: absolute;
+                    top:-16px;
+                    left: 140px;
+                }
+            }
+            .right_comment_list{
+                ul li{
+                    float: left;
+                    line-height: 48px;
+                    margin-left: 35px;
+                    margin-top: 25px;
+                    color:#666;
+                    height: 48px;
+                    padding:0 40px;
+                    font-size: 14px;
+                    background: #efefef;
+                    border-radius: 3px;
+                }
+                ul li.red{
+                    background: #efefef;
+                    color:#ca151e;
+                }
+                ul li.red:hover{
+                    background: #e1e1e1;
+                    color:#ca151e;
+                }
+                ul li:hover{
+                    background: #e1e1e1;
+                    color:#666;
+                    -webkit-transition: all .2s linear;
+                    transition: all .2s linear;
+                }
+            }
+        }
+        .comment_list_top:after{
+            clear:both;
+            display: block;
+            content:'';
+        }
     }
     .left_item{
         width: 234px;
@@ -656,6 +874,7 @@ export default {
         position: relative;
         font-size: 18px;
         margin-bottom: 15px;
+        padding-right: 100px;
         p{
             color:#999;
             line-height: 35px;
@@ -667,17 +886,19 @@ export default {
         box-sizing: border-box;
         padding: 20px;
         // padding-bottom: 90px;
-        height: 180px;
+        height: 170px;
         background: url("../../../asset/pc/summary-bg.jpg");
     }
     .goods_info_price{
         color:#ca151e;
         font-size: 28px;
         line-height: 28px;
+        font-weight: bold;
         span{
             line-height: 28px;
             color:#999;
             font-size: 14px;
+            font-weight: normal;
         }
     }
     .goods_info_market_price{
@@ -706,7 +927,7 @@ export default {
         right: 24px;
         font-size: 12px;
         color:#999;
-        top: 140px;
+        top: 120px;
         i{
             margin-left: 10px;
             color:#666;
@@ -742,7 +963,7 @@ export default {
                 line-height: 40px;
                 i{
                     font-size: 18px;
-                    line-height: 40px;
+                    line-height: 42px;
                     margin-right: 20px;
                     margin-left: 20px;
                     float: left;
@@ -754,10 +975,17 @@ export default {
             }
         }
         .tuan_active{
+            cursor: pointer;
             background: #f0f9eb;
             border: 1px solid #e1f3d8;
             span{
                 color:#67c23a;
+            }
+            &:hover{
+                background: #67c23a;
+                span{
+                    color:#fff;
+                }
             }
         }
     }
@@ -874,6 +1102,96 @@ export default {
         content:'';
         display: block;
         clear:both;
+    }
+}
+.coupons_block{
+    margin-top: 20px;
+    width: 550px;
+    ul li{
+        border:1px dashed #999;
+        display: inline-block;
+        padding: 5px;
+        margin-right: 10px;
+        cursor: pointer;
+        .price{
+            font-size: 30px;
+            font-weight: bold;
+            float: left;
+            margin-right: 10px;
+            line-height: 30px;
+        }
+        .block{
+            float: left;
+            font-size: 12px;
+            color:#b5621b;
+            line-height: 14px;
+        }
+        &:after{
+            clear: both;
+            display: block;
+            content:'';
+        }
+        &:nth-child(n+4){
+            display: none;
+        }
+    }
+}
+.goods_info_full_reduction{
+    background: #e6e6e6;
+    line-height: 25px;
+    font-size: 12px;
+    .title{
+        width: 84px;
+        color:#b5621b;
+        padding-left: 10px;
+        // margin-right: 45px;
+    }
+    .act{
+        color:#b5621b;
+    }
+}
+.tuan_list{
+    margin-bottom: 10px;
+    height: 32px;
+    
+    .tuan_item{
+        &:after{
+            content:'';
+            display: block;
+            clear: both;
+        }
+        img{
+            width: 30px;
+            height: 30px;
+            border:1px solid #efefef;
+            border-radius: 50%;
+            float: left;
+            margin-right: 15px;
+        }
+        .nickname{
+            color:#b5621b;
+            float: left;
+            display: block;
+            width: 180px;
+            line-height: 32px;
+        }
+        .orders_count{
+            color:#b5621b;
+            float: right;
+            display: block;
+            line-height: 32px;
+            margin-right: 15px;
+        }
+        .btn{
+            cursor: pointer;
+            display: block;
+            background: #67c23a;
+            color:#fff;
+            border-radius: 3px;
+            float: right;
+            line-height: 32px;
+            padding:0 10px;
+        }
     }
 }
 </style>

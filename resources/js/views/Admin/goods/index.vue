@@ -25,13 +25,13 @@
                         <div class="img"><img v-if="rows.goods_master_image" :src="rows.goods_master_image"><a-icon v-else type="picture" /></div>
                         <div class="block">
                             <div class="text" :title="rows.goods_name">{{rows.goods_name}}</div>
-                            <div class="tag">标签：
+                            <!-- <div class="tag">标签：
                                 <a-tag color="orange">推荐</a-tag>
                                 <a-tag color="red">HOT</a-tag>
                                 <a-tag color="green">团购</a-tag>
                                 <a-tag color="cyan">秒杀</a-tag>
                                 <a-tag color="purple">劵</a-tag>
-                            </div>
+                            </div> -->
                         </div>
                         
                         <div class="clear"></div>
@@ -45,6 +45,9 @@
                     <a-button icon="edit" @click="$router.push('/Admin/goods/form/'+rows.id)">查看</a-button>
                 </span>
             </a-table>
+            <div class="admin_pagination" v-if="total>0">
+                <a-pagination v-model="params.page" :page-size.sync="params.per_page" :total="total" @change="onChange" show-less-items />
+            </div>
         </div>
     </div>
 </template>
@@ -128,6 +131,7 @@ export default {
             this.$get(this.$api.sellerGoods,this.params).then(res=>{
                 this.list = res.data.data;
                 this.count = res.data.count;
+                this.total = res.data.total;
             });
         },
         to_nav(e){

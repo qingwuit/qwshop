@@ -21,8 +21,8 @@ class CreateGoodsTable extends Migration
             $table->string('goods_name',120)->default('')->comment('商品名称');
             $table->string('goods_subname',120)->default('')->comment('商品副标题');
             $table->string('goods_no',30)->default('')->comment('商品编号');
-            $table->text('goods_images')->default('')->comment('商品图片');
-            $table->string('goods_master_image')->default('')->comment('主图');
+            $table->text('goods_images')->comment('商品图片');
+            $table->string('goods_master_image',150)->default('')->comment('主图');
             $table->unsignedDecimal('goods_price',9,2)->default(0.00)->comment('商品价格');
             $table->unsignedDecimal('goods_market_price',9,2)->default(0.00)->comment('市场价格');
             $table->unsignedInteger('goods_stock')->default(0)->comment('库存');
@@ -32,6 +32,7 @@ class CreateGoodsTable extends Migration
             $table->unsignedTinyInteger('goods_status')->default(0)->comment('上架状态');
             $table->unsignedTinyInteger('goods_verify')->default(1)->comment('审核状态');
             $table->string('refuse_info',80)->default('暂无缘由')->comment('拒绝原因');
+            $table->unsignedInteger('freight_id')->default(0)->comment('运费模版 0默认');
             $table->text('goods_content')->default('')->comment('详情');
             $table->text('goods_content_mobile')->default('')->comment('手机端详情');
             $table->unsignedTinyInteger('is_recommend')->default(0)->comment('是否推荐商家首页');

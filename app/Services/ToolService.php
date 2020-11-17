@@ -50,6 +50,20 @@ class ToolService extends BaseService{
     public function formatTrueName($true_name){      
         return "*" . mb_substr($true_name,1);
     }
+
+    /**
+    * 只显示最后一个字符
+    * @param string $true_name 真实姓名
+    * @return string
+    */
+    public function formatTrueName2($true_name){   
+        if(mb_strlen($true_name)>4){
+            return "***" . mb_substr($true_name,-4,4);
+        }else{
+            return "***" . mb_substr($true_name,-1,1);
+        }   
+        
+    }
  
     /**
     * 对身份证进行掩码

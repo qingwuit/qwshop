@@ -28,6 +28,8 @@ class StoreConfigResource extends JsonResource
             'store_lat'                 =>  $this->store_lat,
             'store_lng'                 =>  $this->store_lng,
             'store_address'             =>  $this->store_address,
+            'store_money'               =>  $this->store_money,
+            'store_frozen_money'        =>  $this->store_frozen_money,
             'area_id'                   =>  [$this->province_id,$this->city_id,$this->region_id],
             'after_sale_service'        =>  empty($this->after_sale_service)?'':$this->after_sale_service,
         ];

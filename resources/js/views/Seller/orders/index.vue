@@ -121,6 +121,9 @@ export default {
         },
     },
     created() {
+        if(!this.$isEmpty(this.$route.query.collective_id)){
+            this.params.collective_id = this.$route.query.collective_id
+        }
         this.onload();
     },
     mounted() {}

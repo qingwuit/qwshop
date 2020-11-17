@@ -92,7 +92,7 @@
             </div>
 
 
-            <div class="order_info_right_price">总计：￥ {{info.total_price}}<span data-v-01d38243="">（运费：{{info.freight_money}}）</span></div>
+            <div class="order_info_right_price">总计：￥ {{info.total_price}}<span>（运费：{{info.freight_money}}）</span><span v-if="info.coupon_money>0">优惠：-{{info.coupon_money}}</span></div>
 
             <div style="margin-top:40px"><span style="font-size: 14px;font-weight: bold;">快递信息</span></div>
             <div class="unline underm"></div>

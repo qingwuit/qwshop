@@ -108,6 +108,12 @@
                     </div>
                     <!-- 规格sku end -->
                 </a-form-model-item>
+                <a-form-model-item label="运费模版">
+                    <a-select v-model="info.freight_id" :filter-option="false">
+                        <a-select-option :value="0">默认运费</a-select-option>
+                        <a-select-option v-for="(v,k) in freightList" :key="k" :value="v.id">{{v.name}}</a-select-option>
+                    </a-select>
+                </a-form-model-item>
                 <a-form-model-item label="商品详情">
                     <div>
                         <span :class="platform?'admin_editor_span':'admin_editor_span check'" @click="check_platform(false)">PC端</span>
@@ -144,6 +150,7 @@ export default {
           },
           list:[],
           brandList:[],// 品牌列表
+          freightList:[], // 运费模版
           platform:false, // 平台PC false 手机 TRUE
           goods_content:'', // 商品详情
           id:0,
@@ -228,6 +235,14 @@ export default {
                 }
             })
         },
+        get_freight_list(){
+            this.$get(this.$api.sellerFreights).then(res=>{
+                if(res.code == 200 && res.data.length>0){
+                    res.data.splice(0,1);
+                    this.freightList = res.data;
+                }
+            })
+        },
 
         onload(){
 
@@ -238,6 +253,7 @@ export default {
             }
 
             this.get_goods_class();
+            this.get_freight_list();
 
             // this.$get(this.$api.sellerGoodsBrands,params).then(res=>{
             //     this.list = res.data;

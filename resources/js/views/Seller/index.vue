@@ -6,7 +6,7 @@
             <a-layout-sider v-if="!subMenu" class="admin_menu" v-model="collapsed" :trigger="null" collapsible>
                     <div class="admin_menu_title"><img :src="require('@/asset/system_logo.png')" alt="logo"><span :class="collapsed?'hiddens':'shows'">青梧商城</span></div>
                     <a-menu mode="inline" theme="dark">
-                        <a-menu-item @click="to_nav('/Seller/default')"><a-font class="afont menu_icon" type="iconshouye" /><span>系统首页</span></a-menu-item>
+                        <a-menu-item @click="to_nav('/Seller/index')"><a-font class="afont menu_icon" type="iconshouye" /><span>系统首页</span></a-menu-item>
                         <a-sub-menu v-for="v in menus" :key="v.id">
                             <span slot="title"><a-font class="afont menu_icon" :type="v.icon||'iconshouye'" /><span>{{v.name}}</span></span>
                             <template v-for="vo in (v.children||[])">
@@ -51,7 +51,12 @@
 
                 <!-- 主体内容 -->
                 <a-layout-content>
-                    <div :class="subMenu?'admin_content_view clear_m':'admin_content_view'">
+                    <div :class="subMenu?'admin_content_view clear_m':'admin_content_view'" v-if="!isSellerDefault">
+                        <transition name="slide-fade">
+                            <router-view v-if="isRefresh"></router-view>
+                        </transition>
+                    </div>
+                    <div :class="subMenu?'admin_content_view2 clear_m':'admin_content_view2'" v-if="isSellerDefault">
                         <transition name="slide-fade">
                             <router-view v-if="isRefresh"></router-view>
                         </transition>
@@ -65,7 +70,7 @@
                 <div class="admin_menu mobile">
                     <div class="admin_menu_title"><img :src="require('@/asset/system_logo.png')" alt="logo"><span :class="'shows'">青梧商城</span></div>
                         <a-menu mode="inline" theme="dark">
-                            <a-menu-item @click="to_nav('/Seller/default')"><a-font class="afont menu_icon" type="iconshouye" /><span>系统首页</span></a-menu-item>
+                            <a-menu-item @click="to_nav('/Seller/index')"><a-font class="afont menu_icon" type="iconshouye" /><span>系统首页</span></a-menu-item>
                             <a-sub-menu v-for="v in menus" :key="v.id">
                                 <span slot="title"><a-font class="afont menu_icon" :type="v.icon||'iconshouye'" /><span>{{v.name}}</span></span>
                                 <template v-for="vo in (v.children||[])">
@@ -92,6 +97,7 @@ export default {
     props: {},
     data() {
       return {
+          isSellerDefault:false,
           collapsed:false,
           subMenu:false,
           drawerShow:false,
@@ -158,11 +164,26 @@ export default {
                 localStorage.removeItem('seller_token');
                 this.$router.push('/Seller/login');
             })
-        }
+        },
 
+    },
+    beforeCreate(){
+        // 判断token是否失效
+        this.$get(this.$api.sellerCheckLogin).then(res=> {
+            this.$store.dispatch('sellerLogin/check_login',res);
+            if(!this.isLogin){
+                localStorage.removeItem('seller_token')
+                return this.$router.push('/Seller/login');
+            }
+        });
     },
     created() {
         this.get_menus();
+        if(this.$route.name == 'seller_default'){
+            this.isSellerDefault = true;
+        }else{
+            this.isSellerDefault = false;
+        }
     },
     mounted() {
         let _this = this
@@ -174,15 +195,15 @@ export default {
                 _this.onScreenWidth();
             })()
         }
-
-        // 判断token是否失效
-        this.$get(this.$api.sellerCheckLogin).then(res=> {
-            this.$store.dispatch('sellerLogin/check_login',res);
-            if(!this.isLogin){
-                localStorage.removeItem('seller_token')
-                return this.$router.push('/Seller/login');
-            }
-        });
+    },
+    beforeRouteUpdate (to, from, next) {
+        // console.log(to,from);
+        if(to.name == 'seller_default'){
+            this.isSellerDefault = true;
+        }else{
+            this.isSellerDefault = false;
+        }
+        next();
     }
 };
 </script>
@@ -249,6 +270,21 @@ export default {
         border-radius: 4px;
         height: auto;
         border:1px solid #e7eaec!important;
+        &:after{
+            content:'';
+            clear:both;
+            display: block;
+        }
+        &.clear_m{
+            margin: 72px 0 22px 0;;
+        }
+    }
+    .admin_content_view2{
+        position: relative;
+        margin: 62px 20px 22px 20px;
+        padding: 15px 20px;
+        // overflow: initial;
+        height: auto;
         &:after{
             content:'';
             clear:both;

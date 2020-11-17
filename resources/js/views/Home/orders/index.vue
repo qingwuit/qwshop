@@ -48,10 +48,14 @@
 
                 <div class="store_list" v-for="(v,k) in order" :key="k">
                     <div class="store_title">
-                        <router-link :to="'/store/'+v.store_info.id">
-                            <img :src="v.store_info.store_logo||require('@/asset/store/default_store_image.png')" :alt="v.store_info.store_name">
-                            <span>{{v.store_info.store_name}}</span>
-                        </router-link>
+                        <div>
+                            <router-link :to="'/store/'+v.store_info.id" class="float_left">
+                                <img :src="v.store_info.store_logo||require('@/asset/store/default_store_image.png')" :alt="v.store_info.store_name">
+                                <span>{{v.store_info.store_name}}</span>
+                            </router-link>
+                            <div v-if="v.is_coupon" class="float_right">优惠券：<a-select style="width:130px;margin-right:10px;" v-model="v.coupon_id"><a-select-option :value="0" >不使用优惠券</a-select-option><a-select-option v-for="(val,key) in v.coupons" :key="key" :value="val.id" >{{val.money}}优惠券</a-select-option></a-select></div>
+                            <div class="clear"></div>
+                        </div>
 
                         <div class="og_list">
                             <ul>
@@ -84,7 +88,7 @@
             </div>
 
             <div class="sum_block">
-                <div class="total">总金额：<span>￥{{total}}</span>( 不包含运费 )</div>
+                <div class="total">总金额：<span>￥{{total}}</span>( 不包含运费和优惠 )</div>
                 <div :class="loading?'btn hide':'btn'" @click="create_order">{{loading?'加载中..':'创建订单'}}</div>
                 <div class="clear"></div>
             </div>
@@ -162,16 +166,27 @@ export default {
                 return this.$message.error('请耐心等待，不要重复下单');
             }
 
+            let coupon_id = [];
+            this.order.forEach(item=>{
+                coupon_id.push(item.coupon_id)
+            })
+
             let params = {
                 params:this.$route.params.params,
                 address_id:this.address_id,
+                coupon_id:coupon_id.join(','),
                 remark:this.remark,
             }
             this.loading = true;
             this.$post(this.$api.homeOrder+'/create_order',params).then(res=>{
+                if(res.code == 200){
+                    let str = window.btoa(JSON.stringify(res.data)); 
+                    this.$router.push("/order/order_pay/"+str);
+                }else{
+                    this.$message.error(res.msg);
+                }
                 this.loading = false;
-                let str = window.btoa(JSON.stringify(res.data)); 
-                this.$router.push("/order/order_pay/"+str);
+                
             });
         }
     },

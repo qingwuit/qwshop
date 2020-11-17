@@ -162,13 +162,13 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         
-
         /*
          * Package Service Providers...
          */
 
         Intervention\Image\ImageServiceProvider::class, // 图片处理
-        
+        Barryvdh\Debugbar\ServiceProvider::class,// debuger
+        SocialiteProviders\Manager\ServiceProvider::class, // oauth 第三方
 
         /*
          * Application Service Providers...
@@ -235,6 +235,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Image' => Intervention\Image\Facades\Image::class,// 图片处理
+        'Debugbar' => Barryvdh\Debugbar\Facade::class, // debuger
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,  // oauth 第三方登录
 
     ],
 

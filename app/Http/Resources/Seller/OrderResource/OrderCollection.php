@@ -31,7 +31,7 @@ class OrderCollection extends ResourceCollection
      
              
                     'refund_status'         =>  $item->refund_status,
-                    'pay_time'              =>  $item->pay_time,
+                    'pay_time'              =>  $item->pay_time->format('Y-m-d H:i:s'),
                     'delivery_time'         =>  $item->delivery_time,
                     'receipt_time'          =>  $item->receipt_time,
                     'comment_time'          =>  $item->comment_time,

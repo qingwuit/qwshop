@@ -69,23 +69,38 @@ export default {
             window.VueAMap.lazyAMapApiLoaderInstance.load().then(() => {
                
                 AMap.plugin('AMap.Geolocation',  ()=> {
-                    var geolocation  = new AMap.Geolocation();
+                    var geolocation  = new AMap.Geolocation({timeout: 5000});
                     geolocation.getCurrentPosition()
                     AMap.event.addListener(geolocation, 'complete', onComplete)
                     AMap.event.addListener(geolocation, 'error', onError)
                     // 定位成功
                     function onComplete (data) {
-                        let city = data.addressComponent.city
-                        let lng = data.position.lng
-                        let lat = data.position.lat
-                        self.city = city;
-                        sessionStorage.setItem('qw_city',city);
-                        sessionStorage.setItem('qw_lng',lng);
-                        sessionStorage.setItem('qw_lat',lat);
+                        // console.log(data)
+                        if(data.addressComponent !=undefined && data.addressComponent.city!=undefined){
+                            let city = data.addressComponent.city
+                            let lng = data.position.lng
+                            let lat = data.position.lat
+                            self.city = city;
+                            sessionStorage.setItem('qw_city',city);
+                            sessionStorage.setItem('qw_lng',lng);
+                            sessionStorage.setItem('qw_lat',lat);
+                        }else{
+                            console.log('定位异常.')
+                            self.city = '北京市';
+                            sessionStorage.setItem('qw_city','北京市');
+                            sessionStorage.setItem('qw_lng','116.20');
+                            sessionStorage.setItem('qw_lat','39.56');
+                        }
+                        
                     }
                     // 定位出错
                     function onError (data) {
+                        console.log('定位失败.')
                         console.log(data)
+                        self.city = '北京市';
+                        sessionStorage.setItem('qw_city','北京市');
+                        sessionStorage.setItem('qw_lng','116.20');
+                        sessionStorage.setItem('qw_lat','39.56');
                     }
                 })
             });

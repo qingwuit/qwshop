@@ -14,7 +14,8 @@ export default {
     computed: {},
     methods: {},
     created() {console.log('青梧系统： https//:www.qwsystem.com  QQ群：1062159788')},
-    mounted() {}
+    mounted() {},
+    
 };
 </script>
 <style lang="scss">

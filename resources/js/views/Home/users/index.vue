@@ -66,13 +66,14 @@ export default {
                         {name:'账号绑定',url:'/user/oauth'},
                         {name:'资金提现',url:'/user/cash'},
                         {name:'收藏/关注',url:'/user/favorite'},
+                        {name:'我的优惠券',url:'/user/coupon'},
                     ],
                 },
                 {
                     name:'积分商城',
                     icon:'iconjifen',
                     children:[
-                        {name:'积分订单',url:'#'},
+                        {name:'积分订单',url:'/user/integral_order'},
                     ],
                 },
                 {
@@ -89,17 +90,18 @@ export default {
                     icon:'iconVIP1',
                     children:[
                         {name:'分销信息',url:'#'},
-                        {name:'分销会员',url:'#'},
-                        {name:'分销佣金',url:'#'},
+                        {name:'分销会员',url:'/user/distribution_users'},
+                        {name:'分销佣金',url:'/user/distribution_logs'},
                     ],
                 },
                 {
                     name:'帮助中心',
                     icon:'iconbangzhu',
                     children:[
-                        {name:'其他合作',url:'#'},
-                        {name:'帮助中心',url:'#'},
-                        {name:'关于我们',url:'#'},
+                        {name:'网站公告',url:'/user/article/notice'},
+                        {name:'其他合作',url:'/user/article/cooperation'},
+                        {name:'帮助中心',url:'/user/article/help'},
+                        {name:'关于我们',url:'/user/article/about'},
                     ],
                 },
             ],
@@ -118,7 +120,8 @@ export default {
     created() {
         this.get_user_info();
     },
-    mounted() {}
+    mounted() {},
+    
 };
 </script>
 <style lang="scss" scoped>

@@ -58,6 +58,8 @@ class PayMentService extends BaseService{
                 $rs = $this->payHandle($payment_name,$out_trade_no,$notify_info);
                 return $rs['status']?$this->format($alipayObj->success()):$this->format_error($rs['msg']);
             }
+
+            
         }catch(\Exception $e){
             // 验证失败 文档
             Log::channel('qwlog')->info('no:'.$out_trade_no.' '.$e->getMessage());
@@ -107,6 +109,22 @@ class PayMentService extends BaseService{
                     'pay_time'      =>  now(),
                     'payment_name'  =>  $payment_name,
                 ]);
+
+                // 订单支付表修改状态
+                $order_pay->payment_name = $payment_name;
+                $order_pay->pay_status = 1;
+                $order_pay->order_balance = $order_pay->total_price;
+                $order_pay->save();
+
+                // 订单送积分
+                $config_service = new ConfigService();
+                $config_service->giveIntegral('order');
+
+                // 建立分销信息
+                $distribution_service = new DistributionService();
+                // $oid_arr = explode(',',$order_pay->order_ids);
+                $distribution_service->addDisLog($oid_arr);
+
                 return $this->format([],__('orders.balance_pay_success'));
             }
         }else{
@@ -301,7 +319,7 @@ class PayMentService extends BaseService{
             $order_pay_model->save();
 
             // 如果不是充值则取修改订单状态
-            if(!$isRecharge){
+            if($isRecharge){
                 // 金额日志 用户账户变更
                 $ml_service = new MoneyLogService();
                 $ml_info = $ml_service->editMoney(__('users.money_log_recharge'),$user_id,$order_pay_model->total_price);
@@ -316,6 +334,15 @@ class PayMentService extends BaseService{
                     'pay_time'      =>  now(),
                     'payment_name'  =>  $payment_name,
                 ]);
+
+                // 订单送积分
+                $config_service = new ConfigService();
+                $config_service->giveIntegral('order');
+
+                // 建立分销信息
+                $distribution_service = new DistributionService();
+                $distribution_service->addDisLog($oid_arr);
+
                 // 金额日志 用户账户变更
                 $ml_service = new MoneyLogService();
                 $ml_info = $ml_service->editMoney(__('users.money_log_order'),$user_id,-$order_pay_model->total_price);

@@ -44,4 +44,39 @@ export default
     // 全国省市区获取
     'sellerAreas' : baseUrl + 'Seller/areas',
 
+    // 运费配置
+    'sellerFreights' : baseUrl + 'Seller/freights',
+
+    // 分销活动
+    'sellerDistributions' : baseUrl + 'Seller/distributions',
+
+    // 分销日志
+    'sellerDistributionLogs' : baseUrl + 'Seller/distribution_logs',
+
+    // 优惠券
+    'sellerCoupons' : baseUrl + 'Seller/coupons',
+    'sellerCouponLogs' : baseUrl + 'Seller/coupon_logs', // 优惠券日志
+
+    // 满减
+    'sellerFullReductions' : baseUrl + 'Seller/full_reductions',
+
+    // 秒杀
+    'sellerSeckills' : baseUrl + 'Seller/seckills',
+
+    // 拼团
+    'sellerCollectives' : baseUrl + 'Seller/collectives',
+    'sellerCollectiveLogs' : baseUrl + 'Seller/collective_logs',
+
+    // 结算日志
+    'sellerOrderSettlements' : baseUrl + 'Seller/order_settlements',
+
+    // 店铺资金日志
+    'sellerMoneyLogs' : baseUrl + 'Seller/money_logs',
+
+    // 资金提现
+    'sellerCashes' : baseUrl + 'Seller/cashes',
+
+    // 数据统计
+    'sellerStatistics' : baseUrl + 'Seller/statistics', 
+
 };

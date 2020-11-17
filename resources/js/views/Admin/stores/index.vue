@@ -42,6 +42,9 @@
                     <a-button icon="read" @click="$router.push('/Admin/stores/form/'+rows.id)">查看详情</a-button>
                 </span>
             </a-table>
+            <div class="admin_pagination" v-if="total>0">
+                <a-pagination v-model="params.page" :page-size.sync="params.per_page" :total="total" @change="onChange" show-less-items />
+            </div>
         </div>
     </div>
 </template>
@@ -132,6 +135,7 @@ export default {
             this.$get(this.$api.adminStores,this.params).then(res=>{
                 this.list = res.data.data;
                 this.count = res.data.count;
+                this.total = res.data.total;
             });
         },
         to_nav(e){

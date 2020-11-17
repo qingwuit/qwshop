@@ -40,14 +40,27 @@ export default [
         {path:"/Admin/sms_logs/index",name:"admin_sms_logs_index",component:()=>import("@/views/Admin/configs/sms/sms_log")}, // 短信日志
         {path:"/Admin/sms_signs/index",name:"admin_sms_signs_index",component:()=>import("@/views/Admin/configs/sms/sign/index")}, // 短信签名列表
         {path:"/Admin/sms_signs/form/:id?",name:"admin_sms_signs_form",component:()=>import("@/views/Admin/configs/sms/sign/form")}, // 短信签名编辑
+        {path:"/Admin/configs/task",name:"admin_configs_task",component:()=>import("@/views/Admin/configs/task/index")}, // 自动任务配置
+        {path:"/Admin/configs/oauth",name:"admin_configs_oauth",component:()=>import("@/views/Admin/configs/oauth/index")}, // OAuth 第三方登录
 
         // 站点协议
-        {path:"/Admin/agreements",name:"admin_agreements_index",component:()=>import("@/views/Admin/agreements/index")}, // 短信签名列表
-        {path:"/Admin/agreements/form/:id?",name:"admin_agreements_form",component:()=>import("@/views/Admin/agreements/form")}, // 短信签名编辑
+        {path:"/Admin/agreements",name:"admin_agreements_index",component:()=>import("@/views/Admin/agreements/index")}, // 站点协议列表
+        {path:"/Admin/agreements/form/:id?",name:"admin_agreements_form",component:()=>import("@/views/Admin/agreements/form")}, // 站点协议编辑
+
+        // 文章 帮助中心
+        {path:"/Admin/articles",name:"admin_articles_index",component:()=>import("@/views/Admin/articles/index")}, // 帮助中心列表
+        {path:"/Admin/articles/form/:id?",name:"admin_articles_form",component:()=>import("@/views/Admin/articles/form")}, // 帮助中心编辑
         
         // 物流公司
         {path:"/Admin/expresses",name:"admin_expresses_index",component:()=>import("@/views/Admin/expresses/index")}, // 物流公司列表
         {path:"/Admin/expresses/form/:id?",name:"admin_aexpresses_form",component:()=>import("@/views/Admin/expresses/form")}, // 物流公司编辑
+
+        // 积分商城 商品分类
+        {path:"/Admin/integral_goods_classes",name:"admin_integral_goods_classes",component:()=>import("@/views/Admin/integral_goods_classes/index")}, 
+        {path:"/Admin/integral_goods_classes/form/:id?",name:"admin_integral_goods_classes_form",component:()=>import("@/views/Admin/integral_goods_classes/form")},
+        // 积分商城 商品
+        {path:"/Admin/integral_goods",name:"admin_integral_goods",component:()=>import("@/views/Admin/integral_goods/index")}, 
+        {path:"/Admin/integral_goods/form/:id?",name:"admin_integral_goods_form",component:()=>import("@/views/Admin/integral_goods/form")},
 
         // 商品分类
         {path:"/Admin/goods_classes",name:"admin_goods_classes",component:()=>import("@/views/Admin/goods_classes/index")}, 
@@ -81,8 +94,31 @@ export default [
         {path:"/Admin/orders",name:"admin_orders",component:()=>import("@/views/Admin/orders/index")}, 
         {path:"/Admin/orders/form/:id?",name:"admin_orders_form",component:()=>import("@/views/Admin/orders/form")},
 
+        // 订单管理
+        {path:"/Admin/integral_orders",name:"admin_integral_orders",component:()=>import("@/views/Admin/integral_orders/index")}, 
+        {path:"/Admin/integral_orders/form/:id?",name:"admin_integral_orders_form",component:()=>import("@/views/Admin/integral_orders/form")},
+
         // 订单评论
         {path:"/Admin/order_comments",name:"admin_order_comments",component:()=>import("@/views/Admin/order_comments/index")}, 
         {path:"/Admin/order_comments/form/:id?",name:"admin_order_comments_form",component:()=>import("@/views/Admin/order_comments/form")},
+
+        // 分销日志
+        {path:"/Admin/distribution_logs",name:"admin_distribution_logs",component:()=>import("@/views/Admin/distribution_logs/index")}, 
+
+        // 结算日志
+        {path:"/Admin/order_settlements",name:"admin_order_settlements",component:()=>import("@/views/Admin/order_settlements/index")}, 
+        {path:"/Admin/order_settlements/form/:id",name:"admin_order_settlements_form",component:()=>import("@/views/Admin/order_settlements/form")}, 
+
+        // 资金日志
+        {path:"/Admin/money_logs",name:"admin_money_logs",component:()=>import("@/views/Admin/money_logs/index")}, 
+
+        // 资金提现
+        {path:"/Admin/cashes",name:"admin_cashes",component:()=>import("@/views/Admin/cashes/index")}, 
+
+        // 数据统计
+        {path:"/Admin/statistics/user",name:"admin_statistics_user",component:()=>import("@/views/Admin/statistics/user")}, 
+        {path:"/Admin/statistics/store",name:"admin_statistics_store",component:()=>import("@/views/Admin/statistics/store")}, 
+        {path:"/Admin/statistics/order",name:"admin_statistics_order",component:()=>import("@/views/Admin/statistics/order")}, 
+        {path:"/Admin/statistics/pay",name:"admin_statistics_pay",component:()=>import("@/views/Admin/statistics/pay")}, 
     ]},
 ];

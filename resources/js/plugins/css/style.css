@@ -84,6 +84,114 @@ ul,li,ol{
     color:#333;
 }
 
+.admin_card{
+    background: #fff;
+    margin-bottom: 30px;
+    border: 1px solid #EBEEF5;
+    transition: .3s;
+    padding: 0px 20px;
+    border-radius: 3px;
+    font-size: 16px;
+}
+.admin_card:hover{
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+.admin_card .title{
+    border-bottom: 1px solid #efefef;
+    line-height: 30px;
+    padding:15px 0;
+}
+.admin_card .content{
+    margin-top: 12px;
+}
+.admin_card .content .total_price{
+    font-size: 30px;
+}
+.admin_card .content .total_rate{
+    font-size: 16px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    display: flex;
+}
+.admin_card .content .total_rate span{
+    flex: 1;
+}
+.admin_card .content  .today_price{
+    margin-top: 10px;
+    padding-bottom: 25px;
+}
+.admin_card .content .color_block{
+    padding:10px 15px;
+    background: #f9f9f9;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.admin_card .content .color_blcok_font{
+    font-size: 20px;
+    margin-top: 10px;
+    padding-left: 5px;
+    line-height: 20px;
+}
+
+.admin_card .sort_list .list_block span,.admin_form  .sort_list .list_block span{
+    width: 20px;
+    height: 20px;
+    background-color: #f5f5f5;
+    border-radius: 50%;
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+    line-height: 20px;
+    margin-right: 15px;
+}
+.admin_card .sort_list .list_title,.admin_form .sort_list .list_title{margin-bottom:10px;margin-top: 10px;font-weight: bold;}
+.admin_card .sort_list .list_block,.admin_form .sort_list .list_block{padding:10px 10px;}
+.admin_card .sort_list .list_block:nth-child(1) span,.admin_form .sort_list .list_block:nth-child(1) span{background: #333;color:#fff;}
+.admin_card .sort_list .list_block:nth-child(2) span,.admin_form .sort_list .list_block:nth-child(2) span{background: #333;color:#fff;}
+.admin_card .sort_list .list_block:nth-child(3) span,.admin_form .sort_list .list_block:nth-child(3) span{background: #333;color:#fff;}
+.admin_card .sort_list .list_block:nth-child(4) span,.admin_form .sort_list .list_block:nth-child(4) span{background: #333;color:#fff;}
+.admin_card .default_gd{height: 320px;margin-top: 20px;margin-bottom: 20px;}
+.admin_card .content .color_block:hover{
+    background: #f2f2f2;
+}
+.admin_card .month_rate{
+    margin-top: 10px;
+}
+.admin_card .copyright{
+    line-height: 60px;
+    display: flex;
+}
+.admin_card .copyright .copyright_title{
+    margin-right: 20px;
+    height: 60px;
+    overflow: hidden;
+}
+.admin_card .copyright .copyright_rs{
+    height: 60px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.admin_card .title .right_block{
+    float: right;
+}
+.admin_card .title .right_block ul li{
+    float: left;
+    font-size: 14px;
+    margin-right: 10px;
+    padding:2px 15px;
+    border-radius: 3px;
+}
+.admin_card .title .right_block ul{
+    float: left;
+}
+.admin_card .title .right_block .daterange{
+    float: left;
+}
+.admin_card .title .right_block ul li.ck{
+    background: #1890ff;
+    color:#fff;
+}
+
 /* 后台列表 table 标题 */
 .admin_table_page_title{
     font-size: 14px;

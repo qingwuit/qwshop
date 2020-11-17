@@ -30,4 +30,17 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID','db2f6ba33fc14'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET','2c64153a1db17ebdb60f3453fb'),
+        'redirect' => 'http://127.0.0.1:8000/api/oauth/github',
+    ],
+
+    'weixinweb' => [    
+        'client_id' => env('WEIXINWEB_CLIENT_ID'),  
+        'client_secret' => env('WEIXINWEB_CLIENT_SECRET'),  
+        'redirect' => env('WEIXINWEB_REDIRECT_URI') 
+    ],
+
+
 ];

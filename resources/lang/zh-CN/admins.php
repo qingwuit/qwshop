@@ -16,6 +16,12 @@ return [
     // 站点协议
     'agreement_not_defined'                         =>  '协议不存在.',
 
+    // 订单结算
+    'order_settlement_empty'                        =>  '没有结算订单.',
+    'order_settlement_error'                        =>  '结算失败.',
+    'order_settlement_auto'                         =>  '系统结算处理.',
+    'order_settlement_handle'                       =>  '手动结算处理.',
+
     // 订单状态
     'order_cancel'                                  =>   '订单取消',
     'wait_pay'                                      =>   '等待支付',

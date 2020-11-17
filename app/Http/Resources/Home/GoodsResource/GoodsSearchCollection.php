@@ -31,6 +31,7 @@ class GoodsSearchCollection extends ResourceCollection
                     'goods_price'           =>  $goods_price,
                     'goods_sale'            =>  $item->goods_sale,
                     'goods_master_image'    =>  $this->thumb($item->goods_master_image,300),
+                    'order_comment_count'   =>  $item->order_comment_count,
                     // 'goods_no'              =>  $item->goods_no,
              
                 ];

@@ -44,6 +44,12 @@ Vue.component('a-font', AFont);
 
 Vue.use(VueLazyload); // 懒加载图片
 
+
+// 跳转页面回到顶部
+router.afterEach(() => {
+    window.scrollTo(0,0);
+});
+
 Vue.use(VueRouter)
 const app = new Vue({
     el: '#app',

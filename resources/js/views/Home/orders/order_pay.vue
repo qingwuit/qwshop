@@ -46,9 +46,14 @@
 
                 <div class="store_list" v-for="(v,k) in order" :key="k">
                     <div class="store_title">
-                        <span>订单号：{{v.order_no}}</span>
+                        <div>
+                            <span class="float_left">订单号：{{v.order_no}}</span>
+                            <div class="float_right"><span style="font-size:14px;color:#666;">优惠金额：</span> <font color="#ca151e">-{{v.coupon_money}}</font></div>
+                            <div class="clear"></div>
+                        </div>
+                        
                         <!-- <font color="#ca151e">订单统计：￥{{v.total_price}}</font> -->
-                        <div class="clear"></div>
+                        
                         <div class="og_list">
                             <ul>
                                 <li v-for="(vo,key) in v.order_goods" :key="key">
@@ -73,7 +78,7 @@
             </div>
 
             <div class="sum_block">
-                <div class="total">总金额：<span>￥{{total}}</span>( 不包含运费 )</div>
+                <div class="total">总金额：<span>￥{{total}}</span>( {{freight_money>0?'包含运费:'+freight_money+'元':'免运费'}} )</div>
                 <div class="clear"></div>
             </div>
         </div>
@@ -102,6 +107,7 @@ export default {
       return {
           order:[],
           total:0,
+          freight_money:0,
           visible:false,
           pay_password:'',
           loading: false,
@@ -115,6 +121,7 @@ export default {
             this.$get(this.$api.homeOrder+'/create_order_after',{params:this.$route.params.params}).then(res=>{
                 res.data.forEach(item=>{
                     this.total += parseFloat(item.total_price);
+                    this.freight_money += parseFloat(item.freight_money);
                 })
                 this.order = res.data;                
             })
