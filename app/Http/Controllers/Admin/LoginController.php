@@ -33,6 +33,7 @@ class LoginController extends Controller
     public function test(){
         $tool_service = new \App\Services\ToolService();
         dd($tool_service->create_qrcode('123'));
+        
     }
 
 }

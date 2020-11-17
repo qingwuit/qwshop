@@ -423,7 +423,7 @@ class UploadService extends BaseService{
         if(!isset($opt['filename'])){
             
             $rs = Storage::disk($disk)->putFileAs($this->path, new File($tempfile),$random.'.'.$ext);
-            Log::channel('qwlog')->debug($rs);
+            // Log::channel('qwlog')->debug($rs);
             // 如果有缩略图
             if(isset($opt['thumb']) && !empty($opt['thumb'])){
                 foreach($opt['thumb'] as $items){

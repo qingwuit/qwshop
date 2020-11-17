@@ -41,7 +41,7 @@ class PermissionController extends Controller
         $permission_model->apis = $request->apis;
         $permission_model->content = $request->content??'';
         $permission_model->save();
-        return $this->success(__('base.success'));
+        return $this->success([],__('base.success'));
     }
 
     /**
@@ -72,7 +72,7 @@ class PermissionController extends Controller
         $permission_model->apis = $request->apis;
         $permission_model->content = $request->content??'';
         $permission_model->save();
-        return $this->success(__('base.success'));
+        return $this->success([],__('base.success'));
     }
 
     /**
@@ -87,6 +87,6 @@ class PermissionController extends Controller
             return is_numeric($item);
         });
         $permission_model->destroy($idArray);
-        return $this->success(__('base.success'));
+        return $this->success([],__('base.success'));
     }
 }

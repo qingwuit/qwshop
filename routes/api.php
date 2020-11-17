@@ -41,12 +41,12 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
         ]); 
 
         // 菜单处理
-        Route::get('/menus/cache/clear','MenuController@clear_cache'); // 缓存清除接口
+        Route::get('/menus/cache/clear','MenuController@clear_cache')->name('menus.clear_cache'); // 缓存清除接口
 
         // 配置中心
         Route::apiResource('configs','ConfigController')->except(['update','show','destroy']);
-        Route::post('/configs/upload/logo','ConfigController@config_logo'); // 配置中心图上传(Logo)
-        Route::post('/configs/upload/icon','ConfigController@config_icon'); // 配置中心上传(icon)
+        Route::post('/configs/upload/logo','ConfigController@config_logo')->name('configs.config_logo'); // 配置中心图上传(Logo)
+        Route::post('/configs/upload/icon','ConfigController@config_icon')->name('configs.config_icon'); // 配置中心上传(icon)
 
         Route::apiResource('agreements','AgreementController'); // 站点协议 
         Route::apiResource('articles','ArticleController'); // 文章，帮助中心 
@@ -55,7 +55,7 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
         Route::apiResource('expresses','ExpressController');
 
         // 编辑器上传图片接口
-        Route::post('/editor/upload','EditorController@editor'); 
+        Route::post('/editor/upload','EditorController@editor')->name('public.editor');  // 富文本编辑器图上传
 
         // 短信管理
         Route::apiResource('sms_logs','SmsLogController')->except(['update','show','store']); // 短信日志
@@ -63,19 +63,19 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
 
         // 商品分类
         Route::apiResource('goods_classes','GoodsClassController');
-        Route::post('/goods_classes/upload/thumb','GoodsClassController@goods_class_upload'); // 缩略图上传
-        Route::get('/goods_classes/cache/clear','GoodsClassController@clear_cache'); // 缓存清除商品分类
+        Route::post('/goods_classes/upload/thumb','GoodsClassController@goods_class_upload')->name('goods_classes.goods_class_upload'); // 缩略图上传
+        Route::get('/goods_classes/cache/clear','GoodsClassController@clear_cache')->name('goods_classes.clear_cache'); // 缓存清除商品分类
 
         // 店铺管理
         Route::apiResource('stores','StoreController')->except(['store']);
 
         // 全国省市区地址
         Route::apiResource('areas','AreaController');
-        Route::get('/areas/cache/clear','AreaController@clear_cache'); // 缓存清除商品分类
+        Route::get('/areas/cache/clear','AreaController@clear_cache')->name('areas.clear_cache'); // 缓存清除行政地址
 
         // 商品品牌
         Route::apiResource('goods_brands','GoodsBrandController');
-        Route::post('/goods_brands/upload/thumb','GoodsBrandController@goods_brand_upload'); // 缩略图上传
+        Route::post('/goods_brands/upload/thumb','GoodsBrandController@goods_brand_upload')->name('goods_brands.goods_brand_upload'); // 品牌缩略图上传
 
         // 商品管理
         Route::apiResource('goods','GoodsController')->except(['store']);
@@ -83,7 +83,7 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
         // 广告位管理
         Route::apiResource('adv_positions','AdvPositionController');
         Route::apiResource('advs','AdvController');
-        Route::post('/advs/upload/thumb','AdvController@adv_upload'); // 缩略图上传
+        Route::post('/advs/upload/thumb','AdvController@adv_upload')->name('advs.adv_upload'); // 缩略图上传
 
         // 订单管理 
         Route::apiResource('orders','OrderController')->except(['store']);
@@ -109,15 +109,15 @@ Route::namespace('Admin')->prefix('Admin')->group(function(){
         // 积分商城
         Route::apiResource('integral_goods_classes','IntegralGoodsClassController'); // 积分商品栏目
         Route::apiResource('integral_goods','IntegralGoodsController'); // 积分商品
-        Route::post('/integral_goods/upload/images','IntegralGoodsController@goods_upload'); // 图片上传
+        Route::post('/integral_goods/upload/images','IntegralGoodsController@goods_upload')->name('integral_goods.goods_upload'); // 图片上传
         Route::apiResource('integral_orders','IntegralOrderController'); // 积分订单
 
         // 数据统计
-        Route::get('/statistics/all','StatisticController@all'); // 所有
-        Route::get('/statistics/user','StatisticController@user'); // 用户
-        Route::get('/statistics/store','StatisticController@store'); // 店铺
-        Route::get('/statistics/order','StatisticController@order'); // 订单
-        Route::get('/statistics/pay','StatisticController@pay'); // 支付
+        Route::get('/statistics/all','StatisticController@all')->name('statistics.all'); // 所有
+        Route::get('/statistics/user','StatisticController@user')->name('statistics.user'); // 用户
+        Route::get('/statistics/store','StatisticController@store')->name('statistics.store'); // 店铺
+        Route::get('/statistics/order','StatisticController@order')->name('statistics.order'); // 订单
+        Route::get('/statistics/pay','StatisticController@pay')->name('statistics.pay'); // 支付
 
     });
 
@@ -149,6 +149,9 @@ Route::namespace('Seller')->prefix('Seller')->group(function(){
         Route::apiResource('goods','GoodsController');
         Route::get('store_goods_classes','GoodsController@store_goods_classes'); // 获取店铺有权的商品栏目信息
         Route::post('/goods/upload/images','GoodsController@goods_upload'); // 图片上传
+
+        // 编辑器上传图片接口
+        Route::post('/editor/upload','EditorController@editor'); 
 
         // 商品品牌
         Route::apiResource('goods_brands','GoodsBrandController')->except(['update','show','store','destroy']);

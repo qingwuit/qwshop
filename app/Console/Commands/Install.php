@@ -57,6 +57,7 @@ class Install extends Command
         // 开始修改.env 数据
         $this->modifyEnv([
             'APP_URL'       =>  $domain,
+            'APP_DEBUG'     =>  'false',
             'DB_HOST'       =>  $mysqlHost,
             'DB_PORT'       =>  $dbPort,
             'DB_DATABASE'   =>  $dbName,
@@ -64,7 +65,7 @@ class Install extends Command
             'DB_PASSWORD'   =>  $dbPassword,
         ]);
 
-        $bar = $this->output->createProgressBar(2);
+        $bar = $this->output->createProgressBar(3);
 
         // 执行migrate
         $bar->advance(); // 第一步
@@ -90,6 +91,13 @@ class Install extends Command
         $this->line('');
         $this->line('');
         $this->info('Create soft link link storage successfully.');
+
+        // 修改前端接口链接
+        $bar->advance(); // 第三步
+        Artisan::call('qwshop:vue '.$domain);
+        $this->line('');
+        $this->line('');
+        $this->info('Modify front end interface link successfully.');
 
         $bar->finish();
 

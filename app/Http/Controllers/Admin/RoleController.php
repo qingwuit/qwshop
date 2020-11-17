@@ -30,7 +30,7 @@ class RoleController extends Controller
         $role_model = $role_model->create(['name'=>$request->name]);
         $role_model->menus()->sync($request->menu_id??[]);
         $role_model->permissions()->sync($request->permission_id??[]);
-        return $this->success(__('base.success'));
+        return $this->success([],__('base.success'));
     }
 
     /**
@@ -59,7 +59,7 @@ class RoleController extends Controller
         $role_model->save();
         $role_model->menus()->sync($request->menu_id??[]);
         $role_model->permissions()->sync($request->permission_id??[]);
-        return $this->success(__('base.success'));
+        return $this->success([],__('base.success'));
     }
 
     /**
@@ -80,6 +80,6 @@ class RoleController extends Controller
             $role_model->refresh();
         }
         $role_model->destroy($idArray);
-        return $this->success(__('base.success'));
+        return $this->success([],__('base.success'));
     }
 }

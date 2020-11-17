@@ -23,6 +23,9 @@ export default
     'sellerStoreGoodsClasses' : baseUrl + 'Seller/store_goods_classes',  // 获取店铺有权的栏目信息
     'sellerGoodsUpload' : baseUrl + 'Seller/goods/upload/images', 
 
+    // 编辑器上传
+    'sellerEditor' : baseUrl + 'Seller/editor/upload',
+
     // 品牌管理
     'sellerGoodsBrands' : baseUrl + 'Seller/goods_brands', 
 

@@ -31,7 +31,7 @@ class PermissionGroupController extends Controller
     {
         $permission_group_model->name = $request->name??'';;
         $permission_group_model->save();
-        return $this->success(__('base.success'));
+        return $this->success([],__('base.success'));
     }
 
     /**
@@ -58,7 +58,7 @@ class PermissionGroupController extends Controller
         $permission_group_model = $permission_group_model->find($id);
         $permission_group_model->name = $request->name??'';
         $permission_group_model->save();
-        return $this->success(__('base.success'));
+        return $this->success([],__('base.success'));
     }
 
     /**
@@ -73,6 +73,6 @@ class PermissionGroupController extends Controller
             return is_numeric($item);
         });
         $permission_group_model->destroy($idArray);
-        return $this->success(__('base.success'));
+        return $this->success([],__('base.success'));
     }
 }

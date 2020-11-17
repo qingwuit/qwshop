@@ -128,7 +128,7 @@ export default {
             });
         },
         onload(){
-            this.$get(this.$api.sellerGoods,this.params).then(res=>{
+            this.$get(this.$api.adminGoods,this.params).then(res=>{
                 this.list = res.data.data;
                 this.count = res.data.count;
                 this.total = res.data.total;

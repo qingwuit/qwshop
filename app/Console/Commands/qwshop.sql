@@ -63,7 +63,7 @@ CREATE TABLE `admin_role` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,6 +72,7 @@ CREATE TABLE `admin_role` (
 
 LOCK TABLES `admin_role` WRITE;
 /*!40000 ALTER TABLE `admin_role` DISABLE KEYS */;
+INSERT INTO `admin_role` VALUES (1,1,1,NULL,NULL);
 /*!40000 ALTER TABLE `admin_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1281,11 +1282,11 @@ DROP TABLE IF EXISTS `permission_groups`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `permission_groups` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '权限分组名称',
+  `name` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '权限分组名称',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1294,7 +1295,7 @@ CREATE TABLE `permission_groups` (
 
 LOCK TABLES `permission_groups` WRITE;
 /*!40000 ALTER TABLE `permission_groups` DISABLE KEYS */;
-INSERT INTO `permission_groups` VALUES (1,'123','2020-07-06 06:13:51','2020-07-06 06:13:51'),(2,'sadas','2020-07-06 06:15:02','2020-07-06 06:15:02'),(3,'asd','2020-07-06 06:15:13','2020-07-06 06:15:13');
+INSERT INTO `permission_groups` VALUES (1,'后台管理员','2020-11-17 09:25:18','2020-11-17 09:25:18'),(2,'平台用户','2020-11-17 09:25:18','2020-11-17 09:25:18'),(3,'角色管理','2020-11-17 09:25:18','2020-11-17 09:25:18'),(4,'菜单管理','2020-11-17 09:25:18','2020-11-17 09:25:18'),(5,'接口管理','2020-11-17 09:25:18','2020-11-17 09:25:18'),(6,'接口分组','2020-11-17 09:25:18','2020-11-17 09:25:18'),(7,'配置管理','2020-11-17 09:25:18','2020-11-17 09:25:18'),(8,'协议管理','2020-11-17 09:25:18','2020-11-17 09:25:18'),(9,'文章管理','2020-11-17 09:25:18','2020-11-17 09:25:18'),(10,'快递公司','2020-11-17 09:25:18','2020-11-17 09:25:18'),(11,'短信日志','2020-11-17 09:25:18','2020-11-17 09:25:18'),(12,'短信签名','2020-11-17 09:25:18','2020-11-17 09:25:18'),(13,'商品分类','2020-11-17 09:25:18','2020-11-17 09:25:18'),(14,'店铺管理','2020-11-17 09:25:18','2020-11-17 09:25:18'),(15,'行政地区','2020-11-17 09:25:18','2020-11-17 09:25:18'),(16,'商品品牌','2020-11-17 09:25:18','2020-11-17 09:25:18'),(17,'商品管理','2020-11-17 09:25:18','2020-11-17 09:25:18'),(18,'广告位管理','2020-11-17 09:25:18','2020-11-17 09:25:18'),(19,'广告管理','2020-11-17 09:25:18','2020-11-17 09:25:18'),(20,'订单管理','2020-11-17 09:25:18','2020-11-17 09:25:18'),(21,'积分订单','2020-11-17 09:25:18','2020-11-17 09:25:18'),(22,'订单评论','2020-11-17 09:25:18','2020-11-17 09:25:18'),(23,'分销日志','2020-11-17 09:25:18','2020-11-17 09:25:18'),(24,'订单结算','2020-11-17 09:25:18','2020-11-17 09:25:18'),(25,'用户资金日志','2020-11-17 09:25:18','2020-11-17 09:25:18'),(26,'提现管理','2020-11-17 09:25:18','2020-11-17 09:25:18'),(27,'积分商品分类','2020-11-17 09:25:18','2020-11-17 09:25:18'),(28,'积分商品管理','2020-11-17 09:25:18','2020-11-17 09:25:18'),(29,'公共接口','2020-11-17 09:32:08','2020-11-17 09:32:12');
 /*!40000 ALTER TABLE `permission_groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1308,13 +1309,13 @@ DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pid` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '权限分组ID',
-  `name` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '权限名称',
-  `apis` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '接口名称',
+  `name` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '权限名称',
+  `apis` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '接口名称',
   `content` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '接口描述',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1323,6 +1324,7 @@ CREATE TABLE `permissions` (
 
 LOCK TABLES `permissions` WRITE;
 /*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
+INSERT INTO `permissions` VALUES (1,1,'列表','admins.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(2,1,'添加','admins.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(3,1,'详情','admins.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(4,1,'修改','admins.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(5,1,'删除','admins.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(6,2,'列表','users.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(7,2,'添加','users.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(8,2,'详情','users.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(9,2,'修改','users.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(10,2,'删除','users.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(11,3,'列表','roles.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(12,3,'添加','roles.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(13,3,'详情','roles.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(14,3,'修改','roles.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(15,3,'删除','roles.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(16,4,'列表','menus.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(17,4,'添加','menus.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(18,4,'详情','menus.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(19,4,'修改','menus.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(20,4,'删除','menus.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(21,5,'列表','permissions.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(22,5,'添加','permissions.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(23,5,'详情','permissions.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(24,5,'修改','permissions.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(25,5,'删除','permissions.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(26,6,'列表','permission_groups.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(27,6,'添加','permission_groups.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(28,6,'详情','permission_groups.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(29,6,'修改','permission_groups.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(30,6,'删除','permission_groups.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(31,7,'列表','configs.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(32,7,'添加','configs.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(33,8,'列表','agreements.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(34,8,'添加','agreements.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(35,8,'详情','agreements.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(36,8,'修改','agreements.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(37,8,'删除','agreements.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(38,9,'列表','articles.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(39,9,'添加','articles.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(40,9,'详情','articles.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(41,9,'修改','articles.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(42,9,'删除','articles.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(43,10,'列表','expresses.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(44,10,'添加','expresses.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(45,10,'详情','expresses.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(46,10,'修改','expresses.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(47,10,'删除','expresses.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(48,11,'列表','sms_logs.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(49,11,'删除','sms_logs.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(50,12,'列表','sms_signs.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(51,12,'添加','sms_signs.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(52,12,'详情','sms_signs.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(53,12,'修改','sms_signs.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(54,12,'删除','sms_signs.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(55,13,'列表','goods_classes.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(56,13,'添加','goods_classes.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(57,13,'详情','goods_classes.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(58,13,'修改','goods_classes.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(59,13,'删除','goods_classes.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(60,14,'列表','stores.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(61,14,'详情','stores.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(62,14,'修改','stores.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(63,14,'删除','stores.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(64,15,'列表','areas.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(65,15,'添加','areas.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(66,15,'详情','areas.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(67,15,'修改','areas.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(68,15,'删除','areas.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(69,16,'列表','goods_brands.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(70,16,'添加','goods_brands.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(71,16,'详情','goods_brands.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(72,16,'修改','goods_brands.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(73,16,'删除','goods_brands.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(74,17,'列表','goods.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(75,17,'详情','goods.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(76,17,'修改','goods.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(77,17,'删除','goods.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(78,18,'列表','adv_positions.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(79,18,'添加','adv_positions.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(80,18,'详情','adv_positions.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(81,18,'修改','adv_positions.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(82,18,'删除','adv_positions.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(83,19,'列表','advs.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(84,19,'添加','advs.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(85,19,'详情','advs.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(86,19,'修改','advs.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(87,19,'删除','advs.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(88,20,'列表','orders.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(89,20,'详情','orders.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(90,20,'修改','orders.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(91,20,'删除','orders.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(92,21,'列表','integral_orders.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(93,21,'详情','integral_orders.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(94,21,'修改','integral_orders.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(95,22,'列表','order_comments.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(96,22,'详情','order_comments.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(97,22,'删除','order_comments.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(98,23,'列表','distribution_logs.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(99,24,'列表','order_settlements.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(100,24,'添加','order_settlements.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(101,24,'详情','order_settlements.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(102,25,'列表','money_logs.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(103,26,'列表','cashes.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(104,26,'添加','cashes.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(105,26,'修改','cashes.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(106,27,'列表','integral_goods_classes.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(107,27,'添加','integral_goods_classes.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(108,27,'详情','integral_goods_classes.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(109,27,'修改','integral_goods_classes.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(110,27,'删除','integral_goods_classes.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(111,28,'列表','integral_goods.index','列表展示','2020-11-17 09:27:47','2020-11-17 09:27:47'),(112,28,'添加','integral_goods.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(113,28,'详情','integral_goods.show','单个详情','2020-11-17 09:27:47','2020-11-17 09:27:47'),(114,28,'修改','integral_goods.update','数据修改','2020-11-17 09:27:47','2020-11-17 09:27:47'),(115,28,'删除','integral_goods.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(116,21,'添加','integral_orders.store','数据添加','2020-11-17 09:27:47','2020-11-17 09:27:47'),(117,21,'删除','integral_orders.destroy','数据删除','2020-11-17 09:27:47','2020-11-17 09:27:47'),(118,4,'菜单缓存清理','menus.clear_cache','','2020-11-17 09:36:00','2020-11-17 09:36:00'),(119,7,'配置中心图上传(Logo)','configs.config_logo','','2020-11-17 09:37:11','2020-11-17 09:37:11'),(120,7,'配置中心上传(icon)','configs.config_icon','','2020-11-17 09:38:01','2020-11-17 09:38:01'),(121,29,'富文本编辑器图上传','public.editor','','2020-11-17 09:39:24','2020-11-17 09:39:24'),(122,13,'分类缩略图上传','goods_classes.goods_class_upload','','2020-11-17 09:40:27','2020-11-17 09:41:00'),(123,13,'缓存清除商品分类','goods_classes.clear_cache','','2020-11-17 09:40:43','2020-11-17 09:40:43'),(124,15,'缓存清除行政地址','areas.clear_cache','','2020-11-17 09:42:19','2020-11-17 09:42:19'),(125,16,'品牌缩略图上传','goods_brands.goods_brand_upload','','2020-11-17 09:43:02','2020-11-17 09:43:02'),(126,19,'缩略图上传','advs.adv_upload','','2020-11-17 09:44:14','2020-11-17 09:44:14'),(127,28,'图片上传','integral_goods.goods_upload','','2020-11-17 09:45:00','2020-11-17 09:45:00'),(128,29,'首页数据统计','statistics.all','','2020-11-17 09:46:55','2020-11-17 09:46:55'),(129,29,'用户数据统计','statistics.user','','2020-11-17 09:47:18','2020-11-17 09:47:18'),(130,29,'订单数据统计','statistics.order','','2020-11-17 09:47:36','2020-11-17 09:47:36'),(131,29,'店铺数据统计','statistics.store','','2020-11-17 09:48:06','2020-11-17 09:48:06'),(132,29,'支付数据统计','statistics.pay','','2020-11-17 09:48:22','2020-11-17 09:48:22');
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1377,7 +1379,7 @@ CREATE TABLE `role_menus` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1386,6 +1388,7 @@ CREATE TABLE `role_menus` (
 
 LOCK TABLES `role_menus` WRITE;
 /*!40000 ALTER TABLE `role_menus` DISABLE KEYS */;
+INSERT INTO `role_menus` VALUES (1,1,9,NULL,NULL),(2,1,10,NULL,NULL),(3,1,4,NULL,NULL),(4,1,3,NULL,NULL),(5,1,7,NULL,NULL),(6,1,6,NULL,NULL),(7,1,11,NULL,NULL),(8,1,68,NULL,NULL),(9,1,69,NULL,NULL),(10,1,17,NULL,NULL),(11,1,21,NULL,NULL),(12,1,19,NULL,NULL),(13,1,18,NULL,NULL),(14,1,20,NULL,NULL),(15,1,44,NULL,NULL),(16,1,24,NULL,NULL),(17,1,15,NULL,NULL),(18,1,13,NULL,NULL),(19,1,14,NULL,NULL),(20,1,40,NULL,NULL),(21,1,41,NULL,NULL),(22,1,42,NULL,NULL),(23,1,43,NULL,NULL),(24,1,36,NULL,NULL),(25,1,66,NULL,NULL),(26,1,72,NULL,NULL),(27,1,73,NULL,NULL),(28,1,74,NULL,NULL),(29,1,35,NULL,NULL),(30,1,45,NULL,NULL),(31,1,32,NULL,NULL),(32,1,54,NULL,NULL),(33,1,57,NULL,NULL),(34,1,33,NULL,NULL),(35,1,34,NULL,NULL),(36,1,75,NULL,NULL),(37,1,76,NULL,NULL),(38,1,77,NULL,NULL),(39,1,78,NULL,NULL);
 /*!40000 ALTER TABLE `role_menus` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1403,7 +1406,7 @@ CREATE TABLE `role_permissions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1412,6 +1415,7 @@ CREATE TABLE `role_permissions` (
 
 LOCK TABLES `role_permissions` WRITE;
 /*!40000 ALTER TABLE `role_permissions` DISABLE KEYS */;
+INSERT INTO `role_permissions` VALUES (1,1,121,NULL,NULL),(2,1,128,NULL,NULL),(3,1,129,NULL,NULL),(4,1,130,NULL,NULL),(5,1,131,NULL,NULL),(6,1,132,NULL,NULL),(7,1,111,NULL,NULL),(8,1,112,NULL,NULL),(9,1,113,NULL,NULL),(10,1,114,NULL,NULL),(11,1,115,NULL,NULL),(12,1,127,NULL,NULL),(13,1,103,NULL,NULL),(14,1,104,NULL,NULL),(15,1,105,NULL,NULL),(16,1,102,NULL,NULL),(17,1,99,NULL,NULL),(18,1,100,NULL,NULL),(19,1,101,NULL,NULL),(20,1,98,NULL,NULL),(21,1,95,NULL,NULL),(22,1,96,NULL,NULL),(23,1,97,NULL,NULL),(24,1,92,NULL,NULL),(25,1,93,NULL,NULL),(26,1,94,NULL,NULL),(27,1,116,NULL,NULL),(28,1,117,NULL,NULL),(29,1,88,NULL,NULL),(30,1,89,NULL,NULL),(31,1,90,NULL,NULL),(32,1,91,NULL,NULL),(33,1,83,NULL,NULL),(34,1,84,NULL,NULL),(35,1,85,NULL,NULL),(36,1,86,NULL,NULL),(37,1,87,NULL,NULL),(38,1,126,NULL,NULL),(39,1,78,NULL,NULL),(40,1,79,NULL,NULL),(41,1,80,NULL,NULL),(42,1,81,NULL,NULL),(43,1,82,NULL,NULL),(48,1,69,NULL,NULL),(49,1,70,NULL,NULL),(50,1,71,NULL,NULL),(51,1,72,NULL,NULL),(52,1,73,NULL,NULL),(53,1,125,NULL,NULL),(54,1,64,NULL,NULL),(55,1,65,NULL,NULL),(56,1,66,NULL,NULL),(57,1,67,NULL,NULL),(58,1,68,NULL,NULL),(59,1,124,NULL,NULL),(60,1,60,NULL,NULL),(61,1,61,NULL,NULL),(62,1,62,NULL,NULL),(63,1,63,NULL,NULL),(64,1,55,NULL,NULL),(65,1,56,NULL,NULL),(66,1,57,NULL,NULL),(67,1,58,NULL,NULL),(68,1,59,NULL,NULL),(69,1,122,NULL,NULL),(70,1,123,NULL,NULL),(71,1,50,NULL,NULL),(72,1,51,NULL,NULL),(73,1,52,NULL,NULL),(74,1,53,NULL,NULL),(75,1,54,NULL,NULL),(76,1,48,NULL,NULL),(77,1,49,NULL,NULL),(78,1,43,NULL,NULL),(79,1,44,NULL,NULL),(80,1,45,NULL,NULL),(81,1,46,NULL,NULL),(82,1,47,NULL,NULL),(83,1,38,NULL,NULL),(84,1,39,NULL,NULL),(85,1,40,NULL,NULL),(86,1,41,NULL,NULL),(87,1,42,NULL,NULL),(88,1,33,NULL,NULL),(89,1,34,NULL,NULL),(90,1,35,NULL,NULL),(91,1,36,NULL,NULL),(92,1,37,NULL,NULL),(93,1,31,NULL,NULL),(94,1,32,NULL,NULL),(95,1,119,NULL,NULL),(96,1,120,NULL,NULL),(97,1,26,NULL,NULL),(98,1,27,NULL,NULL),(99,1,28,NULL,NULL),(100,1,29,NULL,NULL),(101,1,30,NULL,NULL),(102,1,21,NULL,NULL),(103,1,22,NULL,NULL),(104,1,23,NULL,NULL),(105,1,24,NULL,NULL),(106,1,25,NULL,NULL),(107,1,16,NULL,NULL),(108,1,17,NULL,NULL),(109,1,18,NULL,NULL),(110,1,19,NULL,NULL),(111,1,20,NULL,NULL),(112,1,118,NULL,NULL),(113,1,11,NULL,NULL),(114,1,12,NULL,NULL),(115,1,13,NULL,NULL),(116,1,14,NULL,NULL),(117,1,15,NULL,NULL),(118,1,6,NULL,NULL),(119,1,7,NULL,NULL),(120,1,8,NULL,NULL),(121,1,9,NULL,NULL),(122,1,10,NULL,NULL),(123,1,1,NULL,NULL),(124,1,2,NULL,NULL),(125,1,3,NULL,NULL),(126,1,4,NULL,NULL),(127,1,5,NULL,NULL),(128,1,106,NULL,NULL),(129,1,107,NULL,NULL),(130,1,108,NULL,NULL),(131,1,109,NULL,NULL),(132,1,110,NULL,NULL),(133,1,74,NULL,NULL),(134,1,75,NULL,NULL),(135,1,76,NULL,NULL),(136,1,77,NULL,NULL);
 /*!40000 ALTER TABLE `role_permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1428,7 +1432,7 @@ CREATE TABLE `roles` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1437,6 +1441,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'超级管理员','2020-11-17 09:49:35','2020-11-17 09:49:35');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1725,4 +1730,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-17 12:14:28
+-- Dump completed on 2020-11-17 18:00:10

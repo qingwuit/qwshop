@@ -16,8 +16,8 @@ class CreatePermissionsTable extends Migration
         Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('pid')->default(0)->comment('权限分组ID');
-            $table->string('name',15)->default('')->comment('权限名称');
-            $table->string('apis',25)->default('')->comment('接口名称');
+            $table->string('name',35)->default('')->comment('权限名称');
+            $table->string('apis',35)->default('')->comment('接口名称');
             $table->string('content',25)->default('')->comment('接口描述');
             $table->timestamps();
         });

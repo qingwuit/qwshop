@@ -56,6 +56,7 @@ export default {
     methods: {
         create_editor:function(){
             var _this = this;
+            let token_type = sessionStorage.getItem('token_type');
             this.token = this.$getSession('token_type');
             var editor = new wangeditor('#editor');
             this.content = this.contents;
@@ -64,7 +65,13 @@ export default {
             editor.customConfig.showLinkImg = false;
             editor.customConfig.uploadFileName = 'file[]';
             editor.customConfig.uploadImgMaxLength = 5;
-            editor.customConfig.uploadImgServer = this.$api.adminEditor;  // 上传图片到服务器
+            if(token_type=='admin_token'){
+                editor.customConfig.uploadImgServer = this.$api.adminEditor;  // 上传图片到服务器
+            }
+            if(token_type=='seller_token'){
+                editor.customConfig.uploadImgServer = this.$api.sellerEditor;  // 上传图片到服务器
+            }
+            
             editor.customConfig.uploadImgParams = {token:this.token};
             editor.customConfig.menus = this.toolbar;
             editor.customConfig.onchange = function (html) {
