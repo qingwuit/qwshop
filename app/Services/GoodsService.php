@@ -381,6 +381,12 @@ class GoodsService extends BaseService{
                 }else{
                     $goods_model = $goods_model->orderBy('id','desc')->orderBy('goods_sale','desc');
                 }
+                
+            }
+
+            // 是否是拼团产品
+            if(isset(request()->is_collective) && !empty(request()->is_collective)){
+                $goods_model = $goods_model->whereHas('collective');
             }
     
             $list = $goods_model->where($this->status)

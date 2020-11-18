@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Home\CollectiveLogResourcee;
 
+use App\Services\ToolService;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CollectiveLogGoodsCollection extends ResourceCollection
@@ -14,11 +15,12 @@ class CollectiveLogGoodsCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->collection->map(function($item){
+        $tool_service = new ToolService();
+        return $this->collection->map(function($item) use($tool_service){
             return [
                 'id'                        =>  $item->id,
                 'need'                      =>  $item->need,
-                'nickname'                  =>  $item->user->nickname,
+                'nickname'                  =>  $tool_service->formatTrueName2($item->user->nickname),
                 'orders_count'              =>  $item->orders_count,
             ];
         });

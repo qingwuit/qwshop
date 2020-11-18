@@ -65,6 +65,10 @@
     font-size: 20px;
     overflow: hidden;
 }
+.home .s_goods_list .item dl dd.price font{
+    color:#999;
+    font-size: 12px;
+}
 .home .s_goods_list .item dl dd span{
     width: 50%;
     display: block;

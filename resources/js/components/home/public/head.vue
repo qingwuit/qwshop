@@ -40,7 +40,7 @@
                             <router-link to="/seckill">秒杀</router-link>
                         </li>
                         <li>
-                            <router-link to="/collective">拼团</router-link>
+                            <router-link to="/collective/eyJrZXl3b3JkcyI6IiJ9">拼团</router-link>
                         </li>
                         <li>
                             <router-link to="/integral/index">积分商城</router-link>

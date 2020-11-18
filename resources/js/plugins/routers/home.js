@@ -40,6 +40,9 @@ export default [
         {path: '/integral/search/:params?',name: 'home_integral_goods_list',component: () => import('@/views/Home/integral/goods')},  // 积分商品列表
         {path: '/integral/order/:id/:num',name: 'home_integral_order',component: () => import('@/views/Home/integral/order/index')},  // 创建订单
 
+        // 拼团页面
+        {path: '/collective/:params',name: 'home_collective',component: () => import('@/views/Home/collectives/index')}, // 积分商城首页
+
         // 秒杀页面
         {path: '/seckill',name: 'home_seckill',component: () => import('@/views/Home/seckills/index')}, // 秒杀首页
 

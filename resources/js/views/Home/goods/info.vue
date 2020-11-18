@@ -304,6 +304,7 @@ export default {
                     this.seckills = res.data.seckills; // 秒杀
                     this.timing(this.seckills); // 倒计时
                     this.collectives = res.data.collectives; // 拼团
+                    this.collective_list = res.data.collective_list; // 拼团
 
                     this.is_fav(res.data.id); // 获取收藏情况
                     // 存储游览记录
