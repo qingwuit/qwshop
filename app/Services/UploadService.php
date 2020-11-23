@@ -264,6 +264,28 @@ class UploadService extends BaseService{
         }
         return $this->uploadPhoto($path);
     }
+
+    /**
+     * 在线聊天图片商城
+     *
+     * @param integer $store_id  商家ID
+     * @author hg <www.qingwuit.com>
+     */
+    public function chat($store_id=0){
+        $path = 'chat';
+        $opt = [
+            'width'=>800,
+            'height'=>800,
+            'thumb'=>[
+                [150,150],
+            ],
+        ]; // 配置文件
+        if(!empty($store_id)){
+            $path = $path.'/'.$store_id;
+        }
+        
+        return $this->uploadPhoto($path,$opt);
+    }
     
     /**
      * 商品图片上传
@@ -463,7 +485,7 @@ class UploadService extends BaseService{
             }
             unlink($tempfile);
         }
-
+        
         $rs = Storage::disk($disk)->url($rs);
 
         return $rs;

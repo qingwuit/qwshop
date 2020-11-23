@@ -160,7 +160,7 @@
                     <div class="store_com" style="margin-bottom:10px">公司地址：<font color="#999">{{store_info.area_info+' '+store_info.store_address}}</font></div>
                     <div class="btn">
                         <span class="navstore" @click="$router.push('/store/'+store_info.id)">进入店铺</span>
-                        <span class="contact">联系客服</span>
+                        <span class="contact" @click="chat=true">联系客服</span>
                         <div class="clear"></div>
                     </div>
                 </div>
@@ -235,13 +235,18 @@
             </div>
             <div class="clear"></div>
         </div>
+
+        <!-- 聊天 -->
+        <chat v-if="chat" :store_id="store_info.id" />
+
     </div>
 </template>
 
 <script>
+import Chat from "@/components/chat/index"
 import PicZoom from '@/components/home/goods/vue-piczoom.vue' // 放大镜组件 
 export default {
-    components: {PicZoom},
+    components: {PicZoom,Chat},
     props: {},
     data() {
       return {
@@ -263,6 +268,7 @@ export default {
               area_info:'',
               store_address:'',
           },
+          chat:false,
           rate_info:{},
           buy_num:1, // 购买数量
           goods_id:0,

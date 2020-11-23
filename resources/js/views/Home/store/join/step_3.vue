@@ -39,7 +39,7 @@ export default {
     methods: {
         next_step(){
             if(this.info.store_verify == 2 || this.info.store_verify == 3){
-                return this.$router.push(info.store_verify==2?'/':'/Seller/login')
+                return this.$router.push(this.info.store_verify==2?'/':'/Seller/login')
             }
             if(this.info.store_verify == 0){
                 this.$post(this.$api.homeStoreJoin).then(res=>{

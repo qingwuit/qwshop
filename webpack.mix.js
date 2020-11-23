@@ -30,6 +30,7 @@ mix.js('resources/js/app.js', 'public/dist/js')
             'moment': 'moment',
             'vue-amap':'VueAMap',
             'g2plot':'G2Plot',
+            'clipboard':'ClipboardJS',
             // 'element-ui': 'ELEMENT',//这个比较坑　一开始我还以为是ElementUI结果就报错了XD
         },
         output: {

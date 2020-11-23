@@ -69,6 +69,9 @@ export default [
         {path:"/Seller/cashes",name:"seller_cashes",component:()=>import("@/views/Seller/cashes/index")}, 
         {path:"/Seller/cashes/form",name:"seller_cashes_form",component:()=>import("@/views/Seller/cashes/form")}, 
 
+        // 在线聊天
+        {path:"/Seller/chats",name:"seller_chats",component:()=>import("@/views/Seller/chats/index")}, 
+
         // 数据统计
         {path:"/Seller/statistics/order",name:"seller_statistics_order",component:()=>import("@/views/Seller/statistics/order")}, 
     ]},

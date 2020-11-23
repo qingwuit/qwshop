@@ -38,6 +38,7 @@ export default
     // 分销日志
     'homeDistributionLog'   : baseUrl + 'distribution_logs',
     'homeDistributionUser'   : baseUrl + 'distribution/user',// 分销用户
+    'homeDistributionLink'   : baseUrl + 'distribution/link',// 分销链接
 
     // 购物车
     'homeCarts' : baseUrl + 'carts',

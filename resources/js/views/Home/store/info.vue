@@ -40,7 +40,7 @@
                     <div class="store_com" style="margin-bottom:10px">公司地址：<font color="#999">{{store_info.area_info+' '+store_info.store_address}}</font></div>
                     <div class="btn">
                         <span :class="isFav?'navstore':''"  @click="goods_fav()">{{isFav?'已收藏':'收藏店铺'}}</span>
-                        <span class="contact">联系客服</span>
+                        <span class="contact" @click="chat=true">联系客服</span>
                         <div class="clear"></div>
                     </div>
                 </div>
@@ -129,14 +129,16 @@
         </div>
         <!-- S -->
 
-        
+        <!-- 聊天 -->
+        <chat v-if="chat" :store_id="store_info.id" />
     </div>
 </template>
 
 <script>
+import Chat from "@/components/chat/index"
 import Banner from '@/components/home/public/banner'
 export default {
-    components: {Banner},
+    components: {Banner,Chat},
     props: {},
     data() {
       return {
@@ -153,6 +155,7 @@ export default {
               store_address:'',
               sale_list:[],
           },
+          chat:false,
           list:[],
           comment_statistics:[],
           rate_info:{},

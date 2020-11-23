@@ -4,6 +4,7 @@
 /public/dist
 /public/storage
 /storage/*.key
+/packages
 /vendor
 .env
 .env.backup

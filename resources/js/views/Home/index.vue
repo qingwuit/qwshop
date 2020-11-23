@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import Chat from "@/components/chat/index"
 import ShopHead from '@/components/home/public/head'
 import Banner from '@/components/home/public/banner'
 import BannerBottomAdv from "@/components/home/public/banner_bottom_adv"
@@ -78,7 +79,7 @@ import ShopIndexAdv from "@/components/home/public/shop_index_adv"
 // import VueLazyload from 'vue-lazyload' // 图片懒加载
 // Vue.use(VueLazyload)
 export default {
-    components: {ShopHead,Banner,BannerBottomAdv,ShopFoot,ShopIndexAdv},
+    components: {ShopHead,Banner,BannerBottomAdv,ShopFoot,ShopIndexAdv,Chat},
     props: {},
     data() {
       return {

@@ -23,7 +23,7 @@
             <!-- 右侧内容 start -->
             <a-layout class="admin_right_content">
                 <a-layout-header :class="subMenu?'admin_right_top mobile':(collapsed?'admin_right_top small':'admin_right_top')">
-                    <div v-if="subMenu" class="admin_menu_title item_left float_left"><img style="margin-top:-6px;margin-right:10px" width="30px" height="30px" :src="require('@/asset/system_logo.png')" alt="logo"></div>
+                    <div v-if="subMenu" class="admin_menu_title item_left float_left"><img style="margin-top:-6px;margin-right:10px" width="30px" height="30px" :src="storeInfo.store_logo||require('@/asset/system_logo.png')" alt="logo"></div>
                     <a-icon class="base_font_size item_left float_left" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggleCollapsed"/>
                     <div class="item_right float_right">
                         <a-dropdown>

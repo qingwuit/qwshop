@@ -87,6 +87,7 @@ export default [
             // 分销日志
             {path:"/user/distribution_logs",name:"home_user_distribution_logs",component:()=>import("@/views/Home/users/distribution_log/index")}, 
             {path:"/user/distribution_users",name:"home_user_distribution_users",component:()=>import("@/views/Home/users/distribution_log/user")}, // 分销会员
+            {path:"/user/distribution",name:"home_user_distribution_link",component:()=>import("@/views/Home/users/distribution_log/link")}, // 分销信息
 
             {path:"/user/coupon",name:"home_user_coupon",component:()=>import("@/views/Home/users/coupon/index")}, 
         ]}, 

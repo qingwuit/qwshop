@@ -305,6 +305,7 @@ Route::namespace('Home')->group(function(){
         // 分销日志
         Route::apiResource('distribution_logs','DistributionLogController')->only(['index']);
         Route::get('distribution/user','DistributionLogController@user');
+        Route::get('distribution/link','DistributionLogController@link');
 
         // 资金提现
         Route::apiResource('cashes','CashController')->except(['update','show','destroy']);
@@ -348,6 +349,32 @@ Route::namespace('Home')->group(function(){
 
     
 });
+
+
+/**
+ * 
+ * @author hg <364825702@qq.com>
+ * 在线聊天 路由 ['middleware'=>'jwt.user'],
+ * 
+ */
+Route::namespace('Chat')->prefix('Chat')->middleware('jwt.user')->group(function(){
+
+    Route::get('/friends','IndexController@friends'); // 
+    Route::post('/add_friend','IndexController@add_friend'); // 
+    Route::post('/chat_msg','IndexController@chat_msg'); // 
+    Route::post('/read_msg','IndexController@read_msg'); // 
+    Route::post('/chat_event','IndexController@chat_event'); // 
+    Route::post('/image','IndexController@image'); // 
+
+});
+Route::namespace('Chat')->prefix('Seller')->middleware('jwt.user')->group(function(){
+    // 商家端'
+    Route::get('/chat_friends','SellerChatController@friends'); // 
+    Route::post('/chat_msg','SellerChatController@chat_msg'); // 
+    Route::post('/chat_read_msg','SellerChatController@read_msg'); // 
+    Route::post('/chat_event','SellerChatController@chat_event'); // 
+});
+
 
 
 /**

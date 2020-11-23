@@ -89,7 +89,7 @@ export default {
                     name:'分销分佣',
                     icon:'iconVIP1',
                     children:[
-                        {name:'分销信息',url:'#'},
+                        {name:'分销信息',url:'/user/distribution'},
                         {name:'分销会员',url:'/user/distribution_users'},
                         {name:'分销佣金',url:'/user/distribution_logs'},
                     ],
