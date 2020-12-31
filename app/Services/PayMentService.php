@@ -44,7 +44,12 @@ class PayMentService extends BaseService{
             if($firstWord == 'A'){
                 $payment_name = 'ali';
             }
-            $this->getPaymentConfig($payment_name);
+
+            // 根据out_trade_no 获取支付订单信息
+            $pay_no = str_replace(['A','W','R'],'',$out_trade_no); // 得到正常得到pay_no
+            $order_pay_model = OrderPay::where('pay_no',$pay_no)->first();
+
+            $this->getPaymentConfig($order_pay_model->payment_name);
 
             // 根据情况做回调验证
             if($payment_name == 'wechat'){
@@ -156,7 +161,9 @@ class PayMentService extends BaseService{
                 }
             }
 
-            
+            // 订单支付表修改状态
+            $order_pay->payment_name = $payment_name;
+            $order_pay->save();
 
             if($rs['data'] == 'wechat'){  // 微信支付
                 // 支付订单信息
@@ -276,7 +283,7 @@ class PayMentService extends BaseService{
      */
     public function payHandle($payment_name,$out_trade_no='',$notify_info=[]){
         $trade_no = ''; // 平台支付流水号
-        $pay_no = str_replace(['A','W','R'],'',$trade_no); // 得到正常得到pay_no
+        $pay_no = str_replace(['A','W','R'],'',$out_trade_no); // 得到正常得到pay_no
         // 实例化orderPay模型
         $order_pay_model = new OrderPay();
         $order_pay_model = $order_pay_model->where('pay_no',$pay_no)->first();
@@ -312,7 +319,7 @@ class PayMentService extends BaseService{
         try{
             DB::beginTransaction();
             $order_pay_model->trade_no = $trade_no;
-            $order_pay_model->payment_name = $payment_name;
+            // $order_pay_model->payment_name = $payment_name;
             // $order_pay_model->pay_type = $isRecharge?'r':'o';
             $order_pay_model->pay_status = 1;
             $order_pay_model->pay_time = time();

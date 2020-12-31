@@ -4,7 +4,7 @@
             <a-input v-model="ali.app_id"></a-input>
         </a-form-model-item>
         <a-form-model-item label="公钥(public_key)">
-            <a-input v-model="ali.ali_public_key"></a-input>
+            <a-input v-model="ali.public_key"></a-input>
         </a-form-model-item>
         <a-form-model-item label="私钥(private_key)">
             <a-input v-model="ali.private_key"></a-input>

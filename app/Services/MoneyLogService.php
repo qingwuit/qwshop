@@ -41,7 +41,7 @@ class MoneyLogService extends BaseService{
                 case 1:
                     $user_model->frozen_money += $money;
                 break;
-                case 1:
+                case 2:
                     $user_model->integral += $money;
                 break;
             }

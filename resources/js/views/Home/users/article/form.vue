@@ -36,6 +36,8 @@ export default {
             this.$get(this.$api.homeArticle+'/'+this.ename).then(res=>{
             if(res.code == 200){
                 this.info = res.data;
+            }else if(res.code==401){
+                this.$router.push('/user/login');
             }else{
                 return this.$router.go(-1);
             }

@@ -3,12 +3,13 @@
 
 > 我们理解您需要一套前后端分离，功能齐全操作简易的商城框架 青梧商城系统 就是秉承着这样的目的开发出来的，或许您是开发人员，又或许您是即将要创业的老板，都可以基于青梧商城系统进行快速项目启动。
 
-
 ## Need environment and existing functions 需要环境和已有功能
 > Laravel 7.x + Vue 前后分离
 > 多商户、秒杀、团购、优惠券、在线聊天、三级分销、积分商城、Wechat支付、Alipay支付
 > 支持二次开发
 > PHP >= 7.3
+
+## 20201231 【失踪人士回归】为什么没维护了，因为要上班。那为什么又更新了，因为我把老板又炒了。(这次更新主要是将方法集成到Service层，然后前端框架用的antdv,这个前端框架很坑，我不会用。)
 
 ## Code address 代码地址
 [点击它[代码地址] click it](https://gitee.com/qingwuitcn/qwShopPhp "点击它[代码地址]")
@@ -42,8 +43,8 @@ npm prd
 ## Precautions for use 注意事项
 
 1、需要自行配置PHP环境、和node 环境(安装扩展尽量使用国内镜像)
-2、npm run 打包过程失败，请查看node-sass 是否有下载成功，尝试重新下载或者去淘宝镜像下载
-3、安装后无法打开，是否忘记配置伪静态ngnix
+2、npm run 打包过程失败，请查看`node-sass` 是否有下载成功，尝试重新下载或者去淘宝镜像下载 确定`node版本是否过低`。
+3、安装后无法打开，是否忘记配置伪静态ngnix  linux 查看 `chmod -R 777 storage` 是否给权限
 
 ## Common Problem 常见问题
 

@@ -267,6 +267,9 @@ Route::namespace('Home')->group(function(){
     Route::post('/integral/search','IntegralController@search'); // 积分商品列表
     Route::post('/integral/pay','IntegralController@pay'); // 积分商品支付
 
+    // 收藏/关注
+    Route::get('/favorites/{id}','FavoriteController@show');
+
     // 秒杀页面
     Route::get('/seckills','SeckillController@index'); // 首页数据
 
@@ -297,7 +300,7 @@ Route::namespace('Home')->group(function(){
         Route::post('/users/user_check_upload','UserCheckController@user_check_upload'); // 用户认证图片上传
 
         // 收藏/关注
-        Route::apiResource('favorites','FavoriteController')->except(['update']);
+        Route::apiResource('favorites','FavoriteController')->except(['update','show']);
 
         // 资金日志
         Route::apiResource('money_logs','MoneyLogController')->except(['update','show','store','destroy']);
