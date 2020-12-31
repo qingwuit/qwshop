@@ -1,5 +1,6 @@
 <?php
 
+use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 
@@ -36,7 +37,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['daily'],
+            'channels' => ['single'],
             'ignore_exceptions' => false,
         ],
 
@@ -85,16 +86,26 @@ return [
             'level' => 'debug',
         ],
 
-        'qwlog' => [
-            'driver' => 'single',
-            'path' => storage_path('logs/qwlog.log'),
-            'level' => 'debug',
-            'permission' => 0666,
-        ],
-
         'errorlog' => [
             'driver' => 'errorlog',
             'level' => 'debug',
+        ],
+
+        'null' => [
+            'driver' => 'monolog',
+            'handler' => NullHandler::class,
+        ],
+
+        'emergency' => [
+            'path' => storage_path('logs/laravel.log'),
+        ],
+
+        // 自定义日志
+        'qwlog' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/qwlog.log'),
+            'level' => 'debug',
+            'days' => 1,
         ],
     ],
 

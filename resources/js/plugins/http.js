@@ -1,43 +1,37 @@
 import qs from 'qs'; 
 import axios from 'axios'
-import {Message} from 'element-ui';
-import router from '../router'
+import {message} from 'ant-design-vue';
+import router from './router'
 
 axios.defaults.timeout = 5000;  // 请求超时
-// axios.defaults.baseURL ='http://vueyunk.com/'; // 域名
-// axios.defaults.headers.common['Authorization'] = 'Bearer 1111111';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 // axios.defaults.withCredentials = true; // 允许跨域携带cookie
-// axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 
-
-
+const adminPatt = /api\/Admin/i;
+const sellerPatt = /api\/Seller/i;
 
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
-    // const token = localStorage.getItem('token');
-    // const uid = localStorage.getItem('uid');
-    
-    // post 传输
-    // if(config.method === 'post' && !isEmpty(token)){
-    //   let data = qs.parse(config.data);
-    //   config.data = qs.stringify({
-    //       token: token,
-    //       ...data
-    //   });
-    // }
-
-    // // get 传输
-    // if(config.method === 'get' && !isEmpty(token)){
-    //   config.params  = {
-    //       token: token,
-    //       ...config.params
-    //   };
-    // }
 
     // 获取localStorage 内token
-    const token = localStorage.getItem('token');
+    
+    let adminIndex = config.url.search(adminPatt);
+    let sellerIndex = config.url.search(sellerPatt);
+
+    let token = '';
+    if(adminIndex>-1){
+        token = localStorage.getItem('admin_token');
+        sessionStorage.setItem('token_type','admin_token');
+    }else if(sellerIndex>-1){
+        token = localStorage.getItem('seller_token');
+        sessionStorage.setItem('token_type','seller_token');
+    }else{
+        token = localStorage.getItem('token');
+        sessionStorage.setItem('token_type','token');
+    }
+
+    
     if(!isEmpty(token)){
 		config.headers['Authorization'] = 'Bearer '+token; // 如果token 存在则携带token访问
     }
@@ -54,46 +48,59 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(function (res) {
     // 对响应数据做点什么
     // eslint-disable-next-line no-console
-    // console.log(res);
+    // console.log(res.data.code);
+
+    let adminIndex = res.config.url.search(adminPatt);
+    let sellerIndex = res.config.url.search(sellerPatt);
+
     if(res.status != 200){
-      Message.error("请求异常,错误信息："+res.statusText+"！");
+      Message.error(res.statusText);
 	}
 	
 	// 如果出现401 代表token 失效
 	if(res.data.code == 401){
-        localStorage.removeItem('token');
-        localStorage.removeItem('user_info');
-        Message.error(res.data.msg);
-
-        let reAdmin = /^\/admin\/+./i
-        let reSeller = /^\/seller\/+./i
         
-        let fullepath = router.history.current.fullPath;
-        
-        if(reAdmin.test(fullepath)){  // 后台就跳转后台
+        message.error(res.data.msg);
+        if(adminIndex>-1){
+            localStorage.removeItem('admin_token');
             router.push('/Admin/login');
-        }else if(reSeller.test(fullepath)){  // 商家跳转
+        }else if(sellerIndex>-1){
+            localStorage.removeItem('seller_token');
             router.push('/Seller/login');
-        }else{ // 首页
+        }else{
+            localStorage.removeItem('token');
+            localStorage.removeItem('user_info');
             router.push('/user/login');
         }
+        
+        
     }
 
     // 如果出现402 代表接口无权限 失效
 	if(res.data.code == 402){
-        Message.error(res.data.msg);
-        // router.push('/user/login');
+        message.error(res.data.msg);
     }
     
     // 429 代表请求太频繁
 	if(res.data.code == 429){
-        return Message.error("您请求太频繁了，请休息一会");
+        return message.error("您请求太频繁了，请休息一会");
 	}
 
 	// 刷新了token 则重新存放
 	if(!isEmpty(res.headers.authorization)){
-		var token = res.headers.authorization.split(" ")[1];
-		localStorage.setItem('token',token);
+        var token = res.headers.authorization.split(" ")[1];
+        
+        if(adminIndex>-1){
+            localStorage.setItem('admin_token',token);
+            sessionStorage.setItem('token_type','admin_token');
+        }else if(sellerIndex>-1){
+            localStorage.setItem('seller_token',token);
+            sessionStorage.setItem('token_type','seller_token');
+        }else{
+            localStorage.setItem('token',token);
+            sessionStorage.setItem('token_type','token');
+        }
+		
 	}
 	
     return res;
@@ -103,17 +110,17 @@ axios.interceptors.response.use(function (res) {
 
     // 如果地址无法请求
     if(isEmpty(err.response)){
-      Message.error("网络异常，请检查！");
+        message.error("网络异常，请检查！");
     }
 
     // 存在状态码
     if (err.response.status) {
         switch(err.response.status){
             case 404:
-                Message.error('error_code:404');
+                message.error('error_code:404');
                 break;
             case 500:
-                Message.error('error_code:500');
+                message.error('error_code:500');
             break;
             // case 401:
             // // token 失效
@@ -130,12 +137,12 @@ axios.interceptors.response.use(function (res) {
             //     break;
 
             default:
-                Message.error(err.response.statusText+",error_code："+err.response.status);
+                message.error(err.response.statusText+",error_code："+err.response.status);
             break;
         }
       
     }else{
-      Message.error("未知错误,错误信息："+err.response.statusText+"！");
+        message.error("未知错误,错误信息："+err.response.statusText+"！");
     }
     
     // 对响应错误做点什么
@@ -147,6 +154,16 @@ axios.interceptors.response.use(function (res) {
 export function toJson(data){
   var json = qs.stringify(data);
   return json;
+}
+
+/* apihandle */
+export function apiHandle(url,id=0){
+    let status = false;
+    if(id>0){
+        status = true;
+        url += '/'+id
+    }
+    return {url:url,status:status}; // 编辑则为false
 }
 
 /*判断是否为空*/
@@ -179,9 +196,7 @@ export function get(url, params){
 
 export function put(url, params){ 
  return new Promise((resolve, reject) =>{  
-  axios.put(url, {   
-   params: params  
-  })  
+  axios.put(url, qs.stringify(params))  
   .then(res => {   
    resolve(res.data);  
   })  

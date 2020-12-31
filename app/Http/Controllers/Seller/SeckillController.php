@@ -2,92 +2,107 @@
 
 namespace App\Http\Controllers\Seller;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Seller\SeckillResource\SeckillCollection;
+use App\Http\Resources\Seller\SeckillResource\SeckillGoodsCollection;
+use App\Http\Resources\Seller\SeckillResource\SeckillResource;
+use App\Models\Goods;
 use App\Models\Seckill;
-use App\Models\SeckillGoods;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
-class SeckillController extends BaseController
+class SeckillController extends Controller
 {
-    public function index(Request $req,Seckill $seckill_model){
-        $seckill_model = $seckill_model->orderBy('start_time','desc');
-        $list = $seckill_model->paginate(20);
-        return $this->success_msg('Success',$list);
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Seckill $seckill_model)
+    {
+        $store_id = $this->get_store(true);
+        $list = $seckill_model->with(['goods'=>function($q){
+            $q->select('id','goods_name','goods_master_image');
+        }])->where('store_id',$store_id)->orderBy('id','desc')->paginate(request()->per_page??30);
+        return $this->format(new SeckillCollection($list));
     }
 
-    public function add(Request $req,Seckill $seckill_model){
-        if(!$req->isMethod('post')){
-    		return $this->success_msg('Success',[]);
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request,Seckill $seckill_model)
+    {
+        $seckill_model->goods_id = intval($request->goods_id);
+        $seckill_model->store_id = $this->get_store(true);
+        $seckill_model->discount = floatval($request->discount);
+        $seckill_model->start_time = empty($request->start_time)?now():$request->start_time;
+        $seckill_model->end_time = Carbon::parse($seckill_model->start_time)->addHours(1);
+
+        $seckill_model->save();
+        return $this->success([],__('base.success'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Seckill $seckill_model,$id)
+    {
+        $info = $seckill_model->where('store_id',$this->get_store(true))->find($id);
+        return $this->success(new SeckillResource($info));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Seckill $seckill_model,$id)
+    {
+        $seckill_model = $seckill_model->where('store_id',$this->get_store(true))->find($id);
+        $seckill_model->goods_id = intval($request->goods_id);
+        $seckill_model->discount = floatval($request->discount);
+        $seckill_model->start_time = empty($request->start_time)?now():$request->start_time;
+        $seckill_model->end_time = Carbon::parse($seckill_model->start_time)->addHours(1);
+
+        $seckill_model->save();
+        return $this->success([],__('base.success'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Seckill $seckill_model,$id)
+    {
+        $idArray = array_filter(explode(',',$id),function($item){
+            return is_numeric($item);
+        });
+        $seckill_model->where('store_id',$this->get_store(true))->whereIn('id',$idArray)->delete();
+        return $this->success([],__('base.success'));
+    }
+
+    // 获取商品
+    public function get_seckill_goods(){
+        $goods_model = new Goods();
+        $store_id = $this->get_store(true);
+
+        if(isset(request()->goods_name) && !empty(request()->goods_name)){
+            $goods_model = $goods_model->where('goods_name','like','%'.request()->goods_name.'%');
         }
-        
-    	$data = [
-    		'name' => $req->name,
-            'start_time'=> strtotime($req->seckill_date[0]),
-            'end_time'=> strtotime($req->seckill_date[1]),
-    	];
 
-    	$seckill_model->insert($data);
-    	return $this->success_msg();
-    }
-
-    public function edit(Request $req,Seckill $seckill_model,$id){
-        if(!$req->isMethod('post')){
-            $info = $seckill_model->find($id)->toArray();
-            $info['seckill_date'] = [];
-            $info['seckill_date'][0] = date('Y-m-d H:m',$info['start_time']);
-            $info['seckill_date'][1] = date('Y-m-d H:m',$info['end_time']);
-    		return $this->success_msg('Success',$info);
-    	}
-
-    	$data = [
-    		'name' => $req->name,
-            'start_time'=> strtotime($req->seckill_date[0]),
-            'end_time'=> strtotime($req->seckill_date[1]),
-    	];
-
-    	$seckill_model->where('id',$id)->update($data);
-    	return $this->success_msg();
-    }
-
-    public function del(Request $req,Seckill $seckill_model){
-        $id = $req->id;
-        $ids = explode(',',$id);
-        $seckill_model->destroy($ids);
-        return $this->success_msg();
-    }
-
-    // 添加一个商品到商品秒杀
-    public function add_seckill_goods(Request $req,SeckillGoods $seckill_goods_model){
-        $id = $req->id;
-        $seckill_id = $req->seckill_id;
-        $user_info = auth()->user();
-        $ids = explode(',',$id);
-        $seckill_goods_list = $seckill_goods_model->where(['sid'=>$seckill_id,'user_id'=>$user_info['id']])->get()->toArray();
-
-        $seckill_ids = [];
-        foreach($seckill_goods_list as $v){
-            $seckill_ids[] = $v['goods_id'];
-        }
-
-        foreach($ids as $v){
-            if(in_array($v,$seckill_ids)){
-                return $this->error_msg('有商品已经加入该秒杀活动!');
-            }
-        }
-
-        $insertData = [];
-        foreach($ids as $v){
-            $insertData[] = ['sid'=>$seckill_id,'goods_id'=>$v,'user_id'=>$user_info['id']];
-        }
-        $seckill_goods_model->insert($insertData);
-
-        return $this->success_msg();
-    }
-
-    // 获取参加的商品
-    public function get_add_seckill_goods(Request $req,SeckillGoods $seckill_goods_model){
-        $sid = $req->sid;
-        $user_info = auth()->user();
-        $goods_list = $seckill_goods_model->with('goods')->where('user_id',$user_info['id'])->where('sid',$sid)->paginate(20);
-        return $this->success_msg('Success',$goods_list);
+        $list = $goods_model->with(['seckill'=>function($q){
+            $q->select('goods_id');
+        }])->where('store_id',$store_id)->paginate(request()->per_page??30);
+        return $this->success(new SeckillGoodsCollection($list));
     }
 }

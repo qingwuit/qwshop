@@ -1,21 +1,20 @@
 <template>
     <div class="shop_head">
-
         <head-top></head-top>
 
         <!-- logo and search -->
         <div class="center_top width_center_1200" v-show="center_top">
             <div class="shop_logo float_left">
-                <router-link to="/"><img width="180px" height="55px" :src="require('@/public/pc/logo.png')" alt="青梧商城"></router-link>
+                <router-link to="/"><img width="180px" height="55px" :src="require('@/asset/pc/logo.png')" ></router-link>
             </div>
             <div class="shop_top_seach float_left">
                 <ul>
                     <li><input class="search_input" v-model="keywords" type="text" placeholder="手机 笔记本电脑 衣服"></li>
-                    <li><button class="search_button" type="button" @click="search()"><i class="icon iconfont">&#xeba0;</i></button></li>
+                    <li><button class="search_button" type="button" @click="search()"><a-icon type="search" /></button></li>
                     <li>
                         <div class="index_my_car">
-                            <span @click="to_my_store()">我的商城<i class="icon iconfont">&#xe654;</i></span>
-                            <span><router-link to="/cart/index">我的购物车<i class="icon iconfont">&#xe602;</i></router-link><div class="shop_car_dot">{{cart_count}}</div></span>
+                            <span @click="to_my_store()">我的商城<a-font type="icondianpu" /></span>
+                            <span><router-link to="/cart">我的购物车<a-font type="icongouwuche1" /></router-link><div class="shop_car_dot">{{cart_num||0}}</div></span>
                         </div>
                     </li>
                 </ul>
@@ -27,7 +26,7 @@
             <div class="width_center_1200">
                 <div class="shop_top_nav_left" @mouseover="subnav_show?subnav:subnav=true" @mouseleave="subnav_show?subnav:subnav=false">
                     全部商品
-                    <transition name="el-zoom-in-top"><leftBar :change_color="change_color" v-show="subnav"></leftBar></transition>
+                    <transition name="el-zoom-in-top"><leftBar :goods_class="common.classes" :change_color="change_color" v-show="subnav"></leftBar></transition>
                 </div>
                 <div class="shop_top_nav_right">
                     <ul>
@@ -35,13 +34,19 @@
                             <router-link to="/">首页</router-link>
                         </li>
                         <li>
-                            <router-link to="/goods/seckill">秒杀</router-link>
+                            <router-link to="/store">店铺街</router-link>
                         </li>
                         <li>
-                            <router-link to="/groupbuy/list/keywords.">拼团</router-link>
+                            <router-link to="/seckill">秒杀</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/collective/eyJrZXl3b3JkcyI6IiJ9">拼团</router-link>
                         </li>
                         <li>
                             <router-link to="/integral/index">积分商城</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/user/article/help">帮助中心</router-link>
                         </li>
                     </ul>
                 </div>
@@ -51,110 +56,94 @@
 </template>
 
 <script>
-import leftBar from "@/components/home/public/leftbar.vue"
-import HeadTop from "@/components/home/public/head_top.vue"
+import headTop from '@/components/home/public/head_top'
+import leftBar from '@/components/home/public/leftbar'
+import {mapState} from 'vuex'
 export default {
-    components: {
-        leftBar,
-        HeadTop,
-    },
+    components: {headTop,leftBar},
     props: {
         subnav_show:{
             type:Boolean,
             default:true,
         },
-        change_color:{
-            type:Boolean,
-            default:false,
-        },
-        cart_change:{
-            type:Number,
-        }
     },
     data() {
       return {
+          classes:[],
+          subnav_show:true,
           subnav:true,
-          keywords:'',
-          cart_count:0,
+          change_color:false,
           center_top:true,
+          keywords:'',
       };
     },
     watch: {
         subnav_show:function(val){
             this.subnav = val;
         },
-        cart_change:function(){
-            this.get_cart_count();
-        }
     },
-    computed: {},
+    computed: {...mapState('homeLogin',['isLogin','userInfo']),...mapState('homeCommon',['common']),...mapState('homeCart',['cart_num'])},
     methods: {
-        search:function(){
-            if(this.$route.name == 'goods_index'){
-                return this.$emit('search_goods',{keywords:this.keywords});
-            }
-            let params = 'keywords.'+this.keywords;
-            this.$router.push('/goods/params/'+params);
+        get_common(){
+            this.$get(this.$api.homeCommon).then(res=>{
+                return this.$store.dispatch('homeCommon/set_common',res.data);
+            })
         },
-        get_cart_count:function(){
-            if(this.$isEmpty(localStorage.getItem('token'))){
-                return;
+        checkLogin(){
+            // 判断token是否失效
+            let token = localStorage.getItem('token');
+            if(!this.$isEmpty(token)){
+                this.$get(this.$api.homeCheckLogin).then(res=> {
+                    this.$store.dispatch('homeLogin/check_login',res);
+                });
             }
-            this.$get(this.$api.homeGetCartCount).then(res=>{
-                this.cart_count = res.data;
-            });
         },
-        to_my_store:function(){
-            if(this.$isEmpty(localStorage.getItem('token'))){
-                this.$message.error('请先登录！');
-                return this.$router.push('/user/login');
-            }
-            this.$get(this.$api.homeIsStore).then(res=>{
+        cart_count(){
+            this.$get(this.$api.homeCarts+'/cart_count').then(res=> {
                 if(res.code == 200){
-                    return this.$router.push('/store/'+res.data);
-                }else{
-                    this.$message.error(res.msg);
-                    return this.$router.push('/store/join');
+                    this.$store.dispatch('homeCart/set_cart_num',res.data);
                 }
             });
         },
-        get_keywords:function(){
-            let params = this.$route.params.info;
-            if(this.$isEmpty(params)){
-                return;
-            }
-            let paramsArr = params.split('|');
-            paramsArr.forEach(res=>{
-                let paramsInfo = [];
-                paramsInfo = res.split('.');
-                if(paramsInfo[0] == 'keywords'){  // 搜索关键词
-                    if(paramsInfo.length==2){
-                        this.keywords = paramsInfo[1];
+        search(){
+            let params = {};
+            params.keywords = encodeURIComponent(this.keywords);
+            this.$router.push('/s/'+window.btoa(JSON.stringify(params)))
+        },
+        to_my_store(){
+            this.$get(this.$api.homeStoreVerify).then(res=>{
+                if(res.code == 200){
+                    if(res.data.store_verify == 3){
+                        this.$router.push('/store/'+res.data.id)
                     }else{
-                        this.keywords = '';
+                        this.$message.error('您还不是入驻商家！')
                     }
                 }
-            });
-        }
+            })
+        },
     },
     created() {
-        this.subnav = this.subnav_show;
-        this.get_cart_count();
-        this.get_keywords();
-
+        this.get_common();
+        this.checkLogin();
+        this.cart_count(); // 购物车
+        
+        // 如果是不是首页则变成黑色 收缩模式
+        if(this.$route.name != 'home_index'){
+            this.change_color = true;
+            this.subnav_show = false;
+            this.subnav = false;
+        }
         // 监听滚动条
         window.addEventListener('scroll', ()=>{
             var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-            if(scrollTop>210){
+            if(scrollTop>205){
                 this.center_top = false;
             }else{
                 this.center_top = true;
             }
         }, true);
     },
-    mounted() {
-        
-    }
+    mounted() {}
 };
 </script>
 <style lang="scss" scoped>
@@ -252,7 +241,7 @@ export default {
             margin-right: 20px;
             position: relative;
             i{
-                font-size: 13px;
+                font-size: 14px;
                 margin-left: 6px;
             }
             a:hover{

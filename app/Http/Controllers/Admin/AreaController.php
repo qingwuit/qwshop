@@ -2,86 +2,91 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache; // 缓存不然处理太慢了
 use App\Models\Area;
+use App\Services\AreaService;
+use Illuminate\Http\Request;
 
-class AreaController extends BaseController
+class AreaController extends Controller
 {
-    public function index(Area $area_model){
-        if (!Cache::has('admin_area')) {
-            $list = $area_model->get();
-            $list = getAreaChildNode($list);
-            Cache::put('admin_area', json_encode($list));
-        }else{
-            $list = json_decode(Cache::get('admin_area'));
-        }
-        return $this->success_msg('Success',$list);
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(AreaService $area_service)
+    {
+        $list = $area_service->getAreas()['data'];
+        return $this->success($list);
     }
 
-    public function add(Request $req,Area $area_model){
-        if(!$req->isMethod('post')){
-            // $list = $area_model->get_area_tree();
-            $arr = [];
-            // foreach($list as $v){
-            //     $v['name'] = str_repeat('——',$v['lev']).' '.$v['name'];
-            //     $arr[] = $v;
-            // }
-    		return $this->success_msg('Success',$arr);
-    	}
-    	$data = [
-            'name' => $req->name,
-            'pid'  => $req->area_info?$req->area_info[count($req->area_info)-1]:0,
-    		'area_id' => empty($req->area_id)?'':$req->area_id,
-    	];
-
-        $area_model->insert($data);
-        Cache::forget('admin_area');// 清空缓存
-    	return $this->success_msg();
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request,Area $area_model)
+    {
+        $area_model->pid = $request->pid??'';
+        $area_model->name = $request->name;
+        $area_model->code = $request->code??'';
+        $area_model->deep = $request->deep??0;
+        $area_model->save();
+        $this->clear_cache(); // 修改则清空缓存
+        return $this->success([],__('base.success'));
     }
 
-    public function edit(Request $req,Area $area_model,$id){
-        // if(!$req->isMethod('post')){
-        //     $info = $area_model->find($id);
-        //     $list = $area_model->get_area_list();
-        //     $arr = [];
-        //     foreach($list as $v){
-        //         $v['name'] = str_repeat('——',$v['lev']).' '.$v['name'];
-        //         $arr[] = $v;
-        //     }
-        //     $info['area'] = $arr;
-    	// 	return $this->success_msg('Success',$info);
-    	// }
-
-    	// $data = [
-    	// 	'name' => $req->name,
-        //     'pid'  => $req->pid,
-    	// 	'area_id' => empty($req->area_id)?'':$req->area_id,
-    	// ];
-
-        // $area_model->where('id',$id)->update($data);
-        // Cache::flush(); // 清空缓存
-    	// return $this->success_msg();
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Area $area_model,$id)
+    {
+        $info = $area_model->find($id);
+        return $this->success($info);
     }
 
-    public function del(Request $req,Area $area_model){
-        $id = $req->id;
-        $ids = explode(',',$id);
-        $area_model->destroy($ids);
-        Cache::forget('admin_area');// 清空缓存
-        return $this->success_msg();
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request,Area $area_model, $id)
+    {
+        $area_model = $area_model->find($id);
+        $area_model->pid = $request->pid??'';
+        $area_model->name = $request->name;
+        $area_model->code = $request->code??'';
+        $area_model->deep = $request->deep??0;
+        $area_model->save();
+        $this->clear_cache(); // 修改则清空缓存
+        return $this->success([],__('base.success'));
     }
 
-    // 获取省市区信息
-    public function get_area_list(Area $area_model){
-        $rs = $area_model->get_area_list();
-        return $this->success_msg('Success',$rs);
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Area $area_model,$id)
+    {
+        $idArray = array_filter(explode(',',$id),function($item){
+            return is_numeric($item);
+        });
+        $area_model->destroy($idArray);
+        $this->clear_cache(); // 修改则清空缓存
+        return $this->success([],__('base.success'));
     }
 
-    // 根据父Area_id 获取子area
-    public function get_area_children(Request $req,Area $area_model){
-        $area_id = $req->area_id;
-        return $area_model->getAreaChildren($area_id);
+    public function clear_cache(){
+        $area_service = new AreaService();
+        $area_service->clearCache();
+        return $this->success([],__('base.success'));
     }
 }

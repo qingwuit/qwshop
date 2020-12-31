@@ -1,55 +1,22 @@
 <template>
     <div class="qingwu">
-        <div class="admin_main_block">
-            <div class="admin_main_block_top">
-                <div class="admin_main_block_left">
-                    <div><router-link to="/Admin/menus/form"><el-button type="primary" icon="el-icon-plus">添加</el-button></router-link></div>
-                    <!-- <div><el-input v-model="name" placeholder="请输入内容"></el-input></div>
-                    <div><el-button icon="el-icon-search">条件筛选</el-button></div> -->
-                </div>
+        <div class="admin_table_page_title">菜单管理</div>
+        <div class="unline underm"></div>
 
-                <div class="admin_main_block_right">
-                    <div><el-button type="danger" icon="el-icon-delete" @click="del(select_id)">批量删除</el-button></div>
-                </div>
-            </div>
-            <el-tabs v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane label="后台栏目" name="admin">
-                    <div class="admin_table_main">
-                        <el-table :data="list" @selection-change="handleSelectionChange" row-key="id" :tree-props="{children: 'children',hasChildren:'hasChildren'}">
-                            <el-table-column type="selection"></el-table-column>
-                            <!-- <el-table-column prop="id" label="#" fixed="left" width="70px"></el-table-column> -->
-                            <el-table-column prop="name" label="栏目名称"></el-table-column>
-                            <el-table-column prop="url" label="链接"></el-table-column>
-                            <el-table-column prop="is_sort" label="排序"></el-table-column>
-                            <el-table-column label="操作" fixed="right" width="120px">
-                                <template slot-scope="scope">
-                                    <el-button icon="el-icon-edit" @click="$router.push({name:'menus_form',params:{id:scope.row.id}})">编辑</el-button>
-                                    <!-- <el-button type="danger" icon="el-icon-delete" @click="del(scope.row.id)">删除</el-button> -->
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane label="商家栏目" name="seller">
-                    <div class="admin_table_main">
-                        <el-table :data="list" @selection-change="handleSelectionChange" row-key="id" :tree-props="{children: 'children',hasChildren:'hasChildren'}">
-                            <el-table-column type="selection"></el-table-column>
-                            <!-- <el-table-column prop="id" label="#" fixed="left" width="70px"></el-table-column> -->
-                            <el-table-column prop="name" label="栏目名称"></el-table-column>
-                            <el-table-column prop="url" label="链接"></el-table-column>
-                            <el-table-column prop="is_sort" label="排序"></el-table-column>
-                            <el-table-column label="操作" fixed="right" width="120px">
-                                <template slot-scope="scope">
-                                    <el-button icon="el-icon-edit" @click="$router.push({name:'menus_form',params:{id:scope.row.id}})">编辑</el-button>
-                                    <!-- <el-button type="danger" icon="el-icon-delete" @click="del(scope.row.id)">删除</el-button> -->
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </div>
-                </el-tab-pane>
-                
-                
-            </el-tabs>
+        <div class="admin_table_handle_btn">
+            <a-button @click="$router.push(is_type==0?'/Admin/menus/form':'/Admin/menus/form?is_type=1')" type="primary" icon="plus">添加</a-button>
+            <a-button @click="clear_cache"><a-font type="iconitemno_0"></a-font>清除缓存</a-button>
+            <a-button class="admin_delete_btn" type="danger" icon="delete" @click="del">批量删除</a-button>
+        </div>
+        <div class="admin_table_list">
+            <a-table :columns="columns" :data-source="list" :pagination="false" :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" row-key="id">
+                <span slot="is_sort" slot-scope="rows">
+                    <a-input type="number" @blur="sortChange(rows)" v-model="rows.is_sort" />
+                </span>
+                <span slot="action" slot-scope="rows">
+                    <a-button icon="edit" @click="$router.push(is_type==0?'/Admin/menus/form/'+rows.id:'/Admin/menus/form/'+rows.id+'?is_type=1')">编辑</a-button>
+                </span>
+            </a-table>
         </div>
     </div>
 </template>
@@ -60,54 +27,83 @@ export default {
     props: {},
     data() {
       return {
+          is_type:0,
+          selectedRowKeys:[], // 被选择的行
+          columns:[
+            //   {title:'#',dataIndex:'id',fixed:'left'},
+              {title:'菜单名称',dataIndex:'name'},
+              {title:'链接',dataIndex:'link'},
+              {title:'排序',fixed:'right',width:'120px',scopedSlots: { customRender: 'is_sort' }},
+              {title:'操作',key:'id',fixed:'right',scopedSlots: { customRender: 'action' }},
+          ],
           list:[],
-          all_list:{},
-          select_id:'',
-          activeName:'admin',
       };
     },
     watch: {},
     computed: {},
     methods: {
-        handleSelectionChange:function(e){
-            let ids = [];
-            e.forEach(v => {
-                ids.push(v.id);
+        // 选择框被点击
+        onSelectChange(selectedRowKeys) {
+            this.selectedRowKeys = selectedRowKeys;
+        },
+        // 删除
+        del(){
+            if(this.selectedRowKeys.length==0){
+                return this.$message.error('未选择数据.');
+            }
+            this.$confirm({
+                title: '你确定要删除选择的数据？',
+                content: '确定删除后无法恢复.',
+                okText: '是',
+                okType: 'danger',
+                cancelText: '取消',
+                onOk:()=> {
+                    let ids = this.selectedRowKeys.join(',');
+                    this.$delete(this.$api.adminMenus+'/'+ids).then(res=>{
+                        if(res.code == 200){
+                            this.onload();
+                            this.$message.success('删除成功');
+                        }else{
+                            this.$message.error(res.msg)
+                        }
+                    });
+                    
+                },
             });
-            this.select_id = ids.join(',');
         },
-        get_menus_list:function(){
-            let _this = this;
-            this.$get(this.$api.getMenusList).then(function(res){
-                _this.all_list = res.data;
-                _this.list = res.data['admin'];
-            })
-
+        // 清空缓存
+        clear_cache(){
+            this.$get(this.$api.adminMenusClearCache).then(res=>{
+                return this.$message.success(res.msg)
+            });
         },
-        handleClick:function(){
-            if(this.activeName == 'admin'){
-                return  this.list = this.all_list['admin'];
+        onload(){
+            let is_type = this.$route.query.is_type;
+            let params = {};
+            if(!this.$isEmpty(is_type)){
+                params.is_type = is_type;
+                this.is_type = is_type;
             }
-            return this.list = this.all_list['seller'];
+            this.$get(this.$api.adminMenus,params).then(res=>{
+                this.list = res.data;
+            });
         },
-        // 删除处理
-        del:function(id){
-            let _this = this;
-            if(this.$isEmpty(id)){
-                return this.$message.error('请先选择删除的对象');
-            }
-            this.$post(this.$api.delMenus,{id:id}).then(function(res){
+        // 排序移动
+        sortChange(rows){
+            let api = this.$apiHandle(this.$api.adminMenus,rows.id);
+            this.$put(api.url,rows).then(res=>{
                 if(res.code == 200){
-                    _this.get_menus_list();
-                    return _this.$message.success("删除成功");
+                    this.onload();
+                    return this.$message.success(res.msg)
                 }else{
-                    return _this.$message.error("删除失败");
+                    return this.$message.error(res.msg)
                 }
-            });
+            })
+            
         }
     },
     created() {
-        this.get_menus_list();
+        this.onload();
     },
     mounted() {}
 };

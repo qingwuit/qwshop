@@ -1,221 +1,335 @@
 <template>
-    <div class="qingwu">
-        <!-- 容器本身 -->
-        <el-container>
-            <!-- 左侧 -->
-            <el-aside :width="leftBarWidth">
-                <el-scrollbar>
-                    <!-- LOGO -->
-                    <div class="head_logo">
-                        <span>Q</span><font v-show="isQingwu">ingwu</font>
-                    </div>
-                    <!-- 左侧导航 -->
-                    <el-menu background-color="#20222a" text-color="#e1e1e1" active-text-color="#fff" @open="handleOpen" @close="handleClose" :collapse="isCollapse" :router="true">
-                        <el-menu-item index="0" route="/Seller/index">
-                            <i class="icon iconfont title_i">&#xe625;</i>
-                            <span slot="title">系统首页</span>
-                        </el-menu-item>
-                        
-                        <el-submenu :index="v.id+''" v-for="(v,k) in permisssion_menus" :key="k">
-                            <template slot="title">
-                                <i class="icon iconfont title_i" v-html="v.icon"></i>
-                                <span slot="title">{{v.name}}</span>
+        
+        <a-layout class="admin_index_main">
+
+            <!-- 菜单 start -->
+            <a-layout-sider v-if="!subMenu" class="admin_menu" v-model="collapsed" :trigger="null" collapsible>
+                    <div class="admin_menu_title"><img :src="require('@/asset/system_logo.png')" alt="logo"><span :class="collapsed?'hiddens':'shows'">青梧商城</span></div>
+                    <a-menu mode="inline" theme="dark">
+                        <a-menu-item @click="to_nav('/Seller/index')"><a-font class="afont menu_icon" type="iconshouye" /><span>系统首页</span></a-menu-item>
+                        <a-sub-menu v-for="v in menus" :key="v.id">
+                            <span slot="title"><a-font class="afont menu_icon" :type="v.icon||'iconshouye'" /><span>{{v.name}}</span></span>
+                            <template v-for="vo in (v.children||[])">
+                                <a-menu-item v-if="$isEmpty(vo.children) || vo.children.length==0" :key="vo.id"  @click="to_nav(vo.link)">{{vo.name}}</a-menu-item>
+                                <a-sub-menu v-else :key="vo.id" :title="vo.name">
+                                    <a-menu-item  @click="to_nav(vo2.link)" v-for="vo2 in (vo.children||[])" :key="vo2.id">{{vo2.name}}</a-menu-item>
+                                </a-sub-menu>
                             </template>
-                            <el-menu-item-group v-if="!$isEmpty(v.children) && v.children.length>0">
-                                <el-menu-item :route="vo.url" v-for="(vo,key) in v.children" :key="key" :index="vo.id+''">{{vo.name}}</el-menu-item>
-                            </el-menu-item-group>
-                        </el-submenu>
-                    </el-menu>
-                </el-scrollbar>
-            </el-aside>
-            <el-main>
-                <el-header height="102px">
-                    <div class="index_top_bg">
-                        <div class="index_header">
-                            <i class="icon iconfont right_head_i" @click="left_bar();">&#xe62c;</i>
-                            <i class="icon iconfont right_head_i" title="刷新页面" @click="$router.go(0)">&#xe638;</i>
-                        </div>
+                        </a-sub-menu>
+                    </a-menu>
+            </a-layout-sider>
+            <!-- 菜单 end -->
 
-                        <div class="head_user">
-                            <el-dropdown  @command="handleCommand">
-                                <span class="el-dropdown-link">
-                                {{user_info.nickname}}<i class="el-icon-arrow-down el-icon--right"></i>
-                                </span>
-                                <el-dropdown-menu class="head_menu" slot="dropdown">
-                                    <el-dropdown-item>暂无其他功能</el-dropdown-item>
-                                    <el-dropdown-item command="logout" divided>退出</el-dropdown-item>
-                                </el-dropdown-menu>
-                            </el-dropdown>
-                        </div>
-
-                        <div class="avatar"><img :src="user_info.avatar||'https://www.layui.com/admin/pro/dist/style/res/template/portrait.png'"></div>
-
-                        <div class="right_head_other">
-                            <el-badge :value="count_msg" class="item" id="dot">
-                                <i @click="openChat" class="icon iconfont right_head_i">&#xe793;</i>
-                            </el-badge>
-                        </div>
+            <!-- 右侧内容 start -->
+            <a-layout class="admin_right_content">
+                <a-layout-header :class="subMenu?'admin_right_top mobile':(collapsed?'admin_right_top small':'admin_right_top')">
+                    <div v-if="subMenu" class="admin_menu_title item_left float_left"><img style="margin-top:-6px;margin-right:10px" width="30px" height="30px" :src="storeInfo.store_logo||require('@/asset/system_logo.png')" alt="logo"></div>
+                    <a-icon class="base_font_size item_left float_left" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggleCollapsed"/>
+                    <div class="item_right float_right">
+                        <a-dropdown>
+                            <div class="admin_top_person" @click="e => e.preventDefault()">
+                                <a-avatar class="avatar" size="small" icon="user" />
+                                <span>{{storeInfo.store_name}}</span>
+                            </div>
+                            <a-menu slot="overlay">
+                                <a-menu-item key="0">
+                                    <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">QQ群：xxx</a>
+                                </a-menu-item>
+                                <a-menu-item key="1">
+                                    <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">青梧商城</a>
+                                </a-menu-item>
+                                <a-menu-divider />
+                                <a-menu-item key="3"  @click="logout">
+                                    <a-icon style="color:red" type="logout"></a-icon>
+                                    <font color="red">退出后台</font>
+                                </a-menu-item>
+                            </a-menu>
+                        </a-dropdown>
                     </div>
-                    <breadcrumb-nav></breadcrumb-nav>
-                </el-header>
-                <el-main class="main_in">
-                    
-                    <el-scrollbar>
-                        <div class="main_in2">
-                            <transition name="el-fade-in-linear" mode="out-in">
-                            <router-view></router-view>
-                            </transition>
-                        </div>
-                    </el-scrollbar>
-                    
-                </el-main>
-            </el-main>
-            <el-backtop target=".main_in .el-scrollbar .el-scrollbar__wrap"></el-backtop>
-        </el-container>
-        <chat ref="chat" @count_msg="changeCountMsg($event)"></chat>
-    </div>
+                    <div class="clear"></div>
+                </a-layout-header>
+
+                <!-- 主体内容 -->
+                <a-layout-content>
+                    <div :class="subMenu?'admin_content_view clear_m':'admin_content_view'" v-if="!isSellerDefault">
+                        <transition name="slide-fade">
+                            <router-view v-if="isRefresh"></router-view>
+                        </transition>
+                    </div>
+                    <div :class="subMenu?'admin_content_view2 clear_m':'admin_content_view2'" v-if="isSellerDefault">
+                        <transition name="slide-fade">
+                            <router-view v-if="isRefresh"></router-view>
+                        </transition>
+                    </div>
+                </a-layout-content>
+            </a-layout>
+            <!-- 右侧内容 end -->
+
+            <!-- 手机菜单 start -->
+            <a-drawer bodyStyle="padding:0;height:100%;" placement="left" :closable="false" :visible="drawerShow" @close="onClose">
+                <div class="admin_menu mobile">
+                    <div class="admin_menu_title"><img :src="require('@/asset/system_logo.png')" alt="logo"><span :class="'shows'">青梧商城</span></div>
+                        <a-menu mode="inline" theme="dark">
+                            <a-menu-item @click="to_nav('/Seller/index')"><a-font class="afont menu_icon" type="iconshouye" /><span>系统首页</span></a-menu-item>
+                            <a-sub-menu v-for="v in menus" :key="v.id">
+                                <span slot="title"><a-font class="afont menu_icon" :type="v.icon||'iconshouye'" /><span>{{v.name}}</span></span>
+                                <template v-for="vo in (v.children||[])">
+                                    <a-menu-item v-if="$isEmpty(vo.children) || vo.children.length==0" :key="vo.id"  @click="to_nav(vo.link)">{{vo.name}}</a-menu-item>
+                                    <a-sub-menu v-else :key="vo.id" :title="vo.name">
+                                        <a-menu-item  @click="to_nav(vo2.link)" v-for="vo2 in (vo.children||[])" :key="vo2.id">{{vo2.name}}</a-menu-item>
+                                    </a-sub-menu>
+                                </template>
+                            </a-sub-menu>
+                        </a-menu>
+                </div>
+            </a-drawer>
+            <!-- 手机菜单 end -->
+        </a-layout>
+        
+
+        
 </template>
 
 <script>
-import BreadcrumbNav from "@/components/admin/BreadcrumbNav.vue";
-import chat from "@/components/chat/seller_chat.vue";
+import {mapState,mapActions} from 'vuex'
 export default {
-    components: {
-        BreadcrumbNav,
-        chat,
-    },
+    components: {},
     props: {},
     data() {
-        return {
-            isCollapse:false, // 侧边栏缩进打开
-            leftBarWidth:"185px", // 左侧宽度
-            isQingwu:true, // 显示Qingwu 全部
-            minimize:true, // 聊天框是否显示
-            count_msg:0,
-            permisssion_menus:[],
-            user_info:{},
-        };
+      return {
+          isSellerDefault:false,
+          collapsed:false,
+          subMenu:false,
+          drawerShow:false,
+          screenWidth: document.body.clientWidth, // 屏幕宽度
+          menus:[],
+          isRefresh:true,
+      };
     },
-    watch: {},
-    computed: {},
-    methods: {
-        handleOpen:function(){},
-        handleClose:function(){},
-        handleCommand:function(e){
-            // 点击退出
-            if(e == 'logout'){
-                this.logout();
-            }
-        },
-        left_bar:function(){
-            this.isCollapse = !this.isCollapse;
-            if(this.isCollapse){
-                this.leftBarWidth = "65px";
-                this.isQingwu = false;
-            }else{
-                this.leftBarWidth = "185px";
-                this.isQingwu = true;
-            }
-        },
-        get_user_info:function(){
-            let _this = this;
-            this.$get(this.$api.getUserInfo).then(function(res){
-                _this.user_info = res.data;
-            });
-        },
-        get_permission_menus:function(){
-            let _this = this;
-            this.$post(this.$api.getPermissionMenus,{is_type:1}).then(function(res){
-                _this.permisssion_menus = res.data;
-            });
-        },
-        logout:function(){
-            let _this = this;
-            this.$get(this.$api.logout).then(function(){
-                localStorage.removeItem('token');
-                _this.$router.push('/Seller/login');
-            });
-        },
-        openChat:function(){
-            this.$refs.chat.chatShow();
-        },
-        changeCountMsg:function(e){
-            this.count_msg = e;
+    provide () {
+        return {
+            reload: this.reload
         }
     },
-    created() {
-        this.get_permission_menus();
-        this.get_user_info();
+    watch: {},
+    computed: {
+        ...mapState('sellerLogin',['isLogin','storeInfo']),
     },
-    mounted() {}
+    methods: {
+        // 收缩菜单
+        toggleCollapsed() {
+            this.collapsed = !this.collapsed;
+            if(this.subMenu){
+                this.drawerShow = !this.drawerShow;
+            }
+        },
+        onClose() {
+            this.drawerShow = false;
+        },
+        get_menus(){
+            this.$get(this.$api.sellerMenus).then(res=>{
+                this.menus = res.data;
+            });
+        },
+        to_nav(path){
+            this.reload()
+            this.$router.push(path);
+            
+        },
+        // 判断是否宽度小于多少
+        onScreenWidth(){
+            if(this.screenWidth<=950 && this.screenWidth>=576){
+                this.collapsed = true;
+                this.subMenu = false;
+                this.drawerShow = false;
+            }else if(this.screenWidth<576){
+                this.collapsed = true;
+                this.subMenu = true;
+            }else{
+                this.collapsed = false;
+                this.subMenu = false
+                this.drawerShow = false;
+            }
+        },
+        reload () {
+            this.isRefresh= false
+            this.$nextTick(function () {
+                this.isRefresh= true
+            })
+        },
+        // 退出后台
+        logout(){
+            this.$get(this.$api.sellerLogout).then(res=>{
+                this.$message.success(res.msg);
+                localStorage.removeItem('seller_token');
+                this.$router.push('/Seller/login');
+            })
+        },
+
+    },
+    beforeCreate(){
+        // 判断token是否失效
+        this.$get(this.$api.sellerCheckLogin).then(res=> {
+            this.$store.dispatch('sellerLogin/check_login',res);
+            if(!this.isLogin){
+                localStorage.removeItem('seller_token')
+                return this.$router.push('/Seller/login');
+            }
+        });
+    },
+    created() {
+        this.get_menus();
+        if(this.$route.name == 'seller_default'){
+            this.isSellerDefault = true;
+        }else{
+            this.isSellerDefault = false;
+        }
+    },
+    mounted() {
+        let _this = this
+        this.onScreenWidth();
+        window.onresize = () => {
+            return (() => {
+                window.screenWidth = document.body.clientWidth
+                _this.screenWidth = window.screenWidth
+                _this.onScreenWidth();
+            })()
+        }
+    },
+    beforeRouteUpdate (to, from, next) {
+        // console.log(to,from);
+        if(to.name == 'seller_default'){
+            this.isSellerDefault = true;
+        }else{
+            this.isSellerDefault = false;
+        }
+        next();
+    }
 };
 </script>
 <style lang="scss" scoped>
-.el-main {
-    padding: 0;
+.admin_index_main{
+    height: 100%;
 }
-.main_in{
-    height: calc(100% - 101px);
-    background: #f3f3f4;
+.admin_right_content{
     width: 100%;
-    box-sizing: border-box;
-    // padding: 25px;
-    .el-scrollbar__wrap{
-        overflow-x: hidden!important;
+    // transform: scale3d(1, 1, 1);
+    // -ms-transform: scale3d(1, 1, 1);
+    // -moz-transform: scale3d(1, 1, 1);
+    // -webkit-transform: scale3d(1, 1, 1);
+    position: relative;
+    min-height: 700px;
+    background: #efefef;
+    &:after{
+        display: block;
+        clear: both;
+        content:'',
     }
-    .main_in2{
-        padding: 25px;
-    }
-}
-.el-menu {
-    border-right: none;
-    height: 100%;
-    .el-submenu__title i{
-        color:#e1e1e1;
-    }
-    .title_i{
-        color:#cfcfcf;
-        padding-right: 15px;
-    }
-}
-.el-scrollbar{
-    height: 100%;
-}
-.el-aside {
-    height: 100%;
-    overflow: hidden!important;
-    
-}
-.el-container {
-    height: 100%;
-}
-.el-header{
-    padding: 0;
-}
+    .admin_right_top{
+        padding: 0 35px;
+        box-sizing: border-box;
+        line-height: 50px;
+        height: 50px;
+        // width: 100%;
+        z-index: 99;
+        width: calc(100% - 200px);
+        position: fixed;
+        background: #fff;
+        border-bottom: 1px solid #efefef;
+        &:after{
+            display: block;
+            clear: both;
+            content:'',
+        }
+        &.small{
+            width: calc(100% - 82px);
+        }
+        &.mobile{
+            width: 100%;
+        }
+        .item_left{
+            line-height: 50px;
+        }
+        .item_right{
+            justify-content:flex-end;
+            margin-left: 20px;
 
-.head_logo{
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    font-size: 20px;
-    background:#000;
-    color:#fff;
-    span{color:#409EFF;}
+            .admin_top_person{
+                cursor: pointer;
+                .avatar{margin-top: -4px;margin-right: 4px;}
+            } 
+        }
+        
+    }
+    .admin_content_view{
+        position: relative;
+        margin: 72px 20px 22px 20px;
+        padding: 15px 20px;
+        background: #fff;
+        // overflow: initial;
+        border-radius: 4px;
+        height: auto;
+        border:1px solid #e7eaec!important;
+        &:after{
+            content:'';
+            clear:both;
+            display: block;
+        }
+        &.clear_m{
+            margin: 72px 0 22px 0;;
+        }
+    }
+    .admin_content_view2{
+        position: relative;
+        margin: 62px 20px 22px 20px;
+        padding: 15px 20px;
+        // overflow: initial;
+        height: auto;
+        &:after{
+            content:'';
+            clear:both;
+            display: block;
+        }
+        &.clear_m{
+            margin: 72px 0 22px 0;;
+        }
+    }
 }
-.index_top_bg{
-    border-bottom: 1px solid #e7eaec!important;
-    height: 50px;
-    .index_header{
-        float: left;
-        .right_head_i{line-height: 50px;font-size: 18px;color:#333;margin-left: 30px;}
+.admin_menu{
+    max-width: 230px;
+    min-height: 100%;
+    background: #111;
+    .menu_icon{
+        color:#fff!important;
     }
-    .avatar img{width: 30px; height: 30px;border-radius: 50%;float: right;margin-top: 10px;}
-    .right_head_other{
-        float: right;margin-right: 40px;position: relative;
-        .item{margin-top: 17px;}
-        i{font-size: 20px}
+    &.mobile{
+        width: 100%;
+        max-width:100%;
     }
-    .head_user{line-height: 50px;float: right;position: relative;margin-left: 10px;margin-right: 30px;}
+    .admin_menu_title{
+        line-height: 50px;
+        font-size: 20px;
+        color:#fff;
+        background: #000;
+        text-align: center;
+        
+        img{
+            width: 30px;
+            height: 30px;
+            margin-top: -5px;
+        }
+        span{
+            color:#409EFF;
+            &.hiddens{
+                display: none;
+            }
+            &.shows{
+                color:#fff;
+                margin-left: 10px;
+            }
+        }
+    }
+    
 }
 
 </style>

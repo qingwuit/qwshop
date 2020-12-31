@@ -1,6 +1,6 @@
 <template>
     <div class="shop_foot width_center_1200">
-        <shop-index-adv :adv="adv"></shop-index-adv>
+        <!-- <shop-index-adv :adv="adv"></shop-index-adv> -->
         <ul>
             <li><router-link to="">500强企业 品质保证</router-link></li>
             <li><router-link to="">7天退货 15天换货</router-link></li>
@@ -9,16 +9,18 @@
         </ul>
         <div class="foot_copyright">
             <p>448家维修网点 全国联保 隐私政策 服务协议 Copyright © 2012-2016 VMALL.COM 版权所有 保留一切权利</p>
-            <p>公安备案 苏公网安备 32011402010009号 | 苏ICP备09062682号-9 | 增值电信业务经营许可证：苏B2-20130048 | 网络文化经营许可证：苏网文[2015] 1599-026号</p>
+            <p>公安备案 苏公网安备 32011402010009号 | {{common.common.icp}} | 增值电信业务经营许可证：苏B2-20130048 | 网络文化经营许可证：苏网文[2015] 1599-026号</p>
         </div>
+        <a-back-top />
     </div>
 </template>
 
 <script>
-import ShopIndexAdv from "@/components/home/public/shop_index_adv.vue"
+// import ShopIndexAdv from "@/components/home/public/shop_index_adv.vue"
+import {mapState} from 'vuex'
 export default {
     components: {
-        ShopIndexAdv,
+        // ShopIndexAdv,
     },
     props: {},
     data() {
@@ -28,17 +30,13 @@ export default {
       };
     },
     watch: {},
-    computed: {},
+    computed: {
+        ...mapState('homeCommon',['common'])
+    },
     methods: {
-        get_foot_info:function(){
-            this.$get(this.$api.homeGetFootInfo).then(res=>{
-                this.adv = res.data.adv.adv[0];
-                this.info = res.data.info;
-            });
-        }
+        
     },
     created() {
-        this.get_foot_info();
     },
     mounted() {}
 };

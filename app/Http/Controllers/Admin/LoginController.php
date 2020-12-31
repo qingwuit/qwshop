@@ -2,100 +2,38 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use App\Models\Users;
+use Illuminate\Http\Request;
+use App\Services\UserService;
 
-class LoginController extends BaseController
+class LoginController extends Controller
 {
+    public function login(UserService $user_service){
+        $info = $user_service->login('username','admin');
+        return $info['status']?$this->success($info['data']):$this->error($info['msg']);
+    }
 
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function login()
-    {
-        $credentials = request(['username', 'password']);
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+    // 检测是否登陆
+    public function check_login(UserService $user_service){
+        $info = $user_service->checkLogin('admin');
+        return $info['status']?$this->success($info['data']):$this->error($info['msg']);
+    }
+
+    // 退出账号
+    public function logout(){
+        try{
+            auth('admin')->logout();
+        }catch(\Exception $e){
+            return $this->success([],__('base.success'));
         }
-        $user_info = auth()->user();
-        unset($user_info['password']); // 去掉存储的密码
-
-        return response()->json([
-            'code'=>200,
-            'token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-            'user_info' => $user_info,
-        ]);
+        return $this->success([],__('base.success'));
     }
 
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function me()
-    {
-        return response()->json(auth()->user());
+    // 测试
+    public function test(){
+        $tool_service = new \App\Services\ToolService();
+        dd($tool_service->create_qrcode('123'));
+        
     }
 
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function logout()
-    {
-        auth()->logout();
-
-        return response()->json(['code'=>200,'msg' => 'Successfully logged out']);
-    }
-
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh()
-    {
-        return $this->respondWithToken(auth()->refresh());
-    }
-
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'code'=>200,
-            'token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
-    }
-
-    // 检测是否已经登录
-    public function check_user_login(Request $req){
-        if(auth()->parser()->setRequest($req)->hasToken()){
-            return $this->success_msg();
-        }else{
-            return $this->error_msg('Token Not Provided Or Other Error');
-        }
-    }
-
-    // 注册账号
-    protected function register(Request $req,Users $user_model){
-    	$password = Hash::make("123456");
-    	$rs = $user_model->create(['username'=>'admin','password'=>$password]);
-    	dd($rs);
-    }
 }

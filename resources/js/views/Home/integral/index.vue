@@ -1,15 +1,14 @@
 <template>
     <div class="integral_index">
-        <div class="shop_top"><shop-top :subnav_show="subnav_show" :change_color="true"></shop-top></div>
-        <div><banner :list="banner_list" height="300px"></banner></div>
+        <div><banner :list="store_slide" :height="350" /></div>
 
         <!-- 积分商城banner下信息 -->
-        <div class="banner_b_info width_center_1200">
+        <div class="banner_b_info w1200">
             <div class="block or">
 
-                <div class="integral_is_login" v-show="!is_login">
+                <div class="integral_is_login" v-show="!isLogin">
                     <div class="integral_login_avatar">
-                        <el-image :src="require('@/public/pc/user.png')"></el-image>
+                        <img v-lazy="require('@/asset/user/user_default2.png')" />
                     </div>
                     <div class="integrral_info_login">
                         <router-link to="/user/login">登录</router-link>
@@ -20,51 +19,50 @@
                 </div>
                 
 
-                <div class="integrral_info" v-show="is_login">
+                <div class="integrral_info" v-show="isLogin">
                     <div class="integral_user_avatar">
-                        <el-image style="width:70px;height:70px;" :src="user_info.avatar||require('@/public/pc/user.png')"></el-image>
+                        <img style="width:70px;height:70px;" v-lazy="userInfo.avatar||require('@/asset/user/user_default2.png')" />
                     </div>
                     <div class="myintegral">
-                        <i class="icon iconfont">&#xe629;</i>
-                        我的积分：{{user_info.integral||'0.00'}}
+                        <a-font type="iconjifen" />
+                        我的积分：{{userInfo.integral||'0.00'}}
                     </div>
                 </div>
                 
-                <div class="interal_person" v-show="is_login">
+                <div class="interal_person" v-show="isLogin">
                     <router-link to="">积分中心</router-link>
                 </div>
             </div>
             <div class="block or2">
                 <div class="integral_block_title">私人定制</div>
-                <div class="integral_block_img"><el-image :src="require('@/public/pc/integral_01.png')" lazy></el-image></div>
+                <div class="integral_block_img"><img v-lazy="require('@/asset/integral/integral_01.png')" /></div>
                 <div class="integral_block_desc">入驻会员提供个性化定制服务需求</div>
             </div>
             <div class="block or3">
                 <div class="integral_block_title">24H服务</div>
-                <div class="integral_block_img"><el-image :src="require('@/public/pc/integral_02.png')" lazy></el-image></div>
+                <div class="integral_block_img"><img v-lazy="require('@/asset/integral/integral_02.png')" /></div>
                 <div class="integral_block_desc">入驻会员提供24*7解答服务</div>
             </div>
             <div class="block or4">
                 <div class="integral_block_title">优先参与</div>
-                <div class="integral_block_img"><el-image :src="require('@/public/pc/integral_03.png')" lazy></el-image></div>
+                <div class="integral_block_img"><img v-lazy="require('@/asset/integral/integral_03.png')" /></div>
                 <div class="integral_block_desc">入驻会员提供满场活动优先参与资格</div>
             </div>
         </div>
 
         <div class="integral_content">
-            <div class="integral_goods_list width_center_1200">
+            <div class="integral_goods_list width_center_1200" v-if="recommend.length>0">
                 <div class="integral_goods_list_title">
-                    热门推荐<span><router-link to="/integral/goods/index/keyword.">更多 >></router-link></span>
+                    热门推荐<span><router-link to="/integral/search">更多 >></router-link></span>
                 </div>
                 <div class="integral_goods_list_item">
                     <ul>
-                        <li v-for="(v,k) in hot_list" :key="k">
-                            <router-link :to="'/integral/goods/info/'+v.id">
+                        <li v-for="(v,k) in recommend" :key="k">
+                            <router-link :to="'/integral/goods/'+v.id">
                                 <dl>
-                                    <!-- http://127.0.0.1:8000/Uploads/goods/2019_11_21/15743049996339_200.jpg -->
-                                    <dt><el-image :src="v.image" lazy></el-image></dt>
+                                    <dt><img v-lazy="v.goods_master_image" /></dt>
                                     <dd class="integral_goods_list_item_title" :title="v.goods_name">{{v.goods_name}}</dd>
-                                    <dd class="integral_goods_list_item_price"><i class="icon iconfont">&#xe629;</i> {{v.goods_price}} <font>市场价:{{v.goods_market_price}}</font></dd>
+                                    <dd class="integral_goods_list_item_price"><a-font type="iconjifen" /> {{v.goods_price}} <font>市场价:{{v.goods_market_price}}</font></dd>
                                     <dd class="integral_goods_list_item_btn">积分兑换</dd>
                                 </dl>
                             </router-link>
@@ -73,19 +71,18 @@
                 </div>
             </div>
 
-            <div class="integral_goods_list width_center_1200" v-for="(v,k) in class_list" :key="k">
+            <div class="integral_goods_list width_center_1200" v-for="(v,k) in list" :key="k">
                 <div class="integral_goods_list_title">
-                    {{v.name}}<span><router-link :to="'/integral/goods/index/class_id.'+v.cid">更多 >></router-link></span>
+                    {{v.name}}<span><router-link :to="'/integral/search'">更多 >></router-link></span>
                 </div>
                 <div class="integral_goods_list_item">
                     <ul>
-                        <li v-for="(vo,key) in v.goods_list" :key="key">
+                        <li v-for="(vo,key) in v.integral_goods" :key="key">
                             <router-link :to="'/integral/goods/info/'+vo.id">
                                 <dl>
-                                    <!-- http://127.0.0.1:8000/Uploads/goods/2019_11_21/15743049996339_200.jpg -->
-                                    <dt><el-image :src="vo.image" lazy></el-image></dt>
+                                    <dt><img v-lazy="vo.goods_master_image" /></dt>
                                     <dd class="integral_goods_list_item_title" :title="vo.goods_name">{{vo.goods_name}}</dd>
-                                    <dd class="integral_goods_list_item_price"><i class="icon iconfont">&#xe629;</i> {{vo.goods_price}} <font>市场价:{{vo.goods_market_price}}</font></dd>
+                                    <dd class="integral_goods_list_item_price"><a-font type="iconjifen" /> {{vo.goods_price}} <font>市场价:{{vo.goods_market_price}}</font></dd>
                                     <dd class="integral_goods_list_item_btn">积分兑换</dd>
                                 </dl>
                             </router-link>
@@ -95,60 +92,42 @@
             </div>
         </div>
 
-        <shop-foot></shop-foot>
-        <!-- vue 回到顶部 -->
-        <el-backtop></el-backtop>
     </div>
 </template>
 
 <script>
-import ShopTop from "@/components/home/public/head.vue"
-import banner from "@/components/home/public/banner.vue"
-import ShopFoot from "@/components/home/public/shop_foot.vue"
+import banner from '@/components/home/public/banner'
+import {mapState} from 'vuex'
 export default {
     components: {
-        ShopTop,
         banner,
-        ShopFoot,
     },
     props: {},
     data() {
       return {
-          subnav_show:false,
-          banner_list:[],  // 幻灯片
-          hot_list:[],
-          class_list:[],
-          user_info:{},
-          is_login:false,
+          store_slide:[],  // 幻灯片
+          recommend:[],
+          list:[],
       };
     },
     watch: {},
-    computed: {},
+    computed: {...mapState('homeLogin',['isLogin','userInfo'])},
     methods: {
         get_index_info:function(){
-            this.$get(this.$api.homeGetIntegralIndexInfo).then(res=>{
-                this.banner_list = res.data.banner.adv;
-                this.hot_list = res.data.hot_goods;
-                this.class_list = res.data.class_list;
+            this.$get(this.$api.homeIntegral).then(res=>{
+                // this.store_slide = res.data.banner.adv;
+                this.recommend = res.data.recommend;
+                this.list = res.data.list;
             });
         },
-        get_user_info:function(){
-            this.$get(this.$api.homeGetUserInfo).then(res=>{
-                if(res.code == 200){
-                    this.is_login = true;
-                    this.user_info = res.data;
-                }
-                
-            });
-        }
     },
     created() {
-        let token = localStorage.getItem('token');
-        if(!this.$isEmpty(token)){
-            this.get_user_info();
-        }else{
-            this.is_login = false;
-        }
+        // let token = localStorage.getItem('token');
+        // if(!this.$isEmpty(token)){
+        //     this.get_user_info();
+        // }else{
+        //     this.is_login = false;
+        // }
         this.get_index_info();
     },
     mounted() {}
@@ -191,6 +170,9 @@ export default {
                 height: 180px;
                 margin:40px auto 20px auto;
                 background: #efefef;
+                img{
+                    width: 100%;
+                }
             }
             dl dd.integral_goods_list_item_title{
                 width: 220px;
@@ -239,6 +221,11 @@ export default {
 }
 .banner_b_info{
     margin-top: 50px;
+    &:after{
+        display: block;
+        clear: both;
+        content:'';
+    }
     .block{
         width: 288.75px;
         height: 210px;
@@ -257,6 +244,10 @@ export default {
             height: 70px;
             margin:0 auto;
             margin-bottom: 20px;
+            img{
+                width: 70px;
+                height: 70px;  
+            }
         }
         .integral_block_desc{
             font-size: 12px;
@@ -272,7 +263,7 @@ export default {
                 margin:30px auto 0 auto;
                 border-radius: 50%;
             }
-            .integral_user_avatar .el-image{
+            .integral_user_avatar .img{
                 border-radius: 50%;
             }
             .myintegral{
@@ -292,6 +283,10 @@ export default {
                 float: left;
                 margin-right: 10px;
                 margin-left: 80px;
+                img{
+                    width: 40px;
+                    height: 40px;
+                }
             }
             .integrral_info_login{
                 float: left;

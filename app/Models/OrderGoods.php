@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderGoods extends Model
 {
-    protected $table = "order_goods"; //指定表
-    protected $primaryKey = "id"; //指定id字段
-    public $timestamps = false;
+    protected $guarded = [];
+
+    public function distribution(){
+        return $this->hasOne("App\Models\Distribution","goods_id",'goods_id');
+    }
+
+    public function user(){
+        return $this->hasOne("App\Models\User","id",'user_id');
+    }
 }

@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'zh-CN',
 
     /*
     |--------------------------------------------------------------------------
@@ -161,12 +161,14 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class, // 图片处理扩展
-        Barryvdh\Cors\ServiceProvider::class, // 跨域处理
-
+        
         /*
          * Package Service Providers...
          */
+
+        Intervention\Image\ImageServiceProvider::class, // 图片处理
+        Barryvdh\Debugbar\ServiceProvider::class,// debuger
+        SocialiteProviders\Manager\ServiceProvider::class, // oauth 第三方
 
         /*
          * Application Service Providers...
@@ -176,6 +178,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        App\Providers\Alioss\AliOssServiceProvider::class, // 阿里云上传
+
 
     ],
 
@@ -209,6 +214,7 @@ return [
         'File' => Illuminate\Support\Facades\File::class,
         'Gate' => Illuminate\Support\Facades\Gate::class,
         'Hash' => Illuminate\Support\Facades\Hash::class,
+        'Http' => Illuminate\Support\Facades\Http::class,
         'Lang' => Illuminate\Support\Facades\Lang::class,
         'Log' => Illuminate\Support\Facades\Log::class,
         'Mail' => Illuminate\Support\Facades\Mail::class,
@@ -228,7 +234,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        'Image' => Intervention\Image\Facades\Image::class, // 图片处理扩展
+        'Image' => Intervention\Image\Facades\Image::class,// 图片处理
+        'Debugbar' => Barryvdh\Debugbar\Facade::class, // debuger
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,  // oauth 第三方登录
 
     ],
 

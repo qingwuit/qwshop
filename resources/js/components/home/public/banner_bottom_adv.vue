@@ -3,34 +3,34 @@
         <div class="shop_left_on">
             <ul>
                 <li><router-link to="/user/safe">
-                <img :src="require('@/public/pc/001.png')" alt="">
+                <img :src="require('@/asset/pc/001.png')" alt="">
                 <p>实名认证</p>
                 </router-link></li>
                 <li><router-link to="/integral/index">
-                <img :src="require('@/public/pc/002.png')" alt="">
+                <img :src="require('@/asset/pc/002.png')" alt="">
                 <p>积分商城</p>
                 </router-link></li>
-                <li><router-link to="/groupbuy/list/keywords.">
-                <img :src="require('@/public/pc/003.png')" alt="">
+                <li><router-link to="/groupbuy">
+                <img :src="require('@/asset/pc/003.png')" alt="">
                 <p>优惠团购</p>
                 </router-link></li>
-                <li><router-link to="/goods/seckill">
-                <img :src="require('@/public/pc/004.png')" alt="">
+                <li><router-link to="/seckill">
+                <img :src="require('@/asset/pc/004.png')" alt="">
                 <p>秒杀活动</p>
                 </router-link></li>
-                <li><router-link to="/">
-                <img :src="require('@/public/pc/005.png')" alt="">
+                <li><router-link to="/user/article/notice">
+                <img :src="require('@/asset/pc/005.png')" alt="">
                 <p>公告</p>
                 </router-link></li>
-                <li><router-link to="/store/join">
-                <img :src="require('@/public/pc/006.png')" alt="">
+                <li><router-link to="/store/join/index">
+                <img :src="require('@/asset/pc/006.png')" alt="">
                 <p>入驻商家</p>
                 </router-link></li>
             </ul>
         </div>
         <div class="shop_right_on">
             <ul>
-                <li v-for="(v,k) in index_adv" :key="k"><router-link :to="v.adv_link"><el-image width="312px" height="160px" :src="v.adv_image" :alt="v.adv_title"></el-image></router-link></li>
+                <li v-for="(v,k) in index_adv" :key="k"><router-link :to="v.url"><img v-lazy="v.image_url" width="312px" height="160px" :alt="v.name" /></router-link></li>
             </ul>
         </div>
     </div>
@@ -43,6 +43,7 @@ export default {
         // 传过来的数据
         index_adv:{
             type:Array,
+            default:[],
         }
     },
     data() {
@@ -58,6 +59,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .banner_bottom_adv{
+    margin-bottom: 22px;
     margin-top:22px;
     .shop_left_on{
         float: left;

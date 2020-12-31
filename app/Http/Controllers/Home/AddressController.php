@@ -2,84 +2,99 @@
 
 namespace App\Http\Controllers\Home;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
-use App\Models\Area;
+use App\Services\AddressService;
+use App\Services\UserService;
+use Illuminate\Http\Request;
 
-class AddressController extends BaseController
+class AddressController extends Controller
 {
-    public function index(Request $req,Address $address_model){
-        $user_info = auth()->user();
-        $list = $address_model->where('user_id',$user_info['id'])->get();
-        return $this->success_msg('ok',$list);
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $address_service = new AddressService;
+        $rs = $address_service->getAddresses();
+        return $rs['status']?$this->success($rs['data']):$this->error($rs['msg']);
     }
 
-    public function add(Request $req,Address $address_model,Area $area_model){
-        $user_info = auth()->user();
-        $area_info = $area_model->whereIn('id',$req->area_info)->get();
-        $data = [
-            'user_id'       =>  $user_info['id'],
-            'province_id'   =>  $req->area_info[0],
-            'city_id'       =>  $req->area_info[1],
-            'region_id'     =>  $req->area_info[2],
-            'lat'           =>  '',
-            'lng'           =>  '',
-            'area_info'     =>  $area_info[0]['name'].' '.$area_info[1]['name'].' '.$area_info[2]['name'],
-            'address'       =>  $req->address,
-            'receive_tel'   =>  $req->receive_tel,
-            'receive_name'  =>  $req->receive_name,
-            'is_default'    =>  empty($req->is_default)?0:1,
-        ];
-        $rs = $address_model->insert($data);
-        return $this->success_msg('ok',$rs);
-
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $address_service = new AddressService;
+        $rs = $address_service->add();
+        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
     }
 
-    public function edit(Request $req,Address $address_model,Area $area_model,$id){
-        $user_info = auth()->user();
-        if(!$req->isMethod('post')){
-            $info = $address_model->where(['id'=>$id,'user_id'=>$user_info['id']])->first();
-            $info['area_info'] = [$info['province_id'],$info['city_id'],$info['region_id']];
-            return $this->success_msg('ok',$info);
-        }
-        $area_info = $area_model->whereIn('id',$req->area_info)->get();
-        $data = [
-            'user_id'       =>  $user_info['id'],
-            'province_id'   =>  $req->area_info[0],
-            'city_id'       =>  $req->area_info[1],
-            'region_id'     =>  $req->area_info[2],
-            'lat'           =>  '',
-            'lng'           =>  '',
-            'area_info'     =>  $area_info[0]['name'].' '.$area_info[1]['name'].' '.$area_info[2]['name'],
-            'address'       =>  $req->address,
-            'receive_tel'   =>  $req->receive_tel,
-            'receive_name'  =>  $req->receive_name,
-            'is_default'    =>  empty($req->is_default)?0:1,
-        ];
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Address $address_model,$id)
+    {
+        $user_service = new UserService;
+        $user_info = $user_service->getUserInfo();
+        $rs = $address_model->where('id',$id)->where('user_id',$user_info['id'])->first();
+        $rs['area_id'] = [$rs['province_id'],$rs['city_id'],$rs['region_id']];
+        return $this->success($rs);
+    }
 
-        if(!empty($data['is_default'])){
-            $address_model->where('user_id',$user_info['id'])->update(['is_default'=>0]);
-        }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $address_service = new AddressService;
+        $rs = $address_service->edit($id);
+        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
+    }
 
-        $rs = $address_model->where('id',$id)->update($data);
-        return $this->success_msg('ok',$rs);
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Address $address_model,$id)
+    {
+        $idArray = array_filter(explode(',',$id),function($item){
+            return is_numeric($item);
+        });
 
+        // 获取当前用户user_id
+        $user_service = new UserService;
+        $user_info = $user_service->getUserInfo();
+
+        $address_model->whereIn('id',$idArray)->where('user_id',$user_info['id'])->delete();
+        return $this->success([],__('base.success'));
     }
 
     // 设置默认地址
-    public function set_default(Request $req,Address $address_model){
-        $id = $req->id;
-        $user_info = auth()->user();
-        $address_model->where('user_id',$user_info['id'])->update(['is_default'=>0]);
-        $rs = $address_model->where(['id'=>$id,'user_id'=>$user_info['id']])->update(['is_default'=>1]);
-        return $this->success_msg('ok',$rs);
+    public function set_default(Request $request){
+        $address_service = new AddressService;
+        $rs = $address_service->setDefault($request->id);
+        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
     }
 
-    public function del(Request $req,Address $address_model){
-        $id = $req->id;
-		$ids = explode(',',$id);
-		$address_model->destroy($ids);
-    	return $this->success_msg();
+    // 获取默认地址
+    public function get_default(){
+        $address_service = new AddressService;
+        $rs = $address_service->getDefault();
+        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
     }
 }

@@ -2,16 +2,16 @@
     <div :class="change_color?'leftbar2':'leftbar'">
         <ul>
             <li class="left_bar_block" v-for="(v,k) in goods_class" :key="k">
-                <div class="class_1"><router-link :to="'/goods/params/class_id.'+v.id">{{v.name}}</router-link></div>
+                <div class="class_1"><a @click="to_nav(v.id,v)" href="javascript:;">{{v.name}}</a></div>
                 <div class="class_2">
                     <ul>
-                        <li v-for="(vo,key) in v.children" :key="key" v-show="key<3"><router-link :to="'/goods/params/class_id.'+vo.id">{{vo.name}}</router-link></li>
+                        <li v-for="(vo,key) in v.children" :key="key" v-show="key<3"><a @click="to_nav(v.id,vo,1)">{{vo.name}}</a></li>
                     </ul>
                 </div>
                 <div class="subbar">
                     <div class="subbar_top">
                         <ul>
-                            <li v-for="(tag_item,tag_key) in v.tags.split(',')" :key="tag_key"><router-link :to="'/goods/params/class_id.'+v.id">{{tag_item}}</router-link></li>
+                            <!-- <li v-for="(tag_item,tag_key) in v.tags.split(',')" :key="tag_key"><router-link :to="'/goods/params/class_id.'+v.id">{{tag_item}}</router-link></li> -->
                         </ul>
                     </div>
                     <div class="subbar_right">
@@ -19,14 +19,14 @@
                             <li v-for="(goods_brand_item,goods_brand_key) in goods_brand" :key="goods_brand_key"><img width="100px" height="50px" :src="goods_brand_item.thumb" alt=""></li>
                         </ul>
                         <div class="subbar_right_adv">
-                            <router-link :to="goods_brand_adv['adv'][0]['adv_link']"><img width="203px" height="96" :src="goods_brand_adv['adv'][0]['adv_image']" :alt="goods_brand_adv['adv'][0]['adv_title']"></router-link>
+                            <!-- <router-link :to="goods_brand_adv['adv'][0]['adv_link']"><img width="203px" height="96" :src="goods_brand_adv['adv'][0]['adv_image']" :alt="goods_brand_adv['adv'][0]['adv_title']"></router-link> -->
                         </div>
                     </div>
                     <div class="subbar_subnav">
                         <div class="class2_title"  v-for="(vo,key) in v.children" :key="key">
                             <h4>{{vo.name}}</h4>
                             <ul>
-                                <li v-for="(item,index) in vo.children" :key="index"><router-link :to="'/goods/params/class_id.'+item.id">{{item.name}}</router-link></li>
+                                <li v-for="(item,index) in vo.children" :key="index"><a @click="to_nav(v.id,item,2)">{{item.name}}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -45,11 +45,14 @@ export default {
         change_color:{
             type:Boolean,
             default:false,
+        },
+        goods_class:{
+            type:Array,
+            default:[],
         }
     },
     data() {
       return {
-          goods_class:[],
           goods_brand:[],
           goods_brand_adv:{},
       };
@@ -59,11 +62,39 @@ export default {
     methods: {
         // 获取首页左侧导航信息
         get_subnav_info:function(){
-            this.$get(this.$api.homeGetSubNavInfo).then(res=>{
-                this.goods_class = res.data.goods_class;
-                this.goods_brand = res.data.goods_brand;
-                this.goods_brand_adv = res.data.goods_brand_adv;
-            });
+            // this.$get(this.$api.homeGetSubNavInfo).then(res=>{
+            //     this.goods_class = res.data.goods_class;
+            //     this.goods_brand = res.data.goods_brand;
+            //     this.goods_brand_adv = res.data.goods_brand_adv;
+            // });
+        },
+        to_nav(id,info,deep=0){
+            let params = {};
+            params.pid = id; // 顶级栏目ID
+            params.class_id = [];
+            if(deep == 0){
+                info.children.forEach(item=>{
+                    if(!this.$isEmpty(item.children)){
+                        item.children.forEach(item2=>{
+                            params.class_id.push(item2.id);
+                        })
+                    }
+                })
+            }
+            if(deep == 1){
+                params.sid = info.id;
+                if(!this.$isEmpty(info.children)){
+                    info.children.forEach(item=>{
+                        params.class_id.push(item.id);
+                    })
+                }
+            }
+            if(deep == 2){
+                params.sid = info.pid;
+                params.tid = info.id;
+                params.class_id.push(info.id);
+            }
+            this.$router.push('/s/'+window.btoa(JSON.stringify(params)))
         }
     },
     created() {

@@ -1,52 +1,37 @@
 <template>
     <div class="qingwu">
-        <div class="admin_main_block">
-            <div class="admin_main_block_top">
-                <div class="admin_main_block_left">
-                    <div>角色编辑</div>
-                </div>
-
-                <div class="admin_main_block_right">
-                    <div><el-button icon="el-icon-back" @click="$router.go(-1)">返回</el-button></div>
-                </div>
-            </div>
-
-            <div class="admin_form_main">
-                <el-form  label-width="100px" ref="info" :model="info">
-                    <el-form-item label="角色名" prop="name" :rules="[{required:true,message:'角色名不能为空',trigger: 'blur' }]"><el-input placeholder="请输入内容" v-model="info.name"></el-input></el-form-item>
-                    <el-form-item label="描述" prop="content" :rules="[{required:true,message:'描述不能为空',trigger: 'blur' }]"><el-input type="textarea" placeholder="请输入内容" maxlength="30" show-word-limit v-model="info.content"></el-input></el-form-item>
-                    <el-form-item class="width_auto"><el-divider content-position="left">菜单</el-divider></el-form-item>
-                    <el-form-item class="width_auto">
-                        <el-checkbox-group v-model="menus" >
-                            <div class="menus_list" v-for="(v,k) in info.menus_list" :key="k">
-                                <el-checkbox  :label="v.id" border>{{v.name}}</el-checkbox>
-                                <!-- <el-checkbox  :label="v.id+',index'">列表</el-checkbox>
-                                <el-checkbox  :label="v.id+',add'">添加</el-checkbox>
-                                <el-checkbox  :label="v.id+',edit'">编辑</el-checkbox>
-                                <el-checkbox  :label="v.id+',del'">删除</el-checkbox> -->
-                                <el-tag type="success" style="margin-left:15px;" v-show="v.is_type==1">商家栏目</el-tag>
+        <div class="admin_table_page_title"><a-button @click="$router.back()" class="float_right" icon="arrow-left">返回</a-button>角色编辑</div>
+        <div class="unline underm"></div>
+        <div class="admin_form">
+            <a-form-model :label-col="{ span: 3 }" :wrapper-col="{ span: 18 }">
+                <a-form-model-item label="角色名称">
+                    <a-input v-model="info.name"></a-input>
+                </a-form-model-item>
+                <a-form-model-item label="菜单权限">
+                    <a-tree-select :replace-fields="{children:'children', title:'name', key:'id', value: 'id' }" v-model="info.menu_id" :tree-data="list" tree-checkable :show-checked-strategy="SHOW_PARENT"></a-tree-select>
+                    <!-- <a-tree-select v-model="info.menu_id" >
+                        <a-tree-select-node v-for="(v,k) in list" :key="k" :value="v.id" :title="v.name"></a-tree-select-node>
+                    </a-tree-select> -->
+               
+                </a-form-model-item>
+                <a-form-model-item label="接口权限">
+                    <div class="check_list">
+                        <div class="item" v-for="(v,k) in permissions" :key="k">
+                            <div class="permission_title">{{v.name}}<a-tag @click="check_all(k)" style="float:right;margin-top:10px;">点击全选</a-tag></div>
+                            <div class="cblock">
+                                <div class="cbox" v-for="(vo,key) in v.permissions" :key="key">
+                                    <a-checkbox v-model="vo.checked">{{vo.name}}</a-checkbox><a-tag color="red">{{vo.apis}}</a-tag>
+                                </div>
+                                <div class="clear"></div>
                             </div>
-                        </el-checkbox-group>
-                        
-                    </el-form-item>
-                    <el-form-item class="width_auto"><el-divider content-position="left">接口权限</el-divider></el-form-item>
-                    <el-form-item class="width_auto">
-                        <div class="div_apis" v-for="(v,k) in info.hooks_list" :key="k" >
-                            <el-checkbox style="float:left" v-model="hooks" :label="v.id" border>{{v.name}}</el-checkbox>
-                            <div class="apis"><el-tag type="info">{{v.apis}}</el-tag></div>
-                            <div class="content"><el-tag type="info">{{v.content}}</el-tag></div>
-                            <el-tag type="success" style="margin-left:15px;" v-if="v.is_type==1">商家接口</el-tag>
                         </div>
-                        
-                        
-                        <!-- <el-tag type="success" style="margin-left:15px;" v-show="v.is_type==1">商家接口</el-tag> -->
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="submitForm('info')">提交</el-button>
-                        <el-button @click="resetForm('info')">重置</el-button>
-                    </el-form-item>
-                </el-form>
-            </div>
+                    </div>
+                </a-form-model-item>
+                <a-form-model-item :wrapper-col="{ span: 12, offset: 5 }">
+                    <a-button type="primary" @click="handleSubmit">提交</a-button>
+                </a-form-model-item>
+            </a-form-model>
+            
         </div>
     </div>
 </template>
@@ -57,116 +42,140 @@ export default {
     props: {},
     data() {
       return {
-          edit_id:0,
-          info:{},
-          menus:[],
-          hooks:[],
+          info:{
+            //   menu_id:[],
+              permission_id:[],
+          },
+          id:0,
+          list:[],
+          permissions:[],
       };
     },
     watch: {},
     computed: {},
     methods: {
-        resetForm:function(e){
-            this.$refs[e].resetFields();
-            this.menus = [];
-            this.hooks = [];
-        },
-        submitForm:function(e){
-            let _this = this;
+        handleSubmit(){
 
-            // 验证表单
-            this.$refs[e].validate(function(res){
-                if(res){
-                    //  判断是Add 或者 Edit
-                    let url = _this.$api.addRoles;
-                    if(_this.edit_id>0){
-                        url = _this.$api.editRoles+_this.edit_id;
+            // 验证代码处
+            if(this.$isEmpty(this.info.name)){
+                return this.$message.error('角色名称不能为空');
+            }
+            this.get_check_permission(); // 获取选择的接口
+        
+            let api = this.$apiHandle(this.$api.adminRoles,this.id);
+            if(api.status){
+                this.info.menus = undefined;
+                this.info.permissions = undefined;
+                this.$put(api.url,this.info).then(res=>{
+                    if(res.code == 200){
+                        this.$message.success(res.msg)
+                        return this.$router.back();
+                    }else{
+                        return this.$message.error(res.msg)
                     }
+                })
+            }else{
+                this.$post(api.url,this.info).then(res=>{
+                    if(res.code == 200){
+                        this.$message.success(res.msg)
+                        return this.$router.back();
+                    }else{
+                        return this.$message.error(res.msg)
+                    }
+                })
+            }
+   
+            
+        },
+        get_info(){
+            this.$get(this.$api.adminRoles+'/'+this.id).then(res=>{
+                res.data.menu_id = [];
+                res.data.permission_id = [];
+                res.data.menus.forEach(item=>{
+                    res.data.menu_id.push(item.id);
+                })
+                res.data.permissions.forEach(item=>{
+                    res.data.permission_id.push(item.id);
+                })
+                this.info = res.data;
 
-                    _this.info['menus'] = _this.menus;
-                    _this.info['hooks'] = _this.hooks;
-                    delete _this.info['menus_list'];
-                    delete _this.info['hooks_list'];
+                this.$get(this.$api.adminPermissionGroups,{per_page:100}).then(res=>{
+                    this.permissions = res.data.data;
+                    this.permissions.forEach(items=>{
+                        items.permissions.forEach(item=>{
+                            if(this.info.permission_id.indexOf(item.id)>-1){
+                                this.$set(item,'checked',true)
+                            }else{
+                                this.$set(item,'checked',false)
+                            }
+                        })
+                    })
+                });
+                
+            })
+        },
+        // 获取菜单列表
+        onload(){
+            // 判断你是否是编辑
+            if(!this.$isEmpty(this.$route.params.id)){
+                this.id = this.$route.params.id;
+                this.get_info();
+            }else{
+                this.$get(this.$api.adminPermissionGroups,{per_page:100}).then(res=>{
+                    this.permissions = res.data.data;
+                });
+            }
 
-                    // Http 请求
-                    _this.$post(url,_this.info).then(function(res){
-                        if(res.code == 200){
-                            _this.$message.success("编辑成功");
-                            _this.$router.go(-1);
-                        }else{
-                            _this.$message.error("编辑失败");
-                            _this.$router.go(0);
-                        }
-                    });
-                }
+            this.$get(this.$api.adminMenus).then(res=>{
+                this.list = res.data;
             });
+ 
         },
-        get_roles_info:function(){
-            let _this = this;
-            this.$get(this.$api.editRoles+this.edit_id).then(function(res){
-                _this.info = res.data;
-                let menus = [];
-                let hooks = [];
-                if(res.data.hooks.length>0){
-                    res.data.hooks.forEach(hooksRes => {
-                        hooks.push(hooksRes['id']);
-                    });
-                    _this.hooks = hooks;
-                }
-
-                if(res.data.menus.length>0){
-                    res.data.menus.forEach(menusRes => {
-                        menus.push(menusRes['id']);
-                    });
-                    _this.menus = menus;
+        check_all(e){
+            this.permissions[e].permissions.forEach(item=>{
+                if(this.$isEmpty(item.checked)){
+                    this.$set(item,'checked',true)
+                }else{
+                    item.checked = !item.checked;
                 }
             })
         },
-        add_role_info:function(){
-            let _this = this;
-            this.$get(this.$api.addRoles).then(function(res){
-                _this.info = res.data;
+        get_check_permission(){
+            let permission_id = [];
+            this.permissions.forEach(items=>{
+                items.permissions.forEach(item=>{
+                    if(!this.$isEmpty(item.checked) && item.checked){
+                        permission_id.push(item.id)
+                    }
+                })
             })
+            if(permission_id.length>0){
+                this.info.permission_id = permission_id;
+            }else{
+                this.info.permission_id = undefined;
+            }
         },
         
     },
     created() {
-
-        // 判断是否是编辑
-        if(!this.$isEmpty(this.$route.params.id)){
-            this.edit_id = this.$route.params.id;
-        }
-        if(this.edit_id>0){
-            this.get_roles_info();
-        }else{
-            this.add_role_info();
-        }
+        this.onload();
     },
     mounted() {}
 };
 </script>
 <style lang="scss" scoped>
-.menus_list{
-    float: left;
-    margin-right: 15px;
-    margin-bottom: 15px;
+.permission_title{
+    background: #efefef;
+    padding:0 20px;
+    box-sizing: border-box;
+    border-radius: 4px;
 }
-.apis{
-    margin-left: 15px;
-    float: left;
+.cblock{
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
-.content{
+.cbox{
+    width: 33%;
     float: left;
-    margin-left: 15px;
-}
-.div_apis{
-    margin-bottom: 15px;
-    float: left;
-    width: 50%;
-}
-.div_apis:after{
-    content:'';
-    display: block;
-    clear:both;
 }
 </style>

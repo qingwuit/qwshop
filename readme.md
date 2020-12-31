@@ -1,139 +1,50 @@
-# 欢迎使用 青梧商城系统
+## Welcome to Qingwu mall 欢迎使用 青梧商城系统 (B2B2C)
+![logo](http://pc.qingwuit.com/dist/images/logo.png "logo")
 
-------
+> 我们理解您需要一套前后端分离，功能齐全操作简易的商城框架 青梧商城系统 就是秉承着这样的目的开发出来的，或许您是开发人员，又或许您是即将要创业的老板，都可以基于青梧商城系统进行快速项目启动。
 
-我们理解您需要一套前后端分离，功能齐全操作简易的商城框架 **青梧商城系统** 就是秉承着这样的目的开发出来的，或许您是开发人员，又或许您是即将要创业的老板，都可以基于青梧商城系统进行快速项目启动。（不建议商用，代码质量有点差，然后bug很多没改好）
+## Need environment and existing functions 需要环境和已有功能
+> Laravel 7.x + Vue 前后分离
+> 多商户、秒杀、团购、优惠券、在线聊天、三级分销、积分商城、Wechat支付、Alipay支付
+> 支持二次开发
+> PHP >= 7.3
 
+## 20201231 【失踪人士回归】为什么没维护了，因为要上班。那为什么又更新了，因为我把老板又炒了。(这次更新主要是将方法集成到Service层，然后前端框架用的antdv,这个前端框架很坑，我不会用。)
 
-> * Laravel 6.x + Vue 前后分离
-> * 多商户、秒杀、团购、在线聊天、三级分销（未写完）、Wechat支付、Alipay支付
-> * 支持二次开发
-> * PHP >= 7.2
+## Code address 代码地址
+[点击它[代码地址] click it](https://gitee.com/qingwuitcn/qwShopPhp "点击它[代码地址]")
 
-  
-  
-  
+## Demo address 演示地址
+[点击它[演示地址] click it](http://pc.qingwuit.com "点击它[演示地址]")
+> 商家后台：/Seller/login
+> 账号密码：18888888888 123456
 
-### 2020-05-22 一些优化小问题解决
+> 管理员后台：/Admin/login
+> 账号密码：admin 123456
 
-    1. 忘记密码的接口名称写错
-    2. 添加默认地址可以添加多个
-    3. 默认地址前端编辑无法显示已经是默认地址
+> 用户后台：/user/login
+> 账号密码：18888888888 123456
 
+## How Run 如何安装青梧商城
 
+``` php
+composer require qingwuit/qwshop
+php artisan qwshop:install
 
-  
-  
+npm install
+npm prd
 
-![cmd-markdown-logo](http://pc.qingwuit.com/pc/logo.png)
-  
-
-
-
-## 代码地址：
-
-[Laravel 后端代码地址](https://gitee.com/qingwuitcn/qwShopPhp)
-  
-  
-  
-~~[Vue 前端代码地址(已经和当前Laravel项目合并，不再需要两边处理)](https://gitee.com/qingwuitcn/qwShopVue)~~
-  
-
-
-
-## 演示地址:
-[演示地址](http://pc.qingwuit.com)
-
-> * [后台地址](http://pc.qingwuit.com/Admin/login): admin 123456 
-> * [商家地址](http://pc.qingwuit.com/Seller/login): 18888888888 123456 
-> * [用户登录](http://pc.qingwuit.com/user/login): 18888888888 123456 (数据库每日会重新导入数据信息)
-
-  
-
-> 欢迎各位提交建议、BUG。联系方式 **QQ:364825702**  `添加请写上说明如：青梧商城`。
-  
-
-
-------
-  
-
-
-
-## 如何使用青梧商城？
-
-
-
-1. Laravel
-
-```php
-composer install (安装扩展) // 根目录运行，如没有composer请前往搜索引擎学习安装
-
-cp ./.env.example ./.env (WINDOWS 直接复制即可)
-
-php artisan key:generate
-
-chmod -R 777 ./storage/ （WINDOWS 不用执行）
-
-source xx.sql  (导入数据库) 
-
-vim ./env  (修改配置 数据库 邮件 redis 等等)  // win 系统直接编辑器修改就行
-
-php artisan jwt:secret （这条命令会在 .env 文件下生成一个加密密钥，如：JWT_SECRET=foobar）
-
-npm install (安装扩展) // 也是在本项目根目录 没有node环境自行安装
-
-前端记得要修改\resources\js\plugins\api.js  应该是第一行 后端api 根域名，应该是127.0.0.1:8000 （这个是你项目域名）
-
-npm run production (压缩打包) // 在本项目根目录执行
 
 ```
 
-2. 如何开启在线聊天
+## Exchange of views 意见交流 
+欢迎各位提交建议。**联系方式 私人QQ：364825702 QQ群:1062159788** 添加请写上说明如：`青梧商城`
 
-```php
+## Precautions for use 注意事项
 
-php artisan workerman start -d  (WINDOWS则不需要运行左侧命令 在根目录app/Workerman/run.bat  点击运行即可)
+1、需要自行配置PHP环境、和node 环境(安装扩展尽量使用国内镜像)
+2、npm run 打包过程失败，请查看`node-sass` 是否有下载成功，尝试重新下载或者去淘宝镜像下载 确定`node版本是否过低`。
+3、安装后无法打开，是否忘记配置伪静态ngnix  linux 查看 `chmod -R 777 storage` 是否给权限
 
-前端记得去resources\js\components\chat 下修改相对应的wss 链接才行
-
-```
-
-3. 定时任务
-
-```php
-
-cd /www/wwwroot/api.qingwuit.com && php artisan schedule:run >> /dev/null 2>&1  （WINDOWS php artisan schedule:run） 
-
-```
-
-## 数据库文件 （是PHP代码根目录下的admin.sql）
-
-------
-
-## 常见问题
-
-1. npm run 打包过程失败，请查看node-sass 是否有下载成功，尝试重新下载或者去淘宝镜像下载
-
-2. 刷新404 后台无法访问。（20200518 后克隆代码没有这个问题了）
-https://router.vuejs.org/zh/guide/essentials/history-mode.html   可根据自己环境修改
-
-3. 地址缺少
-[代码下载](https://gitee.com/qingwuitcn/address_collection_php)   可以自己去国家统计采集或者用我这个代码
-  
-
-
-## 代码修改
-
-#### 2020-05-22 一些优化小问题解决
-
-1. 忘记密码的接口名称写错
-2. 添加默认地址可以添加多个
-3. 默认地址前端编辑无法显示已经是默认地址
-
-#### 2020-05-18 代码整合Bug修复部分（之前分开的不影响，依旧可以将这个php项目当成api项目）
-
-1. 这次修改主要是吧原本分离出去的vue部分用larave-mix 放进php项目了，不再需要分别搭建
-2. 然后修复一些vue路由的Bug 相同路由params值改变无法跳转的问题
-3. 商品加入购物车导致库存会减少已经注释掉了
-4. 积分商城栏目下积分产品无法显示Bug
+## Common Problem 常见问题
 

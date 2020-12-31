@@ -3,7 +3,7 @@
         <div class="login_bg3">
             <div class="login_bg2">
                 <div class="login_hg_left">
-                    <img :src="require('@/public/login/login_bg.png')" >
+                    <img :src="require('@/asset/login/login_bg.png')" >
                 </div>
                 <div class="login_black_hg">
                     <div class="head_log">
@@ -12,30 +12,21 @@
                     </div>
                     <div class="unline" style="margin-bottom:30px;"></div>
                     <div class="form-group">
-                        <el-input
-                            size="small"
-                            v-model="username"
-                            @keyup.enter.native="login"
-                            placeholder="用户名"
-                        ></el-input>
+                        <a-input v-model="username" @keyup.enter="login"></a-input>
                     </div>
                     <div class="form-group">
-                        <el-input
-                            type="password"
-                            size="small"
-                            v-model="password"
-                            @keyup.enter.native="login"
-                            class="login_input"
-                            placeholder="密码"
-                        ></el-input>
+                        <a-input v-model="password" type="password" @keyup.enter="login"></a-input>
                     </div>
                     <div class="form-group" style="font-size:12px;">
-                        <el-checkbox name="isCheck" v-model="isCheck" label="1">
-                            <font style="font-size:13px;">我已同意</font>
-                        </el-checkbox>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a class="must_rad" href="/index.php/Admin/Test/mustRead">《系统用户使用协议》</a>（必读）
+                        <a-checkbox name="isCheck" v-model="isCheck" label="1">
+                            <font style="font-size:12px;">我已同意</font>
+                        </a-checkbox>
+                        <a class="must_rad" href="#">《系统用户使用协议》</a>（必读）
                     </div>
-                    <el-button size="mini" class="login_btn" @click="login" type="primary">登 录</el-button>
+                    <div class="form-group">
+                        <a-button type="primary" block  @click="login">登 陆</a-button>
+                    </div>
+                   
                 </div>
                 <div class="clear"></div>
             </div>
@@ -69,17 +60,18 @@ export default {
                 return;
             }
 
-            this.$post(this.$api.login, {
+            this.$post(this.$api.adminLogin, {
                 username: this.username,
                 password: this.password
             }).then(function(res) {
                 if (res.code == 200) {
                     // console.log(res);
                     // 存储用户的token
-                    localStorage.setItem("token", res.token);
-                    localStorage.setItem('user_info',JSON.stringify(res.user_info));
-                    vm.$message({ message: "登录成功！", type: "success" });
+                    localStorage.setItem("admin_token", res.data.token);
+                    vm.$message.success('登录成功！');
                     vm.$router.push({ name: "admin_default" });
+                }else{
+                    vm.$message.error(res.msg);
                 }
             });
         }
@@ -87,7 +79,7 @@ export default {
     created: function() {
         var _this = this;
         // 判断token是否失效
-        this.$get(this.$api.checkUserLogin).then(function(res) {
+        this.$get(this.$api.adminCheckLogin).then(function(res) {
             // console.log(res);
             if (res.code == 200) {
                 _this.$router.push({ name: "admin_default" });
@@ -127,7 +119,7 @@ export default {
 }
 .login_bg3{
     height: 100%;
-    background: url('/login/bg.png');
+    background: url('../../asset/login/bg.png');
     background-position: top right;
     background-repeat: no-repeat;
 }
@@ -138,7 +130,7 @@ export default {
 }
 .login_black_hg {
     background: #fff;
-    /* width: 400px; */
+    width: 360px;
     border-radius: 6px;
     padding: 0px 40px 20px 40px;
     box-sizing: border-box;
@@ -165,6 +157,9 @@ export default {
     margin-top: 20px;
     width: 100%;
     font-size: 14px;
+}
+.form-group{
+    margin-bottom: 20px;
 }
 .must_rad {
     font-size: 12px;

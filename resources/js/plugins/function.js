@@ -1,3 +1,4 @@
+import {message} from 'ant-design-vue';
 export function formatDate (date, fmt) {
     if (/(y+)/.test(fmt)) {
         fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
@@ -17,26 +18,44 @@ export function formatDate (date, fmt) {
     }
     return fmt;
 }
+
+export function getSession(name){
+    let token_type = sessionStorage.getItem(name);
+    return localStorage.getItem(token_type);
+}
+
+export function returnInfo(res){
+    if(res.code == 200){
+        return message.success(res.msg);
+    }else{
+        return message.error(res.msg)
+    }
+}
+
+export function formatFloat(value,length=2){  
+    let tempNum = 0;  
+    let s,temp;  
+    let s1 = value + "";  
+    let start = s1.indexOf(".");  
+    if(s1.substr(start+length+1,1)>=5){
+        tempNum=1;  
+    }
+    temp = Math.pow(10,length);  
+    s = Math.floor(value * temp) + tempNum;  
+    return s/temp;  
+}
  
 function padLeftZero (str) {
     return ('00' + str).substr(str.length);
 }
 
+// 时间格式化
+Vue.filter('formatDate', function (time) {
+    var date = new Date(time*1000);
+    return formatDate(date, 'yyyy-MM-dd hh:mm');
+});
 
-// 产品数据格式化
-export function formatGoods (data) {
-    data.forEach(res=>{
-        if(res.spec != undefined && res.spec.length != 0 && res.spec != null && res.spec !=''){
-            res.goods_price = res.spec[0]['goods_price'];
-            res.goods_market_price = res.spec[0]['goods_market_price'];
-            res.goods_num = res.spec[0]['goods_num'];
-            res.all_goods_num = 0;
-            res.spec.forEach(specRes=>{
-                res.all_goods_num += parseInt(specRes.goods_num);
-            });
-            
-        }
-    });
-    
-    return data;
-}
+Vue.filter('formatDateAuto', function (time,str) {
+    var date = new Date(time*1000);
+    return formatDate(date, str);
+});

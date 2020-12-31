@@ -2,52 +2,86 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Agreement;
+use App\Http\Resources\Admin\AgreementResource\AgreementCollection;
 
-class AgreementController extends BaseController
+class AgreementController extends Controller
 {
-    public function index(Agreement $agreement_model){
-        $list = $agreement_model->orderBy('id','desc')->paginate(20);
-        return $this->success_msg('Success',$list);
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request,Agreement $agree_model)
+    {
+        if(!empty($request->title)){
+            $agree_model = $agree_model->where('title','like','%'.$request->title.'%');
+        }
+        if(!empty($request->ename)){
+            $agree_model = $agree_model->where('ename','like','%'.$request->ename.'%');
+        }
+        $list = $agree_model->orderBy('id','desc')->paginate($request->per_page??30);
+        return $this->success(new AgreementCollection($list));
     }
 
-    public function add(Request $req,Agreement $agreement_model){
-        if(!$req->isMethod('post')){
-    		return $this->success_msg('Success',[]);
-    	}
-
-    	$data = [
-    		'name' => $req->name,
-    		'ename' => $req->ename,
-    		'content' => $req->content,
-    	];
-
-    	$agreement_model->insert($data);
-    	return $this->success_msg();
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request,Agreement $agree_model)
+    {
+        $agree_model->title = $request->title??'';
+        $agree_model->ename = $request->ename??'';
+        $agree_model->content = $request->content??'';
+        $agree_model->save();
+        return $this->success([],__('base.success'));
     }
 
-    public function edit(Request $req,Agreement $agreement_model,$id){
-        if(!$req->isMethod('post')){
-            $info = $agreement_model->find($id);
-    		return $this->success_msg('Success',$info);
-    	}
-
-    	$data = [
-    		'name' => $req->name,
-    		'ename' => $req->ename,
-    		'content' => $req->content,
-    	];
-
-    	$agreement_model->where('id',$id)->update($data);
-    	return $this->success_msg();
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Agreement $agree_model,$id)
+    {
+        $info = $agree_model->find($id);
+        return $this->success($info);
     }
 
-    public function del(Request $req,Agreement $agreement_model){
-        $id = $req->id;
-		$ids = explode(',',$id);
-        $agreement_model->destroy($ids);
-        return $this->success_msg();
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request,Agreement $agree_model, $id)
+    {
+        $agree_model = $agree_model->find($id);
+        $agree_model->title = $request->title;
+        $agree_model->ename = $request->ename??'';
+        $agree_model->content = $request->content??'';
+        $agree_model->save();
+        return $this->success([],__('base.success'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Agreement $agree_model,$id)
+    {
+        $idArray = array_filter(explode(',',$id),function($item){
+            return is_numeric($item);
+        });
+        $agree_model->destroy($idArray);
+        return $this->success([],__('base.success'));
     }
 }

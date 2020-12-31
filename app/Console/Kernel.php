@@ -2,9 +2,10 @@
 
 namespace App\Console;
 
+use App\Services\AutoService;
+use App\Services\ConfigService;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Crontab\Crontab;
 
 class Kernel extends ConsoleKernel
 {
@@ -25,30 +26,23 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // 统计数据 定时任务
-        $schedule->call(function () {
-            $crontabl_model = new Crontab();
-            $crontabl_model->crontab_day();
-        })->everyMinute(); // daily
-
-        $schedule->call(function () {
-            $crontabl_model = new Crontab();
-            $crontabl_model->crontab_week();
-        })->weekly();
-
-        $schedule->call(function () {
-            $crontabl_model = new Crontab();
-            $crontabl_model->crontab_month();
-        })->monthly();
-
+        // $schedule->exec('node /home/forge/script.js')->daily();
+        // $schedule->command('inspire')->hourly();
+        $config_service = new ConfigService();
+        $auto_service = new AutoService();
 
         // 这是定时 订单处理
-        $schedule->call(function () {
-            $crontabl_model = new Crontab();
-            $crontabl_model->complete_order();  // 确定订单
-            $crontabl_model->comment_order(); // 评论订单
-            $crontabl_model->cancel_order(); // 取消订单
-        })->everyMinute(); // daily
+        $schedule->call(function () use($auto_service) {
+            $auto_service->autoTask();  // 确定订单
+        })->everyMinute(); 
+
+        // 订单结算
+        $task = $config_service->getFormatConfig('task');
+        $schedule->call(function ()  use($auto_service) {
+            $auto_service->orderSettlement();
+        })->cron('* * */'.$task['settlement'].' * *');
+
+        
     }
 
     /**

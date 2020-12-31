@@ -2,89 +2,60 @@
 
 namespace App\Http\Controllers\Seller;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Seller\OrderResource\OrderCollection;
+use App\Http\Resources\Seller\OrderResource\OrderResource;
 use App\Models\Order;
-use App\Models\Users;
-use App\Tools\Helper;
+use App\Services\OrderService;
+use Illuminate\Http\Request;
 
-class OrderController extends BaseController
+class OrderController extends Controller
 {
-    public function index(Request $req,Order $order_model){
-
-        // 条件
-        $params = json_decode($req->params,true);
-        if($params['times'] != null && count($params['times'])>0){
-            $order_model = $order_model->where('add_time','>=',strtotime($params['times'][0]))->where('add_time','<=',strtotime($params['times'][1]));
-        }
-        if(!empty($params['type'])){
-            $order_model = $order_model->where(get_order_params($params['type']));
-        }
-        if(!empty($params['order_no'])){
-            $order_model = $order_model->where('order_no',$params['order_no']);
-        }
-        if(!empty($params['is_groupbuy'])){
-            $order_model = $order_model->where('is_groupbuy',$params['is_groupbuy']);
-        }
-
-        $user_info = auth()->user();
-
-        $list = $order_model->where('seller_id',$user_info['id'])->orderBy('id','desc')->paginate(20)->toArray();
-        $list['data'] = get_order_status($list['data']);
-        return $this->success_msg('Success',$list);
-    }
-
-    public function info(Request $req,Order $order_model){
-        $id = $req->id;
-        $user_info = auth()->user();
-        $helper_model = new Helper();
-        $info = $order_model->where('seller_id',$user_info['id'])->where('id',$id)->with('order_goods')->first();
-        $info = get_order_status_one($info);
-        // var_dump($info['delivery_no']);
-        if(!empty($info['delivery_no'])){
-            $info['delivery_list'] = json_decode($helper_model->get_freight_info($info['delivery_no']),true);
-        }
-        return $this->success_msg('Success',$info);
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(OrderService $order_service)
+    {
+        $rs = $order_service->getOrders('seller');
+        return $rs['status']?$this->success(new OrderCollection($rs['data'])):$this->error($rs['msg']);
     }
 
 
-    // 发货物流填写
-    public function send_delivery(Request $req,Order $order_model){
-        $delivery_no = $req->delivery_no??'';
-        $order_id = $req->order_id??0;
-        $user_info = auth()->user();
-
-        $delivery_data = [
-            'delivery_no'       =>  $delivery_no,
-            'delivery_status'   =>  1,
-            'delivery_time'     =>  time(),
-        ];
-        $rs = $order_model->where(['id'=>$order_id,'seller_id'=>$user_info['id']])->update($delivery_data);
-        return $this->success_msg('ok',$rs);
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(OrderService $order_service,$id)
+    {
+        $rs = $order_service->getOrderInfoById($id,'seller');
+        return $rs['status']?$this->success(new OrderResource($rs['data'])):$this->error($rs['msg']);
     }
 
-    // 同意申请售后
-    public function refund(Request $req,Order $order_model){
-        $id = $req->id;
-        $user_info = auth()->user();
-        $rs = $order_model->where(['id'=>$id,'seller_id'=>$user_info['id']])->update(['refund_step'=>1]);
-        return $this->success_msg('成功');
-    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request,Order $order_model, $id)
+    {
+        $store_id = $this->get_store(true);
+        $order_model = $order_model->where(['id'=>$id,'store_id'=>$store_id])->first();
+        $order_model->delivery_code = $request->delivery_code??'yd';
+        $order_model->delivery_no = $request->delivery_no??'123456';
 
-    // 同意退款
-    public function refund_money(Request $req,Order $order_model,Users $user_model){
-        $id = $req->id;
-        $user_info = auth()->user();
-        $buyer_info = $user_model->find($req->user_id);
-
-        $order_info = $order_model->find($id);
-
-        if($order_info['refund_step'] == 4){
-            return $this->error_msg('该售后已经处理过了');
+        // 判断是否需要修改订单状态
+        if($order_model->order_status==2){
+            $order_model->order_status = 3;
+            $order_model->delivery_time = now();
         }
-
-        $rs = $order_model->where(['id'=>$id,'seller_id'=>$user_info['id']])->update(['refund_step'=>4,'order_status'=>2,'refund_time'=>time()]);
-        $user_model->money_change('售后退款','frozen_money',-$order_info['total_price'],$buyer_info,'order_no:'.$req->order_no,'-');
-        $user_model->money_change('售后退款','money',$order_info['total_price'],$buyer_info,'order_no:'.$req->order_no,'-');
-        return $this->success_msg('成功');
+        $order_model->save();
+        return $this->success([],__('base.success'));
     }
+
 }

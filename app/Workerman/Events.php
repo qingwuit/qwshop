@@ -38,8 +38,8 @@ class Events
         switch($data['type']){
             // 绑定用户
             case 'bind':
-                self::bindUid($data['client_id'],$data['content']['user_id']);
-                GateWay::sendToUid($data['content']['user_id'],$jsonData);
+                self::bindUid($data['client_id'],$data['uid']);
+                GateWay::sendToUid($data['uid'],$jsonData);
                 break;
         }
     }

@@ -1,385 +1,233 @@
 <template>
-    <div class="qingwu">
-        <el-row :gutter="20">
-            <el-col :span="8" class="default_block_col">
-                <el-card shadow="hover" :body-style="{padding:'15px 20px'}">
-                    总销售额
-                    <i
-                        style="float: right; margin: 3px 0 10px 0;font-size: 18px;"
-                        class="el-icon-refresh"
-                    ></i>
-                    <div class="unline"></div>
-                    <div class="default_total">
-                        <font style="font-size:30px;">￥ {{info.total_price||'0.00'}}</font>
-                        <div class="default_tongbi">
-                            <div class="default_tongbi_left">
-                                周同比：10.25%
-                                <i class="el-icon-caret-top" style="color:red"></i>
-                            </div>
-                            <div class="default_tongbi_right">
-                                日同比：10.25%
-                                <i class="el-icon-caret-bottom" style="color:green"></i>
-                            </div>
+    <div class="admin_default">
+        <a-row :gutter="{ xs: 24,  md: 24}">
+            <a-col :span="8" :xs="{ span: 24 }" :lg="{ span: 8 }">
+                <div class="admin_card">
+                    <div class="title">总销售额</div>
+                    <div class="content">
+                        <div class="total_price">￥ {{info.total_price||'0.00'}}</div>
+                        <div class="total_rate">
+                            <span>周同比 {{info.week_rate||'0.00'}} %<a-icon v-if="info.week_rate>=0" style="margin-left:5px;color:red;" type="caret-up" /><a-icon v-else style="margin-left:5px;color:green;" type="caret-down" /></span>
+                            <span>日同比 {{info.day_rate||'0.00'}} %<a-icon v-if="info.day_rate>=0" style="margin-left:5px;color:red;" type="caret-up" /><a-icon v-else style="margin-left:5px;color:green;" type="caret-down" /></span>
                         </div>
                         <div class="unline"></div>
-                        <el-progress :percentage="90"></el-progress>
-                        <div class="default_day_sale">日销售额：￥ {{info.today_total_price||'0.00'}}</div>
-                    </div>
-                </el-card>
-            </el-col>
-            <el-col :span="8" class="default_block_col">
-                <el-card shadow="hover" :body-style="{padding:'15px 20px'}">
-                    订单信息
-                    <i
-                        style="float: right; margin: 3px 0 10px 0;font-size: 18px;"
-                        class="el-icon-refresh"
-                    ></i>
-                    <div class="unline"></div>
-                    <div class="default_program2">
-                        <ul>
-                            <li>
-                                <div class="default_sq">
-                                    <el-tag>等待付款</el-tag>
-                                </div>
-                                <p>{{info.pay_order||'0'}}</p>
-                            </li>
-                            <li>
-                                <div class="default_sq">
-                                    <el-tag type="success">完成订单</el-tag>
-                                </div>
-                                <p>{{info.complete_order||'0'}}</p>
-                            </li>
-                            <li>
-                                <div class="default_sq">
-                                    <el-tag type="danger">等待发货</el-tag>
-                                </div>
-                                <p>{{info.wait_order||'0'}}</p>
-                            </li>
-                            <!-- <li><div class="default_sq"></div><p></p></li> -->
-                        </ul>
-                    </div>
-                </el-card>
-            </el-col>
-            <el-col :span="8" class="default_block_col">
-                <el-card shadow="hover" :body-style="{padding:'15px 20px'}">
-                    版本信息
-                    <div class="unline" style="margin-bottom: 0px;"></div>
-                    <div class="default_copyright">
-                        <ul>
-                            <li>
-                                <span>当前版本：</span>
-                                <el-tag type="info">v 1.0.0</el-tag>
-                            </li>
-                            <li>
-                                <span>商城框架：</span> 青梧商城系统（<a target="_blank" href="https://www.QingWuIt.com">QingWuIt</a>）
-                            </li>
-                            <li>
-                                <span>下载Apk：</span>
-                                <el-button type="primary" size="mini" icon="el-icon-download">点击下载</el-button>
-                            </li>
-                        </ul>
-                    </div>
-                </el-card>
-            </el-col>
-        </el-row>
-
-        <div class="default_tubiao">
-            <el-card shadow="hover" :body-style="{padding:'15px 20px'}">
-                总销售额
-                <i
-                    style="float: right; margin: 3px 0 10px 0;font-size: 18px;"
-                    class="el-icon-refresh"
-                ></i>
-                <div class="unline"></div>
-                <div class="default_total">
-                    <div id="myChart2" :style="{width:'60%',height:'250px',float:'left'}"></div>
-                    <div class="default_hot_goods" style="float: left;margin-left:3%;width:37%;">
-                        <div>商品销售额排名</div>
-                        <ul>
-                            <li v-for="(v,k) in info.store" :key="k">
-                                <div style="color:#999;float:right;">{{v.sum_total}}</div>
-                                <span>{{k+1}}</span>
-                                <div
-                                    style="width:70%;overflow:hidden;height:20px;"
-                                >{{v.store_name}}</div>
-                            </li>
-                        </ul>
+                        <div class="month_rate"><a-tooltip><template slot="title">月订单完成度</template><a-progress :percent="info.month_rate||60.00" /></a-tooltip></div>
+                        <div class="today_price">日销售额：￥ {{info.today_price||'0.00'}}</div>
                     </div>
                 </div>
-            </el-card>
+            </a-col>
+            <a-col :span="8" :xs="{ span: 24 }" :lg="{ span: 8 }">
+                <div class="admin_card">
+                    <div class="title">订单信息</div>
+                    <div class="content">
+                        <a-row :gutter="{ xs: 12,  md: 12}">
+                            <a-col :span="12" :xs="{ span: 24 }" :lg="{ span: 12 }">
+                                <div class="color_block">
+                                    <div><a-tag color="blue">等待付款</a-tag></div>
+                                    <div class="color_blcok_font">{{info.order_wait||'0'}}</div>
+                                </div>
+                            </a-col>
+                            <a-col :span="12" :xs="{ span: 24 }" :lg="{ span: 12 }">
+                                <div class="color_block">
+                                    <div><a-tag color="green">完成订单</a-tag></div>
+                                    <div class="color_blcok_font">{{info.order_complete||'0'}}</div>
+                                </div>
+                            </a-col>
+                        </a-row>
+                        <a-row :gutter="{ xs: 12,  md: 12}">
+                            <a-col :span="12" :xs="{ span: 24 }" :lg="{ span: 12 }">
+                                <div class="color_block">
+                                    <div><a-tag color="red">等待发货</a-tag></div>
+                                    <div class="color_blcok_font">{{info.order_send||'0'}}</div>
+                                </div>
+                            </a-col>
+                            <a-col :span="12" :xs="{ span: 24 }" :lg="{ span: 12 }">
+                                <div class="color_block">
+                                    <div><a-tag color="orange">售后处理</a-tag></div>
+                                    <div class="color_blcok_font">{{info.order_refund||'0'}}</div>
+                                </div>
+                            </a-col>
+                        </a-row>
+                        <div style="height:20px"></div>
+                    </div>
+                </div>
+            </a-col>
+            <a-col :span="8" :xs="{ span: 24 }" :lg="{ span: 8 }">
+                <div class="admin_card">
+                    <div class="title">版本信息</div>
+                    <div class="content" style="margin-top:0;">
+                        <div class="copyright">
+                            <span class="copyright_title">当前版本：</span>
+                            <span class="copyright_rs"><a-tag>2.0.0</a-tag></span>
+                        </div>
+                        <div class="unline"></div>
+                        <div class="copyright">
+                            <span class="copyright_title">商城框架：</span>
+                            <span class="copyright_rs" @click="openWeb">青梧商城系统（QwSystem）</span>
+                        </div>
+                        <div class="unline"></div>
+                        <div class="copyright" style="padding-bottom:18px">
+                            <span class="copyright_title">开源地址：</span>
+                            <span class="copyright_rs"><a-button icon="download" type="primary" @click="download">前往下载</a-button></span>
+                        </div>
+                    </div>
+                </div>
+            </a-col>
+        </a-row>
+        <div class="admin_card">
+            <div class="title">
+                <div class="right_block">
+                    <ul>
+                        <li :class="params.is_type==0?'ck':''" @click="typeChange(0)">本周</li>
+                        <li :class="params.is_type==1?'ck':''" @click="typeChange(1)">本年</li>
+                    </ul>
+                    <div class="daterange"><a-range-picker v-model="params.created_at" @change="onChange" format="YYYY-MM-DD" /></div>   
+                </div>
+                销售趋势
+            </div>
+            <div class="content">
+                <a-row :gutter="{ xs: 24,  md: 24}">
+                    <a-col :span="16" :xs="{ span: 24 }" :lg="{ span: 16 }">
+                        <div id="container" class="default_gd"></div>
+                    </a-col>
+                    <a-col :span="8" :xs="{ span: 24 }" :lg="{ span: 8 }">
+                        <div class="sort_list">
+                            <div class="list_title">商品销售额排名</div>
+                            <div class="list_block" v-for="v in 6" :key="v"><font style="color:#999;float:right;">{{list[v-1]?list[v-1]['orders_count']:'-'}}</font><span>{{v}}</span>{{list[v-1]?list[v-1]['goods_name']:'-'}}</div>
+
+                        </div>
+                    </a-col>
+                </a-row>
+                
+            </div>
         </div>
-
-        <el-row :gutter="20">
-            <el-col :span="24" class="default_block_col">
-                <el-card shadow="hover" :body-style="{padding:'15px 20px'}">
-                    订单增长
-                    <i
-                        style="float: right; margin: 3px 0 10px 0;font-size: 18px;"
-                        class="el-icon-refresh"
-                    ></i>
-                    <div class="unline"></div>
-                    <!-- 图表 -->
-                    <div id="myChart" :style="{width:'100%',height:'250px'}"></div>
-                </el-card>
-            </el-col>
-
-            <!-- <el-col :span="8" class="default_block_col">
-                <el-card shadow="hover" :body-style="{padding:'15px 20px'}">
-                    授权信息
-                    <i
-                        style="float: right; margin: 3px 0 10px 0;font-size: 18px;"
-                        class="el-icon-refresh"
-                    ></i>
-                    <div class="unline"></div>
-                </el-card>
-            </el-col> -->
-        </el-row>
+        <div class="admin_card">
+            <div class="title">单量趋势</div>
+            <div class="content">
+                <div id="user_plot" class="default_gd"></div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-import echarts from "echarts";
+import { Column,Line } from 'g2plot';
 export default {
-    components: {},
+    components: {
+    },
     props: {},
     data() {
-        return {
-            info:{},
-            week:[0,0,0,0,0,0,0],
-            week2:[0,0,0,0,0,0,0],
-            month:[],
-        };
+      return {
+          params:{
+              is_type:0,
+              created_at:[],
+          },
+          info:{},
+          list:[],
+          isUserPlot:false,
+          isOrderPlot:false,
+          user_plot:[{time:'2012-12-00',num:9.00},{time:'2012-12-01',num:2.00},{time:'2012-12-02',num:1.00},{time:'2012-12-03',num:5.00},{time:'2012-12-04',num:7.00},{time:'2012-12-05',num:5.00},{time:'2012-12-06',num:1.00}],
+          order_plot:[{time:'2012-12-00',num:9.00},{time:'2012-12-01',num:2.00},{time:'2012-12-02',num:1.00},{time:'2012-12-03',num:5.00},{time:'2012-12-04',num:7.00},{time:'2012-12-05',num:5.00},{time:'2012-12-06',num:1.00}],
+          userObj:null,
+          orderObj:null,
+      };
     },
     watch: {},
+    computed: {},
     methods: {
-        get_info:function(){
-            this.$get(this.$api.sellerGetStatistics).then(res=>{
-                this.info = res.data;
-                this.week = [];
-                this.week2 = [];
-                this.month = [];
-                res.data.week.forEach(res=>{
-                    this.week.push(res.users);
-                });
-                res.data.week2.forEach(res=>{
-                    this.week2.push(res.users);
-                });
-                res.data.month.forEach(res=>{
-                    this.month.push(res.price);
-                });
-                this.echartInit();
-            });
+        download(){
+            window.open("https://gitee.com/qingwuitcn/qwShopPhp")
         },
-        echartInit:function(){
-            /*ECharts图表*/
-            var myChart = echarts.init(document.getElementById("myChart"));
-            myChart.setOption({
-                title: { text: "订单趋势" },
-                tooltip: { trigger: "axis" },
-                
-                color:["#E6A23C","#000"],
-                grid: { left: "3%", right: "4%", bottom: "8%", containLabel: true },
-                toolbox: { feature: { saveAsImage: {} } },
-                xAxis: {
-                    type: "category",
-                    boundaryGap: false,
-                    data: ["周一", "周二", "周三","周四","周五","周六","周日",]
-                },
-                yAxis: { type: "value" },
-                
-                series: [
-                    {
-                        name: "现周",
-                        type: "line",
-                        stack: "总量2",
-                        data:this.week,
+        openWeb(){
+            window.open("https://www.qwststem.com")
+        },
+        onChange(e){
+            // this.params.created_at = e;
+            this.params.created_at[0] = moment(e[0]).format('YYYY-MM-DD')
+            this.params.created_at[1] = moment(e[1]).format('YYYY-MM-DD')
+            console.log(this.params.created_at)
+            this.get_info();
+        },
+        typeChange(e){
+            this.params.is_type = e;
+            this.get_info();
+        },
+        get_sale_plot(){
+            let data = this.order_plot;
+            if(this.isOrderPlot){
+                this.orderObj.changeData(data);
+                return;
+            }
+            this.orderObj = new Column('container', {
+                data,
+                xField: 'time',
+                yField: 'num',
+                columnWidthRatio: 0.6,
+                meta: {
+                    time: {
+                    alias: '时间',
                     },
-                    {
-                        name: "上周",
-                        type: "line",
-                        stack: "总量",
-                        data: this.week2,
-                    }
-                ]
+                    num: {
+                    alias: '销售额',
+                    },
+                },
+            });
+            this.orderObj.render();
+            this.isOrderPlot = true;
+        },
+        get_user_plot(){
+            let data = this.user_plot;
+            if(this.isUserPlot){
+                this.userObj.changeData(data);
+                return;
+            }
+            this.userObj = new Line('user_plot', {
+                data,
+                xField: 'time',
+                yField: 'num',
+                label: {},
+                point: {
+                    size: 4,
+                    style: {
+                    stroke: '#fff',
+                    lineWidth: 2,
+                    },
+                },
+                meta: {
+                    time: {
+                    alias: '时间',
+                    },
+                    num: {
+                    alias: '注册数',
+                    },
+                },
             });
 
-            /*ECharts图表*/
-            var myChart2 = echarts.init(document.getElementById("myChart2"));
-            myChart2.setOption({
-                color: "#409EFF",
-                title: { text: "销售趋势" },
-                legend: {
-                    data: ["销量"]
-                },
-                tooltip: { trigger: "axis" },
-                grid: { left: "0%", right: "0%", bottom: "0%", containLabel: true },
-                toolbox: { feature: { saveAsImage: {} } },
-                xAxis: {
-                    data: [
-                        "01",
-                        "02",
-                        "03",
-                        "04",
-                        "05",
-                        "06",
-                        "07",
-                        "08",
-                        "09",
-                        "10",
-                        "11",
-                        "12"
-                    ]
-                },
-                yAxis: { type: "value" },
-                series: [
-                    {
-                        name: "销量",
-                        type: "bar",
-                        stack: "总量2",
-                        data: this.month
-                    }
-                ]
-            });
-        }
+            this.userObj.render();
+            this.isUserPlot = true;
+        },
+        get_info(){
+            this.$get(this.$api.sellerStatistics+'/all',this.params).then(res=>{
+                this.info = res.data;
+                this.list = res.data.list;
+                
+                this.user_plot = res.data.user_plot;
+                this.order_plot = res.data.order_plot;
+                this.get_sale_plot();
+                this.get_user_plot();
+            })
+        },
     },
     created() {
         
     },
-    mounted(){
-        this.get_info();
-
+    mounted() {
         
-    }
+        this.get_info();
+    },
+    
 };
 </script>
 <style lang="scss" scoped>
-.unline {
-    margin: 15px 0;
-}
-.default_program {
-    text-align: center;
-    width: 100%;
-}
-.default_program ul li {
-    float: left;
-    width: 22%;
-    background: #f9f9f9;
-    margin-right: 4%;
-    margin-bottom: 10px;
-}
-.default_program ul li:nth-child(4n) {
-    margin-right: 0;
-}
-.default_program ul li:hover {
-    background: #f1f1f1;
-}
-.default_program2 ul li {
-    float: left;
-    width: 48%;
-    background: #f9f9f9;
-    margin-right: 4%;
-    margin-bottom: 18px;
-    height: 82px;
-    padding: 10px;
-    box-sizing: border-box;
-    font-size: 12px;
-    color: #999;
-}
-.default_program2 ul li:nth-child(2n) {
-    margin-right: 0;
-}
-.default_program2 ul li:nth-child(3) {
-    width: 100%;
-}
-.default_program2 ul li:hover {
-    background: #f3f3f3;
-}
-.default_program .i_backgraounds {
-    text-align: center;
-    margin: 0 auto;
-    display: block;
-    padding: 5px 0;
-}
-.default_program2 p {
-    line-height: 55px;
-    font-size: 22px;
-    color: #303133;
-}
-.i_backgraounds i {
-    font-size: 28px;
-}
-.default_program p {
-    text-align: center;
-    background: #fff;
-    line-height: 30px;
-    font-size: 12px;
-    clear: both;
-}
-.default_block_col {
-    margin-bottom: 20px;
-}
-.default_copyright ul li {
-    line-height: 66px;
-    border-bottom: 1px solid #efefef;
-}
-.default_copyright ul li:nth-child(3) {
-    border-bottom: none;
-}
-.default_copyright ul li span {
-    margin-right: 60px;
-}
-.default_tongbi_left {
-    float: left;
-}
-.default_tongbi_right {
-    float: left;
-    margin-left: 40px;
-}
-.default_tongbi:after {
-    clear: both;
-    content: "";
-    display: block;
-}
-.default_total:after {
-    clear: both;
-    content: "";
-    display: block;
-}
-.default_tongbi {
-    margin-top: 20px;
-}
-.default_day_sale {
-    margin-top: 15px;
-    margin-bottom: 21px;
-}
-.default_tubiao {
-    width: 100%;
-    margin-bottom: 20px;
-}
-.default_hot_goods ul li {
-    margin-top: 20px;
-    overflow: hidden;
-}
-.default_hot_goods ul li span {
-    border-radius: 50%;
-    background: #f5f5f5;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    display: block;
-    float: left;
-    margin-right: 8px;
-}
-.default_hot_goods ul li:nth-child(1) span {
-    background: #314659;
-    color: #fff;
-}
-.default_hot_goods ul li:nth-child(2) span {
-    background: #314659;
-    color: #fff;
-}
-.default_hot_goods ul li:nth-child(3) span {
-    background: #314659;
-    color: #fff;
-}
+
 </style>

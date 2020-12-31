@@ -1,6 +1,6 @@
 <template>
     <div class="shop_index_adv width_center_1200">
-        <el-image width="1200px" :src="adv.adv_image" alt="" lazy></el-image>
+        <img width="1200px" height="120px" v-lazy="adv.adv_image"   />
     </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
         adv:{
             type:Object,
             default:()=>{
-                return {adv_image:'http://127.0.0.1:8000/Uploads/adv/2019_11_14/15737142019047.jpg',adv_link:'',adv_title:'加载中...'};
+                return {adv_image:require('@/asset/pc/adv.jpg'),adv_link:'',adv_title:'加载中...'};
             }
         }
     },

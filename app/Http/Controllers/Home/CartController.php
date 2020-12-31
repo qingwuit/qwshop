@@ -2,86 +2,55 @@
 
 namespace App\Http\Controllers\Home;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\CartService;
+use App\Services\UserService;
+use Illuminate\Http\Request;
 use App\Models\Cart;
 
-class CartController extends BaseController
+class CartController extends Controller
 {
-    // 获取购物车列表
-    public function get_cart_list(Cart $cart_model){
-        $user_info = auth()->user();
-        $cart_list = $cart_model->where('user_id',$user_info['id'])->get()->toArray();
-        $list = [];
-        foreach($cart_list as $v){
-            $list[$v['store_id']][] = $v;
+    // 购物车列表
+    public function index(){
+        $cart_service = new CartService;
+        $rs = $cart_service->getCarts();
+        return $rs['status']?$this->success($rs['data']):$this->error($rs['msg']);
+    }
+
+    // 添加购物车
+    public function store(){
+        $cart_service = new CartService;
+        $rs = $cart_service->addCart();
+        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
+    }
+
+    // 修改购物车
+    public function update($id){
+        $cart_service = new CartService;
+        $rs = $cart_service->editCart($id);
+        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
+    }
+
+    // 删除购物车商品
+    public function destroy(Cart $cart_model,$id){
+        $idArray = array_filter(explode(',',$id),function($item){
+            return is_numeric($item);
+        });
+
+        // 获取当前用户user_id
+        $user_service = new UserService;
+        if(!$user_info = $user_service->getUserInfo()){
+            return $this->format_error(__('carts.add_error').'4'); // 获取用户失败
         }
-        $list = array_merge($list);
-        return $this->success_msg('ok',$list);
+
+        $cart_model->whereIn('id',$idArray)->where('user_id',$user_info['id'])->delete();
+        return $this->success([],__('base.success'));
     }
 
     // 获取购物车数量
-    public function get_cart_count(Cart $cart_model){
-        $user_info = auth()->user();
-        $count = $cart_model->where('user_id',$user_info['id'])->count();
-        return $this->success_msg('ok',$count);
+    public function cart_count(){
+        $cart_service = new CartService;
+        $rs = $cart_service->getCount();
+        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
     }
-
-    // 加入购物车
-    public function add_cart(Request $req,Cart $cart_model){
-        $user_info = auth()->user();
-        $data = [
-            'user_id'           =>  $user_info['id'],
-            'spec_id'           =>  $req->spec_id??0,
-            'goods_id'          =>  $req->id,
-            'seller_id'         =>  $req->user_id,
-            'store_id'          =>  $req->store_info['id'],
-            'store_name'        =>  $req->store_info['store_name'],
-            'goods_name'        =>  $req->goods_name,
-            'image'             =>  get_format_image($req->goods_master_image,200),
-            'goods_price'       =>  floatval($req->goods_price),
-            'goods_num'         =>  intval($req->buy_num),
-            'goods_spec'        =>  $req->goods_spec_name??'-',
-        ];
-        $rs = $cart_model->add_cart($data);
-
-        if($rs['status']){
-            return $this->success_msg($rs['msg'],$rs['status']);
-        }else{
-            return $this->error_msg($rs['msg'],$rs['status']);
-        }
-        
-    }
-
-    // 修改购物车参数
-    public function change_cart(Request $req,Cart $cart_model){
-        $user_info = auth()->user();
-        $data = [
-            'id'  =>  $req->id,
-            'goods_num' =>$req->goods_num,
-            'type'  =>  $req->type??0,
-        ];
-        $change_type = empty($req->change_type)?false:true;
-        
-        $rs = $cart_model->change_cart($data,$change_type);
-        if($rs['status']){
-            return $this->success_msg($rs['msg'],$rs['status']);
-        }else{
-            return $this->error_msg($rs['msg'],$rs['status']);
-        }
-
-    }
-
-    // 删除购物车参数
-    public function del_cart(Request $req,Cart $cart_model){
-        $ids = explode(',',$req->ids);
-        $rs = $cart_model->del_cart($ids);
-
-        if($rs){
-            return $this->success_msg('移除购物车成功',$rs);
-        }else{
-            return $this->error_msg('移除失败');
-        }
-    }
-    
 }

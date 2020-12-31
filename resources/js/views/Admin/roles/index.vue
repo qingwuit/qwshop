@@ -1,34 +1,20 @@
 <template>
     <div class="qingwu">
-        <div class="admin_main_block">
-            <div class="admin_main_block_top">
-                <div class="admin_main_block_left">
-                    <div><router-link to="/Admin/roles/form"><el-button type="primary" icon="el-icon-plus">添加</el-button></router-link></div>
-                    <!-- <div><el-input v-model="name" placeholder="请输入内容"></el-input></div>
-                    <div><el-button icon="el-icon-search">条件筛选</el-button></div> -->
-                </div>
+        <div class="admin_table_page_title">角色管理</div>
+        <div class="unline underm"></div>
 
-                <div class="admin_main_block_right">
-                    <div><el-button type="danger" icon="el-icon-delete" @click="del(select_id)">批量删除</el-button></div>
-                </div>
-            </div>
-
-            <div class="admin_table_main">
-                <el-table :data="list" @selection-change="handleSelectionChange" >
-                    <el-table-column type="selection"></el-table-column>
-                    <el-table-column prop="id" label="#" fixed="left" width="70px"></el-table-column>
-                    <el-table-column prop="name" label="角色名"></el-table-column>
-                    <el-table-column prop="content" label="描述"></el-table-column>
-                    <el-table-column label="操作" fixed="right" width="120px">
-                        <template slot-scope="scope">
-                            <el-button icon="el-icon-edit" @click="$router.push({name:'roles_form',params:{id:scope.row.id}})">编辑</el-button>
-                            <!-- <el-button type="danger" icon="el-icon-delete" @click="del(scope.row.id)">删除</el-button> -->
-                        </template>
-                    </el-table-column>
-                </el-table>
-                <div class="admin_table_main_pagination">
-                    <el-pagination @current-change="current_change" background layout="prev, pager, next,jumper,total" :total="total_data" :page-size="page_size" :current-page="current_page"></el-pagination>
-                </div>
+        <div class="admin_table_handle_btn">
+            <a-button @click="$router.push('/Admin/roles/form')" type="primary" icon="plus">添加</a-button>
+            <a-button class="admin_delete_btn" type="danger" icon="delete" @click="del">批量删除</a-button>
+        </div>
+        <div class="admin_table_list">
+            <a-table :columns="columns" :data-source="list" :pagination="false" :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" row-key="id">
+                <span slot="action" slot-scope="rows">
+                    <a-button icon="edit" @click="$router.push('/Admin/roles/form/'+rows.id)">编辑</a-button>
+                </span>
+            </a-table>
+            <div class="admin_pagination" v-if="total>0">
+                <a-pagination v-model="params.page" :page-size.sync="params.per_page" :total="total" @change="onChange" show-less-items />
             </div>
         </div>
     </div>
@@ -40,56 +26,66 @@ export default {
     props: {},
     data() {
       return {
+          params:{
+              page:1,
+              per_page:30,
+          },
+          total:0, //总页数
+          selectedRowKeys:[], // 被选择的行
+          columns:[
+              {title:'#',dataIndex:'id',fixed:'left'},
+              {title:'角色名称',dataIndex:'name'},
+              {title:'操作',key:'id',fixed:'right',scopedSlots: { customRender: 'action' }},
+          ],
           list:[],
-          total_data:0, // 总条数
-          page_size:20,
-          current_page:1,
-          select_id:'',
       };
     },
     watch: {},
     computed: {},
     methods: {
-        handleSelectionChange:function(e){
-            let ids = [];
-            e.forEach(v => {
-                ids.push(v.id);
-            });
-            this.select_id = ids.join(',');
+        // 选择框被点击
+        onSelectChange(selectedRowKeys) {
+            this.selectedRowKeys = selectedRowKeys;
         },
-        get_roles_list:function(){
-            let _this = this;
-            this.$get(this.$api.getRolesList,{page:this.current_page}).then(function(res){
-                _this.page_size = res.data.per_page;
-                _this.total_data = res.data.total;
-                _this.current_page = res.data.current_page;
-                _this.list = res.data.data;
-            })
-
+        // 选择分页
+        onChange(e){
+            this.params.page = e;
         },
-        // 分页改变
-        current_change:function(e){
-            this.current_page = e;
-            this.get_roles_list();
-        },
-        // 删除处理
-        del:function(id){
-            let _this = this;
-            if(this.$isEmpty(id)){
-                return this.$message.error('请先选择删除的对象');
+        // 删除
+        del(){
+            if(this.selectedRowKeys.length==0){
+                return this.$message.error('未选择数据.');
             }
-            this.$post(this.$api.delRoles,{id:id}).then(function(res){
-                if(res.code == 200){
-                    _this.get_roles_list();
-                    return _this.$message.success("删除成功");
-                }else{
-                    return _this.$message.error("删除失败！"+res.msg);
-                }
+            this.$confirm({
+                title: '你确定要删除选择的数据？',
+                content: '确定删除后无法恢复.',
+                okText: '是',
+                okType: 'danger',
+                cancelText: '取消',
+                onOk:()=> {
+                    let ids = this.selectedRowKeys.join(',');
+                    this.$delete(this.$api.adminRoles+'/'+ids).then(res=>{
+                        if(res.code == 200){
+                            this.onload();
+                            this.$message.success('删除成功');
+                        }else{
+                            this.$message.error(res.msg)
+                        }
+                    });
+                    
+                },
             });
-        }
+        },
+ 
+        onload(){
+            this.$get(this.$api.adminRoles,this.params).then(res=>{
+                this.total = res.data.total;
+                this.list = res.data.data;
+            });
+        },
     },
     created() {
-        this.get_roles_list();
+        this.onload();
     },
     mounted() {}
 };

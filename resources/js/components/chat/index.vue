@@ -11,9 +11,10 @@
             <!-- 好友界面头部 -->
             <div class="chat_friend_interface_head">
                 <div class="head_top_info">
-                    <span>{{user_info.nickname||'加载中...'}}</span>
+                    <span>{{userInfo.nickname||'加载中...'}}</span>
                     <font :class="isOnline?'green':'red'"></font>
-                    <i class="font iconfont chat_handle" @click="minimizes = true">&#xeb9b;</i>
+                    <!-- <i class="font iconfont chat_handle" @click="minimizes = true">&#xeb9b;</i> -->
+                    <a-icon type="close" class="chat_handle" @click="minimizes = true" />
                 </div>
                 <div class="chat_friend_interface_head_desc">
                     该用户很懒，没留下任何描述~
@@ -21,30 +22,20 @@
             </div>
 
             <!-- 分组好友和临时聊天列表Tab切换 -->
-            <div class="chat_friend_interface_tab">
+            <!-- <div class="chat_friend_interface_tab">
                 <ul>
                     <li class="border_b_show">消息<div class="border_b"></div></li>
                     <li @click="$message.error('暂无此功能')">联系人<div class="border_b"></div></li>
                 </ul>
-            </div>
+            </div> -->
 
             <!-- 好友的内容块 -->
             <div class="chat_friend_interface_content">
-                <dl class="chat_handle" v-for="(v,k) in chat_friend.data" :key="k" @click="onChatHandle(v.friend_info)">
-                    <dt><img :src="v.friend_info.avatar||'/pc/default_avatar.png'" alt=""></dt>
-                    <dd>{{v.friend_info.nickname||'加载中...'}}<span v-show="v.not_read_count>0"></span></dd>
-                    <dd class="friend_new">聊天内容：{{v.chat_msg==null?'-':(v.chat_msg.type=='text'?v.chat_msg.content:(v.chat_msg.type=='image'?'[图片]':'-'))}}</dd>
+                <dl class="chat_handle" v-for="(v,k) in chat_friend.data" :key="k" @click="onChatHandle(v.store)">
+                    <dt><img :src="v.store.store_logo||require('@/asset/user/user_default.png')" alt=""></dt>
+                    <dd>{{v.store.store_name||'加载中...'}}<span v-show="v.not_read_count>0"></span></dd>
+                    <dd class="friend_new">{{v.chat_msg==null?'-':(v.chat_msg.type=='text'?v.chat_msg.content:(v.chat_msg.type=='image'?'[图片]':'-'))}}</dd>
                 </dl>
-                <!-- <dl class="chat_handle">
-                    <dt><img src="/pc/default_avatar.png" alt=""></dt>
-                    <dd>青梧商城<span></span></dd>
-                    <dd class="friend_new">青梧商城：[图片][图片][图片][图片][图片]</dd>
-                </dl>
-                <dl class="chat_handle">
-                    <dt><img src="/pc/default_avatar.png" alt=""></dt>
-                    <dd>青梧商城</dd>
-                    <dd class="friend_new">青梧商城：[图片][图片][图片][图片][图片]</dd>
-                </dl> -->
             </div>
 
             <!-- 聊天界面 -->
@@ -52,46 +43,44 @@
                 <!-- 左侧显示聊天好友 -->
                 <div class="chat_interface_left">
                     <dl :class="k==onChatIndex?'active':'active2'" v-for="(v,k) in onChat" :key="k">
-                        <dt><img :src="v.avatar||'/pc/default_avatar.png'" alt=""></dt>
-                        <dd>{{v.nickname||'-'}}</dd>
-                        <dd class="close" @click="closeWin(onChat[onChatIndex])"><i class="icon iconfont">&#xebb2;</i></dd>
+                        <dt><img :src="v.store_logo||require('@/asset/user/user_default.png')" alt=""></dt>
+                        <dd>{{v.store_name||'-'}}</dd>
+                        <dd class="close" @click="closeWin(onChat[onChatIndex])"><a-icon type="close-circle" /></dd>
                     </dl>
                 </div>
                 <div class="chat_interface_right">
-                    <div class="chat_interface_right_top">{{onChat[onChatIndex].nickname||'加载中...'}}<i class="icon iconfont chat_handle" @click="onChat = [];onChatIndex = 0;">&#xeb9b;</i></div>
+                    <div class="chat_interface_right_top">{{onChat[onChatIndex].store_name||'加载中...'}}<a-icon class="chat_handle"  @click="onChat = [];onChatIndex = 0;" type="close" /></div>
 
                     <!-- 聊天内容 -->
-                    <div class="chat_interface_right_content">
+                    <div class="chat_interface_right_content"  ref="myScrollbar">
                         <div v-if="onChat[onChatIndex].chat_msg != undefined">
-                            <el-scrollbar ref="myScrollbar">
-                                <div :class="user_info.id==v.user_id?'chat_interface_msg_item me':'chat_interface_msg_item'" v-for="(v,k) in onChat[onChatIndex].chat_msg.data" :key="k">
+                            <div>
+                                <div :class="v.send_type==0?'chat_interface_msg_item me':'chat_interface_msg_item'" v-for="(v,k) in onChat[onChatIndex].chat_msg.data" :key="k">
                                     <div class="chat_interface_msg_avatar">
-                                        <img :src="v.user_info.avatar||'/pc/default_avatar.png'" alt="">
+                                        <img :src="v.send_type==1?v.store_logo:userInfo.avatar||require('@/asset/user/user_default.png')" alt="">
                                     </div>
-                                    <div class="chat_interface_msg_time"><span>{{v.user_info.nickname||'-'}}</span> {{v.add_time|formatDateAuto('yyyy-MM-dd hh:mm:ss')}}</div>
+                                    <div class="chat_interface_msg_time"><span>{{v.send_type==1?v.store_name:userInfo.nickname||'-'}}</span> {{v.created_at}}</div>
                                     <div class="chat_interface_msg">
-                                        <div class="chat_image" v-if="v.type=='image'" ><el-image :key="v.content" :src="v.content" ></el-image></div>
+                                        <div class="chat_image" v-if="v.type=='image'" ><img :key="v.content" :src="v.content"  /></div>
                                         <div v-else-if="v.type=='text'">{{v.content}}</div>
                                         <div v-else>无法识别！</div>
                                     </div>
                                 </div>
-                            </el-scrollbar>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 聊天输入框 -->
                     <div class="chat_interface_right_send">
                         <div class="chat_interface_right_send_tool">
-                            <div class="tool_item chat_handle">
+                            <!-- <div class="tool_item chat_handle">
                                 <emoji-picker @emoji="insert">
                                     <div slot="emoji-invoker" slot-scope="{ events: { click: clickEvent } }" @click.stop="clickEvent">
-                                        <i class="icon iconfont">&#xeb96;</i>
+                                        <a-icon type="smile" />
                                     </div>
                                     <div slot="emoji-picker" slot-scope="{ emojis, insert }">
                                     <div>
                                     <div>
-                                        <!-- <div v-for="(emojiGroup, category) in emojis" :key="category"> -->
-                                        <!-- <h5>{{ category }}</h5> -->
                                         <div class="emoji_block">
                                             <el-scrollbar>
                                             <span class="emoji_class"
@@ -102,23 +91,28 @@
                                             >{{ emoji }}</span>
                                             </el-scrollbar>
                                         </div>
-                                        <!-- </div> -->
                                     </div>
                                     </div>
                                 </div>
                                 </emoji-picker>
-                            </div>
-                            <!-- <div class="tool_item chat_handle"><i class="icon iconfont">&#xeb96;</i></div> -->
+                            </div> -->
+                            <div class="tool_item chat_handle" @click="$message.error('暂时未开放')"><a-icon type="smile" /></div>
                             <div class="tool_item chat_handle">
-                                <el-upload :action="$api.chatUpload" :headers="upload_headers" :show-file-list="false" :on-success="chatUpload" >
-                                    <i class="icon iconfont">&#xebac;</i>
-                                </el-upload>
+                                <a-upload
+                                    :action="$api.chatImage"
+                                    :data="{token:$getSession('token_type')}"
+                                    :multiple="true"
+                                    :show-upload-list="false"
+                                    @change="chatUpload"
+                                >
+                                    <a-icon type="picture" />
+                                </a-upload>
                                 <!-- <i class="icon iconfont">&#xebac;</i> -->
                             </div>
-                            <div class="tool_item other_tool_item chat_handle" @click="$message.error('暂时未开放')"><i class="icon iconfont">&#xeb9d;</i>聊天记录</div>
+                            <div class="tool_item other_tool_item chat_handle" @click="$message.error('暂时未开放')"><a-icon type="bar-chart" />聊天记录</div>
                         </div>
                         <div class="chat_interface_right_send_text">
-                            <textarea v-model="sendMsg['content']['content']"></textarea>
+                            <textarea v-model="sendMsg.content"></textarea>
                         </div>
                         <div class="chat_interface_right_send_text_btn">
                             <button @click="send('text')">发送消息(E)</button>
@@ -134,21 +128,21 @@
 </template>
 
 <script>
-import EmojiPicker from 'vue-emoji-picker'
+import {mapState} from 'vuex'
 export default {
     components: {
-        EmojiPicker,
+        // EmojiPicker,
     },
     props: {
         minimize:{ // 最小化
             type:Boolean,
-            default:true,
+            default:true, // true
         },
         miniItem:{
             type:Boolean,
-            default:false,
+            default:false, // false
         },
-        sellerId:{
+        store_id:{
             type:Number,
             default:0,
         }
@@ -159,7 +153,7 @@ export default {
           minimizes:this.minimize,
           miniItems:this.miniItem,
           webSocketLink:"ws://127.0.0.1:2346",
-          music:"/music/chat.wav", // 播放音频地址
+          music:"/default.mp3", // 播放音频地址
           upload_headers:{},
           page:1, // 聊天页码
           socketObj:null,
@@ -173,19 +167,26 @@ export default {
           onChatIndex:0,
           sendMsg:{
               type:'text', // 类型
-              content:{
-                  content:'',// 聊天内容
-              }, // 内容
+              content:'', // 内容
+              uid:0,
+              send_type:0,
+              store_id:0,
           },
-          user_info:{}, // 链接成功后获取到的用户信息
           chat_friend:{}, // 好友列表
 
       };
     },
     watch: {},
-    computed: {},
+    computed: {...mapState('homeLogin',['isLogin','userInfo'])},
     methods: {
         websocketInit:function(){
+
+            // 判断是否登录
+            console.log(this.isLogin)
+            if(!this.isLogin){
+                this.$router.push('/user/login');
+            }
+
             if(typeof(WebSocket) === "undefined"){
                 alert("您的浏览器不支持socket")
             }else{
@@ -211,9 +212,10 @@ export default {
 
             // 如果登录了，且用户ID存在
             this.sendMsg.type = 'bind';
-            this.sendMsg.content = this.connect_info;
+            this.sendMsg.uid = this.userInfo.id;
+            this.sendMsg.store_id = this.store_id;
             let infoStr = JSON.stringify(this.sendMsg);
-            if(this.user_info.id>0){
+            if(this.userInfo.id>0){
                 this.socketObj.send(infoStr); // 发送用户ID到服务器
                 this.isBind = true; // 发送完了绑定信息
                 this.add_friend(); // 添加商家为好友
@@ -232,8 +234,8 @@ export default {
                 return;
             }
             // eslint-disable-next-line no-console
-            console.log(obj)
-
+            
+            let chatType = 1;
             switch(obj.type){
                 case 'bind': // 绑定用户成功
                     this.isOnline = true;
@@ -246,18 +248,25 @@ export default {
                     break;
                 case 'image': // 图片接收
                     break;
+                default :  // 都不是
+                    chatType = -1;
+                    break;
             }
 
+            if(chatType == -1){
+                return;
+            }
+            console.log(obj)
             // 只要不是心跳检测，就查询一次好友列表
             if(obj.type != '@heart@'){
                 this.get_chat_friend();
             }
 
             // 只要不是就处理到指定位置
-            if(obj.type != '@heart@' && obj.type != 'bind' && obj.type != 'error' && obj.type !='other'){
+            if(obj.type != 'bind' && obj.type != 'error' && obj.type !='other'){
 
                 // 判断如果发送人不是自己则提示音
-                if(obj.user_id != this.user_info.id){
+                if(obj.send_type==1){
                     let audio = new Audio(this.music);
                     audio.play();
                 }   
@@ -270,13 +279,17 @@ export default {
                 this.onChat.forEach((item,key)=>{
 
                     // 正在聊天则将聊天记录放入到onChat内
-                    if(item.id == obj.user_id || item.id == obj.to_user_id){
+                    if(item.id == obj.store_id){
+                        obj.store_logo = this.onChat[key].store_logo;
+                        obj.store_name = this.onChat[key].store_name;
+                        obj.avatar = this.onChat[key].avatar;
+                        obj.nickname = this.onChat[key].nickname;
                         this.onChat[key].chat_msg.data.push(obj) // 放入
-
+                        this.scrollDown();
                         // 如果消息存在onChat 则要清空未读记录
-                        if(obj.user_id != this.user_info.id){
-                            this.clearNoRead(obj.content.user_id,obj.content.to_user_id);
-                        }
+                        // if(obj.uid != this.user_info.id){
+                        //     this.clearNoRead(obj.content.user_id,obj.content.to_user_id);
+                        // }
                     }
                 });
             }
@@ -284,12 +297,12 @@ export default {
         },
         send: function (type) {
             this.sendMsg.type = type;
-            this.sendMsg.content.to_user_id = this.onChat[this.onChatIndex].id;
-            this.sendMsg.content.user_id = this.user_info.id;
+            this.sendMsg.store_id = this.onChat[this.onChatIndex].id;
             // 发送信息
             this.$post(this.$api.chatChatEvent,{data:this.sendMsg}).then(res=>{
                 if(res.code == 200){
-                    this.sendMsg.content.content = '';
+                    this.$set(this.sendMsg,'content','');
+                    // console.log(this.onChat)
                     this.scrollDown();
                 }else{
                     this.$message.error(res.msg);
@@ -301,10 +314,7 @@ export default {
             // eslint-disable-next-line no-console
             console.log("socket已经关闭")
         },
-        // 获取用户链接信息，如果未登陆则跳转登录
-        get_connect_info:function(){ 
-
-        },
+   
         insert(emoji) {
             if(this.$isEmpty(this.sendMsg.content.content)){
                 this.sendMsg.content.content = '';
@@ -315,7 +325,9 @@ export default {
         // 滚动条到底部
         scrollDown() {
             this.$nextTick(() => {
-                this.$refs['myScrollbar'].wrap.scrollTop = this.$refs['myScrollbar'].wrap.scrollHeight;
+                setTimeout(()=>{
+                    this.$refs['myScrollbar'].scrollTop = this.$refs['myScrollbar'].scrollHeight;
+                },600)
             })
             
         },
@@ -324,57 +336,54 @@ export default {
             this.$post(this.$api.chatReadMsg,{user_id:user_id,to_user_id:to_user_id}).then(()=>{});
         },
         // 图片上传成功
-        chatUpload:function(res){
-            let info = {
-                type:'image',
-                content:{
-                    to_user_id:0,
-                    user_id:0,
+        chatUpload:function(e){
+            if(e.file.status == 'done'){
+                let rs = e.file.response;
+                let info = {
+                    type:'image',
+                    uid:this.userInfo.id,
+                    store_id:0,
+                    send_type:0,
                     content:'',
-                }
-            };
-            info.content.to_user_id = this.onChat[this.onChatIndex].id;
-            info.content.user_id = this.user_info.id;
-            info.content.content = res.data;
-            // 发送信息
-            this.$post(this.$api.chatChatEvent,{data:info}).then(res=>{
-                if(res.code == 200){
-                    this.scrollDown();
+                
+                };
+                if(rs.code == 200){
+                    info.store_id = this.onChat[this.onChatIndex].id;
+                    info.content = rs.data;
+                    // 发送信息
+                    this.$post(this.$api.chatChatEvent,{data:info}).then(res=>{
+                        if(res.code == 200){
+                            this.scrollDown();
+                        }else{
+                            this.$message.error(res.msg);
+                        }
+                    });
+                    this.$forceUpdate();
                 }else{
-                    this.$message.error(res.msg);
+                    return this.$message.error(rs.msg);
                 }
-            });
-            this.$forceUpdate();
+            }
+            
+            
         },
         
-        // 获取用户信息
-        get_user_info:function(){
-            let user_info = localStorage.getItem('user_info');
-            if(this.$isEmpty(user_info)){
-                this.$message.error('请先登陆');
-                this.$router.push('/user/login');
-            }
-            this.user_info = JSON.parse(user_info);
-            this.connect_info.user_id = this.user_info.id;
-            // this.connect_info.to_user_id = 
-        },
+    
         // 把商家添加成好友
         add_friend:function(){
-            this.$post(this.$api.chatAddFriend,{firend_id:this.sellerId}).then(res=>{
+            this.$post(this.$api.chatAddFriend,{store_id:this.store_id}).then(res=>{
                 if(res.code==200){
                     // eslint-disable-next-line no-console
-                    console.log(res);
+                    console.log(res.msg);
                 }else{
-                    return this.$message.error(res.msg);
+                    console.log(res.msg)
                 }
             })
         },
         // 获取聊天好友列表
         get_chat_friend:function(){
-            this.$get(this.$api.chatGetChatFriend).then(res=>{
+            this.$get(this.$api.chatFriends).then(res=>{
                 if(res.code == 200){
-                    this.user_info = res.data.user_info;
-                    this.chat_friend = res.data.chat_friend;
+                    this.chat_friend = res.data.friends;
                     this.$forceUpdate();
                 }else{
                     this.$message.error(res.msg);
@@ -394,6 +403,7 @@ export default {
             if(!isOnChat){
                 this.onChat.push(info);
             }
+            console.log(this.onChat);
 
             // 获取聊天信息列表
             this.get_chat_msg(info);
@@ -413,13 +423,13 @@ export default {
         },
         // 获取聊天信息列表
         get_chat_msg:function(info){
-            this.$post(this.$api.chatGetChatMsg,{to_user_id:info.id,page:this.page}).then(res=>{
+            this.$post(this.$api.chatChatMsg,{store_id:info.id,page:this.page}).then(res=>{
                 if(res.code == 200){
                     this.onChat.forEach((item,key) => {
                         if(item.id == info.id){
                             res.data.data = res.data.data.reverse();
                             this.onChat[key].chat_msg = res.data;
-                            this.clearNoRead(this.user_info.id,item.id); // 将该正在聊天未读标记已读
+                            this.clearNoRead(this.userInfo.id,item.id); // 将该正在聊天未读标记已读
                             this.$forceUpdate();
                         }
                     });
@@ -432,9 +442,10 @@ export default {
 
     },
     created() {
-        this.upload_headers.Authorization = 'Bearer '+localStorage.getItem('token'); // 要保证取到
-        this.get_user_info();
-        // this.websocketInit();
+        // this.upload_headers.Authorization = 'Bearer '+localStorage.getItem('token'); // 要保证取到
+        // this.get_user_info();
+        this.websocketInit();
+        
     },
     mounted() {},
     destroyed () {
@@ -447,6 +458,9 @@ export default {
 .chat_image{
     max-width: 200px;
     max-height: 200px;
+    img{
+      width: 100%;  
+    }
 }
 .emoji_block{
     height: 170px;
@@ -537,6 +551,7 @@ export default {
             border-radius: 0 3px 0 0;
             i{
                 float:right;
+                line-height: 40px;
                 margin-right: 15px;
             }
         }
@@ -544,9 +559,7 @@ export default {
             height: 280px;
             padding-bottom: 15px;
             box-sizing: border-box;
-            .el-scrollbar{
-                height: 265px;
-            }
+            overflow-y: scroll;
             .chat_interface_msg_item{
                 padding: 15px 0 0 15px;
                 .chat_interface_msg_avatar{
@@ -590,7 +603,7 @@ export default {
                     word-wrap:break-word;
                     // display:inline-block;
                     min-width: 140px;
-                    max-width: 400px;
+                    max-width: 250px;
                     height: 100%;
                     margin-left: 52px;
                 }
@@ -699,7 +712,8 @@ export default {
 }
 .chat_friend_interface_content{
     dl{
-        padding: 15px 0 10px 0; 
+        padding: 15px 0 10px 0;
+        border-bottom: 1px solid #efefef;; 
         dt{
             width: 40px;
             height: 40px;
@@ -825,7 +839,7 @@ export default {
             }
             i{
                 float: right;
-                line-height: 40px;
+                line-height: 50px;
                 margin-right: 10px;
             }
         }
@@ -862,13 +876,5 @@ export default {
     cursor:pointer;
 }
 
-@font-face {
-  font-family: 'iconfont';  /* project id 1617825 */
-  src: url('//at.alicdn.com/t/font_1617825_5wjqc8ogtbk.eot');
-  src: url('//at.alicdn.com/t/font_1617825_5wjqc8ogtbk.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1617825_5wjqc8ogtbk.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1617825_5wjqc8ogtbk.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1617825_5wjqc8ogtbk.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1617825_5wjqc8ogtbk.svg#iconfont') format('svg');
-}
+
 </style>

@@ -2,95 +2,61 @@
 
 namespace App\Http\Controllers\Home;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Order;
-use App\Models\OrderGoods;
+use App\Http\Resources\Home\OrderResource\OrderCollection;
+use App\Http\Resources\Home\OrderResource\OrderResource;
+use App\Services\OrderService;
+use Illuminate\Http\Request;
 
-class OrderController extends BaseController
+class OrderController extends Controller
 {
-    // 获取订单需要的信息
-    public function buy(Request $req){
-
+    
+    // 获取订单列表
+    public function get_orders(){
+        $order_service = new OrderService();
+        $list = $order_service->getOrders()['data'];
+        return $this->success(new OrderCollection($list));
     }
 
-    // 开始生成订单
-    public function create_order(Request $req,Order $order_model){
-        $data['data'] = $req->info;
-        $data['remark'] = $req->remark;
-        $data['is_cart'] = $req->type==1?true:false;
-
-        if($req->type == 2){
-            $data['is_groupbuy'] = true;
-        }
-
-        $rs = $order_model->create_order($data);
-        if($rs['status']){
-            return $this->success_msg('ok',$rs['data']);
-        }else{
-            return $this->error_msg($rs['msg']);
-        }
+    // 创建订单
+    public function create_order(){
+        $order_service = new OrderService;
+        $rs = $order_service->createOrder();
+        return $rs['status']?$this->success($rs['data']):$this->error($rs['msg']);
     }
 
-    // 根据参数获取订单数据 购物车或者直接购买
-    public function get_befor_order(Request $req,Order $order_model){
-        $info = $req->info;
-        $type = $req->type==1?true:false;
-
-        // 团购
-        $is_groupbuy = false;
-        if($req->type == 2){
-            $is_groupbuy = true;
-        }
-
-        $store_arr = $order_model->get_befor_order($info,$type,$is_groupbuy);
-        return $this->success_msg('ok',$store_arr['data']);
+    // 创建订单前
+    public function create_order_before(){
+        $order_service = new OrderService;
+        $rs = $order_service->createOrderBefore();
+        return $rs['status']?$this->success($rs['data']):$this->error($rs['msg']);
     }
 
-    // 获取订单信息
-    public function get_order_info_by_order_no(Request $req,Order $order_model){
-        return $this->success_msg('ok',$order_model->getOrderInfoByOrderNo($req->order_no));
+    // 创建订单后
+    public function create_order_after(){
+        $order_service = new OrderService;
+        $rs = $order_service->createOrderAfter();
+        return $rs['status']?$this->success($rs['data']):$this->error($rs['msg']);
     }
 
-    // 获取订单信息
-    public function get_order_info_by_order_id(Request $req,Order $order_model,OrderGoods $order_goods_model){
-        $user_info = auth()->user();
-        $order_info = $order_model->where('id',$req->order_id)->where('user_id',$user_info['id'])->first();
-        $order_info['goods_list'] = $order_goods_model->where('order_id',$order_info['id'])->get();
-        $order_info = get_order_status_one($order_info);
-        if(empty($order_info)){
-            return $this->error_msg('非法数据');
-        }else{
-            return $this->success_msg('ok',$order_info);
-        }
+    // 支付订单
+    public function pay(){
+        $order_service = new OrderService();
+        $rs = $order_service->payOrder();
+        return $rs['status']?$this->success($rs['data']):$this->error($rs['msg']);
     }
 
-    // 取消订单
-    public function close_order(Request $req,Order $order_model){
-        $order_no = $req->order_no;
-        $order_info = $order_model->where('order_no',$order_no)->first();
-        if($order_info['pay_status'] == 1){
-            return $this->error_msg('订单无法取消');
-        }
-        $order_model->where('order_no',$order_no)->update(['order_status'=>2,'close_time'=>time()]);
-        return $this->success_msg('取消成功');
+    // 修改订单状态 // 用户只能操作取消订单
+    public function edit_order_status(Request $request){
+        $order_service = new OrderService();
+        $rs = $order_service->editOrderStatus($request->id,$request->order_status,'user');
+        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
     }
 
-    // 申请售后
-    public function refund(Request $req,Order $order_model){
-        $id = $req->id;
-        $refund_info = $req->refund_info;
-        $refund_status = $req->refund_status;
-        $rs = $order_model->where('id',$id)->update(['refund'=>1,'refund_status'=>$refund_status,'refund_info'=>$refund_info]);
-        return $this->success_msg('申请成功');
+    // 获取订单详情
+    public function get_order_info($id){
+        $order_service = new OrderService();
+        $rs = $order_service->getOrderInfoById($id,'user');
+        return $rs['status']?$this->success(new OrderResource($rs['data']),$rs['msg']):$this->error($rs['msg']);
     }
-
-    // 寄回快递单号填写
-    public function refund_delivery_no(Request $req,Order $order_model){
-        $id = $req->id;
-        $refund_delivery_no = $req->refund_delivery_no;
-        $rs = $order_model->where('id',$id)->update(['refund'=>1,'refund_step'=>2,'refund_delivery_no'=>$refund_delivery_no]);
-        return $this->success_msg('提交成功');
-    }
-
 }

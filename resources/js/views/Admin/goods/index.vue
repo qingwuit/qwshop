@@ -1,188 +1,151 @@
 <template>
     <div class="qingwu">
-        <div class="admin_main_block">
-            <div class="admin_main_block_top">
-                <div class="admin_main_block_left">
-                    <div><router-link to="/Admin/goods/goods_verify"><el-badge v-if="goods_verify_count>0" :value="goods_verify_count" :max="99" class="item"><el-button icon="el-icon-receiving">待审核列表</el-button></el-badge><el-button v-else icon="el-icon-receiving">待审核列表</el-button></router-link></div>
-                    <!-- <div><el-input v-model="name" placeholder="请输入内容"></el-input></div>
-                    <div><el-button icon="el-icon-search">条件筛选</el-button></div> -->
-                    <div><el-input v-model="where.goods_name" placeholder="商品名"></el-input></div>
-                    <div style="width:160px;">
-                        <el-select v-model="where.type" placeholder="选择类型">
-                            <el-option label="全部" value=""></el-option>
-                        </el-select>
-                    </div>
-                    <div><el-button icon="el-icon-search" @click="get_goods_list()">条件筛选</el-button></div>
-                </div>
+        <div class="admin_table_page_title">商品管理</div>
+        <div class="unline underm"></div>
 
-                <div class="admin_main_block_right">
-                    <!-- <div><el-button type="danger" icon="el-icon-delete" @click="del(select_id)">批量删除</el-button></div> -->
-                </div>
-            </div>
-            <div class="admin_table_main">
-                <el-table :data="list" @selection-change="handleSelectionChange" >
-                    <el-table-column type="selection"></el-table-column>
-                    <!-- <el-table-column prop="id" label="#" fixed="left" width="70px"></el-table-column> -->
-                    <el-table-column prop="id" label="#"  width="70px"></el-table-column>
-                    <el-table-column label="商品名称" width="400px">
-                        <template slot-scope="scope">
-                            <dl class="table_dl">
-                                <dt><el-image style="width: 50px; height: 50px" :src="scope.row.goods_master_image"><div slot="error" class="image-slot"><i class="el-icon-picture-outline"></i></div></el-image></dt>
-                                <dd class="table_dl_dd_all">{{ scope.row.goods_name }}</dd>
-                            </dl>
-                        </template>
-                    </el-table-column>
-                    <el-table-column label="商品状态">
-                        <template slot-scope="scope">
-                            <el-tag type="success" v-if="scope.row.goods_verify==1">通过</el-tag>
-                            <el-tag type="warning" v-else-if="scope.row.goods_verify==2">审核中</el-tag>
-                            <el-tag type="danger" v-else-if="scope.row.goods_verify==0">失败</el-tag>
-                        </template> 
-                    </el-table-column>
-                    <el-table-column label="是否上架">
-                        <template slot-scope="scope">
-                            <div :class="scope.row.goods_status==1?'green_round':'gray_round'" @click="goods_status(scope.row.id)"></div>
-                        </template> 
-                    </el-table-column>
-                    <el-table-column label="PC推荐首页">
-                        <template slot-scope="scope">
-                            <div :class="scope.row.is_index==1?'green_round':'gray_round'" @click="goods_index(scope.row.id)"></div>
-                        </template> 
-                    </el-table-column>
-                    <el-table-column prop="goods_price" label="价格"></el-table-column>
-                    <el-table-column prop="all_goods_num" label="库存">
-                        <template slot-scope="scope">
-                            <div>{{scope.row.all_goods_num||scope.row.goods_num}}</div>
-                        </template> 
-                    </el-table-column>
-                    <el-table-column label="修改时间">
-                        <template slot-scope="scope">
-                            <div>{{scope.row.edit_time|formatDate}}</div>
-                        </template> 
-                    </el-table-column>
-                    <el-table-column label="操作" fixed="right" width="120px">
-                        <template slot-scope="scope">
-                            <el-button icon="el-icon-edit" :disabled="scope.row.goods_verify==1 || scope.row.goods_verify==0" @click="verify_click(scope.row.id)">审核</el-button>
-                            <!-- <el-button type="danger" icon="el-icon-delete" @click="del(scope.row.id)">删除</el-button> -->
-                        </template>
-                    </el-table-column>
-                </el-table>
-                <div class="admin_table_main_pagination">
-                    <el-pagination @current-change="current_change" background layout="prev, pager, next,jumper,total" :total="total_data" :page-size="page_size" :current-page="current_page"></el-pagination>
-                </div>
+        <admin-search :searchConfig="searchConfig" @searchParams="search"></admin-search>
+
+        <div class="admin_table_handle_btn">
+            <!-- <a-button style="margin-right:20px" @click="$router.push('/Seller/goods/chose_class')" type="primary" icon="plus">添加商品</a-button> -->
+            <a-badge :count="0" style="margin-right:20px">
+                <a-button @click="to_nav(1)" icon="check-square">通过审核</a-button>
+            </a-badge>
+            <a-badge :count="count.wait" style="margin-right:20px">
+                <a-button @click="to_nav(2)" icon="solution">等待审核</a-button>
+            </a-badge>
+            <a-badge :count="count.refuse" style="margin-right:20px">
+                <a-button @click="to_nav(0)" icon="close-square">审核失败</a-button>
+            </a-badge>
+            <!-- <a-button class="admin_delete_btn" type="danger" icon="delete" @click="del">批量删除</a-button> -->
+        </div>
+        <div class="admin_table_list">
+            <a-table :columns="columns" :data-source="list" :pagination="false" :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" row-key="id">
+                <span slot="name" slot-scope="rows">
+                    <div class="admin_goods_pic_txt">
+                        <div class="img"><img v-if="rows.goods_master_image" :src="rows.goods_master_image"><a-icon v-else type="picture" /></div>
+                        <div class="block">
+                            <div class="text" :title="rows.goods_name">{{rows.goods_name}}</div>
+                            <!-- <div class="tag">标签：
+                                <a-tag color="orange">推荐</a-tag>
+                                <a-tag color="red">HOT</a-tag>
+                                <a-tag color="green">团购</a-tag>
+                                <a-tag color="cyan">秒杀</a-tag>
+                                <a-tag color="purple">劵</a-tag>
+                            </div> -->
+                        </div>
+                        
+                        <div class="clear"></div>
+                    </div>
+                </span>
+                <span slot="goods_status" slot-scope="rows">
+                    <div style="margin:0 auto" :class="rows.goods_status==1?'green_round':'red_round'"></div>
+                </span>
+                <span slot="action" slot-scope="rows">
+                    <a-button icon="read" @click="$router.push('/goods/'+rows.id)">前往</a-button>
+                    <a-button icon="edit" @click="$router.push('/Admin/goods/form/'+rows.id)">查看</a-button>
+                </span>
+            </a-table>
+            <div class="admin_pagination" v-if="total>0">
+                <a-pagination v-model="params.page" :page-size.sync="params.per_page" :total="total" @change="onChange" show-less-items />
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import adminSearch from '@/components/admin/search'
 export default {
-    components: {},
+    components: {adminSearch,},
     props: {},
     data() {
       return {
-          list:[],
-          total_data:0, // 总条数
-          page_size:20,
-          current_page:1,
-          select_id:'',
-          goods_verify_count:0,
-          where:{
-              goods_name:'',
+          params:{
+              page:1,
+              per_page:30,
           },
+          total:0, //总页数
+          searchConfig:[
+              {label:'商品名称',name:'goods_name',type:'text'},
+            //   {label:'商品编号',name:'goods_no',type:'text'},
+              {label:'上架状态',name:'goods_status',type:'select',data:[{label:'全部',value:''},{label:'上架',value:1},{label:'下架',value:0}]},
+            //   {label:'审核状态',name:'goods_verify',type:'select',data:[{label:'已审核',value:1},{label:'未审核',value:0}]},
+              {label:'商品品牌',name:'brand_id',type:'text'},
+              {label:'商品分类',name:'class_id',type:'text'},
+          ],
+          selectedRowKeys:[], // 被选择的行
+          columns:[
+              {title:'商品名称',key:'id',scopedSlots: { customRender: 'name' }},
+              {title:'上架状态',key:'id',scopedSlots: { customRender: 'goods_status' }},
+              {title:'品牌',dataIndex:'brand_name'},
+              {title:'价格',dataIndex:'goods_price'},
+              {title:'库存',dataIndex:'goods_stock'},
+              {title:'销量',dataIndex:'goods_sale'},
+              {title:'修改时间',dataIndex:'updated_at'},
+              {title:'操作',key:'id',scopedSlots: { customRender: 'action' }},
+          ],
+          list:[],
+          count:[],
       };
     },
     watch: {},
     computed: {},
     methods: {
-        handleSelectionChange:function(e){
-            let ids = [];
-            e.forEach(v => {
-                ids.push(v.id);
-            });
-            this.select_id = ids.join(',');
+        search(params){
+            let page = this.params.page;
+            let per_page = this.params.per_page;
+            this.params = params;
+            this.params.page = page;
+            this.params.per_page = per_page;
+            this.onload();
         },
-        get_goods_list:function(){
-            this.where.page = this.current_page;
-            this.$post(this.$api.getAdminGoodsList,this.where).then(res=>{
-                this.page_size = res.data.per_page;
-                this.total_data = res.data.total;
-                this.current_page = res.data.current_page;
-                this.list = this.$formatGoods(res.data.data);
-                this.goods_verify();
-            })
-
+        // 选择框被点击
+        onSelectChange(selectedRowKeys) {
+            this.selectedRowKeys = selectedRowKeys;
         },
-        // 删除处理
-        del:function(id){
-            if(this.$isEmpty(id)){
-                return this.$message.error('请先选择删除的对象');
+        // 删除
+        del(){
+            if(this.selectedRowKeys.length==0){
+                return this.$message.error('未选择数据.');
             }
-            this.$post(this.$api.delGoods,{id:id}).then(res=>{
-                if(res.code == 200){
-                    this.get_goods_list();
-                    return this.$message.success("删除成功");
-                }else{
-                    return this.$message.error("删除失败");
-                }
+            this.$confirm({
+                title: '你确定要删除选择的数据？',
+                content: '确定删除后无法恢复.',
+                okText: '是',
+                okType: 'danger',
+                cancelText: '取消',
+                onOk:()=> {
+                    let ids = this.selectedRowKeys.join(',');
+                    this.$delete(this.$api.sellerGoods+'/'+ids).then(res=>{
+                        if(res.code == 200){
+                            this.onload();
+                            this.$message.success('删除成功');
+                        }else{
+                            this.$message.error(res.msg)
+                        }
+                    });
+                    
+                },
             });
         },
-        // 指定ID修改状态
-        goods_status:function(id){
-            this.$post(this.$api.adminGoodsStatus,{id:id}).then(res=>{
-                if(res.code==200){
-                    this.$message.success('操作成功');
-                }else{
-                    this.$message.success('操作失败');
-                }
-                this.get_goods_list();
+        onload(){
+            this.$get(this.$api.adminGoods,this.params).then(res=>{
+                this.list = res.data.data;
+                this.count = res.data.count;
+                this.total = res.data.total;
             });
         },
-        goods_index:function(id){
-            this.$post(this.$api.adminGoodsIndex,{id:id}).then(res=>{
-                if(res.code==200){
-                    this.$message.success('操作成功');
-                }else{
-                    this.$message.success('操作失败');
-                }
-                this.get_goods_list();
-            });
-        },
-        // 获取待审核数据
-        goods_verify:function(){
-            this.$post(this.$api.goodsVerify,{page:this.current_page}).then(res=>{
-                this.goods_verify_count = res.data.total;
-            });
-        },
-        verify_click:function(id){
-            this.$confirm('此操作将控制商品是否通过审核, 是否继续?', '提示', {
-                confirmButtonText: '同意',
-                cancelButtonText: '拒绝',
-                type: 'info'
-            }).then(() => {
-                this.$post(this.$api.goodsVerifyChange,{id:id,status:1}).then(()=>{
-                    this.$message.success('成功审核');
-                    this.get_goods_list();
-                });
-                
-            }).catch(() => {
-                this.$post(this.$api.goodsVerifyChange,{id:id,status:0}).then(()=>{
-                    this.$message.info('已拒绝');
-                    this.get_goods_list();
-                });
-                      
-            });
-        },
-        current_change:function(e){
-            this.current_page = e;
-            this.get_goods_list();
+        to_nav(e){
+            this.params.goods_verify = e;
+            this.params.page = 1;
+            this.onload();
         },
     },
     created() {
-        this.get_goods_list();
+        this.onload();
     },
     mounted() {}
 };
 </script>
 <style lang="scss" scoped>
+
 </style>

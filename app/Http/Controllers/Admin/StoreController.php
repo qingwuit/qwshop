@@ -2,55 +2,78 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\StoreResource\StoreCollection;
+use App\Http\Resources\Admin\StoreResource\StoreResource;
 use App\Models\Store;
-use App\Models\Roles;
-use App\Models\Users;
+use App\Services\StoreService;
+use Illuminate\Http\Request;
 
-class StoreController extends BaseController
+class StoreController extends Controller
 {
-    public function index(Request $req,Store $store_model){
-
-        $store_verify = 1; // 默认取审核通过的店铺
-        $where = [
-            'store_verify' => $store_verify,
-        ];
-
-        if(isset($req->store_verify)){
-            $where['store_verify'] = $req->store_verify;
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request,Store $store_model)
+    {
+        $store_verify = 3;
+        // 店铺名称
+        if(empty($request->store_name)){
+            $store_model->where('store_name','like','%'.$request->store_name.'%');
         }
-
-        $list = $store_model->where($where)->orderBy('id','desc')->paginate(20);
-        
-		return $this->success_msg('Success',$list);
-	}
-
-
-	public function del(Request $req,Store $store_model){
-		$id = $req->id;
-		$ids = explode(',',$id);
-        $store_model->destroy($ids);
-        return $this->success_msg();
+        // 申请公司名称
+        if(empty($request->store_company_name)){
+            $store_model->where('store_company_name','like','%'.$request->store_company_name.'%');
+        }
+        // 审核状态
+        if(isset($request->store_verify)){
+            $store_verify = $request->store_verify;
+        }
+        $list = new StoreCollection($store_model->where('store_verify',$store_verify)->orderBy('id','desc')->paginate($request->per_page??30));
+        return $this->success($list);
     }
-    
-    // 修改店铺信息  审核之类的
-    public function store_pass(Request $req,Store $store_model,Roles $roles_model,Users $users_model){
-        $info = $req->only(['store_verify','store_status','store_close_info','id']);
-        $store_model->where('id',$info['id'])->update($info);
 
-        // 增加权限
-        $store_info = $store_model->find($info['id']);
-        $users = $users_model->find($store_info['user_id']);
 
-        if($store_info['user_id'] != 1){
-            if($info['store_status'] == 1 && $info['store_verify'] == 1){
-                $users->roles()->sync([30]);
-            }else{
-                $users->roles()->sync([]);
-            }
-        }
 
-        return $this->success_msg('Success',[]);
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Store $store_model,$id)
+    {
+        $info = $store_model->find($id);
+        return $this->success(new StoreResource($info));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request,StoreService $store_service, $id)
+    {
+        $store_verify_status = $store_service->editStoreStatus($id,['store_verify'=>$request->store_verify,'store_status'=>$request->store_status,'store_refuse_info'=>$request->store_refuse_info]);
+        return $store_verify_status['status']?$this->success($store_verify_status['data'],__('stores.store_success')):$this->error($store_verify_status['msg']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Store $store_model,$id)
+    {
+        $idArray = array_filter(explode(',',$id),function($item){
+            return is_numeric($item);
+        });
+        $store_model->destroy($idArray);
+        return $this->success([],__('base.success'));
     }
 }

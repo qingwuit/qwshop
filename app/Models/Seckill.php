@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Seckill extends Model
 {
-    protected $table = "seckill"; //指定表
-    protected $primaryKey = "id"; //指定id字段
-    public $timestamps = false;
+    protected $dates = ['start_time','end_time'];
+
+    public function goods(){
+        return $this->hasOne("App\Models\Goods",'id','goods_id');
+    }
 }

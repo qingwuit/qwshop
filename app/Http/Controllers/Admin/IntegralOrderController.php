@@ -2,55 +2,57 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\IntegralOrderResource\IntegralOrderCollection;
+use App\Http\Resources\Admin\IntegralOrderResource\IntegralOrderResource;
 use App\Models\IntegralOrder;
-use App\Tools\Helper;
+use App\Services\IntegralOrderService;
+use Illuminate\Http\Request;
 
-class IntegralOrderController extends BaseController
+class IntegralOrderController extends Controller
 {
-    public function index(Request $req,IntegralOrder $integral_order_model){
-
-        // 条件
-        $params = json_decode($req->params,true);
-        if($params['times'] != null && count($params['times'])>0){
-            $integral_order_model = $integral_order_model->where('add_time','>=',strtotime($params['times'][0]))->where('add_time','<=',strtotime($params['times'][1]));
-        }
-        if(!empty($params['type'])){
-            $integral_order_model = $integral_order_model->where(get_integral_order_params($params['type']));
-        }
-        if(!empty($params['order_no'])){
-            $integral_order_model = $integral_order_model->where('order_no',$params['order_no']);
-        }
-
-        $list = $integral_order_model->orderBy('id','desc')->paginate(20)->toArray();
-        $list['data'] = get_integral_order_status($list['data']);
-        return $this->success_msg('Success',$list);
-    }
-
-    public function info(Request $req,IntegralOrder $integral_order_model){
-        $id = $req->id;
-        $helper_model = new Helper();
-        $info = $integral_order_model->where('id',$id)->with('integral_order_goods')->first();
-        $info = get_integral_order_status_one($info);
-        // var_dump($info['delivery_no']);
-        if(!empty($info['delivery_no'])){
-            $info['delivery_list'] = json_decode($helper_model->get_freight_info($info['delivery_no']),true);
-        }
-        return $this->success_msg('Success',$info);
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(IntegralOrderService $order_service)
+    {
+        $rs = $order_service->getOrders('admin');
+        return $rs['status']?$this->success(new IntegralOrderCollection($rs['data'])):$this->error($rs['msg']);
     }
 
 
-    // 发货物流填写
-    public function send_delivery(Request $req,IntegralOrder $integral_order_model){
-        $delivery_no = $req->delivery_no??'';
-        $order_id = $req->order_id??0;
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(IntegralOrderService $order_service,$id)
+    {
+        $rs = $order_service->getOrderInfoById($id,'seller');
+        return $rs['status']?$this->success(new IntegralOrderResource($rs['data'])):$this->error($rs['msg']);
+    }
 
-        $delivery_data = [
-            'delivery_no'       =>  $delivery_no,
-            'delivery_status'   =>  1,
-        ];
-        $rs = $integral_order_model->where(['id'=>$order_id])->update($delivery_data);
-        return $this->success_msg('ok',$rs);
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request,IntegralOrder $order_model, $id)
+    {
+        $order_model = $order_model->where(['id'=>$id])->first();
+        $order_model->delivery_code = $request->delivery_code??'yd';
+        $order_model->delivery_no = $request->delivery_no??'123456';
+
+        // 判断是否需要修改订单状态
+        if($order_model->order_status==2){
+            $order_model->order_status = 6;
+        }
+        $order_model->save();
+        return $this->success([],__('base.success'));
     }
 }

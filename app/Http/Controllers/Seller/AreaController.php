@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Seller;
 
-use Illuminate\Http\Request;
-use App\Models\Area;
+use App\Http\Controllers\Controller;
+use App\Services\AreaService;
 
-class AreaController extends BaseController
+class AreaController extends Controller
 {
-    // 获取省市区信息
-    public function get_area_list(Area $area_model){
-        $rs = $area_model->get_area_list();
-        return $this->success_msg('Success',$rs);
+    // 获取格式化全国省市区地址
+    public function areas(AreaService $area_service){
+        $list = $area_service->getAreas()['data'];
+        return $this->success($list);
     }
 }
