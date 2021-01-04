@@ -36,7 +36,7 @@ composer create-project qingwuit/qwshop blog
 php artisan qwshop:install
 
 npm install
-npm prd
+npm prod
 
 // 在线聊天
 Ngnix 
@@ -68,5 +68,7 @@ app\Workerman\run.bat
 
 #### 20210104
 1、mysql5.5 不兼容的问题
+
 2、sql文件不全的问题
+
 3、安装命令写错了
