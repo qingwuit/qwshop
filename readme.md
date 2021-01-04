@@ -31,12 +31,19 @@
 ## How Run 如何安装青梧商城
 
 ``` php
-composer require qingwuit/qwshop
+
+composer create-project qingwuit/qwshop blog
 php artisan qwshop:install
 
 npm install
 npm prd
 
+// 在线聊天
+Ngnix 
+php artisan workerman start
+
+win
+app\Workerman\run.bat
 
 ```
 
@@ -51,7 +58,15 @@ npm prd
 
 3、安装后无法打开，是否忘记配置伪静态ngnix  linux 查看 `chmod -R 777 storage` 是否给权限
 
+4、演示得到链接为1.0版本，如需看最新版本得自己本地安装
+
 4、`暂时没有APP 小程序版本，还在开发`，如果有做完我会第一时间发出来的
 
 ## Common Problem 常见问题
 
+## Version 更新记录
+
+#### 20210104
+1、mysql5.5 不兼容的问题
+2、sql文件不全的问题
+3、安装命令写错了
