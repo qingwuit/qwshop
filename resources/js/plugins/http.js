@@ -53,13 +53,15 @@ axios.interceptors.response.use(function (res) {
     let adminIndex = res.config.url.search(adminPatt);
     let sellerIndex = res.config.url.search(sellerPatt);
 
+    // 防止多次出现
+    message.destroy();
+    
     if(res.status != 200){
-      Message.error(res.statusText);
+        return message.error(res.statusText);
 	}
 	
 	// 如果出现401 代表token 失效
 	if(res.data.code == 401){
-        
         message.error(res.data.msg);
         if(adminIndex>-1){
             localStorage.removeItem('admin_token');
@@ -78,7 +80,7 @@ axios.interceptors.response.use(function (res) {
 
     // 如果出现402 代表接口无权限 失效
 	if(res.data.code == 402){
-        message.error(res.data.msg);
+        return message.error(res.data.msg);
     }
     
     // 429 代表请求太频繁
