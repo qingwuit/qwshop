@@ -95,7 +95,7 @@ class CartService extends BaseService{
             'user_id'=>$user_info['id'],
             'goods_id'=>$goods_id,
             'sku_id'=>$sku_id,
-            'buy_num'=>$buy_num,
+            // 'buy_num'=>$buy_num,
 
         ])->first();
 

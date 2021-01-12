@@ -72,7 +72,7 @@
                         <span class="span_time">团购价：￥ {{goods_info.goods_price*(1-collectives.discount/100)||'0.00'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 需要 {{collectives.need}} 人</span>
                     </div>
                     <div class="tuan_list" v-if="collectives && collective_list.length>0">
-                        <a-carousel autoplay :autoplaySpeed="3000" speed="1000" :vertical="true" :dots="false">
+                        <a-carousel autoplay :autoplaySpeed="3000" speed="1000" :vertical="true" :adaptiveHeight="true" :dots="false">
                             <div class="tuan_item" v-for="(v,k) in collective_list" :key="k">
                                 <img v-lazy="require('@/asset/user/user_default.png')">
                                 <div class="nickname">{{v.nickname}}</div>
@@ -423,6 +423,7 @@ export default {
 
         // 属性被选择点击
         attr_click:function(e,index){
+            console.log(123)
             this.goods_info.attrList[e]['specs'].forEach((res,key)=>{
                 res.is_chose = false;
                 if(key == index){
@@ -811,6 +812,7 @@ export default {
             margin-right: 15px;
         }
         .goods_info_num_jian,.goods_info_num_jia{
+            cursor: pointer;
             border:1px solid #efefef;
             width: 25px;
             height: 25px;
@@ -843,6 +845,7 @@ export default {
         margin-top: 20px;
     }
     .goods_info_add_cart,.goods_info_buy{
+        cursor: pointer;
         line-height: 40px;
         float: left;
         margin-right: 20px;
@@ -857,6 +860,7 @@ export default {
         }
     }
     .goods_info_buy{
+        cursor: pointer;
         background: #ca151e;
         i{
             font-size: 16px;
@@ -865,6 +869,7 @@ export default {
     }
 
     .goods_info_add_groupbuy{
+        cursor: pointer;
         line-height: 40px;
         float: left;
         margin-right: 20px;
@@ -1081,12 +1086,15 @@ export default {
     padding-left:10px; 
     line-height: 20px;
     color:#666;
+    position: relative;
+    z-index: 200;
     .spec_list{
         margin-bottom: 10px;
         span{float: left;width: 84px;}
         ul{
             float: left;
             li{
+                cursor: pointer;
                 float: left;
                 color:#666;
                 border:1px solid #e1e1e1;
