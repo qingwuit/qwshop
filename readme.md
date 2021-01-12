@@ -39,7 +39,7 @@ npm install
 npm prod
 
 // 在线聊天
-Ngnix 
+Linux 
 php artisan workerman start
 
 win
