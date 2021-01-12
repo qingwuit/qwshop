@@ -138,6 +138,7 @@ export default {
                     this.$message.success('设置地址成功');
                     this.address_id = id;
                 }else{
+                    this.$message.destroy();
                     this.$message.error(res.msg)
                 }
             })
@@ -153,6 +154,7 @@ export default {
                     })
                     this.order = res.data;
                 }else{
+                    this.$message.destroy();
                     this.$message.error(res.msg)
                     return this.$router.go(-1)
                 }
