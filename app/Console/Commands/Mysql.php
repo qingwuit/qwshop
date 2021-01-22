@@ -40,7 +40,7 @@ class Mysql extends Command
     {
         $name = $this->argument('name');
         if($name == 'insert'){
-            DB::unprepared(file_get_contents(app_path('Console\Commands\qwshop.sql'))); // 直接执行sql文件 导入数据
+            DB::unprepared(file_get_contents(app_path('Console'.DIRECTORY_SEPARATOR.'Commands'.DIRECTORY_SEPARATOR.'qwshop.sql'))); // 直接执行sql文件 导入数据
         }
     }
 }

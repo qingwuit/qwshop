@@ -63,6 +63,7 @@ class AddressService extends BaseService{
         $address_info->receive_name = request()->receive_name??'';
         $address_info->receive_tel = request()->receive_tel??'';
         $address_info->address = request()->address??'';
+        $address_info->area_info = request()->area_info??'';
         $address_info->province_id = request()->province_id??'';
         $address_info->city_id = request()->city_id??'';
         $address_info->region_id = request()->region_id??'';

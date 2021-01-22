@@ -361,7 +361,12 @@ class GoodsService extends BaseService{
     
                 // 栏目
                 if(isset($params_array['class_id']) && !empty($params_array['class_id'])){
-                    $goods_model = $goods_model->whereIn('class_id',$params_array['class_id']);
+                    if(is_array($params_array['class_id']) ){
+                        $goods_model = $goods_model->whereIn('class_id',$params_array['class_id']);
+                    }else{
+                        $goods_model = $goods_model->where('class_id',$params_array['class_id']);
+                    }
+                    
                 }
 
                 // 商家
