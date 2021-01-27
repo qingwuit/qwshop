@@ -106,6 +106,7 @@ return [
             'path' => storage_path('logs/qwlog.log'),
             'level' => 'debug',
             'days' => 1,
+            'permission' => 0777,
         ],
     ],
 
