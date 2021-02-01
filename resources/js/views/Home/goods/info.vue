@@ -74,7 +74,7 @@
                     <div class="tuan_list" v-if="collectives && collective_list.length>0">
                         <a-carousel autoplay :autoplaySpeed="3000" speed="1000" :vertical="true" :adaptiveHeight="true" :dots="false">
                             <div class="tuan_item" v-for="(v,k) in collective_list" :key="k">
-                                <img v-lazy="require('@/asset/user/user_default.png')">
+                                <img v-lazy="v.avatar||require('@/asset/user/user_default.png')">
                                 <div class="nickname">{{v.nickname}}</div>
                                 <div class="btn" @click="collective_id=v.id;buy()">参团</div>
                                 <div class="orders_count">已经参团 {{v.orders_count}} / {{v.need}} 人</div>

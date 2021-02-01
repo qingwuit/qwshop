@@ -48,7 +48,7 @@
                     <div class="store_title">
                         <div>
                             <span class="float_left">订单号：{{v.order_no}}</span>
-                            <div class="float_right"><span style="font-size:14px;color:#666;">优惠金额：</span> <font color="#ca151e">-{{v.coupon_money}}</font></div>
+                            <div class="float_right" v-if="v.coupon_money && v.coupon_money<=0"><span style="font-size:14px;color:#666;">优惠金额：</span> <font color="#ca151e">-{{v.coupon_money}}</font></div>
                             <div class="clear"></div>
                         </div>
                         
