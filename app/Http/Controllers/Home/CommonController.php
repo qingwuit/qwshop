@@ -16,7 +16,6 @@ class CommonController extends Controller
         $data['brands'] = $goods_brand_service->getBrands()['data']; // 商品分类
 
         // 可以使用 Resource 控制达到脱敏
-        // $data['common'] = new ConfigResource($config_service->getFormatConfig());
         $data['common'] = ConfigResource::make($config_service->getFormatConfig())->resolve();
         return $this->success($data);
     }

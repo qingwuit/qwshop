@@ -60,23 +60,25 @@ export default {
             this.token = this.$getSession('token_type');
             var editor = new wangeditor('#editor');
             this.content = this.contents;
-            editor.customConfig.debug = true;
-            editor.customConfig.zIndex = 100;
-            editor.customConfig.showLinkImg = false;
-            editor.customConfig.uploadFileName = 'file[]';
-            editor.customConfig.uploadImgMaxLength = 5;
+            editor.config.debug = true;
+            editor.config.zIndex = 100;
+            editor.config.showLinkImg = false;
+            editor.config.uploadFileName = 'file[]';
+            editor.config.uploadImgMaxLength = 5;
             if(token_type=='admin_token'){
-                editor.customConfig.uploadImgServer = this.$api.adminEditor;  // 上传图片到服务器
+                editor.config .uploadImgServer = this.$api.adminEditor;  // 上传图片到服务器
             }
             if(token_type=='seller_token'){
-                editor.customConfig.uploadImgServer = this.$api.sellerEditor;  // 上传图片到服务器
+                editor.config .uploadImgServer = this.$api.sellerEditor;  // 上传图片到服务器
             }
-            
-            editor.customConfig.uploadImgParams = {token:this.token};
-            editor.customConfig.menus = this.toolbar;
-            editor.customConfig.onchange = function (html) {
+
+            editor.config.uploadImgParams = {token:this.token};
+            editor.config.menus = this.toolbar;
+            editor.config.onchange = function (html) {
                 _this.content = html;
-                _this.$emit("goods_content",_this.content);
+                setTimeout(() => {
+                    _this.$emit("goods_content",_this.content);
+                }, 100);
             }
             editor.create();
             editor.txt.html(this.content);
