@@ -103,9 +103,22 @@ class StoreService extends BaseService{
         // 店铺分类
         $store_classes_model = new StoreClass();
         $store_classes = $store_classes_model->where('store_id',$store_id)->first();
-        $class_id = json_decode($store_classes['class_id'],true);
-        $class_name = json_decode($store_classes['class_name'],true);
+
+        if(empty($store_classes['class_id']) || empty($store_classes['class_name'])){
+            return $this->format_error(__('goods.goods_classes_not_fond'));
+        }
+        
+        try{
+            $class_id = json_decode($store_classes['class_id'],true);
+            $class_name = json_decode($store_classes['class_name'],true);
+        }catch(\Exception $e){
+            return $this->format_error($e->getMessage());
+        }
+        
         $choseStoreClasses = [];
+
+        // 	@jiangslee todo:不存在分类时，会报错  @qingwuit 我认为入驻就一定有分类|不过可以做错误提示
+
         foreach($class_id as $k=>$v){
             $choseStoreClasses[$k] = [];
             foreach($v as $key=>$vo){

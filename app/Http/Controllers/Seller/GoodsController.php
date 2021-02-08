@@ -123,13 +123,14 @@ class GoodsController extends Controller
     // 商家拥有商品栏目信息
     public function store_goods_classes(StoreService $store_service){
         $goods_classes = $store_service->getStoreGoodsClasses($this->get_store(true));
-        return $this->success($goods_classes['data']);
+        return $goods_classes['status']?$this->success($goods_classes['data']):$this->error($goods_classes['msg']);
     }
 
     // 商品图片上传
     public function goods_upload(){
         $upload_service = new UploadService();
-        $rs = $upload_service->goods();
+        $store_id = $this->get_store(true);
+        $rs = $upload_service->goods($store_id);
         if($rs['status']){
             return $this->success($rs['data'],$rs['msg']);
         }else{

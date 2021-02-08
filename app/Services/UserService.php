@@ -277,6 +277,9 @@ class UserService extends BaseService{
         $user_service = new UserService();
         $user_info = $user_service->getUserInfo();
 
+        $config_service = new ConfigService;
+        $sms = $config_service->getFormatConfig('alisms');
+
         $user_model = User::find($user_info['id']);
 
         // 昵称
@@ -303,6 +306,12 @@ class UserService extends BaseService{
         ){
             // 判断
             if($auth == 'user'){
+
+                // 如果并没有配置则直接提示未配置，不再做任何操作
+                if(empty($sms['key']) || empty($sms['secret'])) {
+                    $this->format_error(__('sms.sms_config_not_fond'));
+                }
+
                 if(!isset(request()->code) || empty(request()->code)){
                     return $this->format_error(__('users.edit_code_error'));
                 }

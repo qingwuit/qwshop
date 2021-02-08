@@ -34,19 +34,20 @@ class AliOssServiceProvider extends ServiceProvider
         Storage::extend('alioss', function($app, $config)
         {
             $configService = new ConfigService;
-            $config = json_decode($configService->get_format_config('alioss'),true);
+            $config = $configService->getFormatConfig('alioss');
             $accessId  = $config['access_id'];
             $accessKey = $config['access_key'];
 
             $cdnDomain = empty($config['cdnDomain']) ? '' : $config['cdnDomain'];
             $bucket    = $config['bucket'];
-            $ssl       = empty($config['ssl']) ? false : $config['ssl']; 
-            $isCname   = empty($config['isCName']) ? false : $config['isCName'];
+            $ssl       = empty($config['ssl']) ? false : true; 
+            $isCname   = empty($config['isCName']) ? false : true; // 不是非空全为true不做验证 
             $debug     = env('APP_DEBUG');
 
             $endPoint  = $config['endpoint']; // 默认作为外部节点
             // dd('http://'.$endPoint);
-            $epInternal= $isCname?$cdnDomain:(empty($config['endpoint_internal']) ? $endPoint : $config['endpoint_internal']); // 内部节点
+            $epInternal = !empty($config['endpoint_internal']) ? $config['endpoint_internal'] : $endPoint;
+            $epInternal = $isCname ? $cdnDomain : $epInternal; // 内部节点
             
             if($debug) Log::channel('qwlog')->debug('OSS config:', $config);
             

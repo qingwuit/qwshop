@@ -78,7 +78,7 @@ export default {
             })
         },
         handleSubmit(){
-            if(this.params.pay_password != this.re_pay_password){
+            if(this.params.pay_password != this.params.re_pay_password){
                 return this.$message.error('两次密码不相符.');
             }
             this.$put(this.$api.homeUser+'/edit_user',this.params).then(res=>{

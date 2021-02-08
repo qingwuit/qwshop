@@ -189,12 +189,16 @@ class PayMentService extends BaseService{
             switch($payment_name){
                 // 微信支付
                 case 'wechat_h5': // wap
+                    $rs = Pay::wechat($this->wx_config)->wap($pay_order_info);
                     break;
                 case 'wechat_public': // 公众号
+                    $rs = Pay::wechat($this->wx_config)->mp($pay_order_info);
                     break;
                 case 'wechat_app': // app
+                    $rs = Pay::wechat($this->wx_config)->app($pay_order_info);
                     break;
                 case 'wechat_mini': // 小程序
+                    $rs = Pay::wechat($this->wx_config)->miniapp($pay_order_info);
                     break;
                 case 'wechat_scan': // pc 扫码
                     $rs = Pay::wechat($this->wx_config)->scan($pay_order_info);
@@ -204,10 +208,13 @@ class PayMentService extends BaseService{
           
                 // 阿里支付
                 case 'ali_h5': // wap
+                    $rs = Pay::wechat($this->ali_config)->wap($pay_order_info);
                     break;
                 case 'ali_app': // app
+                    $rs = Pay::wechat($this->ali_config)->app($pay_order_info);
                     break;
                 case 'ali_mini': // 小程序
+                    $rs = Pay::wechat($this->ali_config)->mini($pay_order_info);
                     break;
                 case 'ali_scan':
                     $rs = Pay::alipay($this->ali_config)->web($pay_order_info);
