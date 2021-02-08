@@ -21,6 +21,7 @@ class CollectiveLogGoodsCollection extends ResourceCollection
                 'id'                        =>  $item->id,
                 'need'                      =>  $item->need,
                 'nickname'                  =>  $tool_service->formatTrueName2($item->user->nickname),
+                'avatar'                    =>  $item->user->avatar,
                 'orders_count'              =>  $item->orders_count,
             ];
         });

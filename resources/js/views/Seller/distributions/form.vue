@@ -29,13 +29,13 @@
                     </div>
                 </a-form-model-item>
                 <a-form-model-item label="一级分销" :rules="{ required: true}">
-                    <a-input type="number" v-model="info.lev_1" placeholder="不能超过 0.50" suffix="%"></a-input>
+                    <a-input-number class="input_number" :min="0" :max="0.5" :step="0.1" v-model="info.lev_1" placeholder="不能超过 0.50" suffix="%"></a-input-number>
                 </a-form-model-item>
                 <a-form-model-item label="二级分销" :rules="{ required: true}">
-                    <a-input type="number" v-model="info.lev_2" placeholder="不能超过 0.30" suffix="%"></a-input>
+                    <a-input-number class="input_number" :min="0" :max="0.3" :step="0.1"  v-model="info.lev_2" placeholder="不能超过 0.30" suffix="%"></a-input-number>
                 </a-form-model-item>
                 <a-form-model-item label="三级分销" :rules="{ required: true}">
-                    <a-input type="number" v-model="info.lev_3" placeholder="不能超过 0.20" suffix="%"></a-input>
+                    <a-input-number class="input_number" :min="0" :max="0.2" :step="0.1"  v-model="info.lev_3" placeholder="不能超过 0.20" suffix="%"></a-input-number>
                 </a-form-model-item>
                 <a-form-model-item :wrapper-col="{ span: 12, offset: 5 }">
                     <a-button type="primary" @click="handleSubmit">提交</a-button>
@@ -150,6 +150,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.input_number{
+    width: 40%;
+}
 .goods_list{
     &.chose{
         margin-bottom: 40px;

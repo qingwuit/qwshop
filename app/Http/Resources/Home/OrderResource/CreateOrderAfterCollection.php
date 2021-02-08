@@ -22,6 +22,7 @@ class CreateOrderAfterCollection extends ResourceCollection
                 'total_price'           =>  $item->total_price,
                 'freight_money'         =>  $item->freight_money,
                 'coupon_money'          =>  $item->coupon_money,
+                'remark'                =>  $item->remark,
 
                 'order_goods'           =>  $item->order_goods->map(function($v){
                                             return [

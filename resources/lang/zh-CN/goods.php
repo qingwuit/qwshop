@@ -9,5 +9,6 @@ return [
 
     'goods_not_found'                       =>  '商品不存在.',
     'search_error'                          =>  '搜索失败.',
+    'goods_classes_not_fond'                =>  '分类不存在.',
 
 ];

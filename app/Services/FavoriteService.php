@@ -43,6 +43,7 @@ class FavoriteService extends BaseService{
         $fav_model = new Favorite();
         $fav_info = $fav_model->where(['user_id'=>$user_info['id'],'out_id'=>$out_id,'is_type'=>request()->is_type])->first();
         if(!empty($fav_info)){
+            $fav_model->where(['user_id'=>$user_info['id'],'out_id'=>$out_id,'is_type'=>request()->is_type])->delete();
             return $this->format([],__('base.success'));
         }
 

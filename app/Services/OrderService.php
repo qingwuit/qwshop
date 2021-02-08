@@ -589,7 +589,7 @@ class OrderService extends BaseService{
         // 循环查看是否存在优惠券
         $coupon_log_model = new CouponLog();
         foreach($list as $k=>&$v){
-            $coupon_list = $coupon_log_model->select('id','money')->where('user_id',$user_info['id'])->where('store_id',$k)->where('use_money','<=',$v['store_total_price'])->where('status',0)->get();
+            $coupon_list = $coupon_log_model->select('id','money','name')->where('user_id',$user_info['id'])->where('store_id',$k)->where('use_money','<=',$v['store_total_price'])->where('status',0)->get();
             $v['is_coupon'] = true;
             if($coupon_list->isEmpty()){
                 $v['is_coupon'] = false;
@@ -615,14 +615,14 @@ class OrderService extends BaseService{
 
         // 如果为空
         if(empty($base64)){
-            return $this->format_error(_('orders.error'));
+            return $this->format_error(__('orders.error'));
         }
 
         // 判断是否能解析
         try{
             $params = json_decode(base64_decode($base64),true);
         }catch(\Exception $e){
-            return $this->format_error(_('orders.error').'2');
+            return $this->format_error(__('orders.error').'2');
         }
         return $this->format($params);
     }
@@ -642,7 +642,7 @@ class OrderService extends BaseService{
         }
         
         $order_model = $order_model->with(['store'=>function($q){
-             return $q->select('id','store_name');
+             return $q->select('id','store_name','store_logo');
         },'user'=>function($q){
             return $q->select('id','username');
         },'order_goods']);
@@ -678,7 +678,7 @@ class OrderService extends BaseService{
         }
         
         // 订单状态
-        if(isset(request()->order_status)){
+        if(isset(request()->order_status) && request()->order_status!=-1){
             $order_model = $order_model->where('order_status',request()->order_status);
         }
 

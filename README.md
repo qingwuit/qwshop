@@ -12,7 +12,6 @@
 
 > PHP >= 7.3
 
-### 20201231 【失踪人士回归】为什么没维护了，因为要上班。那为什么又更新了，因为我把老板又炒了。(这次更新主要是将方法集成到Service层，然后前端框架用的antdv,这个前端框架很坑，我不会用。)
 
 ## Code address 代码地址
 [点击它[代码地址] click it](https://gitee.com/qingwuitcn/qwShopPhp "点击它[代码地址]")
@@ -38,8 +37,11 @@ php artisan qwshop:install
 npm install
 npm prod
 
+## linux 得给下权限 window 不用执行
+chmod -R 777 ./storage/
+
 // 在线聊天
-Ngnix 
+Linux 
 php artisan workerman start
 
 win
@@ -65,6 +67,14 @@ app\Workerman\run.bat
 ## Common Problem 常见问题
 
 ## Version 更新记录
+
+#### 20210208
+非常感谢@jiangslee的提交！做了部分修改
+
+#### 20210112
+1、购物车添加bug
+
+2、添加拼团后无法进行点击规格属性
 
 #### 20210104
 1、mysql5.5 不兼容的问题
