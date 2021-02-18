@@ -18,8 +18,10 @@ class DistributionUserCollection extends ResourceCollection
             'data'=>$this->collection->map(function($item){
                 return [
                     'nickname'              =>  $item->nickname,
+                    'avatar'                =>  $item->avatar,
                     'login_time'            =>  $item->login_time,
                     'created_at'            =>  $item->created_at->format('Y-m-d H:i:s'),
+                    'created_at_app'        =>  $item->created_at->format('Y-m-d'),
                 ];
             }),
             'total'=>$this->total(), // 数据总数

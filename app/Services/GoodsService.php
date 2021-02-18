@@ -393,7 +393,7 @@ class GoodsService extends BaseService{
             if(isset(request()->is_collective) && !empty(request()->is_collective)){
                 $goods_model = $goods_model->whereHas('collective');
             }
-    
+
             $list = $goods_model->where($this->status)
                         ->with(['goods_sku'=>function($q){
                             return $q->select('goods_id','goods_price','goods_stock')->orderBy('goods_price','asc');

@@ -10,6 +10,9 @@
                 <a-tab-pane :key="0" tab="微信PC">
                     <weixinweb-config />
                 </a-tab-pane>
+                <a-tab-pane :key="1" tab="微信">
+                    <weixin-config />
+                </a-tab-pane>
             </a-tabs>
             
             
@@ -19,7 +22,8 @@
 
 <script>
 import weixinwebConfig from "./weixinweb.vue"
+import weixinConfig from "./weixin.vue"
 export default {
-    components: {weixinwebConfig},
+    components: {weixinwebConfig,weixinConfig},
 };
 </script>

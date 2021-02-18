@@ -190,14 +190,17 @@ class PayMentService extends BaseService{
                 // 微信支付
                 case 'wechat_h5': // wap
                     $rs = Pay::wechat($this->wx_config)->wap($pay_order_info);
+                    $rs = $rs->getTargetUrl();
                     break;
                 case 'wechat_public': // 公众号
+                    $pay_order_info['openid'] = ''; // 微信游览器需要openid
                     $rs = Pay::wechat($this->wx_config)->mp($pay_order_info);
                     break;
                 case 'wechat_app': // app
                     $rs = Pay::wechat($this->wx_config)->app($pay_order_info);
                     break;
                 case 'wechat_mini': // 小程序
+                    $pay_order_info['openid'] = ''; // 小程序需要openid
                     $rs = Pay::wechat($this->wx_config)->miniapp($pay_order_info);
                     break;
                 case 'wechat_scan': // pc 扫码
@@ -209,6 +212,7 @@ class PayMentService extends BaseService{
                 // 阿里支付
                 case 'ali_h5': // wap
                     $rs = Pay::wechat($this->ali_config)->wap($pay_order_info);
+                    $rs = $rs->getTargetUrl();
                     break;
                 case 'ali_app': // app
                     $rs = Pay::wechat($this->ali_config)->app($pay_order_info);
@@ -218,8 +222,7 @@ class PayMentService extends BaseService{
                     break;
                 case 'ali_scan':
                     $rs = Pay::alipay($this->ali_config)->web($pay_order_info);
-                    $rs = (array)$rs;
-                    $rs = $rs["\0*\0content"];
+                    $rs = $rs->getContent();
                     break;
             }
         }catch(\Exception $e){
@@ -244,12 +247,28 @@ class PayMentService extends BaseService{
         switch($payment_name){
             // 微信支付
             case 'wechat_h5': // wap
+                $this->wx_config['app_id'] = $config_info[$payment_name]['app_id'];
+                $this->wx_config['mch_id'] = trim($config_info[$payment_name]['mch_id']);
+                $this->wx_config['key'] = $config_info[$payment_name]['key'];
+                $this->wx_config['notify_url'] = $config_info[$payment_name]['notify_url'];
                 break;
             case 'wechat_public': // 公众号
+                $this->wx_config['app_id'] = $config_info[$payment_name]['app_id'];
+                $this->wx_config['mch_id'] = trim($config_info[$payment_name]['mch_id']);
+                $this->wx_config['key'] = $config_info[$payment_name]['key'];
+                $this->wx_config['notify_url'] = $config_info[$payment_name]['notify_url'];
                 break;
             case 'wechat_app': // app
+                $this->wx_config['appid'] = $config_info[$payment_name]['app_id'];
+                $this->wx_config['mch_id'] = trim($config_info[$payment_name]['mch_id']);
+                $this->wx_config['key'] = $config_info[$payment_name]['key'];
+                $this->wx_config['notify_url'] = $config_info[$payment_name]['notify_url'];
                 break;
             case 'wechat_mini': // 小程序
+                $this->wx_config['miniapp_id'] = $config_info[$payment_name]['app_id'];
+                $this->wx_config['mch_id'] = trim($config_info[$payment_name]['mch_id']);
+                $this->wx_config['key'] = $config_info[$payment_name]['key'];
+                $this->wx_config['notify_url'] = $config_info[$payment_name]['notify_url'];
                 break;
             case 'wechat_scan': // pc 扫码
                 // 配置支付密钥
@@ -261,10 +280,25 @@ class PayMentService extends BaseService{
       
             // 阿里支付
             case 'ali_h5': // wap
+                $this->ali_config['app_id'] = $config_info[$payment_name]['app_id'];
+                $this->ali_config['ali_public_key'] = $config_info[$payment_name]['public_key'];
+                $this->ali_config['private_key'] = $config_info[$payment_name]['private_key'];
+                $this->ali_config['notify_url'] = $config_info[$payment_name]['notify_url'];
+                $this->ali_config['return_url'] = $config_info[$payment_name]['return_url'];
                 break;
             case 'ali_app': // app
+                $this->ali_config['app_id'] = $config_info[$payment_name]['app_id'];
+                $this->ali_config['ali_public_key'] = $config_info[$payment_name]['public_key'];
+                $this->ali_config['private_key'] = $config_info[$payment_name]['private_key'];
+                $this->ali_config['notify_url'] = $config_info[$payment_name]['notify_url'];
+                $this->ali_config['return_url'] = $config_info[$payment_name]['return_url'];
                 break;
             case 'ali_mini': // 小程序
+                $this->ali_config['app_id'] = $config_info[$payment_name]['app_id'];
+                $this->ali_config['ali_public_key'] = $config_info[$payment_name]['public_key'];
+                $this->ali_config['private_key'] = $config_info[$payment_name]['private_key'];
+                $this->ali_config['notify_url'] = $config_info[$payment_name]['notify_url'];
+                $this->ali_config['return_url'] = $config_info[$payment_name]['return_url'];
                 break;
             case 'ali_scan':
                 // 配置支付密钥

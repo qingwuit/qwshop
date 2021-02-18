@@ -32,7 +32,7 @@ class OrderResource extends JsonResource
             'total_price'           =>  $this->total_price,
             'freight_money'         =>  $this->freight_money,
             'remark'                =>  $this->remark,
-            'pay_time'              =>  $this->pay_time,
+            'pay_time'              =>  $this->pay_time->format('Y-m-d H:i:s'),
             'created_at'            =>  $this->created_at->format('Y-m-d H:i:s'),
             'order_status'          =>  $this->order_status,
             'order_status_cn'       =>  $order_service->getOrderStatusCn($this),

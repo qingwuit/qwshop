@@ -61,7 +61,11 @@ class OrderCommentService extends BaseService{
                 $comment['service'] = $service;
                 $comment['service'] = $speed;
                 $comment['content'] = $content;
-                $comment['image'] = empty($image)?'':implode(',',$image);
+                if(is_array($image)){
+                    $comment['image'] = empty($image)?'':implode(',',$image);
+                }else{
+                    $comment['image'] = $image;
+                }
                 $comment['created_at'] = now();
                 $data[] = $comment;
             }

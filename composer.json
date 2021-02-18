@@ -19,6 +19,7 @@
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.0",
         "overtrue/easy-sms": "^1.1",
+        "socialiteproviders/weixin": "^4.1",
         "socialiteproviders/weixin-web": "^4.0",
         "tymon/jwt-auth": "1.*@rc",
         "workerman/gateway-worker": "^3.0",
