@@ -29,7 +29,11 @@ class KuaibaoService extends BaseService{
         $data['data'] = json_encode($data2);
         $info = $this->http_send($url,$data,'POST');
         $infos = $info->getContents();
-        $data = json_decode($infos,true)['data'][0]['data'];
+        $kbInfo = json_decode($infos,true);
+        if($kbInfo['code'] != 0){
+            return $this->format_error($kbInfo['msg']);
+        }
+        $data = $kbInfo['data'][0]['data'];
         return $data;
     }
 

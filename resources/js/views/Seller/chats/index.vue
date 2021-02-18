@@ -238,7 +238,7 @@ export default {
             this.sendMsg.uid = this.chat_friend[this.onChatIndex].user_id;
             
             // 发送信息
-            this.$post(this.$api.chatChatEvent,{data:this.sendMsg}).then(res=>{
+            this.$post(this.$api.sellerChatChatEvent,{data:this.sendMsg}).then(res=>{
                 if(res.code == 200){
                     this.$set(this.sendMsg,'content','');
                     // console.log(this.onChat)
@@ -266,7 +266,7 @@ export default {
         },
         // 清空未读信息
         clearNoRead:function(user_id,to_user_id){
-            this.$post(this.$api.chatReadMsg,{user_id:user_id,to_user_id:to_user_id}).then(()=>{});
+            this.$post(this.$api.sellerChatReadMsg,{user_id:user_id,to_user_id:to_user_id}).then(()=>{});
         },
         // 图片上传成功
         chatUpload:function(e){
@@ -284,7 +284,7 @@ export default {
                     info.uid = this.chat_friend[this.onChatIndex].user_id;
                     info.content = rs.data;
                     // 发送信息
-                    this.$post(this.$api.chatChatEvent,{data:info}).then(res=>{
+                    this.$post(this.$api.sellerChatChatEvent,{data:info}).then(res=>{
                         if(res.code == 200){
                             this.scrollDown();
                         }else{

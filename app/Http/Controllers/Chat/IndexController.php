@@ -100,6 +100,10 @@ class IndexController extends Controller
     public function chat_event(Request $req){
         $data = $req->data;
 
+        if(!is_array($data)){
+            $data = json_decode($data,true);
+        }
+
         // 存入数据库
         if($data['type'] != 'bind'){
             $chat_msg = [

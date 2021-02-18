@@ -14,6 +14,13 @@ class LoginController extends Controller
         return $info['status']?$this->success($info['data']):$this->error($info['msg']);
     }
 
+    // 第三方登录
+    public function auth_login(){
+        $user_service = new UserService();
+        $info = $user_service->oauthLogin(request()->all(),request()->oauth_name);
+        return $info['status']?$this->success($info['data']):$this->error($info['msg']);
+    }
+
     // 检测是否登陆
     public function check_login(UserService $user_service){
         $info = $user_service->checkLogin('user');

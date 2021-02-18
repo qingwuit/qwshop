@@ -144,6 +144,11 @@ class ConfigService extends BaseService{
                     'client_secret'=>'',
                     'redirect'=>'',
                 ], 
+                'weixin'=>[
+                    'client_id'=>'',
+                    'client_secret'=>'',
+                    'redirect'=>'',
+                ], 
             ];
         }else{
             $data['oauth'] = json_decode($data['oauth'],true);

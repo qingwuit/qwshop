@@ -33,6 +33,12 @@ class StoreService extends BaseService{
                 }else{
                     $store_model = $store_model->orderBy('distance','desc')->orderBy('id','desc');
                 }
+
+                // 关键词
+                if(isset($params_array['keywords']) && !empty($params_array['keywords'])){
+                    $params_array['keywords'] = urldecode($params_array['keywords']);
+                    $store_model = $store_model->where('store_name','like','%'.$params_array['keywords'].'%');
+                }
             }
             $list = $store_model->paginate(request()->per_page??30);
             return $this->format(new StoreCollection($list) );

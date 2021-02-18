@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "384720bef67edb3f430046602bab8e3f",
+    "content-hash": "02b886da94a7ef6fa1134f9eb913d6b2",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -2872,6 +2872,54 @@
             "description": "Easily add new or override built-in providers in Laravel Socialite.",
             "homepage": "https://socialiteproviders.com/",
             "time": "2020-10-20T22:15:02+00:00"
+        },
+        {
+            "name": "socialiteproviders/weixin",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/Weixin.git",
+                "reference": "4f5ca3ee25e1a46e0dc6bb00bd6ba77f344e340f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/Weixin/zipball/4f5ca3ee25e1a46e0dc6bb00bd6ba77f344e340f",
+                "reference": "4f5ca3ee25e1a46e0dc6bb00bd6ba77f344e340f",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.2 || ^8.0",
+                "socialiteproviders/manager": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\Weixin\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "xyxu",
+                    "email": "techxu@gmail.com"
+                },
+                {
+                    "name": "xiami",
+                    "email": "jhdxr@php.net"
+                }
+            ],
+            "description": "Weixin OAuth2 Provider for Laravel Socialite",
+            "time": "2020-12-01T23:10:59+00:00"
         },
         {
             "name": "socialiteproviders/weixin-web",

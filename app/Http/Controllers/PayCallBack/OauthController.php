@@ -18,7 +18,7 @@ class OauthController extends Controller
      */
     public function oauth($payment_name){
         $config_service = new ConfigService();
-        $info = $config_service->getFormatConfig('oauth')['weixinweb'];
+        $info = $config_service->getFormatConfig('oauth')[$payment_name];
         $config = new \SocialiteProviders\Manager\Config($info['client_id'], $info['client_secret'], $info['redirect'], []);
         return Socialite::driver($payment_name)->setConfig($config)->redirect();
     }
