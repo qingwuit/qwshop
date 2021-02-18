@@ -14,7 +14,7 @@
 
 
 ## Code address 代码地址
-[点击它[代码地址] click it](https://gitee.com/qingwuitcn/qwShopPhp "点击它[代码地址]")
+[点击它[代码地址] click it](https://github.com/qingwuit/qwshop "点击它[代码地址]")
 
 ## Demo address 演示地址
 [点击它[演示地址] click it](http://pc.qingwuit.com "点击它[演示地址]")
