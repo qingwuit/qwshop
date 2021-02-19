@@ -76,18 +76,14 @@
                 </a-form-model-item>
             </a-form-model>
 
-            <!-- 属性规格选择 -->
-            <goods-attr-modal :attrVisible="attrVisible" @goods_attr_modal_cancel="attrVisible=false" @goods_attr="goods_attr_chose" />
-            
         </div>
     </div>
 </template>
 
 <script>
 import wangEditor from "@/components/wangeditor"
-import GoodsAttrModal from "@/components/seller/goods_attr_modal"
 export default {
-    components: {wangEditor,GoodsAttrModal},
+    components: {wangEditor},
     props: {},
     data() {
       return {

@@ -13,7 +13,7 @@
                         <a-input v-model="params['order_no']" :placeholder="'2020091418433488438'"/>
                     </a-form-item>
                     <a-form-item label="订单状态">
-                        <a-select  v-model="params['order_status']" >
+                        <a-select  v-model="params['order_status']" style="width:160px" >
                             <a-select-option v-for="(vo,key) in searchConfig[1].data" :key="key" :value="vo.value">{{vo.label}}</a-select-option>
                         </a-select>
                     </a-form-item>
@@ -127,6 +127,10 @@ export default {
             this.onload();
         },
         onload(){
+            console.log(this.$route)
+            if(!this.$isEmpty(this.$route.params.status)){
+                this.params.order_status = this.$route.params.status;
+            }
             this.$get(this.$api.homeOrder,this.params).then(res=>{
                 this.list = res.data.data;
                 this.total = res.data.total;

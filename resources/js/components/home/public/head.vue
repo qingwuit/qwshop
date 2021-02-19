@@ -5,7 +5,7 @@
         <!-- logo and search -->
         <div class="center_top width_center_1200" v-show="center_top">
             <div class="shop_logo float_left">
-                <router-link to="/"><img width="180px" height="55px" :src="require('@/asset/pc/logo.png')" ></router-link>
+                <router-link to="/"><img width="242px" height="74px" :src="require('@/asset/pc/logo.png')" ></router-link>
             </div>
             <div class="shop_top_seach float_left">
                 <ul>
@@ -197,8 +197,8 @@ export default {
     }
 }
 .shop_top_seach{
-    margin-top: 44px;
-    margin-left: 200px;
+    margin-top: 60px;
+    margin-left: 180px;
     ul li{
         float: left;
     }

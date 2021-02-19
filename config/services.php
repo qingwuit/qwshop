@@ -42,5 +42,11 @@ return [
         'redirect' => env('WEIXINWEB_REDIRECT_URI') 
     ],
 
+    'weixin' => [    
+        'client_id' => env('WEIXIN_CLIENT_ID'),  
+        'client_secret' => env('WEIXIN_CLIENT_SECRET'),  
+        'redirect' => env('WEIXIN_REDIRECT_URI') 
+    ],
+
 
 ];

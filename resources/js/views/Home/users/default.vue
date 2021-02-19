@@ -23,31 +23,31 @@
         <div class="order_status_block">
             <ul>
                 <li>
-                    <router-link to="#">
+                    <router-link :to="{name:'home_user_order',params:{status:1}}">
                     <a-font type="icondengdaifh"></a-font>
                     <span><a-badge :count="count[0]" :offset="[11,-7]">待支付</a-badge></span>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="#">
+                    <router-link :to="{name:'home_user_order',params:{status:2}}">
                     <a-font type="iconwuliu"></a-font>
                     <span><a-badge :count="count[1]" :offset="[11,-7]">待发货</a-badge></span>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="#">
+                    <router-link :to="{name:'home_user_order',params:{status:3}}">
                     <a-font type="iconchanpin1"></a-font>
                     <span><a-badge :count="count[2]" :offset="[11,-7]">待收货</a-badge></span>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="#">
+                    <router-link :to="{name:'home_user_order',params:{status:4}}">
                     <a-font type="iconpinglun"></a-font>
                     <span><a-badge :count="count[3]" :offset="[11,-7]">待评论</a-badge></span>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="#">
+                    <router-link :to="{name:'home_user_order',params:{status:5}}">
                     <a-font type="iconshouhou"></a-font>
                     <span><a-badge :count="count[4]" :offset="[11,-7]">售后处理</a-badge></span>
                     </router-link>
