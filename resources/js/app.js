@@ -8,7 +8,7 @@ import router from '@/plugins/router'
 import Antd from 'ant-design-vue'
 import {Icon} from 'ant-design-vue'
 import App from '@/views/App'
-import {post,get,put,deletes,toJson,isEmpty,apiHandle} from '@/plugins/http.js' // 请求方式中间件
+import {post,get,put,deletes,postfile,toJson,isEmpty,apiHandle} from '@/plugins/http.js' // 请求方式中间件
 import {api} from '@/plugins/api' // 后端API
 import {getSession,returnInfo,formatFloat} from '@/plugins/function' // 辅助方法
 import '@/plugins/css/home.css' // 首页样式
@@ -25,6 +25,7 @@ Vue.prototype.$post=post;
 Vue.prototype.$get=get;
 Vue.prototype.$put=put;
 Vue.prototype.$delete=deletes;
+Vue.prototype.$postfile=postfile;
 Vue.prototype.$toJson=toJson;
 Vue.prototype.$isEmpty=isEmpty;
 Vue.prototype.$apiHandle=apiHandle;

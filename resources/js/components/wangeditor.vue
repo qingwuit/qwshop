@@ -63,16 +63,37 @@ export default {
             editor.config.debug = true;
             editor.config.zIndex = 100;
             editor.config.showLinkImg = false;
-            editor.config.uploadFileName = 'file[]';
+            editor.config.uploadFileName = 'file';
             editor.config.uploadImgMaxLength = 5;
+
+            let uploadApi = '';
             if(token_type=='admin_token'){
-                editor.config .uploadImgServer = this.$api.adminEditor;  // 上传图片到服务器
+                uploadApi = this.$api.adminEditor;  // 上传图片到服务器
             }
             if(token_type=='seller_token'){
-                editor.config .uploadImgServer = this.$api.sellerEditor;  // 上传图片到服务器
+                uploadApi = this.$api.sellerEditor;  // 上传图片到服务器
             }
 
-            editor.config.uploadImgParams = {token:this.token};
+
+            editor.config.customUploadImg =  (resultFiles, insertImgFn)=> {
+                // resultFiles 是 input 中选中的文件列表 insertImgFn 是获取图片 url 后，插入到编辑器的方法
+                let formData = new FormData();
+                for (var i = 0; i < resultFiles.length; i++) {
+                    formData.append("file["+i+"]", resultFiles[i],resultFiles[i].name);
+                }
+
+                this.$postfile(uploadApi, formData).then(res=>{
+                    if(res.code == 200){
+                        res.data.forEach(item=>{
+                            insertImgFn(item);
+                        })
+                    }else{
+                        return this.$message.error(res.msg);
+                    }
+                })
+                
+            }
+
             editor.config.menus = this.toolbar;
             editor.config.onchange = function (html) {
                 _this.content = html;
