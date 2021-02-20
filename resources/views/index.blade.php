@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>青梧商城</title>
-    <meta name="keywords" content="青梧商城">
-    <meta name="description" content="青梧商城" />
+    <title>{{$title}}</title>
+    <meta name="keywords" content="{{$keywords}}">
+    <meta name="description" content="{{$description}}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ant-design-vue@1.6.2/dist/antd.min.css">
 
     <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
