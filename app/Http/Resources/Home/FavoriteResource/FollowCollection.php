@@ -19,7 +19,7 @@ class FollowCollection extends ResourceCollection
                 return [
                     'id'                    =>  $item->id,
                     'out_id'                =>  $item->out_id,
-                    'store_name'            =>  $item->store->store_name??__('goods.store_not_defined'),
+                    'store_name'            =>  $item->store->store_name??__('stores.store_not_defined'),
                     'store_logo'            =>  $item->store->store_logo??'',
                 ];
             }),

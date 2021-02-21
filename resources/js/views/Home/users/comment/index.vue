@@ -15,7 +15,7 @@
                         </div>
                     </span>
                     <span slot="action" slot-scope="rows">
-                        <a-button icon="edit" @click="$router.push('/user/order_comments/form/'+rows.id)">编辑</a-button>
+                        <a-button icon="edit" @click="$router.push('/user/order_comments/form/'+rows.id)" :disabled="rows.goods.id==0">编辑</a-button>
                     </span>
                 </a-table>
                 <div class="fy" style="margin-top:20px;" v-if="total>0">

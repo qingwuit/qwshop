@@ -29,8 +29,8 @@ class DistributionCollection extends ResourceCollection
                     'created_at'            =>  $item->created_at->format('Y-m-d H:i:s'),
                     'updated_at'            =>  $item->updated_at->format('Y-m-d H:i:s'),
                     'goods'                 =>  [
-                                                    'goods_name'                =>  $item->goods->goods_name,
-                                                    'goods_master_image'        =>  $this->thumb($item->goods->goods_master_image,150),
+                                                    'goods_name'                =>  $item->goods->goods_name??__('goods.goods_not_found'),
+                                                    'goods_master_image'        =>  empty($item->goods)?'':$this->thumb($item->goods->goods_master_image,150),
                                                 ],
                 ];
             }),

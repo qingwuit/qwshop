@@ -25,9 +25,9 @@ class OrderCommentCollection extends ResourceCollection
                     'service'                       =>  $item->service,
                     'speed'                         =>  $item->speed,
                     'goods'                         =>  [
-                                                            'id'                    =>  $item->goods->id,
-                                                            'goods_name'            =>  $item->goods->goods_name,
-                                                            'goods_master_image'    =>  $this->thumb($item->goods->goods_master_image),
+                                                            'id'                    =>  $item->goods->id??0,
+                                                            'goods_name'            =>  $item->goods->goods_name??__('goods.goods_not_found'),
+                                                            'goods_master_image'    =>  empty($item->goods)?'':$this->thumb($item->goods->goods_master_image,150),
                                                         ],
                     'content'                       =>  $item->content,
                     'image'                         =>  empty($item->image)?[]:explode(',',$item->image),
