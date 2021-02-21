@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Services\AdvService;
 use App\Services\CollectiveService;
 use App\Services\CouponService;
 use App\Services\FullReductionService;
@@ -59,10 +60,18 @@ class GoodsController extends Controller
 
     // 搜索产品
     public function goods_search(GoodsService $goods_service){
+        
         $info = $goods_service->goodsSearch();
         if(!$info['status']){
             return $this->error($info['msg']);
         }
+        
         return $this->success($info['data']);
+    }
+
+    // 获取拼团幻灯片
+    public function collection_banner(AdvService $adv_service){
+        $data = $adv_service->getAdvList('PC_拼团幻灯片')['data'];
+        return $this->success($data);
     }
 }

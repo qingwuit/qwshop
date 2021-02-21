@@ -14,7 +14,7 @@
 
 
 ## Code address 代码地址
-[点击它[代码地址] click it](https://github.com/qingwuit/qwshop "点击它[代码地址]")
+[点击它[代码地址] click it](https://gitee.com/qingwuitcn/qwShopPhp "点击它[代码地址]")
 
 ## Demo address 演示地址
 [点击它[演示地址] click it](http://pc.qingwuit.com "点击它[演示地址]")
@@ -31,7 +31,7 @@
 
 ``` php
 
-composer create-project qingwuit/qwshop blog
+composer create-project qingwuit/qwshop shop
 php artisan qwshop:install
 
 npm install
@@ -50,7 +50,7 @@ app\Workerman\run.bat
 ```
 
 ## Exchange of views 意见交流 
-欢迎各位提交建议。**联系方式 私人QQ：364825702 - QQ群:1062159788** 添加请写上说明如：`青梧商城`
+欢迎各位提交建议。**联系方式 私人QQ：364825702 QQ群:1062159788** 添加请写上说明如：`青梧商城`
 
 ## Precautions for use 注意事项
 
@@ -70,20 +70,6 @@ app\Workerman\run.bat
 
 ## Version 更新记录
 
-#### 202002018
-若干bug+商家端无法使用聊天
 
 #### 20210208
 非常感谢@jiangslee的提交！做了部分修改
-
-#### 20210112
-1、购物车添加bug
-
-2、添加拼团后无法进行点击规格属性
-
-#### 20210104
-1、mysql5.5 不兼容的问题
-
-2、sql文件不全的问题
-
-3、安装命令写错了

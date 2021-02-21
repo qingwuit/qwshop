@@ -136,7 +136,7 @@ export default {
     computed: {},
     methods: {
         download(){
-            window.open("https://gitee.com/qingwuitcn/qwShopPhp")
+            window.open("https://gitee.com/qingwuitcn/qwshop")
         },
         openWeb(){
             window.open("https://www.qwststem.com")

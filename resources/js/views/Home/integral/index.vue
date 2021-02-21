@@ -117,6 +117,7 @@ export default {
             this.$get(this.$api.homeIntegral).then(res=>{
                 // this.store_slide = res.data.banner.adv;
                 this.recommend = res.data.recommend;
+                this.store_slide = res.data.banner;
                 this.list = res.data.list;
             });
         },

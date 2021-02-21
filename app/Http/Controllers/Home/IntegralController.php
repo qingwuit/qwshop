@@ -7,6 +7,7 @@ use App\Http\Resources\Home\IntegralOrderResource\IntegralOrderCollection;
 use App\Http\Resources\Home\IntegralOrderResource\IntegralOrderResource;
 use App\Models\IntegralGoods;
 use App\Models\IntegralGoodsClass;
+use App\Services\AdvService;
 use App\Services\IntegralGoodsService;
 use App\Services\IntegralOrderService;
 use App\Traits\HelperTrait;
@@ -30,11 +31,12 @@ class IntegralController extends Controller
         return $rs['status']?$this->success(new IntegralOrderResource($rs['data']),$rs['msg']):$this->error($rs['msg']);
     }
 
-    public function index(IntegralGoods $ig_model,IntegralGoodsClass $igc_model){
+    public function index(IntegralGoods $ig_model,IntegralGoodsClass $igc_model,AdvService $adv_service){
         $data['recommend'] = $ig_model->where('goods_status',1)->where('is_recommend',1)->take(4)->get();
         $data['list'] = $igc_model->with(['integral_goods'=>function($q){
             $q->where('goods_status',1)->take(4);
         }])->get();
+        $data['banner'] = $adv_service->getAdvList('PC_积分商城幻灯片')['data'];
         return $this->success($data);
     }
 

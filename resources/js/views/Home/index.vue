@@ -25,28 +25,28 @@
                 </div>
                 <div class="seckill_right">
                         <ul>
-                            <li v-for="(v,k) in seckill_list" :key="k"><router-link :to="'/goods/'+v.id">
+                            <li v-for="(v,k) in seckill_list" :key="k" @click="toGoods(v.id)">
                                 <dl>
                                     <dt><img style="width: 180px; height: 180px" v-lazy="v.goods_master_image" :alt="v.goods_name" /></dt>
                                     <dd class="product_title" :title="v.goods_name">{{v.goods_name}}</dd>
                                     <dd class="product_subtitle">{{v.goods_subname}}</dd>
                                     <dd class="product_price">￥{{v.goods_price}}<span>{{v.goods_market_price}}</span></dd>
                                 </dl>
-                            </router-link></li>
+                            </li>
                             
                         </ul>
                 </div>
             </div>
 
             <div class="goods_class_list w1200" v-for="(v,k) in list.goods" :key="k">
-                <shop-index-adv v-if="v.goods.length>0" />
+                <shop-index-adv v-if="v.goods.length>0" :adv="(list.class_top_adv[k] && list.class_top_adv[k].image_url)?list.class_left_adv[k]:{adv_image:require('@/asset/pc/adv.jpg'),adv_link:'',adv_title:'加载中...'}" />
                 <div v-if="v.goods.length>0">
                     <!-- <div class="adv_width_1200"><img v-lazy="v.image_url" :alt="v.name"></div>   -->
                     <div class="title">{{v.name||'加载中...'}}<span><router-link to="/s/eyJrZXl3b3JkcyI6IiJ9">查看更多</router-link></span></div>
-                    <div class="index_adv_goods_left"><img v-lazy="v.image_url||''" :alt="v.name"></div>
+                    <div class="index_adv_goods_left"><img v-lazy="(list.class_left_adv[k] && list.class_left_adv[k].image_url)?list.class_left_adv[k].image_url:require('@/asset/pc/pc_class_btadv.jpg')" :alt="v.name"></div>
                     <div class="index_class_goods_right">
                         <ul>
-                            <li><router-link :to="'/goods/'+vo.id" v-for="(vo,key) in v.goods" :key="key">
+                            <li v-for="(vo,key) in v.goods" :key="key" @click="toGoods(vo.id)">
                                 <div class="product_act_in">
                                     <dl>
                                         <dt><img v-lazy="vo.goods_master_image||''" :alt="vo.goods_name" /></dt>
@@ -55,12 +55,12 @@
                                         <dd class="product_price">￥{{vo.goods_price}}<span>{{vo.goods_market_price}}元</span></dd>
                                     </dl>
                                 </div>
-                            </router-link></li>
+                            </li>
                         </ul>
                     </div>
                 </div>
-`                
-            </div>`
+
+            </div>
         </div>
         
 
@@ -127,6 +127,9 @@ export default {
             },1000)
             
         },
+        toGoods(id){
+            return this.$router.push('/goods/'+id);
+        },
     },
     created() {
         this.get_index();
@@ -154,6 +157,7 @@ export default {
     width: 966px;
     float: left;
     ul li{
+        cursor: pointer;
         width: 220px;
         height: 300px;
         margin-bottom: 14px;
@@ -272,6 +276,7 @@ export default {
                 margin-left: 45px;
             }
             ul li{
+                cursor: pointer;
                 float: left;
                 width: 40px;
                 height: 40px;

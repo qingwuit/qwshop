@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2021-01-27 19:01:20
+Date: 2021-02-21 15:08:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -62,7 +62,7 @@ CREATE TABLE `admins` (
 -- ----------------------------
 -- Records of admins
 -- ----------------------------
-INSERT INTO `admins` VALUES ('1', 'admin', '$2y$10$TnUza7yGyIObzC2PSXWbWOaMr3EItm4Z8B.bSIAWeIyObYgJ7BgZe', '管理员', '', '127.0.0.1', '2021-01-09 12:32:48', '2020-11-28 14:42:39', '2020-08-09 18:43:46', '2021-01-09 12:32:48');
+INSERT INTO `admins` VALUES ('1', 'admin', '$2y$10$TnUza7yGyIObzC2PSXWbWOaMr3EItm4Z8B.bSIAWeIyObYgJ7BgZe', '管理员', '', '127.0.0.1', '2021-02-17 21:02:27', '2021-02-09 13:50:51', '2020-08-09 18:43:46', '2021-02-17 21:02:27');
 
 -- ----------------------------
 -- Table structure for admin_role
@@ -99,15 +99,17 @@ CREATE TABLE `advs` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of advs
 -- ----------------------------
-INSERT INTO `advs` VALUES ('5', '4', '1', '', 'http://127.0.0.1:8000/storage/adv/2020-08-06/hc30PI0zqFDEFHgCQhJl9K8BpY1LowqsrGAgw2dS.jpg', '2020-08-06 16:05:19', '2020-09-26 16:05:19', '0', '0', '2020-08-06 16:06:24', '2020-08-06 16:06:24');
-INSERT INTO `advs` VALUES ('6', '5', '1', '', 'http://127.0.0.1:8000/storage/adv/2020-08-06/Du1PuYRHlzY76e9yEh7X3e2TyvKIPlwuWBG93nCo.jpg', '2020-08-06 16:09:24', '2021-09-01 16:09:24', '0', '0', '2020-08-06 16:09:24', '2020-08-06 16:20:22');
-INSERT INTO `advs` VALUES ('7', '5', '2', '', 'http://127.0.0.1:8000/storage/adv/2020-08-06/AaQxeGVF1WoJifocfABcp0snrFZ7mE5Bk1bswc8F.jpg', '2020-08-06 16:09:38', '2021-09-01 16:09:38', '0', '0', '2020-08-06 16:09:46', '2020-08-06 16:09:46');
-INSERT INTO `advs` VALUES ('8', '5', '4', '', 'http://127.0.0.1:8000/storage/adv/2020-08-06/EJahW4QPvcTPA1u6YtX9yR0iOQGVUMviViL0vlFV.jpg', '2020-08-06 16:09:55', '2021-09-01 16:09:55', '0', '0', '2020-08-06 16:10:02', '2020-08-06 16:10:02');
+INSERT INTO `advs` VALUES ('5', '4', '1', '', 'http://pc.qingwuit.com/storage/adv/2020-08-06/hc30PI0zqFDEFHgCQhJl9K8BpY1LowqsrGAgw2dS.jpg', '2020-08-01 16:05:19', '2025-09-01 16:05:19', '0', '0', '2020-08-06 16:06:24', '2021-02-21 12:55:44');
+INSERT INTO `advs` VALUES ('6', '5', '1', '', 'http://pc.qingwuit.com/storage/adv/2020-08-06/Du1PuYRHlzY76e9yEh7X3e2TyvKIPlwuWBG93nCo.jpg', '2020-08-06 16:09:24', '2021-09-01 16:09:24', '0', '0', '2020-08-06 16:09:24', '2020-08-06 16:20:22');
+INSERT INTO `advs` VALUES ('7', '5', '2', '', 'http://pc.qingwuit.com/storage/adv/2020-08-06/AaQxeGVF1WoJifocfABcp0snrFZ7mE5Bk1bswc8F.jpg', '2020-08-06 16:09:38', '2021-09-01 16:09:38', '0', '0', '2020-08-06 16:09:46', '2020-08-06 16:09:46');
+INSERT INTO `advs` VALUES ('8', '5', '4', '', 'http://pc.qingwuit.com/storage/adv/2020-08-06/EJahW4QPvcTPA1u6YtX9yR0iOQGVUMviViL0vlFV.jpg', '2020-08-06 16:09:55', '2021-09-01 16:09:55', '0', '0', '2020-08-06 16:10:02', '2020-08-06 16:10:02');
+INSERT INTO `advs` VALUES ('10', '9', '1', '#', 'http://pc.qingwuit.com/storage/adv/2021-02-21/z8ssB2NMOEY9GodaKFDythuiBFPZR0dvVikWUC2r.jpg', '2021-02-21 14:42:02', '2025-03-01 14:42:02', '0', '0', '2021-02-21 14:42:11', '2021-02-21 14:42:11');
+INSERT INTO `advs` VALUES ('11', '10', '1', '#', 'http://pc.qingwuit.com/storage/adv/2021-02-21/gy4MdmiMJhG89EeyVahyX4KqO7bcCE26WsmIt0Y2.jpg', '2021-02-21 14:42:28', '2025-03-01 14:42:28', '0', '0', '2021-02-21 14:42:36', '2021-02-21 14:42:36');
 
 -- ----------------------------
 -- Table structure for adv_positions
@@ -121,13 +123,17 @@ CREATE TABLE `adv_positions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of adv_positions
 -- ----------------------------
 INSERT INTO `adv_positions` VALUES ('4', 'PC_首页幻灯片', '1920', '450', '2020-08-06 15:59:21', '2020-08-06 15:59:34');
 INSERT INTO `adv_positions` VALUES ('5', 'PC_幻灯片下广告', '312', '160', '2020-08-06 16:00:16', '2020-08-06 16:00:16');
+INSERT INTO `adv_positions` VALUES ('6', 'PC_栏目左侧广告', '234', '614', '2021-02-21 12:57:22', '2021-02-21 12:57:22');
+INSERT INTO `adv_positions` VALUES ('7', 'PC_栏目顶部广告', '1200', '120', '2021-02-21 13:01:51', '2021-02-21 13:01:51');
+INSERT INTO `adv_positions` VALUES ('9', 'PC_拼团幻灯片', '1200', '420', '2021-02-21 14:41:06', '2021-02-21 14:41:06');
+INSERT INTO `adv_positions` VALUES ('10', 'PC_积分商城幻灯片', '1200', '420', '2021-02-21 14:41:37', '2021-02-21 14:41:37');
 
 -- ----------------------------
 -- Table structure for agreements
@@ -2945,9 +2951,9 @@ CREATE TABLE `articles` (
 -- Records of articles
 -- ----------------------------
 INSERT INTO `articles` VALUES ('1', '关于我们', 'about', '<p>123关于我们</p>', '17', '0', '2020-11-05 20:09:14', '2020-11-15 20:31:33');
-INSERT INTO `articles` VALUES ('2', '其他合作', 'cooperation', '<p>是</p>', '3', '0', '2020-11-05 20:40:12', '2020-11-09 13:35:49');
-INSERT INTO `articles` VALUES ('3', '帮助中心', 'help', '<p>1</p>', '15', '0', '2020-11-05 20:40:28', '2020-11-23 15:10:57');
-INSERT INTO `articles` VALUES ('4', '网站公告', 'notice', '<p>网站公告</p>', '5', '0', '2020-11-09 13:38:58', '2020-11-15 20:15:24');
+INSERT INTO `articles` VALUES ('2', '其他合作', 'cooperation', '<p>是</p>', '4', '0', '2020-11-05 20:40:12', '2021-02-21 14:36:59');
+INSERT INTO `articles` VALUES ('3', '帮助中心', 'help', '<p>1</p>', '21', '0', '2020-11-05 20:40:28', '2021-02-21 14:56:44');
+INSERT INTO `articles` VALUES ('4', '网站公告', 'notice', '<p>网站公告</p>', '6', '0', '2020-11-09 13:38:58', '2021-02-21 14:36:57');
 
 -- ----------------------------
 -- Table structure for carts
@@ -2963,11 +2969,12 @@ CREATE TABLE `carts` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of carts
 -- ----------------------------
+INSERT INTO `carts` VALUES ('30', '1', '16', '0', '2', '1', '2021-02-01 19:18:47', '2021-02-01 19:18:47');
 
 -- ----------------------------
 -- Table structure for cashes
@@ -3007,12 +3014,13 @@ CREATE TABLE `chat_friends` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of chat_friends
 -- ----------------------------
 INSERT INTO `chat_friends` VALUES ('3', '8', '2', '2020-11-19 17:01:19', '2020-11-19 17:01:19');
+INSERT INTO `chat_friends` VALUES ('4', '1', '2', '2021-02-18 15:44:00', '2021-02-18 15:44:00');
 
 -- ----------------------------
 -- Table structure for chat_msgs
@@ -3030,65 +3038,76 @@ CREATE TABLE `chat_msgs` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of chat_msgs
 -- ----------------------------
-INSERT INTO `chat_msgs` VALUES ('17', '8', '2', 'text', '1', '1', '1', '0', '2020-11-19 17:56:43', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('18', '8', '2', 'text', '1', '1', '1', '0', '2020-11-19 17:57:59', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('19', '8', '2', 'text', '1', '1', '1', '0', '2020-11-19 18:01:03', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('20', '8', '2', 'text', '12', '1', '1', '0', '2020-11-19 18:01:52', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('21', '8', '2', 'text', '123', '1', '1', '0', '2020-11-19 18:04:30', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('22', '8', '2', 'text', '1', '1', '1', '0', '2020-11-19 18:20:02', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('23', '8', '2', 'text', '3', '1', '1', '0', '2020-11-19 18:20:29', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('24', '8', '2', 'text', '2', '1', '1', '0', '2020-11-19 18:35:41', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('25', '8', '2', 'image', 'http://127.0.0.1:8000/storage/chat/2020-11-19/PEboCjb30DhlnsTag3DYcczilHUBRYNDU8ORTZ2z.jpg', '1', '1', '0', '2020-11-19 18:46:28', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('26', '8', '2', 'image', 'http://127.0.0.1:8000/storage/chat/2020-11-19/DDp0sxbg63oLiJc9I4ixl2yzSd5RE5USY8RVL3jE.jpg', '1', '1', '0', '2020-11-19 18:48:45', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('27', '8', '2', 'image', 'http://127.0.0.1:8000/storage/chat/2020-11-19/DPs33C8biUGPQ3o5d5d2PrYGgA5ecmZ9oOYZH2Zh.jpg', '1', '1', '0', '2020-11-19 18:50:28', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('28', '8', '2', 'image', 'http://127.0.0.1:8000/storage/chat/2020-11-19/j22Ko38bBMeoXctsJIDCNmVQIcY8iB8YakPPhbC5.png', '1', '1', '0', '2020-11-19 18:51:17', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('29', '8', '2', 'image', 'http://127.0.0.1:8000/storage/chat/2020-11-19/s0CEnwtTTXBnG2SNJRZYvQFLRtNQq5VqbWC2MOcd.png', '1', '1', '0', '2020-11-19 18:56:10', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('30', '8', '2', 'text', '1', '1', '1', '1', '2020-11-19 19:28:47', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('31', '8', '2', 'text', '1', '1', '1', '0', '2020-11-19 19:46:10', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('32', '8', '2', 'text', '12', '1', '1', '1', '2020-11-23 11:58:24', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('33', '8', '2', 'text', '222', '1', '1', '1', '2020-11-23 12:00:54', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('34', '8', '2', 'text', '333', '1', '1', '1', '2020-11-23 12:02:02', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('35', '8', '2', 'text', '1234', '1', '1', '1', '2020-11-23 12:03:29', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('36', '8', '2', 'text', '1', '1', '1', '0', '2020-11-23 12:08:11', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('37', '8', '2', 'text', '2', '1', '1', '1', '2020-11-23 12:09:48', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('38', '8', '2', 'text', '2', '1', '1', '1', '2020-11-23 12:11:40', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('39', '8', '2', 'text', '1', '1', '1', '1', '2020-11-23 12:12:21', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('40', '8', '2', 'text', '3', '1', '1', '0', '2020-11-23 12:14:21', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('41', '8', '2', 'text', '1', '1', '1', '1', '2020-11-23 12:16:19', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('42', '8', '2', 'text', '12', '1', '1', '1', '2020-11-23 12:16:43', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('43', '8', '2', 'text', '1', '1', '1', '1', '2020-11-23 12:18:53', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('44', '8', '2', 'text', '2', '1', '1', '1', '2020-11-23 12:20:07', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('45', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 12:20:18', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('46', '8', '2', 'text', '2', '1', '1', '1', '2020-11-23 12:31:23', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('47', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 12:31:31', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('48', '8', '2', 'text', '3', '1', '1', '0', '2020-11-23 12:32:27', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('49', '8', '2', 'text', '4', '1', '1', '0', '2020-11-23 12:34:37', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('50', '8', '2', 'text', '5', '1', '1', '0', '2020-11-23 12:36:26', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('51', '8', '2', 'text', '6', '1', '1', '0', '2020-11-23 12:36:35', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('52', '8', '2', 'text', '1', '1', '1', '0', '2020-11-23 12:37:55', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('53', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 12:39:12', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('54', '8', '2', 'text', '3', '1', '1', '0', '2020-11-23 12:40:51', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('55', '8', '2', 'text', '4', '1', '1', '1', '2020-11-23 12:41:02', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('56', '8', '2', 'text', '4', '1', '1', '0', '2020-11-23 12:43:46', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('57', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 12:44:07', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('58', '8', '2', 'text', '1', '1', '1', '1', '2020-11-23 12:44:12', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('59', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 12:50:52', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('60', '8', '2', 'text', '23', '1', '1', '0', '2020-11-23 12:51:40', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('61', '8', '2', 'text', '123', '1', '1', '1', '2020-11-23 12:51:47', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('62', '8', '2', 'text', '12', '1', '1', '0', '2020-11-23 13:02:28', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('63', '8', '2', 'text', '1', '1', '1', '0', '2020-11-23 13:03:31', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('64', '8', '2', 'text', '1', '1', '1', '0', '2020-11-23 13:03:58', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('65', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 13:04:21', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('66', '8', '2', 'image', 'http://127.0.0.1:8000/storage/chat/2020-11-23/0ihvOAFRUz2zf37UtafEG2aexKGu2bQuPeQZl80s.png', '1', '1', '1', '2020-11-23 13:13:37', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('67', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 14:12:43', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('68', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 14:13:01', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('69', '8', '2', 'text', '2', '0', '1', '0', '2020-11-23 14:16:01', '2020-11-23 14:16:26');
-INSERT INTO `chat_msgs` VALUES ('70', '8', '2', 'text', '3', '0', '1', '0', '2020-11-23 14:16:10', '2020-11-23 14:16:26');
+INSERT INTO `chat_msgs` VALUES ('17', '8', '2', 'text', '1', '1', '1', '0', '2020-11-19 17:56:43', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('18', '8', '2', 'text', '1', '1', '1', '0', '2020-11-19 17:57:59', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('19', '8', '2', 'text', '1', '1', '1', '0', '2020-11-19 18:01:03', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('20', '8', '2', 'text', '12', '1', '1', '0', '2020-11-19 18:01:52', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('21', '8', '2', 'text', '123', '1', '1', '0', '2020-11-19 18:04:30', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('22', '8', '2', 'text', '1', '1', '1', '0', '2020-11-19 18:20:02', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('23', '8', '2', 'text', '3', '1', '1', '0', '2020-11-19 18:20:29', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('24', '8', '2', 'text', '2', '1', '1', '0', '2020-11-19 18:35:41', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('25', '8', '2', 'image', 'http://pc.qingwuit.com/storage/chat/2020-11-19/PEboCjb30DhlnsTag3DYcczilHUBRYNDU8ORTZ2z.jpg', '1', '1', '0', '2020-11-19 18:46:28', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('26', '8', '2', 'image', 'http://pc.qingwuit.com/storage/chat/2020-11-19/DDp0sxbg63oLiJc9I4ixl2yzSd5RE5USY8RVL3jE.jpg', '1', '1', '0', '2020-11-19 18:48:45', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('27', '8', '2', 'image', 'http://pc.qingwuit.com/storage/chat/2020-11-19/DPs33C8biUGPQ3o5d5d2PrYGgA5ecmZ9oOYZH2Zh.jpg', '1', '1', '0', '2020-11-19 18:50:28', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('28', '8', '2', 'image', 'http://pc.qingwuit.com/storage/chat/2020-11-19/j22Ko38bBMeoXctsJIDCNmVQIcY8iB8YakPPhbC5.png', '1', '1', '0', '2020-11-19 18:51:17', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('29', '8', '2', 'image', 'http://pc.qingwuit.com/storage/chat/2020-11-19/s0CEnwtTTXBnG2SNJRZYvQFLRtNQq5VqbWC2MOcd.png', '1', '1', '0', '2020-11-19 18:56:10', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('30', '8', '2', 'text', '1', '1', '1', '1', '2020-11-19 19:28:47', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('31', '8', '2', 'text', '1', '1', '1', '0', '2020-11-19 19:46:10', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('32', '8', '2', 'text', '12', '1', '1', '1', '2020-11-23 11:58:24', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('33', '8', '2', 'text', '222', '1', '1', '1', '2020-11-23 12:00:54', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('34', '8', '2', 'text', '333', '1', '1', '1', '2020-11-23 12:02:02', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('35', '8', '2', 'text', '1234', '1', '1', '1', '2020-11-23 12:03:29', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('36', '8', '2', 'text', '1', '1', '1', '0', '2020-11-23 12:08:11', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('37', '8', '2', 'text', '2', '1', '1', '1', '2020-11-23 12:09:48', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('38', '8', '2', 'text', '2', '1', '1', '1', '2020-11-23 12:11:40', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('39', '8', '2', 'text', '1', '1', '1', '1', '2020-11-23 12:12:21', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('40', '8', '2', 'text', '3', '1', '1', '0', '2020-11-23 12:14:21', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('41', '8', '2', 'text', '1', '1', '1', '1', '2020-11-23 12:16:19', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('42', '8', '2', 'text', '12', '1', '1', '1', '2020-11-23 12:16:43', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('43', '8', '2', 'text', '1', '1', '1', '1', '2020-11-23 12:18:53', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('44', '8', '2', 'text', '2', '1', '1', '1', '2020-11-23 12:20:07', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('45', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 12:20:18', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('46', '8', '2', 'text', '2', '1', '1', '1', '2020-11-23 12:31:23', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('47', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 12:31:31', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('48', '8', '2', 'text', '3', '1', '1', '0', '2020-11-23 12:32:27', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('49', '8', '2', 'text', '4', '1', '1', '0', '2020-11-23 12:34:37', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('50', '8', '2', 'text', '5', '1', '1', '0', '2020-11-23 12:36:26', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('51', '8', '2', 'text', '6', '1', '1', '0', '2020-11-23 12:36:35', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('52', '8', '2', 'text', '1', '1', '1', '0', '2020-11-23 12:37:55', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('53', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 12:39:12', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('54', '8', '2', 'text', '3', '1', '1', '0', '2020-11-23 12:40:51', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('55', '8', '2', 'text', '4', '1', '1', '1', '2020-11-23 12:41:02', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('56', '8', '2', 'text', '4', '1', '1', '0', '2020-11-23 12:43:46', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('57', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 12:44:07', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('58', '8', '2', 'text', '1', '1', '1', '1', '2020-11-23 12:44:12', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('59', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 12:50:52', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('60', '8', '2', 'text', '23', '1', '1', '0', '2020-11-23 12:51:40', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('61', '8', '2', 'text', '123', '1', '1', '1', '2020-11-23 12:51:47', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('62', '8', '2', 'text', '12', '1', '1', '0', '2020-11-23 13:02:28', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('63', '8', '2', 'text', '1', '1', '1', '0', '2020-11-23 13:03:31', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('64', '8', '2', 'text', '1', '1', '1', '0', '2020-11-23 13:03:58', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('65', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 13:04:21', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('66', '8', '2', 'image', 'http://pc.qingwuit.com/storage/chat/2020-11-23/0ihvOAFRUz2zf37UtafEG2aexKGu2bQuPeQZl80s.png', '1', '1', '1', '2020-11-23 13:13:37', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('67', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 14:12:43', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('68', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 14:13:01', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('69', '8', '2', 'text', '2', '1', '1', '0', '2020-11-23 14:16:01', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('70', '8', '2', 'text', '3', '1', '1', '0', '2020-11-23 14:16:10', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('71', '8', '2', 'text', '222', '1', '1', '0', '2021-02-18 16:53:45', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('72', '8', '2', 'text', '44444', '1', '1', '0', '2021-02-18 16:59:09', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('73', '8', '2', 'text', '111', '1', '1', '0', '2021-02-18 16:59:17', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('74', '8', '2', 'text', '66666', '1', '1', '0', '2021-02-18 17:00:21', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('75', '8', '2', 'image', 'http://pc.qingwuit.com/storage/chat/2021-02-18/OSngzGOf8pRrIxdXbbPiD7AF5Ynato07FNMcBqO7.jpg', '1', '1', '0', '2021-02-18 18:03:26', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('76', '8', '2', 'text', '234', '1', '1', '0', '2021-02-18 18:17:12', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('77', '8', '2', 'text', '4442', '1', '1', '0', '2021-02-18 18:17:29', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('78', '8', '2', 'text', '442', '1', '1', '0', '2021-02-18 18:19:18', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('79', '8', '2', 'text', '443', '1', '1', '0', '2021-02-18 18:20:02', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('80', '8', '2', 'text', '335', '1', '1', '0', '2021-02-18 18:20:44', '2021-02-18 18:33:04');
+INSERT INTO `chat_msgs` VALUES ('81', '8', '2', 'text', '123', '0', '0', '1', '2021-02-18 18:33:12', '2021-02-18 18:33:12');
 
 -- ----------------------------
 -- Table structure for collectives
@@ -3150,7 +3169,7 @@ CREATE TABLE `configs` (
 -- ----------------------------
 -- Records of configs
 -- ----------------------------
-INSERT INTO `configs` VALUES ('1', 'web_name', '青梧商城', '网站名');
+INSERT INTO `configs` VALUES ('1', 'web_name', '青梧商城3', '网站名');
 INSERT INTO `configs` VALUES ('2', 'title', '青梧商城-B2B2C', '网站标题');
 INSERT INTO `configs` VALUES ('3', 'keywords', '青梧商城,B2B2C,laravel,vue', '关键字');
 INSERT INTO `configs` VALUES ('4', 'description', '青梧商城,电商开发平台', '网站描述');
@@ -3158,7 +3177,7 @@ INSERT INTO `configs` VALUES ('5', 'logo', '', '网站Logo');
 INSERT INTO `configs` VALUES ('6', 'icon', '', '游览器Logo');
 INSERT INTO `configs` VALUES ('7', 'mobile', '', '联系电话');
 INSERT INTO `configs` VALUES ('8', 'email', 'bishashiwo@gmail.com', '邮箱');
-INSERT INTO `configs` VALUES ('9', 'icp', '', '备案信息');
+INSERT INTO `configs` VALUES ('9', 'icp', '123', '备案信息');
 INSERT INTO `configs` VALUES ('10', 'web_status', '1', '网站状态 0关 1开');
 INSERT INTO `configs` VALUES ('11', 'web_close_info', '网站维护中...', '网站关闭原因');
 INSERT INTO `configs` VALUES ('12', 'ali_pay', '{\"ali_h5\":{\"app_id\":null,\"public_key\":null,\"private_key\":null,\"return_url\":null,\"notify_url\":null},\"ali_app\":{\"app_id\":null,\"public_key\":null,\"private_key\":null,\"return_url\":null,\"notify_url\":null},\"ali_mini\":{\"app_id\":null,\"public_key\":null,\"private_key\":null,\"return_url\":null,\"notify_url\":null},\"ali_scan\":{\"app_id\":\"2016091900544672\",\"public_key\":null,\"private_key\":\"MIIEowIBAAKCAQEAqMfEF9QVEOW4+7dNJCY674IHjllPVFLUtP\\/r72qL37XpDlX\\/hutQQKOqRtaqBtoEiWEwnkvzvntUhbvNy6PDQfw5CGSIKfKV2UsIEnTXeoY9byizhkvmPedGSBEjo6622fwzdfu5uHRPbrwedNFcGKfb2PPgNeb3KUCJFYh5aHk\\/8WPpJBo\\/zJW29iN0WznqXiOWsuADCFNKQuzEvSzyxpiyZErJ2k+xptmX1S5MsfsENHVfLc\\/IY8VXQhle\\/UG+ccoTASUGyI8Dq2QV76XMDotaheOdX7iUOmtW6px\\/Rjk9qbzIfobbvlRDboJYnTiBXA+7Qh7Jr8ZMY2+L1ccHHQIDAQABAoIBADisS2YM6r3vxTuQgzCePa\\/qo4ri5kZUQeQ9AwYzaqBFvun3aoPtQ9dQnX6H2jPOxTM0FVUx\\/7h4RRtawnGcnZXskWIGD8q2ECcUkLNR1IDpznsi2ZVAqyEiJXFRf\\/wYUIHFs6nsSqJrO7jdJgTnv9rvkly5FxJCab\\/KUb2PQ+UWM76tGfhEjxv9+ONBuWxDHr6mHLQn2MK\\/CM\\/WB0qNDEMSVz4AqQ\\/hx0ysZZWBAZaOPN5V9FRV+bWhpo\\/O9HB18TaKNtRdAfMvsy2o70NLi\\/DZDjPsQ1dtIVTjBE5j\\/ikn6Qpm6P\\/tBCw\\/8hWukbO7Aktg+1YLakHq\\/110xnM4VmkCgYEA+VizDa7D1+1jzveS7Ca2\\/44dw3eGnYEz+DUxigeQO6nY2RIkUEhOg5MvdezJsN1P9GIGS3JG9QJCCmKPpWdHRnSTaz8H04sKeWlObOs\\/pgWyXq1g2WZWQZ77CUB7LcgChQTltPBPoUKeuW3Cj8GOG3xvEhgXoW5sGMhgOyMcVkcCgYEArUi25iUb3\\/F4QOd6Kkdlur825sXBJ2xGe6TQP8BhbE86\\/oUU34RuNz0PGwWnvidb5JwS9S4wCmkU+AbpC1+9cd1Mdpb08heY\\/KqYi9CxE0EGOYN3fWksbc4tuXD8BBKJPq2K1uPtzHEZKW2ysVsEfC52ZpZNC8MAVPbj\\/otcVXsCgYEA95ipa\\/vPgvm6M0lJvm+PJeLEEVX9+SbUKTMA9zQdd\\/FnX92Q65txQ1wDM9EmUhbhDyXLZF2csixE0bUfOLp+XyrhPAyBxAD8LKVx99v9\\/ukHPtZhJl9lZZHtazl5V3OVdOrxAiPinpndrPmdykwDxa1hSZFc3bMdadqHHBH4UH8CgYBbSfmBGX+r5OxzVP9ZErAXR\\/FGdlwhxrsDHHrReypYAw2TVM0ATCY8V6CDneEXHmkc8NRT8ndApMd1Oz6+zTtipzFHMJPujlv8kGs5DUKcYB9FYWsr2KKdXodcMJe0FYfUS1zfhMicceDNoIsJQGgGe\\/vIY9pHHf4oxMCsMwL7zQKBgGxePvJuaQRklq7m\\/IB4+htsOBR457HTXJnskpVfUBR5ZJGq8fq4ilO\\/Ej3F+Yi\\/AA6HrarM7xB5LV7e97HpHATJs6HcY+pMOdilEDPZ2CDBCR1CiJ9+pOUCyviIVDs7ePZFKqqnwf8HiJbQwTp6ADMWJp6WzRfriucaO9WW9S5I\",\"return_url\":\"http:\\/\\/app.qingwuit.com\\/api\\/payment\\/alipay\",\"notify_url\":\"http:\\/\\/app.qingwuit.com\\/api\\/payment\\/alipay\",\"ali_public_key\":\"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA+z64yozEqXS9GvcT7e758dPTt8qJ2+12wcpioEhaBbfqvowcZjUV9BPL1EgtJie5SNK9rFDFO\\/POWVlzj8BVD0viUteNe2amPRhZLxzT3HXn9VJH+dTwOEgZ1MSrDisxOi7\\/NCTF42zQl6\\/w2lK2FQI\\/c1kIoN91ivWlPqX3BbXG54hyngu5T9j2AimEhKWMhq6sL2gVoNILbJDLDN85AOfoGb1DZ59dFSez\\/GtssO0KXGqfc1R1AggmisksQOKAXSiSHejEHvU\\/Zx4lIvpCWEwBXx7qWbOD2MXWmsrn6W41f4AJYoJxQ2QRUkFlKpstAgVfhNMR6A+W1p7bh647GQIDAQAB\"}}', '阿里云支付配置');
@@ -3166,14 +3185,14 @@ INSERT INTO `configs` VALUES ('13', 'alioss', '{\"status\":false,\"access_id\":\
 INSERT INTO `configs` VALUES ('14', 'alisms', '{\"key\":\"xxx\",\"secret\":\"xxx\"}', '阿里云sms');
 INSERT INTO `configs` VALUES ('15', 'amap_ak', '', '高德地图密钥');
 INSERT INTO `configs` VALUES ('16', 'wechat_public', '', '微信公众号配置');
-INSERT INTO `configs` VALUES ('17', 'wechat_pay', '{\"wechat_h5\":{\"app_id\":null,\"app_secret\":null,\"mch_id\":null,\"key\":null,\"notify_url\":null},\"wechat_public\":{\"app_id\":null,\"app_secret\":null,\"mch_id\":null,\"key\":null,\"notify_url\":null},\"wechat_app\":{\"app_id\":null,\"app_secret\":null,\"mch_id\":null,\"key\":null,\"notify_url\":null},\"wechat_mini\":{\"app_id\":null,\"app_secret\":null,\"mch_id\":null,\"key\":null,\"notify_url\":null},\"wechat_scan\":{\"app_id\":null,\"app_secret\":null,\"mch_id\":null,\"key\":null,\"notify_url\":null}}', '微信支付配置');
+INSERT INTO `configs` VALUES ('17', 'wechat_pay', '{\"wechat_h5\":{\"app_id\":\"wx78ddf6a4699\",\"app_secret\":\"2f633e97835592\",\"mch_id\":\"1505332661\",\"key\":\"8ed99d4290fe86a\",\"notify_url\":\"http://xxx\"},\"wechat_public\":{\"app_id\":\"wx78ddf6a469\",\"app_secret\":\"2f633e978355\",\"mch_id\":\"15053326\",\"key\":\"8ed99d4290fe86ae\",\"notify_url\":\"http://i/payment\"},\"wechat_app\":{\"app_id\":null,\"app_secret\":null,\"mch_id\":null,\"key\":null,\"notify_url\":null},\"wechat_mini\":{\"app_id\":null,\"app_secret\":null,\"mch_id\":null,\"key\":null,\"notify_url\":null},\"wechat_scan\":{\"app_id\":null,\"app_secret\":null,\"mch_id\":null,\"key\":null,\"notify_url\":null}}', '微信支付配置');
 INSERT INTO `configs` VALUES ('18', 'paypal', '', 'paypal支付配置');
-INSERT INTO `configs` VALUES ('19', 'oauth', '{\"weixinweb\":{\"client_id\":\"123\",\"client_secret\":\"456\",\"redirect\":\"11112\"}}', '第三方登陆配置');
+INSERT INTO `configs` VALUES ('19', 'oauth', '{\"weixinweb\":{\"client_id\":\"123\",\"client_secret\":\"142\",\"redirect\":\"124\"},\"weixin\":{\"client_id\":\"wx5b0a018866e\",\"client_secret\":\"43e8c03663af946a\",\"redirect\":\"http://pc.qingwuit.com\"}}', '第三方登陆配置');
 INSERT INTO `configs` VALUES ('20', 'goods_verify', '0', '商品审核');
 INSERT INTO `configs` VALUES ('21', 'cash_rate', '0', '提现手续费');
-INSERT INTO `configs` VALUES ('22', 'kuaibao', '{\"app_id\":\"106\",\"app_key\":\"c3b848153db\"}', '快宝物流配置');
+INSERT INTO `configs` VALUES ('22', 'kuaibao', '{\"app_id\":\"106\",\"app_key\":\"c3b84\"}', '快宝物流配置');
 INSERT INTO `configs` VALUES ('23', 'task', '{\"confirm\":\"5\",\"cancel\":\"1\",\"settlement\":\"7\"}', '自动任务配置');
-INSERT INTO `configs` VALUES ('24', 'integral', '{\"login\":{\"status\":true,\"integral\":1},\"register\":{\"status\":true,\"integral\":\"5\"},\"inviter\":{\"status\":false,\"integral\":1},\"order\":{\"status\":false,\"integral\":1}}', '');
+INSERT INTO `configs` VALUES ('24', 'integral', '{\"login\":{\"status\":\"true\",\"integral\":\"1\"},\"register\":{\"status\":false,\"integral\":\"5\"},\"inviter\":{\"status\":false,\"integral\":\"1\"},\"order\":{\"status\":false,\"integral\":\"1\"}}', '');
 
 -- ----------------------------
 -- Table structure for coupons
@@ -3199,7 +3218,7 @@ CREATE TABLE `coupons` (
 -- ----------------------------
 INSERT INTO `coupons` VALUES ('1', '2', '第一张优惠券', '10.00', '50.00', '100', '', '2020-11-15 04:32:45', '2021-01-16 04:32:45', '2020-11-15 16:33:21', '2020-11-15 19:26:05');
 INSERT INTO `coupons` VALUES ('2', '2', '第二张优惠券', '100.00', '500.00', '10', '', '2020-11-10 06:52:00', '2021-01-19 06:52:00', '2020-11-15 18:52:29', '2020-11-15 19:26:21');
-INSERT INTO `coupons` VALUES ('3', '2', '第三张优惠券', '200.00', '800.00', '99', '', '2020-11-15 06:52:30', '2021-12-01 06:52:30', '2020-11-15 18:52:51', '2020-11-16 13:49:16');
+INSERT INTO `coupons` VALUES ('3', '2', '第三张优惠券', '200.00', '800.00', '99', '', '2020-11-15 06:52:30', '2021-12-30 06:52:30', '2020-11-15 18:52:51', '2020-11-16 13:49:16');
 
 -- ----------------------------
 -- Table structure for coupon_logs
@@ -3225,8 +3244,8 @@ CREATE TABLE `coupon_logs` (
 -- ----------------------------
 -- Records of coupon_logs
 -- ----------------------------
-INSERT INTO `coupon_logs` VALUES ('1', '第一张优惠券', '1', '1', '2', '38', '10.00', '50.00', '1', '2021-01-08 04:32:45', '2021-01-22 04:32:45', '2020-11-15 19:18:52', '2020-11-15 23:32:03');
-INSERT INTO `coupon_logs` VALUES ('3', '第三张优惠券', '3', '1', '2', '0', '200.00', '800.00', '0', '2021-01-08 06:52:30', '2021-01-22 06:52:30', '2020-11-16 13:49:16', '2020-11-16 13:49:16');
+INSERT INTO `coupon_logs` VALUES ('1', '第一张优惠券', '1', '1', '2', '38', '10.00', '50.00', '1', '2021-01-08 04:32:45', '2021-02-26 04:32:45', '2020-11-15 19:18:52', '2020-11-15 23:32:03');
+INSERT INTO `coupon_logs` VALUES ('3', '第三张优惠券', '3', '1', '2', '57', '0.20', '1.00', '1', '2021-01-08 06:52:30', '2021-02-26 06:52:30', '2020-11-16 13:49:16', '2021-02-07 15:09:58');
 
 -- ----------------------------
 -- Table structure for distributions
@@ -3413,13 +3432,27 @@ CREATE TABLE `goods` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES ('16', '2', '29', '2', '标题', '', '', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH.jpg', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH.jpg', '1.00', '2.00', '0', '3.00', '2', '0', '1', '0', null, '1', '<p>1</p>', '', '0', '1', '2020-08-02 18:45:08', '2021-01-14 14:30:13');
-INSERT INTO `goods` VALUES ('17', '1', '26', '2', '品标题品标题品标题品标题品标题', '品标题品标题', '', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD.jpg,http://127.0.0.1:8000/storage/goods/2020-08-21/qmWgpiMNk2KI9yXyzmaTC9WcRaAX2Quqjpg3iB6f.jpg', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD.jpg', '0.00', '0.00', '0', '0.00', '2', '0', '1', '11', null, '1', '', '', '0', '1', '2020-08-02 18:45:45', '2020-11-15 21:34:21');
+INSERT INTO `goods` VALUES ('18', '2', '26', '3', 'Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体', '智能操控 快速冷暖', '', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/K2f0AKQqJgKu4trdQF2zytOMEdRQ0PM9yYRB2srj.jpg', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/K2f0AKQqJgKu4trdQF2zytOMEdRQ0PM9yYRB2srj.jpg', '6819.00', '8999.00', '1000', '10.00', '0', '0', '1', '0', null, '1', '', '', '0', '0', '2021-02-21 13:59:29', '2021-02-21 13:59:29');
+INSERT INTO `goods` VALUES ('19', '2', '26', '3', 'Xiaomi/小米 小米电视4A 55英寸 4k超高清智能网络电视机 50 60', '小米电视4A 55英寸', '', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/P9H13dxYDx8oDm5QsiYlYlNoBcN1ROEnn8R8mlqE.jpg', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/P9H13dxYDx8oDm5QsiYlYlNoBcN1ROEnn8R8mlqE.jpg', '2300.00', '4500.00', '1000', '5.00', '0', '0', '1', '0', null, '1', '', '', '0', '0', '2021-02-21 14:01:35', '2021-02-21 14:01:35');
+INSERT INTO `goods` VALUES ('20', '2', '26', '3', 'Hisense/海信 LED49EC270W 49吋液晶平板电视机网络wifi彩电50', 'Hisense/海信 wifi彩电', '', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/HUEYKEuHCAKTilIWWse4e9J6jNHy4CUSwbCOO63H.jpg', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/HUEYKEuHCAKTilIWWse4e9J6jNHy4CUSwbCOO63H.jpg', '1800.00', '2999.00', '1000', '2.00', '0', '0', '1', '0', null, '1', '', '', '0', '0', '2021-02-21 14:05:28', '2021-02-21 14:05:28');
+INSERT INTO `goods` VALUES ('21', '2', '26', '3', 'Konka/康佳 A48F 48英寸高清智能网络平板 LED液晶电视机 50 49 已累计爆售 1万台 大屏购物 镇店爆款', '大屏购物 镇店爆款', '', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/ZtCEjPfDPzSF2OvdCY2mAKsTmFhhVcdIRo3VEX9g.jpg', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/ZtCEjPfDPzSF2OvdCY2mAKsTmFhhVcdIRo3VEX9g.jpg', '4500.00', '6999.00', '1000', '1.00', '0', '0', '1', '0', null, '1', '', '', '0', '0', '2021-02-21 14:19:36', '2021-02-21 14:19:36');
+INSERT INTO `goods` VALUES ('22', '2', '26', '3', 'Haier/海尔 EG10014B39GU1 10公斤kg蓝晶变频滚筒全自动洗衣机', '自动洗衣机', '', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/comnkzGxDkMgN1kD8VrZEWT9nUAjJyhSQ3O4FGlo.jpg', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/comnkzGxDkMgN1kD8VrZEWT9nUAjJyhSQ3O4FGlo.jpg', '1200.00', '1399.00', '1000', '1.00', '0', '0', '1', '0', null, '1', '', '', '0', '0', '2021-02-21 14:20:39', '2021-02-21 14:20:39');
+INSERT INTO `goods` VALUES ('23', '2', '26', '3', 'Haier/海尔 EG7012B29W 7公斤 变频全自动 滚筒洗衣机 消毒洗', '变频全自动', '', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/stEVhOj4E3nIggkoWMkA2VhV6lsNJ0gikrTGNgCF.jpg', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/stEVhOj4E3nIggkoWMkA2VhV6lsNJ0gikrTGNgCF.jpg', '3999.00', '4500.00', '1000', '1.00', '0', '0', '1', '0', null, '1', '', '', '0', '0', '2021-02-21 14:21:50', '2021-02-21 14:21:50');
+INSERT INTO `goods` VALUES ('24', '2', '26', '3', 'Skyworth/创维 55V9E 55吋4K超高清智能网络平板LED液晶电视机 50 25核智能 4K超高清 人气爆款', '4K超高清 人气爆款', '', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/v77vwbiZMOYCEPWRueUQ3B2tEIg5TBsgH886sxXH.jpg', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/v77vwbiZMOYCEPWRueUQ3B2tEIg5TBsgH886sxXH.jpg', '2199.00', '3099.00', '1000', '1.00', '0', '0', '1', '0', null, '1', '', '', '0', '0', '2021-02-21 14:23:05', '2021-02-21 14:23:05');
+INSERT INTO `goods` VALUES ('25', '2', '26', '3', 'Changhong/长虹 55G6 55吋液晶电视机4k曲面平板电视智能网络wifi 曲面 4K超清 双64位 U-MAX', '曲面 4K超清', '', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/SGTSO7aydUm1QQjvxSokwX8AeSbz4iu2WvQKENFg.jpg', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/SGTSO7aydUm1QQjvxSokwX8AeSbz4iu2WvQKENFg.jpg', '2599.00', '3599.00', '1000', '1.00', '0', '0', '1', '0', null, '1', '', '', '0', '0', '2021-02-21 14:24:09', '2021-02-21 14:24:09');
+INSERT INTO `goods` VALUES ('26', '2', '29', '3', '你当像鸟飞往你的山（比尔·盖茨年度特别推荐，登顶《纽约时报》畅销榜80 周！多一个人读到这个真实故事，就多一个人勇敢做自己！）', '你当像鸟飞往你的山', '', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/BZXdVMnA0hMMZQ0CcqMDROJViBjbC59S2Jjgj4xc.jpg', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/BZXdVMnA0hMMZQ0CcqMDROJViBjbC59S2Jjgj4xc.jpg', '45.00', '65.00', '1000', '1.00', '0', '0', '1', '0', null, '1', '', '', '0', '0', '2021-02-21 14:26:43', '2021-02-21 14:26:43');
+INSERT INTO `goods` VALUES ('27', '2', '29', '3', '悲喜自渡：季羡林的孤独智慧', '生活态度 悲喜自渡', '', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/w1C35C7d0nP8RHokoEHg1lgOCQnS9OTrHNSNTlrb.jpg', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/w1C35C7d0nP8RHokoEHg1lgOCQnS9OTrHNSNTlrb.jpg', '25.00', '65.00', '1000', '1.00', '0', '0', '1', '0', null, '1', '', '', '0', '0', '2021-02-21 14:27:47', '2021-02-21 14:27:47');
+INSERT INTO `goods` VALUES ('28', '2', '29', '3', '凡心所向，素履所往：季羡林的生命智慧', '季羡林98载了悟生命', '', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/22hwnlsgPzPrP2ffiI8KxzKv2GCU2gdBnc2cERkI.jpg', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/22hwnlsgPzPrP2ffiI8KxzKv2GCU2gdBnc2cERkI.jpg', '55.00', '80.00', '100', '1.00', '0', '0', '1', '0', null, '1', '', '', '0', '0', '2021-02-21 14:28:56', '2021-02-21 14:29:03');
+INSERT INTO `goods` VALUES ('29', '2', '29', '3', '生活明朗 万物可爱：季羡林的豁达智慧', '生活明朗 万物可爱', '', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/GtNWJazLkeBsTo4wdeSVV2errlp2iF9d7icLodaa.jpg', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/GtNWJazLkeBsTo4wdeSVV2errlp2iF9d7icLodaa.jpg', '39.00', '69.00', '1000', '1.00', '0', '0', '1', '0', null, '1', '', '', '0', '0', '2021-02-21 14:30:27', '2021-02-21 14:30:27');
+INSERT INTO `goods` VALUES ('30', '2', '29', '3', '季羡林散文精选集：糊涂一点，潇洒一点', '糊涂潇洒', '', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/ZwxKKcx6kiYh6JVEkM2jX28XncG6C3SGBvOqBv79.jpg', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/ZwxKKcx6kiYh6JVEkM2jX28XncG6C3SGBvOqBv79.jpg', '55.00', '95.00', '1000', '1.00', '0', '0', '1', '0', null, '1', '', '', '0', '0', '2021-02-21 14:31:19', '2021-02-21 14:31:19');
+INSERT INTO `goods` VALUES ('31', '2', '29', '3', '一个人的世界史 解读20世纪', '郗士作序推荐', '', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/86ho7T6wqOEOWR4dAo3i3qU39BZI3featTBH2AkL.jpg', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/86ho7T6wqOEOWR4dAo3i3qU39BZI3featTBH2AkL.jpg', '26.00', '36.00', '1000', '1.00', '0', '0', '1', '0', null, '1', '', '', '0', '0', '2021-02-21 14:32:14', '2021-02-21 14:32:14');
+INSERT INTO `goods` VALUES ('32', '2', '29', '3', '人生海海 解密人性的荒唐与高尚', '图书榜虚构类连续六周TOP1', '', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/RLCpxsuDuZrEK1R4VtpvS2p7pKdFFTnCeEWWIkAb.jpg', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/RLCpxsuDuZrEK1R4VtpvS2p7pKdFFTnCeEWWIkAb.jpg', '89.00', '289.00', '1000', '1.00', '0', '0', '1', '0', null, '1', '', '', '0', '0', '2021-02-21 14:33:02', '2021-02-21 14:33:02');
+INSERT INTO `goods` VALUES ('33', '2', '29', '3', '直面人生的终极问题，刻在骨头里的故事', '皮囊人生', '', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/zAMCR8ior1TYmBaFAm5F2fkNshiyUnn1oNIqBAuE.jpg', 'http://pc.qingwuit.com/storage/goods/3/2021-02-21/zAMCR8ior1TYmBaFAm5F2fkNshiyUnn1oNIqBAuE.jpg', '18.00', '28.00', '1000', '1.00', '0', '0', '1', '0', null, '1', '', '', '0', '0', '2021-02-21 14:34:05', '2021-02-21 14:34:05');
 
 -- ----------------------------
 -- Table structure for goods_attrs
@@ -3461,7 +3494,7 @@ CREATE TABLE `goods_brands` (
 -- Records of goods_brands
 -- ----------------------------
 INSERT INTO `goods_brands` VALUES ('1', '', '华为', '0', '2020-07-27 14:17:14', '2020-07-27 14:17:07');
-INSERT INTO `goods_brands` VALUES ('2', 'http://127.0.0.1:8000/storage/goods_brand/2020-08-23/K7ZXnYJhBgj8ZzHYNAetw6cq70OpPhXpvFZsDwIF.png', '小米', '0', '2020-07-27 14:17:18', '2020-08-23 16:25:41');
+INSERT INTO `goods_brands` VALUES ('2', 'http://pc.qingwuit.com/storage/goods_brand/2020-08-23/K7ZXnYJhBgj8ZzHYNAetw6cq70OpPhXpvFZsDwIF.png', '小米', '0', '2020-07-27 14:17:18', '2020-08-23 16:25:41');
 
 -- ----------------------------
 -- Table structure for goods_classes
@@ -3476,16 +3509,16 @@ CREATE TABLE `goods_classes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of goods_classes
 -- ----------------------------
-INSERT INTO `goods_classes` VALUES ('2', '0', '', '家用电器', '0', '2020-08-02 14:58:08', '2020-08-02 14:58:08');
-INSERT INTO `goods_classes` VALUES ('3', '0', '', '图书 & 音像 & 电子书', '1', '2020-08-02 14:58:15', '2020-08-02 14:59:12');
-INSERT INTO `goods_classes` VALUES ('4', '0', '', '手机 & 数码 & 通信', '2', '2020-08-02 14:58:22', '2020-08-02 14:59:16');
-INSERT INTO `goods_classes` VALUES ('5', '0', '', '电脑 & 办公', '3', '2020-08-02 14:58:28', '2020-08-02 14:59:20');
-INSERT INTO `goods_classes` VALUES ('6', '0', '', '家居 & 家具 & 家装', '4', '2020-08-02 14:58:34', '2020-08-02 14:59:22');
+INSERT INTO `goods_classes` VALUES ('2', '0', 'http://pc.qingwuit.com/storage/goods_class/2021-02-21/88bNEsWnX6H869zlH8eZbIlN2faQghXuoVqrNbmQ.png', '家用电器', '0', '2020-08-02 14:58:08', '2021-02-21 14:58:36');
+INSERT INTO `goods_classes` VALUES ('3', '0', 'http://pc.qingwuit.com/storage/goods_class/2021-02-21/OKMg3IThy9L1W5YYeN80uaUaIJPuT9ZIV6h4BQdK.png', '图书 & 音像 & 电子书', '1', '2020-08-02 14:58:15', '2021-02-21 14:58:43');
+INSERT INTO `goods_classes` VALUES ('4', '0', 'http://pc.qingwuit.com/storage/goods_class/2021-02-21/RTB3mZKANhwF85fQWggyegLWuR3PEF40E6nYpuWC.png', '手机 & 数码 & 通信', '2', '2020-08-02 14:58:22', '2021-02-21 14:58:50');
+INSERT INTO `goods_classes` VALUES ('5', '0', 'http://pc.qingwuit.com/storage/goods_class/2021-02-21/RCtZiAvIxaktEbCBPMGMUO9whF1eHZGbTzS9T9cg.png', '电脑 & 办公', '3', '2020-08-02 14:58:28', '2021-02-21 14:58:59');
+INSERT INTO `goods_classes` VALUES ('6', '0', 'http://pc.qingwuit.com/storage/goods_class/2021-02-21/DuO1K6Gk8kSiD5cCE5GPVaFWKnC6OlBpK1pCYvSO.png', '家居 & 家具 & 家装', '4', '2020-08-02 14:58:34', '2021-02-21 14:59:06');
 INSERT INTO `goods_classes` VALUES ('7', '0', '', '男装 & 女装 & 内衣', '5', '2020-08-02 14:58:42', '2020-08-02 14:59:25');
 INSERT INTO `goods_classes` VALUES ('8', '2', '', '大家电', '0', '2020-08-02 14:58:57', '2020-08-02 14:58:57');
 INSERT INTO `goods_classes` VALUES ('9', '2', '', '生活电器', '0', '2020-08-02 14:59:39', '2020-08-02 14:59:39');
@@ -3513,6 +3546,7 @@ INSERT INTO `goods_classes` VALUES ('30', '16', '', '索尼', '0', '2020-08-02 1
 INSERT INTO `goods_classes` VALUES ('31', '18', '', '台式', '0', '2020-08-02 18:27:42', '2020-08-02 18:27:42');
 INSERT INTO `goods_classes` VALUES ('32', '20', '', '双门', '0', '2020-08-02 18:28:04', '2020-08-02 18:28:04');
 INSERT INTO `goods_classes` VALUES ('33', '24', '', '美系', '0', '2020-08-02 18:28:18', '2020-08-02 18:28:18');
+INSERT INTO `goods_classes` VALUES ('34', '15', '', '智能手机', '0', '2021-02-21 13:53:32', '2021-02-21 13:53:32');
 
 -- ----------------------------
 -- Table structure for goods_skus
@@ -3536,9 +3570,6 @@ CREATE TABLE `goods_skus` (
 -- ----------------------------
 -- Records of goods_skus
 -- ----------------------------
-INSERT INTO `goods_skus` VALUES ('19', '17', '13', '红色', '', '1.00', '0.00', '9', '0.10', '2020-08-02 18:45:45', '2021-01-14 14:39:36');
-INSERT INTO `goods_skus` VALUES ('20', '17', '14', '白色', '', '2.00', '0.00', '46', '0.20', '2020-08-02 18:45:45', '2020-11-15 21:34:21');
-INSERT INTO `goods_skus` VALUES ('21', '17', '15', '黑色', '', '50.00', '10.00', '53', '0.00', '2020-08-02 18:45:45', '2020-11-16 13:50:12');
 
 -- ----------------------------
 -- Table structure for goods_specs
@@ -3601,7 +3632,7 @@ CREATE TABLE `integral_goods` (
 -- ----------------------------
 -- Records of integral_goods
 -- ----------------------------
-INSERT INTO `integral_goods` VALUES ('1', '1', '123', '4444', '10.00', '100.00', '98', 'http://127.0.0.1:8000/storage/integrals/0/2020-11-09/HgTyg2LMUlc6Q48puimpxkISyQtNmtCixZbpZDDG.png', 'http://127.0.0.1:8000/storage/integrals/0/2020-11-09/HgTyg2LMUlc6Q48puimpxkISyQtNmtCixZbpZDDG.png', '0', '1', '1', '<p>eqw</p>', '<p>fvcvv</p>', '2020-11-09 19:21:46', '2020-11-10 19:27:12');
+INSERT INTO `integral_goods` VALUES ('1', '1', '电音少女手办', '电音少女手办', '10.00', '100.00', '96', 'http://pc.qingwuit.com/storage/integrals/0/2021-02-21/Mz9U1unTMWaEX90Y6FreBjoTxP6CxLpjxIDxXnNd.jpg', 'http://pc.qingwuit.com/storage/integrals/0/2021-02-21/Mz9U1unTMWaEX90Y6FreBjoTxP6CxLpjxIDxXnNd.jpg', '0', '1', '1', '<p>eqw</p>', '<p>fvcvv</p>', '2020-11-09 19:21:46', '2021-02-21 14:40:06');
 
 -- ----------------------------
 -- Table structure for integral_goods_classes
@@ -3646,12 +3677,14 @@ CREATE TABLE `integral_orders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of integral_orders
 -- ----------------------------
-INSERT INTO `integral_orders` VALUES ('2', '1', '2020111019271219174', '123', 'http://127.0.0.1:8000/storage/integrals/0/2020-11-09/HgTyg2LMUlc6Q48puimpxkISyQtNmtCixZbpZDDG_150.png', '20.00', '20.00', '6', '2222222222', 'yd', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '2020-11-09 14:28:05', '2020-11-09 14:28:05', '', '2020-11-10 19:27:12', '2020-11-10 20:07:45');
+INSERT INTO `integral_orders` VALUES ('2', '1', '2020111019271219174', '123', 'http://pc.qingwuit.com/storage/integrals/0/2020-11-09/HgTyg2LMUlc6Q48puimpxkISyQtNmtCixZbpZDDG_150.png', '20.00', '20.00', '6', '2222222222', 'yd', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '2020-11-09 14:28:05', '2020-11-09 14:28:05', '', '2020-11-10 19:27:12', '2020-11-10 20:07:45');
+INSERT INTO `integral_orders` VALUES ('3', '1', '2021021714414912453', '123', 'http://pc.qingwuit.com/storage/integrals/0/2020-11-09/HgTyg2LMUlc6Q48puimpxkISyQtNmtCixZbpZDDG_150.png', '10.00', '10.00', '2', '', '', '李三', '18888888888', '山西省 太原市 长子县', '打扫打扫', '2020-11-09 14:28:05', '2020-11-09 14:28:05', '', '2021-02-17 14:41:49', '2021-02-17 14:41:49');
+INSERT INTO `integral_orders` VALUES ('4', '1', '2021021714544412620', '123', 'http://pc.qingwuit.com/storage/integrals/0/2020-11-09/HgTyg2LMUlc6Q48puimpxkISyQtNmtCixZbpZDDG_150.png', '10.00', '10.00', '2', '', '', '李三', '18888888888', '山西省 太原市 长子县', '打扫打扫', '2020-11-09 14:28:05', '2020-11-09 14:28:05', '', '2021-02-17 14:54:44', '2021-02-17 14:54:44');
 
 -- ----------------------------
 -- Table structure for integral_order_goods
@@ -3670,12 +3703,14 @@ CREATE TABLE `integral_order_goods` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of integral_order_goods
 -- ----------------------------
-INSERT INTO `integral_order_goods` VALUES ('2', '2', '1', '1', '123', 'http://127.0.0.1:8000/storage/integrals/0/2020-11-09/HgTyg2LMUlc6Q48puimpxkISyQtNmtCixZbpZDDG_150.png', '2', '20.00', '10.00', '2020-11-10 19:27:12', '2020-11-10 19:27:12');
+INSERT INTO `integral_order_goods` VALUES ('2', '2', '1', '1', '123', 'http://pc.qingwuit.com/storage/integrals/0/2020-11-09/HgTyg2LMUlc6Q48puimpxkISyQtNmtCixZbpZDDG_150.png', '2', '20.00', '10.00', '2020-11-10 19:27:12', '2020-11-10 19:27:12');
+INSERT INTO `integral_order_goods` VALUES ('3', '3', '1', '1', '123', 'http://pc.qingwuit.com/storage/integrals/0/2020-11-09/HgTyg2LMUlc6Q48puimpxkISyQtNmtCixZbpZDDG_150.png', '1', '10.00', '10.00', '2021-02-17 14:41:49', '2021-02-17 14:41:49');
+INSERT INTO `integral_order_goods` VALUES ('4', '4', '1', '1', '123', 'http://pc.qingwuit.com/storage/integrals/0/2020-11-09/HgTyg2LMUlc6Q48puimpxkISyQtNmtCixZbpZDDG_150.png', '1', '10.00', '10.00', '2021-02-17 14:54:44', '2021-02-17 14:54:44');
 
 -- ----------------------------
 -- Table structure for menus
@@ -3862,7 +3897,7 @@ CREATE TABLE `money_logs` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of money_logs
@@ -3938,6 +3973,35 @@ INSERT INTO `money_logs` VALUES ('71', '1', '登录积分', '1.00', '2', '0', ''
 INSERT INTO `money_logs` VALUES ('72', '1', '登录积分', '1.00', '2', '0', '', '2021-01-18 14:26:53', '2021-01-18 14:26:53');
 INSERT INTO `money_logs` VALUES ('73', '1', '登录积分', '1.00', '2', '0', '', '2021-01-18 15:11:54', '2021-01-18 15:11:54');
 INSERT INTO `money_logs` VALUES ('74', '1', '登录积分', '1.00', '2', '0', '', '2021-01-18 16:16:48', '2021-01-18 16:16:48');
+INSERT INTO `money_logs` VALUES ('75', '1', '登录积分', '1.00', '2', '0', '', '2021-01-31 13:16:01', '2021-01-31 13:16:01');
+INSERT INTO `money_logs` VALUES ('76', '1', '登录积分', '1.00', '2', '0', '', '2021-01-31 18:22:57', '2021-01-31 18:22:57');
+INSERT INTO `money_logs` VALUES ('77', '1', '登录积分', '1.00', '2', '0', '', '2021-02-01 15:50:58', '2021-02-01 15:50:58');
+INSERT INTO `money_logs` VALUES ('78', '1', '登录积分', '1.00', '2', '0', '', '2021-02-07 14:11:31', '2021-02-07 14:11:31');
+INSERT INTO `money_logs` VALUES ('79', '1', '登录积分', '1.00', '2', '0', '', '2021-02-08 16:54:00', '2021-02-08 16:54:00');
+INSERT INTO `money_logs` VALUES ('80', '1', '登录积分', '1.00', '2', '0', '', '2021-02-08 18:03:50', '2021-02-08 18:03:50');
+INSERT INTO `money_logs` VALUES ('81', '1', '登录积分', '1.00', '2', '0', '', '2021-02-09 11:15:59', '2021-02-09 11:15:59');
+INSERT INTO `money_logs` VALUES ('82', '1', '登录积分', '1.00', '2', '0', '', '2021-02-09 11:16:00', '2021-02-09 11:16:00');
+INSERT INTO `money_logs` VALUES ('83', '1', '登录积分', '1.00', '2', '0', '', '2021-02-09 14:45:36', '2021-02-09 14:45:36');
+INSERT INTO `money_logs` VALUES ('84', '1', '登录积分', '1.00', '2', '0', '', '2021-02-09 14:47:39', '2021-02-09 14:47:39');
+INSERT INTO `money_logs` VALUES ('85', '1', '登录积分', '1.00', '2', '0', '', '2021-02-09 15:32:34', '2021-02-09 15:32:34');
+INSERT INTO `money_logs` VALUES ('86', '1', '登录积分', '1.00', '2', '0', '', '2021-02-09 16:11:09', '2021-02-09 16:11:09');
+INSERT INTO `money_logs` VALUES ('87', '1', '登录积分', '1.00', '2', '0', '', '2021-02-14 14:02:32', '2021-02-14 14:02:32');
+INSERT INTO `money_logs` VALUES ('88', '1', '订单支付', '-10.80', '0', '0', '', '2021-02-14 14:07:16', '2021-02-14 14:07:16');
+INSERT INTO `money_logs` VALUES ('89', '1', '登录积分', '1.00', '2', '0', '', '2021-02-14 14:19:46', '2021-02-14 14:19:46');
+INSERT INTO `money_logs` VALUES ('90', '1', '登录积分', '1.00', '2', '0', '', '2021-02-14 16:28:31', '2021-02-14 16:28:31');
+INSERT INTO `money_logs` VALUES ('91', '1', '登录积分', '1.00', '2', '0', '', '2021-02-17 09:17:08', '2021-02-17 09:17:08');
+INSERT INTO `money_logs` VALUES ('92', '1', '登录积分', '1.00', '2', '0', '', '2021-02-17 09:33:59', '2021-02-17 09:33:59');
+INSERT INTO `money_logs` VALUES ('93', '1', '登录积分', '1.00', '2', '0', '', '2021-02-17 14:34:03', '2021-02-17 14:34:03');
+INSERT INTO `money_logs` VALUES ('94', '1', '订单支付', '-10.00', '2', '0', '', '2021-02-17 14:41:49', '2021-02-17 14:41:49');
+INSERT INTO `money_logs` VALUES ('95', '1', '订单支付', '-10.00', '2', '0', '', '2021-02-17 14:54:44', '2021-02-17 14:54:44');
+INSERT INTO `money_logs` VALUES ('96', '1', '登录积分', '1.00', '2', '0', '', '2021-02-17 20:56:58', '2021-02-17 20:56:58');
+INSERT INTO `money_logs` VALUES ('97', '1', '登录积分', '1.00', '2', '0', '', '2021-02-18 15:01:19', '2021-02-18 15:01:19');
+INSERT INTO `money_logs` VALUES ('98', '8', '登录积分', '1.00', '2', '0', '', '2021-02-18 16:30:36', '2021-02-18 16:30:36');
+INSERT INTO `money_logs` VALUES ('99', '1', '登录积分', '1.00', '2', '0', '', '2021-02-19 11:38:52', '2021-02-19 11:38:52');
+INSERT INTO `money_logs` VALUES ('100', '1', '登录积分', '1.00', '2', '0', '', '2021-02-19 13:44:07', '2021-02-19 13:44:07');
+INSERT INTO `money_logs` VALUES ('101', '1', '登录积分', '1.00', '2', '0', '', '2021-02-20 15:42:19', '2021-02-20 15:42:19');
+INSERT INTO `money_logs` VALUES ('102', '8', '登录积分', '1.00', '2', '0', '', '2021-02-21 13:44:01', '2021-02-21 13:44:01');
+INSERT INTO `money_logs` VALUES ('103', '8', '登录积分', '1.00', '2', '0', '', '2021-02-21 13:56:55', '2021-02-21 13:56:55');
 
 -- ----------------------------
 -- Table structure for orders
@@ -3975,45 +4039,50 @@ CREATE TABLE `orders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('1', '8', '2', '0', '0', '2020091018223983846', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '1.00', '1.00', '0.00', '0.00', '0.00', '0', '0', '0', '', '', 'xsa', '18888888888', '北京市 市辖区 东城区', 'sds', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-09-10 18:22:39', '2020-09-24 12:25:15');
-INSERT INTO `orders` VALUES ('2', '8', '2', '0', '0', '2020091018254689366', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '1.00', '1.00', '0.00', '0.00', '0.00', '0', '0', '0', '', '', 'xsa', '18888888888', '北京市 市辖区 东城区', 'sds', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', 'scs', '2020-09-10 18:25:46', '2020-11-09 13:23:16');
-INSERT INTO `orders` VALUES ('3', '8', '2', '0', '0', '2020091418433488438', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '1.00', '1.00', '0.00', '0.00', '0.00', '0', '2', '0', '4604719464579', 'yd', 'xsa', '18888888888', '北京市 市辖区 东城区', 'sds', 'money', '2020-09-23 14:30:37', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-09-14 18:43:34', '2020-09-28 19:05:31');
-INSERT INTO `orders` VALUES ('4', '8', '2', '0', '0', '2020092221141088672', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '3.00', '3.00', '0.00', '0.00', '0.00', '0', '0', '0', '', '', 'xsa', '18888888888', '北京市 市辖区 东城区', 'sds', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-09-22 21:14:10', '2020-11-09 13:23:16');
-INSERT INTO `orders` VALUES ('8', '1', '2', '0', '0', '2020110619053313039', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '1.00', '1.00', '0.00', '0.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-06 19:05:33', '2020-11-09 13:23:16');
-INSERT INTO `orders` VALUES ('13', '1', '2', '0', '0', '2020110619124215405', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '11.00', '1.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-06 19:12:42', '2020-11-09 13:23:16');
-INSERT INTO `orders` VALUES ('14', '1', '2', '0', '0', '2020110619195814751', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '2.00', '1.00', '0.00', '1.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-06 19:19:58', '2020-11-09 13:23:16');
-INSERT INTO `orders` VALUES ('15', '1', '2', '0', '0', '2020110721131415465', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:13:14', '2020-11-09 13:23:16');
-INSERT INTO `orders` VALUES ('16', '1', '2', '0', '0', '2020110721142511482', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:14:25', '2020-11-09 13:23:16');
-INSERT INTO `orders` VALUES ('17', '1', '2', '0', '0', '2020110721145912334', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:14:59', '2020-11-09 13:23:16');
-INSERT INTO `orders` VALUES ('23', '1', '2', '0', '0', '2020110721253912417', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:25:39', '2020-11-09 13:23:16');
-INSERT INTO `orders` VALUES ('24', '1', '2', '0', '0', '2020110721315214526', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '15.00', '5.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:31:52', '2020-11-09 13:23:16');
-INSERT INTO `orders` VALUES ('25', '8', '2', '0', '0', '2020110721335888082', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '6', '0', '1', '', '', 'xsa', '18888888888', '北京市 市辖区 东城区', 'sds', 'money', '2020-11-07 21:34:03', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:33:58', '2020-11-09 14:58:55');
-INSERT INTO `orders` VALUES ('26', '8', '2', '0', '0', '2020110721395389902', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '2', '0', '0', '', '', 'xsa', '18888888888', '北京市 市辖区 东城区', 'sds', 'money', '2020-11-07 21:40:24', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:39:53', '2020-11-07 21:40:24');
-INSERT INTO `orders` VALUES ('27', '8', '2', '0', '0', '2020110721475784128', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '2', '0', '0', '', '', 'xsa', '18888888888', '北京市 市辖区 东城区', 'sds', 'money', '2020-11-07 21:48:22', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:47:57', '2020-11-07 21:48:22');
-INSERT INTO `orders` VALUES ('28', '8', '2', '0', '0', '2020110721515681057', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '6', '0', '1', '', '', 'xsa', '18888888888', '北京市 市辖区 东城区', 'sds', 'money', '2020-11-07 21:52:04', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:51:56', '2020-11-09 14:57:08');
-INSERT INTO `orders` VALUES ('29', '1', '2', '0', '0', '2020110913324511447', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '11.00', '1.00', '0.00', '10.00', '0.00', '6', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-09 13:32:45', '2020-11-09 13:32:46');
-INSERT INTO `orders` VALUES ('30', '1', '2', '0', '0', '2020111416114811845', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '2', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', 'money', '2020-11-14 16:14:10', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-14 16:11:48', '2020-11-14 16:14:10');
-INSERT INTO `orders` VALUES ('31', '1', '2', '0', '0', '2020111521390319596', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '60.00', '50.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-15 21:39:03', '2020-11-15 23:29:55');
-INSERT INTO `orders` VALUES ('32', '1', '2', '0', '0', '2020111522562814875', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '60.00', '50.00', '0.00', '10.00', '0.00', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-15 22:56:28', '2020-11-15 22:56:28');
-INSERT INTO `orders` VALUES ('33', '1', '2', '1', '0', '2020111522574411203', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '60.00', '50.00', '0.00', '10.00', '0.00', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-15 22:57:44', '2020-11-15 22:57:44');
-INSERT INTO `orders` VALUES ('34', '1', '2', '0', '0', '2020111523140717453', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '60.00', '50.00', '0.00', '10.00', '0.00', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-15 23:14:07', '2020-11-15 23:14:07');
-INSERT INTO `orders` VALUES ('35', '1', '2', '1', '0', '2020111523142716261', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '50.00', '50.00', '0.00', '10.00', '0.00', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-15 23:14:27', '2020-11-15 23:14:27');
-INSERT INTO `orders` VALUES ('36', '1', '2', '1', '0', '2020111523154414151', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '50.00', '50.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-15 23:15:44', '2020-11-15 23:31:40');
-INSERT INTO `orders` VALUES ('37', '1', '2', '1', '0', '2020111523225511463', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '50.00', '50.00', '0.00', '10.00', '10.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-15 23:22:55', '2020-11-15 23:30:20');
-INSERT INTO `orders` VALUES ('38', '1', '2', '1', '0', '2020111523320311176', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '50.00', '50.00', '0.00', '10.00', '10.00', '2', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', 'money', '2020-11-15 23:32:16', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-15 23:32:03', '2020-11-15 23:32:16');
-INSERT INTO `orders` VALUES ('39', '1', '2', '0', '0', '2020111611504316971', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '50.00', '50.00', '0.00', '10.00', '10.00', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-16 11:50:43', '2020-11-16 11:50:44');
-INSERT INTO `orders` VALUES ('41', '1', '2', '0', '0', '2020111613351312724', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '55.00', '50.00', '0.00', '10.00', '5.00', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-16 13:35:13', '2020-11-16 13:35:13');
-INSERT INTO `orders` VALUES ('42', '1', '2', '0', '0', '2020111613501219898', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '55.00', '50.00', '0.00', '10.00', '5.00', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-16 13:50:12', '2020-11-16 13:50:12');
-INSERT INTO `orders` VALUES ('44', '1', '2', '0', '-1', '2020111623013419966', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '10.85', '1.00', '0.00', '10.00', '0.15', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-16 23:01:34', '2020-11-16 23:01:35');
-INSERT INTO `orders` VALUES ('49', '1', '2', '0', '1', '2020111623444615133', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '10.85', '1.00', '0.00', '10.00', '0.15', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-16 23:44:46', '2020-11-16 23:44:46');
-INSERT INTO `orders` VALUES ('50', '1', '2', '0', '2', '2020111813204612745', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '10.80', '1.00', '0.00', '10.00', '0.20', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-18 13:20:46', '2020-11-18 13:20:46');
-INSERT INTO `orders` VALUES ('51', '1', '2', '0', '0', '2021011414301213782', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '17.00', '7.00', '0.00', '10.00', '0.00', '1', '0', '0', '', '', '李三', '18888888888', '山西省 太原市 长子县', '打扫打扫', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2021-01-14 14:30:12', '2021-01-14 14:30:13');
-INSERT INTO `orders` VALUES ('52', '1', '2', '0', '0', '2021011414393617140', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '11.00', '1.00', '0.00', '10.00', '0.00', '1', '0', '0', '', '', '李三', '18888888888', '山西省 太原市 长子县', '打扫打扫', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2021-01-14 14:39:36', '2021-01-14 14:39:36');
+INSERT INTO `orders` VALUES ('1', '8', '2', '0', '0', '2020091018223983846', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '1.00', '1.00', '0.00', '0.00', '0.00', '0', '0', '0', '', '', 'xsa', '18888888888', '北京市 市辖区 东城区', 'sds', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-09-10 18:22:39', '2020-09-24 12:25:15');
+INSERT INTO `orders` VALUES ('2', '8', '2', '0', '0', '2020091018254689366', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '1.00', '1.00', '0.00', '0.00', '0.00', '0', '0', '0', '', '', 'xsa', '18888888888', '北京市 市辖区 东城区', 'sds', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', 'scs', '2020-09-10 18:25:46', '2020-11-09 13:23:16');
+INSERT INTO `orders` VALUES ('3', '8', '2', '0', '0', '2020091418433488438', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '1.00', '1.00', '0.00', '0.00', '0.00', '0', '2', '0', '4604719464579', 'yd', 'xsa', '18888888888', '北京市 市辖区 东城区', 'sds', 'money', '2020-09-23 14:30:37', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-09-14 18:43:34', '2020-09-28 19:05:31');
+INSERT INTO `orders` VALUES ('4', '8', '2', '0', '0', '2020092221141088672', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '3.00', '3.00', '0.00', '0.00', '0.00', '0', '0', '0', '', '', 'xsa', '18888888888', '北京市 市辖区 东城区', 'sds', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-09-22 21:14:10', '2020-11-09 13:23:16');
+INSERT INTO `orders` VALUES ('8', '1', '2', '0', '0', '2020110619053313039', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '1.00', '1.00', '0.00', '0.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-06 19:05:33', '2020-11-09 13:23:16');
+INSERT INTO `orders` VALUES ('13', '1', '2', '0', '0', '2020110619124215405', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '11.00', '1.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-06 19:12:42', '2020-11-09 13:23:16');
+INSERT INTO `orders` VALUES ('14', '1', '2', '0', '0', '2020110619195814751', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '2.00', '1.00', '0.00', '1.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-06 19:19:58', '2020-11-09 13:23:16');
+INSERT INTO `orders` VALUES ('15', '1', '2', '0', '0', '2020110721131415465', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:13:14', '2020-11-09 13:23:16');
+INSERT INTO `orders` VALUES ('16', '1', '2', '0', '0', '2020110721142511482', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:14:25', '2020-11-09 13:23:16');
+INSERT INTO `orders` VALUES ('17', '1', '2', '0', '0', '2020110721145912334', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:14:59', '2020-11-09 13:23:16');
+INSERT INTO `orders` VALUES ('23', '1', '2', '0', '0', '2020110721253912417', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:25:39', '2020-11-09 13:23:16');
+INSERT INTO `orders` VALUES ('24', '1', '2', '0', '0', '2020110721315214526', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '15.00', '5.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:31:52', '2020-11-09 13:23:16');
+INSERT INTO `orders` VALUES ('25', '8', '2', '0', '0', '2020110721335888082', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '6', '0', '1', '', '', 'xsa', '18888888888', '北京市 市辖区 东城区', 'sds', 'money', '2020-11-07 21:34:03', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:33:58', '2020-11-09 14:58:55');
+INSERT INTO `orders` VALUES ('26', '8', '2', '0', '0', '2020110721395389902', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '2', '0', '0', '', '', 'xsa', '18888888888', '北京市 市辖区 东城区', 'sds', 'money', '2020-11-07 21:40:24', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:39:53', '2020-11-07 21:40:24');
+INSERT INTO `orders` VALUES ('27', '8', '2', '0', '0', '2020110721475784128', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '2', '0', '0', '', '', 'xsa', '18888888888', '北京市 市辖区 东城区', 'sds', 'money', '2020-11-07 21:48:22', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:47:57', '2020-11-07 21:48:22');
+INSERT INTO `orders` VALUES ('28', '8', '2', '0', '0', '2020110721515681057', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '6', '0', '1', '', '', 'xsa', '18888888888', '北京市 市辖区 东城区', 'sds', 'money', '2020-11-07 21:52:04', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-07 21:51:56', '2020-11-09 14:57:08');
+INSERT INTO `orders` VALUES ('29', '1', '2', '0', '0', '2020110913324511447', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '11.00', '1.00', '0.00', '10.00', '0.00', '6', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-09 13:32:45', '2020-11-09 13:32:46');
+INSERT INTO `orders` VALUES ('30', '1', '2', '0', '0', '2020111416114811845', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '12.00', '2.00', '0.00', '10.00', '0.00', '2', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', 'money', '2020-11-14 16:14:10', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-14 16:11:48', '2020-11-14 16:14:10');
+INSERT INTO `orders` VALUES ('31', '1', '2', '0', '0', '2020111521390319596', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '60.00', '50.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-15 21:39:03', '2020-11-15 23:29:55');
+INSERT INTO `orders` VALUES ('32', '1', '2', '0', '0', '2020111522562814875', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '60.00', '50.00', '0.00', '10.00', '0.00', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-15 22:56:28', '2020-11-15 22:56:28');
+INSERT INTO `orders` VALUES ('33', '1', '2', '1', '0', '2020111522574411203', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '60.00', '50.00', '0.00', '10.00', '0.00', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-15 22:57:44', '2020-11-15 22:57:44');
+INSERT INTO `orders` VALUES ('34', '1', '2', '0', '0', '2020111523140717453', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '60.00', '50.00', '0.00', '10.00', '0.00', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-15 23:14:07', '2020-11-15 23:14:07');
+INSERT INTO `orders` VALUES ('35', '1', '2', '1', '0', '2020111523142716261', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '50.00', '50.00', '0.00', '10.00', '0.00', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-15 23:14:27', '2020-11-15 23:14:27');
+INSERT INTO `orders` VALUES ('36', '1', '2', '1', '0', '2020111523154414151', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '50.00', '50.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-15 23:15:44', '2020-11-15 23:31:40');
+INSERT INTO `orders` VALUES ('37', '1', '2', '1', '0', '2020111523225511463', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '50.00', '50.00', '0.00', '10.00', '10.00', '0', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-15 23:22:55', '2020-11-15 23:30:20');
+INSERT INTO `orders` VALUES ('38', '1', '2', '1', '0', '2020111523320311176', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '50.00', '50.00', '0.00', '10.00', '10.00', '2', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', 'money', '2020-11-15 23:32:16', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-15 23:32:03', '2020-11-15 23:32:16');
+INSERT INTO `orders` VALUES ('39', '1', '2', '0', '0', '2020111611504316971', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '50.00', '50.00', '0.00', '10.00', '10.00', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-16 11:50:43', '2020-11-16 11:50:44');
+INSERT INTO `orders` VALUES ('41', '1', '2', '0', '0', '2020111613351312724', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '55.00', '50.00', '0.00', '10.00', '5.00', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-16 13:35:13', '2020-11-16 13:35:13');
+INSERT INTO `orders` VALUES ('42', '1', '2', '0', '0', '2020111613501219898', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '55.00', '50.00', '0.00', '10.00', '5.00', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-16 13:50:12', '2020-11-16 13:50:12');
+INSERT INTO `orders` VALUES ('44', '1', '2', '0', '-1', '2020111623013419966', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '10.85', '1.00', '0.00', '10.00', '0.15', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-16 23:01:34', '2020-11-16 23:01:35');
+INSERT INTO `orders` VALUES ('49', '1', '2', '0', '1', '2020111623444615133', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '10.85', '1.00', '0.00', '10.00', '0.15', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-16 23:44:46', '2020-11-16 23:44:46');
+INSERT INTO `orders` VALUES ('50', '1', '2', '0', '2', '2020111813204612745', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '10.80', '1.00', '0.00', '10.00', '0.20', '1', '0', '0', '', '', '搜索', '18888888888', '北京市 市辖区 东城区', '公告公共', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2020-11-18 13:20:46', '2020-11-18 13:20:46');
+INSERT INTO `orders` VALUES ('51', '1', '2', '0', '0', '2021011414301213782', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '17.00', '7.00', '0.00', '10.00', '0.00', '1', '0', '0', '', '', '李三', '18888888888', '山西省 太原市 长子县', '打扫打扫', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2021-01-14 14:30:12', '2021-01-14 14:30:13');
+INSERT INTO `orders` VALUES ('52', '1', '2', '0', '0', '2021011414393617140', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '11.00', '1.00', '0.00', '10.00', '0.00', '1', '0', '0', '', '', '李三', '18888888888', '山西省 太原市 长子县', '打扫打扫', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2021-01-14 14:39:36', '2021-01-14 14:39:36');
+INSERT INTO `orders` VALUES ('53', '1', '2', '0', '0', '2021013118232619360', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '11.00', '1.00', '0.00', '10.00', '0.00', '0', '0', '0', '', '', '李三', '18888888888', '山西省 太原市 长子县', '打扫打扫', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2021-01-31 18:23:26', '2021-01-31 18:27:31');
+INSERT INTO `orders` VALUES ('54', '1', '2', '0', '0', '2021013118300017698', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '11.00', '1.00', '0.00', '10.00', '0.00', '1', '0', '0', '', '', '李三', '18888888888', '山西省 太原市 长子县', '打扫打扫', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2021-01-31 18:30:00', '2021-01-31 18:30:00');
+INSERT INTO `orders` VALUES ('55', '1', '2', '3', '0', '2021020715002116476', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '10.80', '1.00', '0.00', '10.00', '0.20', '0', '0', '0', '', '', '李三', '18888888888', '山西省 太原市 长子县', '打扫打扫', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2021-02-07 15:00:21', '2021-02-09 14:11:05');
+INSERT INTO `orders` VALUES ('56', '1', '2', '0', '0', '2021020715074612630', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '11.00', '1.00', '0.00', '10.00', '0.00', '1', '0', '0', '', '', '李三', '18888888888', '山西省 太原市 长子县', '打扫打扫', '', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '2020-09-09 16:30:13', '', '2021-02-07 15:07:46', '2021-02-07 15:07:47');
+INSERT INTO `orders` VALUES ('57', '1', '2', '3', '0', '2021020715095811329', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '10.80', '1.00', '0.00', '10.00', '0.20', '5', '0', '0', 'YT9421911984293', 'yd', '李三', '18888888888', '山西省 太原市 长子县', '打扫打扫', 'money', '2021-02-14 14:07:16', '2021-02-14 14:20:03', '2020-09-09 16:30:13', '2021-02-14 16:37:00', '', '2021-02-07 15:09:58', '2021-02-14 17:26:45');
 
 -- ----------------------------
 -- Table structure for order_comments
@@ -4036,12 +4105,13 @@ CREATE TABLE `order_comments` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of order_comments
 -- ----------------------------
 INSERT INTO `order_comments` VALUES ('1', '8', '3', '16', '2', '5.00', '5.00', '5.00', '5.00', '谢谢亲的回复！', '2020-09-24 19:30:51', '很不错！2', '', '2020-09-24 18:11:37', '2020-09-24 19:30:51');
+INSERT INTO `order_comments` VALUES ('3', '1', '57', '16', '2', '5.00', '5.00', '5.00', '5.00', '', '2020-09-24 18:10:52', '很不错哦！', 'http://pc.qingwuit.com/storage/comments/2021-02-14/WuV0afQSD4boLl5WZY6mERF34IFPx52IA5UgSLWu.jpg,http://pc.qingwuit.com/storage/comments/2021-02-14/epVSCWowaEdVpT521N6kcXj89wKEEOLMDiQK5TSE.jpg', '2021-02-14 16:37:00', null);
 
 -- ----------------------------
 -- Table structure for order_goods
@@ -4064,52 +4134,57 @@ CREATE TABLE `order_goods` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `total_weight` decimal(6,2) NOT NULL DEFAULT 0.00 COMMENT '总重量',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of order_goods
 -- ----------------------------
-INSERT INTO `order_goods` VALUES ('1', '1', '0', '16', '8', '2', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-09-10 18:22:39', '2020-09-10 18:22:39', '0.00');
-INSERT INTO `order_goods` VALUES ('2', '2', '0', '16', '8', '2', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-09-10 18:25:46', '2020-09-10 18:25:46', '0.00');
-INSERT INTO `order_goods` VALUES ('3', '3', '0', '16', '8', '2', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-09-14 18:43:34', '2020-09-14 18:43:34', '0.00');
-INSERT INTO `order_goods` VALUES ('4', '4', '19', '17', '8', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-09-22 21:14:10', '2020-09-22 21:14:10', '0.00');
-INSERT INTO `order_goods` VALUES ('5', '4', '0', '16', '8', '2', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '2', '2.00', '1.00', '2020-09-22 21:14:10', '2020-09-22 21:14:10', '0.00');
-INSERT INTO `order_goods` VALUES ('6', '8', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-06 19:05:33', '2020-11-06 19:05:33', '0.00');
-INSERT INTO `order_goods` VALUES ('11', '13', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-06 19:12:42', '2020-11-06 19:12:42', '0.00');
-INSERT INTO `order_goods` VALUES ('12', '14', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-06 19:19:58', '2020-11-06 19:19:58', '0.00');
-INSERT INTO `order_goods` VALUES ('13', '15', '20', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '白色', '1', '2.00', '2.00', '2020-11-07 21:13:14', '2020-11-07 21:13:14', '0.00');
-INSERT INTO `order_goods` VALUES ('14', '16', '20', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '白色', '1', '2.00', '2.00', '2020-11-07 21:14:25', '2020-11-07 21:14:25', '0.00');
-INSERT INTO `order_goods` VALUES ('15', '17', '20', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '白色', '1', '2.00', '2.00', '2020-11-07 21:14:59', '2020-11-07 21:14:59', '0.00');
-INSERT INTO `order_goods` VALUES ('17', '23', '20', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '白色', '1', '2.00', '2.00', '2020-11-07 21:25:39', '2020-11-07 21:25:39', '0.20');
-INSERT INTO `order_goods` VALUES ('18', '24', '0', '16', '1', '2', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '2', '2.00', '1.00', '2020-11-07 21:31:52', '2020-11-07 21:31:52', '6.00');
-INSERT INTO `order_goods` VALUES ('19', '24', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '3.00', '3.00', '2020-11-07 21:31:52', '2020-11-07 21:31:52', '0.00');
-INSERT INTO `order_goods` VALUES ('20', '25', '19', '17', '8', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-07 21:33:58', '2020-11-07 21:33:58', '0.10');
-INSERT INTO `order_goods` VALUES ('21', '25', '0', '16', '8', '2', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-11-07 21:33:58', '2020-11-07 21:33:58', '3.00');
-INSERT INTO `order_goods` VALUES ('22', '26', '19', '17', '8', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-07 21:39:53', '2020-11-07 21:39:53', '0.10');
-INSERT INTO `order_goods` VALUES ('23', '26', '0', '16', '8', '2', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-11-07 21:39:53', '2020-11-07 21:39:53', '3.00');
-INSERT INTO `order_goods` VALUES ('24', '27', '19', '17', '8', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-07 21:47:57', '2020-11-07 21:47:57', '0.10');
-INSERT INTO `order_goods` VALUES ('25', '27', '0', '16', '8', '2', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-11-07 21:47:57', '2020-11-07 21:47:57', '3.00');
-INSERT INTO `order_goods` VALUES ('26', '28', '19', '17', '8', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-07 21:51:56', '2020-11-07 21:51:56', '0.10');
-INSERT INTO `order_goods` VALUES ('27', '28', '0', '16', '8', '2', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-11-07 21:51:56', '2020-11-07 21:51:56', '3.00');
-INSERT INTO `order_goods` VALUES ('28', '29', '0', '16', '1', '2', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-11-09 13:32:45', '2020-11-09 13:32:45', '3.00');
-INSERT INTO `order_goods` VALUES ('29', '30', '20', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '白色', '1', '2.00', '2.00', '2020-11-14 16:11:48', '2020-11-14 16:11:48', '0.20');
-INSERT INTO `order_goods` VALUES ('30', '31', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-15 21:39:03', '2020-11-15 21:39:03', '0.00');
-INSERT INTO `order_goods` VALUES ('31', '32', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-15 22:56:28', '2020-11-15 22:56:28', '0.00');
-INSERT INTO `order_goods` VALUES ('32', '33', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-15 22:57:44', '2020-11-15 22:57:44', '0.00');
-INSERT INTO `order_goods` VALUES ('33', '34', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-15 23:14:07', '2020-11-15 23:14:07', '0.00');
-INSERT INTO `order_goods` VALUES ('34', '35', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-15 23:14:27', '2020-11-15 23:14:27', '0.00');
-INSERT INTO `order_goods` VALUES ('35', '36', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-15 23:15:44', '2020-11-15 23:15:44', '0.00');
-INSERT INTO `order_goods` VALUES ('36', '37', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-15 23:22:55', '2020-11-15 23:22:55', '0.00');
-INSERT INTO `order_goods` VALUES ('37', '38', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-15 23:32:03', '2020-11-15 23:32:03', '0.00');
-INSERT INTO `order_goods` VALUES ('38', '39', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-16 11:50:44', '2020-11-16 11:50:44', '0.00');
-INSERT INTO `order_goods` VALUES ('39', '41', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-16 13:35:13', '2020-11-16 13:35:13', '0.00');
-INSERT INTO `order_goods` VALUES ('40', '42', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-16 13:50:12', '2020-11-16 13:50:12', '0.00');
-INSERT INTO `order_goods` VALUES ('42', '44', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-16 23:01:34', '2020-11-16 23:01:34', '0.10');
-INSERT INTO `order_goods` VALUES ('47', '49', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-16 23:44:46', '2020-11-16 23:44:46', '0.10');
-INSERT INTO `order_goods` VALUES ('48', '50', '0', '16', '1', '2', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-11-18 13:20:46', '2020-11-18 13:20:46', '3.00');
-INSERT INTO `order_goods` VALUES ('49', '51', '0', '16', '1', '2', '标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '3', '3.00', '1.00', '2021-01-14 14:30:13', '2021-01-14 14:30:13', '9.00');
-INSERT INTO `order_goods` VALUES ('50', '51', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '4', '4.00', '1.00', '2021-01-14 14:30:13', '2021-01-14 14:30:13', '0.40');
-INSERT INTO `order_goods` VALUES ('51', '52', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://127.0.0.1:8000/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2021-01-14 14:39:36', '2021-01-14 14:39:36', '0.10');
+INSERT INTO `order_goods` VALUES ('1', '1', '0', '16', '8', '2', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-09-10 18:22:39', '2020-09-10 18:22:39', '0.00');
+INSERT INTO `order_goods` VALUES ('2', '2', '0', '16', '8', '2', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-09-10 18:25:46', '2020-09-10 18:25:46', '0.00');
+INSERT INTO `order_goods` VALUES ('3', '3', '0', '16', '8', '2', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-09-14 18:43:34', '2020-09-14 18:43:34', '0.00');
+INSERT INTO `order_goods` VALUES ('4', '4', '19', '17', '8', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-09-22 21:14:10', '2020-09-22 21:14:10', '0.00');
+INSERT INTO `order_goods` VALUES ('5', '4', '0', '16', '8', '2', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '2', '2.00', '1.00', '2020-09-22 21:14:10', '2020-09-22 21:14:10', '0.00');
+INSERT INTO `order_goods` VALUES ('6', '8', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-06 19:05:33', '2020-11-06 19:05:33', '0.00');
+INSERT INTO `order_goods` VALUES ('11', '13', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-06 19:12:42', '2020-11-06 19:12:42', '0.00');
+INSERT INTO `order_goods` VALUES ('12', '14', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-06 19:19:58', '2020-11-06 19:19:58', '0.00');
+INSERT INTO `order_goods` VALUES ('13', '15', '20', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '白色', '1', '2.00', '2.00', '2020-11-07 21:13:14', '2020-11-07 21:13:14', '0.00');
+INSERT INTO `order_goods` VALUES ('14', '16', '20', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '白色', '1', '2.00', '2.00', '2020-11-07 21:14:25', '2020-11-07 21:14:25', '0.00');
+INSERT INTO `order_goods` VALUES ('15', '17', '20', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '白色', '1', '2.00', '2.00', '2020-11-07 21:14:59', '2020-11-07 21:14:59', '0.00');
+INSERT INTO `order_goods` VALUES ('17', '23', '20', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '白色', '1', '2.00', '2.00', '2020-11-07 21:25:39', '2020-11-07 21:25:39', '0.20');
+INSERT INTO `order_goods` VALUES ('18', '24', '0', '16', '1', '2', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '2', '2.00', '1.00', '2020-11-07 21:31:52', '2020-11-07 21:31:52', '6.00');
+INSERT INTO `order_goods` VALUES ('19', '24', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '3.00', '3.00', '2020-11-07 21:31:52', '2020-11-07 21:31:52', '0.00');
+INSERT INTO `order_goods` VALUES ('20', '25', '19', '17', '8', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-07 21:33:58', '2020-11-07 21:33:58', '0.10');
+INSERT INTO `order_goods` VALUES ('21', '25', '0', '16', '8', '2', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-11-07 21:33:58', '2020-11-07 21:33:58', '3.00');
+INSERT INTO `order_goods` VALUES ('22', '26', '19', '17', '8', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-07 21:39:53', '2020-11-07 21:39:53', '0.10');
+INSERT INTO `order_goods` VALUES ('23', '26', '0', '16', '8', '2', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-11-07 21:39:53', '2020-11-07 21:39:53', '3.00');
+INSERT INTO `order_goods` VALUES ('24', '27', '19', '17', '8', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-07 21:47:57', '2020-11-07 21:47:57', '0.10');
+INSERT INTO `order_goods` VALUES ('25', '27', '0', '16', '8', '2', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-11-07 21:47:57', '2020-11-07 21:47:57', '3.00');
+INSERT INTO `order_goods` VALUES ('26', '28', '19', '17', '8', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-07 21:51:56', '2020-11-07 21:51:56', '0.10');
+INSERT INTO `order_goods` VALUES ('27', '28', '0', '16', '8', '2', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-11-07 21:51:56', '2020-11-07 21:51:56', '3.00');
+INSERT INTO `order_goods` VALUES ('28', '29', '0', '16', '1', '2', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-11-09 13:32:45', '2020-11-09 13:32:45', '3.00');
+INSERT INTO `order_goods` VALUES ('29', '30', '20', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '白色', '1', '2.00', '2.00', '2020-11-14 16:11:48', '2020-11-14 16:11:48', '0.20');
+INSERT INTO `order_goods` VALUES ('30', '31', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-15 21:39:03', '2020-11-15 21:39:03', '0.00');
+INSERT INTO `order_goods` VALUES ('31', '32', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-15 22:56:28', '2020-11-15 22:56:28', '0.00');
+INSERT INTO `order_goods` VALUES ('32', '33', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-15 22:57:44', '2020-11-15 22:57:44', '0.00');
+INSERT INTO `order_goods` VALUES ('33', '34', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-15 23:14:07', '2020-11-15 23:14:07', '0.00');
+INSERT INTO `order_goods` VALUES ('34', '35', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-15 23:14:27', '2020-11-15 23:14:27', '0.00');
+INSERT INTO `order_goods` VALUES ('35', '36', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-15 23:15:44', '2020-11-15 23:15:44', '0.00');
+INSERT INTO `order_goods` VALUES ('36', '37', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-15 23:22:55', '2020-11-15 23:22:55', '0.00');
+INSERT INTO `order_goods` VALUES ('37', '38', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-15 23:32:03', '2020-11-15 23:32:03', '0.00');
+INSERT INTO `order_goods` VALUES ('38', '39', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-16 11:50:44', '2020-11-16 11:50:44', '0.00');
+INSERT INTO `order_goods` VALUES ('39', '41', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-16 13:35:13', '2020-11-16 13:35:13', '0.00');
+INSERT INTO `order_goods` VALUES ('40', '42', '21', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '黑色', '1', '50.00', '50.00', '2020-11-16 13:50:12', '2020-11-16 13:50:12', '0.00');
+INSERT INTO `order_goods` VALUES ('42', '44', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-16 23:01:34', '2020-11-16 23:01:34', '0.10');
+INSERT INTO `order_goods` VALUES ('47', '49', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2020-11-16 23:44:46', '2020-11-16 23:44:46', '0.10');
+INSERT INTO `order_goods` VALUES ('48', '50', '0', '16', '1', '2', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2020-11-18 13:20:46', '2020-11-18 13:20:46', '3.00');
+INSERT INTO `order_goods` VALUES ('49', '51', '0', '16', '1', '2', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '3', '3.00', '1.00', '2021-01-14 14:30:13', '2021-01-14 14:30:13', '9.00');
+INSERT INTO `order_goods` VALUES ('50', '51', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '4', '4.00', '1.00', '2021-01-14 14:30:13', '2021-01-14 14:30:13', '0.40');
+INSERT INTO `order_goods` VALUES ('51', '52', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2021-01-14 14:39:36', '2021-01-14 14:39:36', '0.10');
+INSERT INTO `order_goods` VALUES ('52', '53', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2021-01-31 18:23:26', '2021-01-31 18:23:26', '0.10');
+INSERT INTO `order_goods` VALUES ('53', '54', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2021-01-31 18:30:00', '2021-01-31 18:30:00', '0.10');
+INSERT INTO `order_goods` VALUES ('54', '55', '0', '16', '1', '2', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2021-02-07 15:00:21', '2021-02-07 15:00:21', '3.00');
+INSERT INTO `order_goods` VALUES ('55', '56', '19', '17', '1', '2', '品标题品标题品标题品标题品标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/f6m56l8l5rJ8UuaxjcciAP3KVONFlaORnRkWChBD_150.jpg', '红色', '1', '1.00', '1.00', '2021-02-07 15:07:46', '2021-02-07 15:07:46', '0.10');
+INSERT INTO `order_goods` VALUES ('56', '57', '0', '16', '1', '2', '标题', 'http://pc.qingwuit.com/storage/goods/2020-08-06/t9vMqzHlQQCobmNsoxrmT7dKzMBuXX1Uku6vRNxH_150.jpg', '-', '1', '1.00', '1.00', '2021-02-07 15:09:58', '2021-02-07 15:09:58', '3.00');
 
 -- ----------------------------
 -- Table structure for order_pays
@@ -4131,7 +4206,7 @@ CREATE TABLE `order_pays` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `order_pays_pay_no_unique` (`pay_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=126 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of order_pays
@@ -4179,6 +4254,48 @@ INSERT INTO `order_pays` VALUES ('77', '1', '2020111416124130', '', '30', '', 'o
 INSERT INTO `order_pays` VALUES ('78', '1', '2020111416125130', '', '30', '', 'o', '12.00', '0.00', '0', '2020-09-14 18:36:39', '2020-11-14 16:12:52', '2020-11-14 16:12:52');
 INSERT INTO `order_pays` VALUES ('79', '1', '2020111416140130', '', '30', 'money', 'o', '12.00', '0.00', '1', '2020-09-14 18:36:39', '2020-11-14 16:14:09', '2020-11-14 16:14:10');
 INSERT INTO `order_pays` VALUES ('80', '1', '2020111523321138', '', '38', 'money', 'o', '50.00', '50.00', '1', '2020-09-14 18:36:39', '2020-11-15 23:32:16', '2020-11-15 23:32:16');
+INSERT INTO `order_pays` VALUES ('81', '1', '2021020914254157', '', '57', 'wechat_wap', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 14:25:40', '2021-02-09 14:25:40');
+INSERT INTO `order_pays` VALUES ('82', '1', '2021020914264157', '', '57', 'wechat_wap', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 14:26:48', '2021-02-09 14:26:48');
+INSERT INTO `order_pays` VALUES ('83', '1', '2021020914272157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 14:27:20', '2021-02-09 14:27:20');
+INSERT INTO `order_pays` VALUES ('84', '1', '2021020914363157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 14:36:32', '2021-02-09 14:36:32');
+INSERT INTO `order_pays` VALUES ('85', '1', '2021020914455157', '', '57', 'wechat_public', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 14:45:59', '2021-02-09 14:45:59');
+INSERT INTO `order_pays` VALUES ('86', '1', '2021020914464157', '', '57', 'wechat_public', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 14:46:40', '2021-02-09 14:46:40');
+INSERT INTO `order_pays` VALUES ('87', '1', '2021020914475157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 14:47:52', '2021-02-09 14:47:52');
+INSERT INTO `order_pays` VALUES ('88', '1', '2021020914563157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 14:56:35', '2021-02-09 14:56:35');
+INSERT INTO `order_pays` VALUES ('89', '1', '2021020914583157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 14:58:30', '2021-02-09 14:58:30');
+INSERT INTO `order_pays` VALUES ('90', '1', '2021020914584157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 14:58:40', '2021-02-09 14:58:40');
+INSERT INTO `order_pays` VALUES ('91', '1', '2021020915000157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:00:00', '2021-02-09 15:00:00');
+INSERT INTO `order_pays` VALUES ('92', '1', '2021020915053157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:05:32', '2021-02-09 15:05:32');
+INSERT INTO `order_pays` VALUES ('93', '1', '2021020915055157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:05:59', '2021-02-09 15:05:59');
+INSERT INTO `order_pays` VALUES ('94', '1', '2021020915075157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:07:52', '2021-02-09 15:07:52');
+INSERT INTO `order_pays` VALUES ('95', '1', '2021020915080157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:08:01', '2021-02-09 15:08:01');
+INSERT INTO `order_pays` VALUES ('96', '1', '2021020915083157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:08:37', '2021-02-09 15:08:37');
+INSERT INTO `order_pays` VALUES ('97', '1', '2021020915211157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:21:14', '2021-02-09 15:21:14');
+INSERT INTO `order_pays` VALUES ('98', '1', '2021020915220157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:22:09', '2021-02-09 15:22:09');
+INSERT INTO `order_pays` VALUES ('99', '1', '2021020915222157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:22:27', '2021-02-09 15:22:27');
+INSERT INTO `order_pays` VALUES ('100', '1', '2021020915223157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:22:31', '2021-02-09 15:22:31');
+INSERT INTO `order_pays` VALUES ('102', '1', '2021020915225157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:22:59', '2021-02-09 15:22:59');
+INSERT INTO `order_pays` VALUES ('103', '1', '2021020915230157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:23:03', '2021-02-09 15:23:03');
+INSERT INTO `order_pays` VALUES ('106', '1', '2021020915233157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:23:30', '2021-02-09 15:23:30');
+INSERT INTO `order_pays` VALUES ('107', '1', '2021020915242157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:24:29', '2021-02-09 15:24:29');
+INSERT INTO `order_pays` VALUES ('108', '1', '2021020915244157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:24:47', '2021-02-09 15:24:47');
+INSERT INTO `order_pays` VALUES ('109', '1', '2021020915330157', '', '57', 'ali_scan', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:33:09', '2021-02-09 15:33:09');
+INSERT INTO `order_pays` VALUES ('110', '1', '2021020915335157', '', '57', 'ali_scan', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:33:56', '2021-02-09 15:33:57');
+INSERT INTO `order_pays` VALUES ('111', '1', '2021020915343157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:34:35', '2021-02-09 15:34:35');
+INSERT INTO `order_pays` VALUES ('112', '1', '2021020915351157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:35:15', '2021-02-09 15:35:15');
+INSERT INTO `order_pays` VALUES ('113', '1', '2021020915354157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:35:40', '2021-02-09 15:35:41');
+INSERT INTO `order_pays` VALUES ('114', '1', '2021020915360157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:36:09', '2021-02-09 15:36:09');
+INSERT INTO `order_pays` VALUES ('115', '1', '2021020915371157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:37:18', '2021-02-09 15:37:18');
+INSERT INTO `order_pays` VALUES ('116', '1', '2021020915374157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:37:47', '2021-02-09 15:37:47');
+INSERT INTO `order_pays` VALUES ('117', '1', '2021020915391157', '', '57', 'wechat_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 15:39:11', '2021-02-09 15:39:11');
+INSERT INTO `order_pays` VALUES ('118', '1', '2021020916004157', '', '57', 'ali_h5', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 16:00:44', '2021-02-09 16:00:44');
+INSERT INTO `order_pays` VALUES ('119', '1', '2021020916034157', '', '57', 'wechat_public', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 16:03:47', '2021-02-09 16:03:47');
+INSERT INTO `order_pays` VALUES ('120', '1', '2021020916113157', '', '57', 'wechat_app', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 16:11:35', '2021-02-09 16:11:35');
+INSERT INTO `order_pays` VALUES ('121', '1', '2021020916120157', '', '57', 'ali_app', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 16:12:01', '2021-02-09 16:12:01');
+INSERT INTO `order_pays` VALUES ('122', '1', '2021020916123157', '', '57', '', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-09 16:12:33', '2021-02-09 16:12:33');
+INSERT INTO `order_pays` VALUES ('123', '1', '2021021414040157', '', '57', '', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-14 14:04:00', '2021-02-14 14:04:00');
+INSERT INTO `order_pays` VALUES ('124', '1', '2021021414055157', '', '57', '', 'o', '10.80', '0.00', '0', '2020-09-14 18:36:39', '2021-02-14 14:05:50', '2021-02-14 14:05:50');
+INSERT INTO `order_pays` VALUES ('125', '1', '2021021414071157', '', '57', 'money', 'o', '10.80', '10.80', '1', '2020-09-14 18:36:39', '2021-02-14 14:07:16', '2021-02-14 14:07:17');
 
 -- ----------------------------
 -- Table structure for order_settlements
@@ -4431,11 +4548,12 @@ CREATE TABLE `refunds` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of refunds
 -- ----------------------------
+INSERT INTO `refunds` VALUES ('1', '1', '2', '57', '0', '0', '0', '', '', '', '', '颜色不对', '', '', '2021-02-14 17:26:45', '2021-02-14 17:26:45');
 
 -- ----------------------------
 -- Table structure for roles
@@ -4695,7 +4813,7 @@ CREATE TABLE `sms_logs` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of sms_logs
@@ -4707,6 +4825,8 @@ INSERT INTO `sms_logs` VALUES ('6', '17369417688', 'register', '9300', '1', '127
 INSERT INTO `sms_logs` VALUES ('7', '17369417688', 'register', '8162', '1', '127.0.0.1', '', '2020-09-10 17:37:53', '2020-09-10 17:30:53');
 INSERT INTO `sms_logs` VALUES ('8', '17369417688', 'forget_password', '5719', '1', '127.0.0.1', '', '2020-09-10 18:05:41', '2020-09-10 18:05:41');
 INSERT INTO `sms_logs` VALUES ('9', '15073010918', 'register', '7066', '0', '127.0.0.1', 'Client error: `GET http://dysmsapi.aliyuncs.com?Re', '2021-01-12 13:37:19', '2021-01-12 13:37:19');
+INSERT INTO `sms_logs` VALUES ('10', '18888888888', 'edit_user', '8520', '0', '127.0.0.1', 'Client error: `GET http://dysmsapi.aliyuncs.com?Re', '2021-02-01 17:21:54', '2021-02-01 17:21:54');
+INSERT INTO `sms_logs` VALUES ('11', '18888888888', 'register', '3290', '0', '127.0.0.1', 'Client error: `GET http://dysmsapi.aliyuncs.com?Re', '2021-02-21 13:42:02', '2021-02-21 13:42:03');
 
 -- ----------------------------
 -- Table structure for sms_signs
@@ -4726,9 +4846,9 @@ CREATE TABLE `sms_signs` (
 -- ----------------------------
 -- Records of sms_signs
 -- ----------------------------
-INSERT INTO `sms_signs` VALUES ('1', 'register', '代发兔', 'SMS_186000191', '注册', '2020-09-10 15:21:21', '2020-09-10 15:21:21');
-INSERT INTO `sms_signs` VALUES ('2', 'forget_password', '代发兔', 'SMS_186000190', '忘记密码', '2020-09-10 15:37:57', '2020-09-10 15:37:57');
-INSERT INTO `sms_signs` VALUES ('3', 'edit_user', '代发兔', 'SMS_186000189', '修改资料', '2020-09-10 15:38:25', '2020-09-10 15:38:25');
+INSERT INTO `sms_signs` VALUES ('1', 'register', '代发', 'SMS_1860', '注册', '2020-09-10 15:21:21', '2021-02-21 13:34:30');
+INSERT INTO `sms_signs` VALUES ('2', 'forget_password', '代发', 'SMS_1860', '忘记密码', '2020-09-10 15:37:57', '2021-02-21 13:34:19');
+INSERT INTO `sms_signs` VALUES ('3', 'edit_user', '代发', 'SMS_186000', '修改资料', '2020-09-10 15:38:25', '2021-02-21 13:34:24');
 
 -- ----------------------------
 -- Table structure for stores
@@ -4770,12 +4890,13 @@ CREATE TABLE `stores` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of stores
 -- ----------------------------
-INSERT INTO `stores` VALUES ('2', '1', '青梧商城', 'http://127.0.0.1:8000/storage/store_join/2/2020-07-25/j1ZydoBpEO4iCQ1niSDuInX083uDRIydwcBk1MPx.png', '', '18888888888', '该商户很懒，什么也没留下', '', 'http://localhost:8000/storage/store_slide/1/2020-10-07/CQ6siACC0fK2Okgou2HWcADxWUN2RX9BpFI4bli4.jpg,http://localhost:8000/storage/store_slide/1/2020-10-07/yMz3U69AYjGssCNzdeJcQnd9p5jVo4saMLQ10O5e.png,http://localhost:8000/storage/store_slide/1/2020-10-07/R15PFrrSLegpJ5Jsr3X4piFyUxy0Y3Xuo9SxHzsO.png', '岳阳青梧信息', '18', '199', '2091', '29.436446', '112.967179', '湖南省 岳阳市 君山区', '工业园208', 'http://127.0.0.1:8000/storage/store_join/2/2020-07-23/mTnLdIS1SDTDkco1KHfIaDn81K3f67VVb3EPi2Pu.jpeg', '123123124', '打工', '18888888888', '430xxxx', 'http://127.0.0.1:8000/storage/store_join/2/2020-07-23/A9winx4aGzaAv814q3c80aS4mClGgTtTe8CCKYKq.jpeg', 'http://127.0.0.1:8000/storage/store_join/2/2020-07-23/gLmGTDKwL0wSo7uic9XQ6Z7WiHFrjNb7hkVvq9sD.jpeg', '发哥', '18888888888', '54.80', '0.00', '1', '3', '被拒绝了', '<p>18888888888</p>', '2020-07-21 18:37:01', '2020-11-09 14:58:55');
+INSERT INTO `stores` VALUES ('2', '1', '青梧商城', 'http://pc.qingwuit.com/storage/store_join/2/2020-07-25/j1ZydoBpEO4iCQ1niSDuInX083uDRIydwcBk1MPx.png', '', '18888888888', '该商户很懒，什么也没留下', '', 'http://localhost:8000/storage/store_slide/1/2020-10-07/CQ6siACC0fK2Okgou2HWcADxWUN2RX9BpFI4bli4.jpg,http://localhost:8000/storage/store_slide/1/2020-10-07/yMz3U69AYjGssCNzdeJcQnd9p5jVo4saMLQ10O5e.png,http://localhost:8000/storage/store_slide/1/2020-10-07/R15PFrrSLegpJ5Jsr3X4piFyUxy0Y3Xuo9SxHzsO.png', '岳阳青梧信息', '18', '199', '2091', '29.436446', '112.967179', '湖南省 岳阳市 君山区', '工业园208', 'http://pc.qingwuit.com/storage/store_join/2/2020-07-23/mTnLdIS1SDTDkco1KHfIaDn81K3f67VVb3EPi2Pu.jpeg', '123123124', '打工', '18888888888', '430xxxx', 'http://pc.qingwuit.com/storage/store_join/2/2020-07-23/A9winx4aGzaAv814q3c80aS4mClGgTtTe8CCKYKq.jpeg', 'http://pc.qingwuit.com/storage/store_join/2/2020-07-23/gLmGTDKwL0wSo7uic9XQ6Z7WiHFrjNb7hkVvq9sD.jpeg', '发哥', '18888888888', '54.80', '0.00', '1', '3', '被拒绝了', '<p>18888888888</p>', '2020-07-21 18:37:01', '2020-11-09 14:58:55');
+INSERT INTO `stores` VALUES ('3', '8', '青梧商城', 'http://pc.qingwuit.com/storage/store_join/3/2021-02-21/JM6F967P2dxgVyzlIUca8Z3sTVbekXe0REr3L5ZX.png', '', '', '该商户很懒，什么也没留下', '', '', '湖南青梧信息科技有限公司', '18', '199', '2089', '39.92', '116.46', '湖南省 岳阳市 岳阳楼区', '208', 'http://pc.qingwuit.com/storage/store_join/3/2021-02-21/B0HuqyapTkoxCpYhpK9Z4IY7y2VPDeRquM6UFHIr.png', '991000021999212999910', '李大嘴', '18888888888', '421932199011107013', 'http://pc.qingwuit.com/storage/store_join/3/2021-02-21/BjEvUhb4XrnnGa2XksbPgCiNgvtr0lhVXMpjmmlE.jpg', 'http://pc.qingwuit.com/storage/store_join/3/2021-02-21/7o4hr8lJWBMENFPlvO0sEnJgk0TrERJGmTHmYRoR.jpg', '虎哥', '18888888888', '0.00', '0.00', '1', '3', '', null, '2021-02-21 13:50:56', '2021-02-21 13:56:36');
 
 -- ----------------------------
 -- Table structure for store_classes
@@ -4789,12 +4910,13 @@ CREATE TABLE `store_classes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of store_classes
 -- ----------------------------
 INSERT INTO `store_classes` VALUES ('2', '2', '[[\"1\",\"2\",\"4\"],[\"2\",\"8\",\"26\"],[\"3\",\"11\",\"29\"]]', '[[\"\\u670d\\u88c5\",\"\\u8863\\u670d\",\"\\u65e5\\u7cfb\"],[\"\\u5bb6\\u7528\\u7535\\u5668\",\"\\u5927\\u5bb6\\u7535\",\"\\u7a7a\\u8c03\"],[\"\\u56fe\\u4e66 & \\u97f3\\u50cf & \\u7535\\u5b50\\u4e66\",\"\\u56fe\\u4e66\",\"\\u7ae5\\u8bdd\"]]', null, '2020-08-02 18:19:39');
+INSERT INTO `store_classes` VALUES ('3', '3', '[[\"2\",\"8\",\"26\"],[\"3\",\"11\",\"29\"],[\"4\",\"15\",\"34\"]]', '[[\"\\u5bb6\\u7528\\u7535\\u5668\",\"\\u5927\\u5bb6\\u7535\",\"\\u7a7a\\u8c03\"],[\"\\u56fe\\u4e66 & \\u97f3\\u50cf & \\u7535\\u5b50\\u4e66\",\"\\u56fe\\u4e66\",\"\\u7ae5\\u8bdd\"],[\"\\u624b\\u673a & \\u6570\\u7801 & \\u901a\\u4fe1\",\"\\u624b\\u673a\",\"\\u667a\\u80fd\\u624b\\u673a\"]]', null, null);
 
 -- ----------------------------
 -- Table structure for users
@@ -4825,8 +4947,8 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'xxx', '$2y$10$TnUza7yGyIObzC2PSXWbWOaMr3EItm4Z8B.bSIAWeIyObYgJ7BgZe', 'eeafb716f93fa090d7716749a6eefa72', 'UF0神秘人', '1', 'http://127.0.0.1:8000/storage/avatars/1/2021-01-15/QIIZdR03XXyQGx8kZMJmHVmpbkHWChCAs3FjuaQ3.png', '18888888888', '', '40.60', '0.00', '42.00', '0', '127.0.0.1', '2021-01-18 16:16:48', '2021-01-18 15:11:54', '2020-09-10 14:28:40', '2021-01-18 16:16:48');
-INSERT INTO `users` VALUES ('8', '1736941768', '$2y$10$9GTb5t36Y8Dlj1rxSlhUxeqJV0AAscsYE7wL4ClEhG29GDVXDJMfO', '4c797f0acb616d6a8894dc5bb8a337d3', '17369417688_102', '0', '', '17369417688', '', '52.00', '0.00', '30.00', '1', '127.0.0.1', '2020-11-23 11:01:03', '2020-11-19 16:07:47', '2020-09-10 17:45:09', '2020-11-23 11:01:03');
+INSERT INTO `users` VALUES ('1', 'xxx', '$2y$10$TnUza7yGyIObzC2PSXWbWOaMr3EItm4Z8B.bSIAWeIyObYgJ7BgZe', 'eeafb716f93fa090d7716749a6eefa72', 'UF0神秘人', '1', 'http://pc.qingwuit.com/storage/avatars/1/2021-01-15/QIIZdR03XXyQGx8kZMJmHVmpbkHWChCAs3FjuaQ3.png', '18888888888', '', '29.80', '0.00', '45.00', '0', '127.0.0.1', '2021-02-20 15:42:19', '2021-02-19 13:44:07', '2020-09-10 14:28:40', '2021-02-20 15:42:19');
+INSERT INTO `users` VALUES ('8', '1736941768', '$2y$10$9GTb5t36Y8Dlj1rxSlhUxeqJV0AAscsYE7wL4ClEhG29GDVXDJMfO', '4c797f0acb616d6a8894dc5bb8a337d3', '武当宋青书', '0', 'http://pc.qingwuit.com/storage/avatars/1/2021-01-15/QIIZdR03XXyQGx8kZMJmHVmpbkHWChCAs3FjuaQ3.png', '17369417688', '', '52.00', '0.00', '33.00', '1', '127.0.0.1', '2021-02-21 13:56:55', '2021-02-21 13:44:00', '2020-09-10 17:45:09', '2021-02-21 13:56:55');
 
 -- ----------------------------
 -- Table structure for user_checks
@@ -4849,8 +4971,8 @@ CREATE TABLE `user_checks` (
 -- ----------------------------
 -- Records of user_checks
 -- ----------------------------
-INSERT INTO `user_checks` VALUES ('3', '8', '李四', '43092115621102011145', 'http://127.0.0.1:8000/storage/user_check/8/2020-09-23/Zy8SRXSf0MeykvrYa6JsrvoK3cIpnWGmoxhFQ0Tb.jpg', 'http://127.0.0.1:8000/storage/user_check/8/2020-09-23/fUGdmekTb8BnLpJ5IodhcHVw5R6R0pITE2swCUEa.jpg', '43092115621102011145', '中国工商银行', '2020-09-23 15:45:58', '2020-09-23 15:49:37');
-INSERT INTO `user_checks` VALUES ('4', '1', '234', '43092115621102011145', 'http://127.0.0.1:8000/storage/user_check/1/2021-01-18/VOisj1PnDBvL18NitdYS4scT06O3B6X2rnnfhPHu.png', 'http://127.0.0.1:8000/storage/user_check/1/2021-01-18/2cy5rjwmAP4NS2YMkbMS6ipBQIAaLszxvHckFr6V.png', '43092115621102011145', '234', '2021-01-18 16:49:43', '2021-01-18 16:49:43');
+INSERT INTO `user_checks` VALUES ('3', '8', '李四', '43092115621102011145', 'http://pc.qingwuit.com/storage/user_check/8/2020-09-23/Zy8SRXSf0MeykvrYa6JsrvoK3cIpnWGmoxhFQ0Tb.jpg', 'http://pc.qingwuit.com/storage/user_check/8/2020-09-23/fUGdmekTb8BnLpJ5IodhcHVw5R6R0pITE2swCUEa.jpg', '43092115621102011145', '中国工商银行', '2020-09-23 15:45:58', '2020-09-23 15:49:37');
+INSERT INTO `user_checks` VALUES ('4', '1', '234', '43092115621102011145', 'http://pc.qingwuit.com/storage/user_check/1/2021-01-18/VOisj1PnDBvL18NitdYS4scT06O3B6X2rnnfhPHu.png', 'http://pc.qingwuit.com/storage/user_check/1/2021-01-18/2cy5rjwmAP4NS2YMkbMS6ipBQIAaLszxvHckFr6V.png', '43092115621102011145', '234', '2021-01-18 16:49:43', '2021-01-18 16:49:43');
 
 -- ----------------------------
 -- Table structure for user_wechats

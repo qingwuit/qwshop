@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Banner />
+        <Banner height="420" :list="[{image_url:require('@/asset/store/store_join_banner.jpg'),name:'#'}]" />
         <div class="store_join width_center_1200">
             <div class="store_join_btn float_left">
                 <h4>入驻申请</h4>

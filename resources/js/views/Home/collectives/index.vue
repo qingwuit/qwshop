@@ -1,6 +1,6 @@
 <template>
     <div class="integral_index">
-        <div><banner :list="store_slide" :height="350" /></div>
+        <div><banner :list="banner" :height="350" /></div>
 
         <!-- 搜索条件 S -->
         <div class="goods_where w1200" style="margin-top:30px">
@@ -125,6 +125,7 @@ export default {
               is_collective:1,
           },
           list:[],
+          banner:[],
           base64Code:'',
           base64Decode:{},
       };
@@ -233,6 +234,12 @@ export default {
             this.base64Decode = JSON.parse(window.atob(this.base64Code));
             this.onload();
         }
+        this.$get(this.$api.homeGoods+'/collection/banner').then(res=>{
+            if(res.code == 200){
+                this.banner = res.data;
+            }
+            
+        })
     },
     mounted() {},
     beforeRouteUpdate (to, from, next) {

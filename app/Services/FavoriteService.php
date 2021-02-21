@@ -79,6 +79,11 @@ class FavoriteService extends BaseService{
         $user_info = $user_service->getUserInfo();
 
         $fav_model = new Favorite();
+
+        if(empty($user_info)){
+            $user_info['id'] = 0;
+        }
+
         $fav_info = $fav_model->where(['user_id'=>$user_info['id'],'out_id'=>$out_id,'is_type'=>request()->is_type])->first();
         if(empty($fav_info)){
             return $this->format_error();
