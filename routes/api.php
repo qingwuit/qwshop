@@ -325,6 +325,7 @@ Route::namespace('Home')->group(function(){
         Route::get('/order/create_order_after','OrderController@create_order_after'); // 生成订单后处理
         Route::post('/order/create_order','OrderController@create_order'); // 生成订单
         Route::post('/order/pay','OrderController@pay'); // 订单支付
+        Route::post('/order/wechat_pay_check','OrderController@wechat_pay_check'); // 微信支付验证
         Route::put('/order/edit_order_status','OrderController@edit_order_status'); // 取消订单
         Route::get('/order/get_order_info/{id}','OrderController@get_order_info'); // 查看订单信息
 
