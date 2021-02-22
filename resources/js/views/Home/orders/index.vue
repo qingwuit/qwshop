@@ -154,9 +154,9 @@ export default {
                     })
                     this.order = res.data;
                 }else{
-                    this.$message.destroy();
+                    // this.$message.destroy();
                     this.$message.error(res.msg)
-                    return this.$router.go(-1)
+                    // return this.$router.go(-1)
                 }
                 
             })

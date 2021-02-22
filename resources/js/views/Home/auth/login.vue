@@ -1,5 +1,5 @@
 <template>
-    <div class="home_login" style='background: url("https://x.dscmall.cn/storage/data/afficheimg/1564453243544166182.jpg");'>
+    <div class="home_login" :style="'background: url('+ require('@/asset/login/user_login__bgs.png') +');'">
         <div class="login_block w1200">
             <div class="login_item">
                 <div class="login_title">

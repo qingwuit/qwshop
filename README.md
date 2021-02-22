@@ -14,7 +14,7 @@
 
 
 ## Code address 代码地址
-[点击它[代码地址] click it](https://gitee.com/qingwuitcn/qwShopPhp "点击它[代码地址]")
+[点击它[代码地址] click it](https://gitee.com/qingwuitcn/qwshop "点击它[代码地址]")
 
 ## Demo address 演示地址
 [点击它[演示地址] click it](http://pc.qingwuit.com "点击它[演示地址]")
@@ -27,6 +27,9 @@
 > 用户后台：/user/login
 > 账号密码：18888888888 123456
 
+## H5 bate demo H5版本(测试版本) 
+![logo](http://h5.qingwuit.com/qrcode.png "logo")
+
 ## How Run 如何安装青梧商城
 
 ``` php
@@ -35,7 +38,7 @@ composer create-project qingwuit/qwshop shop
 php artisan qwshop:install
 
 npm install
-npm prod
+npm run prod
 
 ## linux 得给下权限 window 不用执行
 chmod -R 777 ./storage/
