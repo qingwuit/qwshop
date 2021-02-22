@@ -165,6 +165,14 @@ class PayMentService extends BaseService{
             $order_pay->payment_name = $payment_name;
             $order_pay->save();
 
+            // 如果长度过长128将信息裁掉
+            if(!$isRecharge){
+                $orderNameLen = mb_strlen($order_info['order_name']);
+                if($orderNameLen>30){
+                    $order_info['order_name'] = mb_substr($order_info['order_name'],0,30);
+                }
+            }
+
             if($rs['data'] == 'wechat'){  // 微信支付
                 // 支付订单信息
                 $pay_order_info['out_trade_no'] = 'W'.$order_pay->pay_no.($isRecharge?'R':'');
@@ -231,6 +239,16 @@ class PayMentService extends BaseService{
         }
         
         return $this->format($rs);
+    }
+
+    // 检测微信支付是否成功
+    public function wechatPayCheck(){
+        $out_trade_no = request()->out_trade_no;
+        if($rs = Order::where('order_no',$out_trade_no)->where('order_status','>',1)->exists()){
+            return $this->format($rs);
+        }else{
+            return $this->format_error($rs);
+        }
     }
 
     // 配置好支付的参数

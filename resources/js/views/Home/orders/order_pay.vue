@@ -48,7 +48,7 @@
                     <div class="store_title">
                         <div>
                             <span class="float_left">订单号：{{v.order_no}}</span>
-                            <div class="float_right" v-if="v.coupon_money && v.coupon_money<=0"><span style="font-size:14px;color:#666;">优惠金额：</span> <font color="#ca151e">-{{v.coupon_money}}</font></div>
+                            <div class="float_right" v-if="v.coupon_money && v.coupon_money>0"><span style="font-size:14px;color:#666;">优惠金额：</span> <font color="#ca151e">-{{v.coupon_money}}</font></div>
                             <div class="clear"></div>
                         </div>
                         
@@ -95,6 +95,11 @@
             </template>
             <input class="pay_password" type="password" v-model="pay_password" placeholder="pay password" />
         </a-modal>
+
+        <!-- 二维码扫描 -->
+        <a-modal centered v-model="dialogVisible" title="微信支付扫描" @cancel="qrcodeClose()" :footer="null" style="text-align:center" > 
+            <img :src="qr_code" class="qrcode_class" />
+        </a-modal>
     </div>
 </template>
 
@@ -109,8 +114,11 @@ export default {
           total:0,
           freight_money:0,
           visible:false,
+          dialogVisible:false,
+          qr_code:'',
           pay_password:'',
           loading: false,
+          timeObj:null,
       };
     },
     watch: {},
@@ -139,8 +147,8 @@ export default {
                         this.qr_code = res.data.qr_code;
                         this.dialogVisible = true;
                         this.timeObj = setInterval(()=>{
-                            this.check_pay(this.$route.params.order_no+'|'+payment_name);
-                        },1000);
+                            this.check_pay(this.order[0].order_no);
+                        },1500);
                     }else if(payment_name == 'ali_scan'){
                         // var newwindow = window.open("#","_blank");
                         // newwindow.document.write(res.data); // 打开新页面
@@ -155,6 +163,18 @@ export default {
                     this.$message.error(res.msg);
                 }
             })
+        },
+        // 定时查询是否支付成功
+        check_pay:function(out_trade_no){
+            this.$post(this.$api.homeOrder+'/wechat_pay_check',{out_trade_no:out_trade_no}).then(res=>{
+                if(res.code == 200){
+                    clearInterval(this.timeObj);
+                    this.$router.push('/order/pay_success');
+                }
+            });
+        },
+        qrcodeClose(){
+            clearInterval(this.timeObj);
         }
     },
     created() {
@@ -166,6 +186,12 @@ export default {
 <style lang="scss" scoped>
 .step_bar{
     margin:40px 0;
+}
+.qrcode_class{
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    display: block;
 }
 .pay_password{
     width: 100%;

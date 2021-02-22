@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Home\OrderResource\OrderCollection;
 use App\Http\Resources\Home\OrderResource\OrderResource;
 use App\Services\OrderService;
+use App\Services\PayMentService;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -43,6 +44,12 @@ class OrderController extends Controller
     public function pay(){
         $order_service = new OrderService();
         $rs = $order_service->payOrder();
+        return $rs['status']?$this->success($rs['data']):$this->error($rs['msg']);
+    }
+
+    // 微信订单验证是否支付成功
+    public function wechat_pay_check(PayMentService $payment_service){
+        $rs = $payment_service->wechatPayCheck();
         return $rs['status']?$this->success($rs['data']):$this->error($rs['msg']);
     }
 
