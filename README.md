@@ -1,5 +1,5 @@
 ## Welcome to Qingwu mall 欢迎使用 青梧商城系统 (B2B2C)
-![logo](http://pc.qingwuit.com/dist/images/logo.png "logo")
+![logo](https://gitee.com/qingwuitcn/qwshop/raw/master/resources/js/asset/pc/logo.png "logo")
 
 > 我们理解您需要一套前后端分离，功能齐全操作简易的商城框架 青梧商城系统 就是秉承着这样的目的开发出来的，或许您是开发人员，又或许您是即将要创业的老板，都可以基于青梧商城系统进行快速项目启动。
 
@@ -28,7 +28,7 @@
 > 账号密码：18888888888 123456
 
 ## H5 bate demo H5版本(测试版本) 
-![logo](http://h5.qingwuit.com/qrcode.png "logo")
+![logo](https://gitee.com/qingwuitcn/qwshop/raw/master/resources/js/asset/qrcode.png "qrcode")
 
 ## How Run 如何安装青梧商城
 
