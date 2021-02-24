@@ -34,13 +34,13 @@ class Kernel extends ConsoleKernel
         // 这是定时 订单处理
         $schedule->call(function () use($auto_service) {
             $auto_service->autoTask();  // 确定订单
-        })->everyMinute(); 
+        })->everyMinute()->withoutOverlapping(); 
 
         // 订单结算
         $task = $config_service->getFormatConfig('task');
         $schedule->call(function ()  use($auto_service) {
             $auto_service->orderSettlement();
-        })->cron('* * */'.$task['settlement'].' * *');
+        })->cron('* * */'.$task['settlement'].' * *')->withoutOverlapping();
 
         
     }
