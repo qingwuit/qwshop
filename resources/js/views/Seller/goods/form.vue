@@ -205,7 +205,7 @@ export default {
         },
         get_info(){
             this.$get(this.$api.sellerGoods+'/'+this.id).then(res=>{
-                this.goodsAttr = res.data.attrList;
+                this.goodsAttr = res.data.attrList||[];
                 this.skuList = res.data.skuList||[];
                 res.data.goods_status = res.data.goods_status==0?false:true;
                 this.info = res.data;
@@ -323,10 +323,10 @@ export default {
         // 属性选择
         goods_attr_chose(e){
             this.attrVisible=false;
-            // e=>{goodsAttr=e;attrVisible=false}
             if(e.length<=0){
                 return;
             }
+            
             e.forEach((items,k)=>{
                 let status = false;
                 this.goodsAttr.forEach(attrItems=>{

@@ -112,7 +112,7 @@ class OrderSettlementService extends BaseService{
 
             // 商家金额处理
             foreach($store_list as $k=>$v){
-                $ml_service->editSellerMoney(__('users.money_log_distribution'),$k,$v);
+                $ml_service->editSellerMoney(__('users.money_log_order_settlement'),$k,$v);
             }
 
             // 订单修改状态为已经结算

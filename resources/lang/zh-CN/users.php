@@ -38,6 +38,7 @@ return [
     'money_log_integral_register'                =>  '注册积分',
     'money_log_integral_inviter'                 =>  '邀请积分',
     'money_log_integral_order'                   =>  '订单积分',
+    'money_log_order_settlement'                 =>  '订单结算',
 
     
 ];
