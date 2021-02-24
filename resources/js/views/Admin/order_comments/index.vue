@@ -17,7 +17,7 @@
                     </div>
                 </span>
                 <span slot="action" slot-scope="rows">
-                    <a-button icon="read" @click="$router.push('/Admin/order_comments/form/'+rows.id)">查看</a-button>
+                    <a-button icon="read" @click="$router.push('/Admin/order_comments/form/'+rows.id)" :disabled="rows.goods.id==0">查看</a-button>
                 </span>
             </a-table>
             <div class="admin_pagination" v-if="total>0">
