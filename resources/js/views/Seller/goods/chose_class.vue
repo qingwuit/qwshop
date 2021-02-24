@@ -44,9 +44,10 @@ export default {
     computed: {},
     methods: {
         next_step(){
+            
             let url = '/Seller/goods/form';
-            if(!this.$isEmpty(this.$route.query.id)){
-                url += '/'+this.$route.query.id;
+            if(!this.$isEmpty(this.$route.params.id)){
+                url += '/'+this.$route.params.id;
             }
             this.$router.push(url+'?id='+this.choseId[0]+','+this.choseId[1]+','+this.choseId[2]);
         },

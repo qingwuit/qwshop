@@ -53,8 +53,7 @@ axios.interceptors.response.use(function (res) {
     let adminIndex = res.config.url.search(adminPatt);
     let sellerIndex = res.config.url.search(sellerPatt);
 
-    // 防止多次出现
-    message.destroy();
+    
     
     if(res.status != 200){
         return message.error(res.statusText);
@@ -104,7 +103,10 @@ axios.interceptors.response.use(function (res) {
         }
 		
 	}
-	
+    
+	// 防止多次出现
+    message.destroy();
+
     return res;
   }, function (err) {
     // eslint-disable-next-line no-console

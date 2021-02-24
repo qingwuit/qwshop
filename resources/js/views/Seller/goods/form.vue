@@ -482,7 +482,7 @@ export default {
         // 修改栏目
         to_chose_class(){
             if(this.info.id>0){
-                this.$router.push('/Seller/goods/chose_goods/'+info.id);
+                this.$router.push('/Seller/goods/chose_class/'+this.info.id);
             }else{
                 this.$router.go(-1);
             }
