@@ -112,7 +112,7 @@
         <!-- 修改物流 -->
         <a-modal v-model="visible" title="编辑物流" ok-text="确认" cancel-text="取消" @ok="handleSubmit">
             <a-input-group compact>
-                <a-select style="width: 25%" :value="info.delivery_code||'yd'">
+                <a-select style="width: 25%" v-model="info.delivery_code">
                     <a-select-option :value="v.code" v-for="(v,k) in express" :key="k">{{v.name}}</a-select-option>
                 </a-select>
                 <a-input style="width: 75%" placeholder="输入快递单号发货" v-model="info.delivery_no" />
@@ -178,6 +178,9 @@ export default {
         },
         get_info(){
             this.$get(this.$api.sellerOrders+'/'+this.id).then(res=>{
+                if(res.data.delivery_code == ''){
+                    res.data.delivery_code = 'yd'
+                }
                 if(res.data.delivery_no != ''){
                     this.get_delivery();
                 }
