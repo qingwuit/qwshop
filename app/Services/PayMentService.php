@@ -56,12 +56,12 @@ class PayMentService extends BaseService{
                 $wxpayObj = Pay::wechat($this->wx_config);
                 $notify_info = $wxpayObj->verify();
                 $rs = $this->payHandle($payment_name,$out_trade_no,$notify_info);
-                return $rs['status']?$this->format($wxpayObj->success()):$this->format_error($rs['msg']);
+                return $rs['status']?$wxpayObj->success():$this->format_error($rs['msg']);
             }elseif($payment_name == 'ali'){
                 $alipayObj = Pay::alipay($this->ali_config);
                 $notify_info = $alipayObj->verify();
                 $rs = $this->payHandle($payment_name,$out_trade_no,$notify_info);
-                return $rs['status']?$this->format($alipayObj->success()):$this->format_error($rs['msg']);
+                return $rs['status']?$alipayObj->success():$this->format_error($rs['msg']);
             }
 
             

@@ -14,9 +14,10 @@ class CashService extends BaseService{
     public function getCash($auth='user'){
         $cash_model = new Cash();
         if($auth == 'user'){
-            $cash_model = $cash_model->where('user_id','>',0)->where('store_id',0);
+            $cash_model = $cash_model->where('user_id',auth()->id())->where('store_id',0);
         }elseif($auth == 'seller'){
-            $cash_model = $cash_model->where('user_id',0)->where('store_id','>',0);
+            $store_id = $this->get_store(true);
+            $cash_model = $cash_model->where('user_id',0)->where('store_id','>',$store_id);
         }
         $list = $cash_model->orderBy('id','desc')->paginate(request()->per_page??30);
 
