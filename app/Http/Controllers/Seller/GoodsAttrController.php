@@ -81,7 +81,7 @@ class GoodsAttrController extends Controller
         }
 
         if(!empty($spec_id)){
-            if($goods_sku_model->where('attr_id',$id)->whereIn('spec_id',$spec_id)->exists()){
+            if($goods_sku_model->whereIn('spec_id',$spec_id)->exists()){
                 return $this->error(__('admins.goods_attr_delete'));
             }
         }
