@@ -9,7 +9,7 @@
             <a-button class="admin_delete_btn" type="danger" icon="delete" @click="del">批量删除</a-button>
         </div>
         <div class="admin_table_list">
-            <a-table :columns="columns" :data-source="list" :pagination="false" :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" row-key="id">
+            <a-table :columns="columns" :data-source="list" :pagination="false" @expand="expanded" :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" row-key="id">
                 <span slot="expand"><!-- -> --></span>
                 <span slot="name" slot-scope="rows">
                     <div class="admin_pic_txt">
@@ -42,7 +42,9 @@ export default {
               {title:'排序',fixed:'right',width:'120px',scopedSlots: { customRender: 'is_sort' }},
               {title:'操作',key:'id',fixed:'right',scopedSlots: { customRender: 'action' }},
           ],
+          loading:false,
           list:[],
+          classList:[],
       };
     },
     watch: {},
@@ -84,9 +86,26 @@ export default {
             });
         },
         onload(){
+            this.loading = true;
             this.$get(this.$api.adminGoodsClasses).then(res=>{
-                this.list = res.data;
+                this.loading = false;
+                this.classList = res.data;
+                res.data.forEach(item=>{
+                    let info = {};
+                    info = {name:item.name,pid:item.pid,id:item.id,is_sort:item.is_sort,lev:item.lev,thumb:item.thumb,children:[]}
+                    this.list.push(info);
+                })
             });
+        },
+        // 展开再去获取数据防止卡住
+        expanded(status,rows){
+            if(rows.lev == 0){
+                this.classList.forEach((items,key)=>{
+                    if(items.id == rows.id){
+                        this.list[key].children = items.children;
+                    }
+                })
+            }
         },
         // 排序移动
         sortChange(rows){
