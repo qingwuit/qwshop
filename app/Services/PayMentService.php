@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\Order;
 use App\Models\OrderPay;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Yansongda\Pay\Pay;
 
@@ -94,8 +95,7 @@ class PayMentService extends BaseService{
                 return $this->format_error(__('orders.pay_password_error'));
             }
             $user_info = auth('user')->user();
-            $pay_password_md5 = md5($user_info->id.$pay_password);
-            if($pay_password_md5 != $user_info->pay_password){
+            if(!Hash::check($pay_password , $user_info->pay_password)){
                 return $this->format_error(__('orders.pay_password_error'));
             }
             if($order_pay->total_price>$user_info->money){

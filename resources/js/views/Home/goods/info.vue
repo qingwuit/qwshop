@@ -69,7 +69,7 @@
                     <div class="goods_skill tuan_active" v-if="collectives"  @click="collective_id=-1;buy()">
                         <span><a-icon type="usergroup-delete" /></span>
                         <span>参加团购活动 <span style="font-weight:bold; margin-left:15px;" >( 点击开新团 )</span></span>
-                        <span class="span_time">团购价：￥ {{goods_info.goods_price*(1-collectives.discount/100)||'0.00'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 需要 {{collectives.need}} 人</span>
+                        <span class="span_time">团购价：￥ {{$formatFloat(goods_info.goods_price*(1-collectives.discount/100)||'0.00')}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 需要 {{collectives.need}} 人</span>
                     </div>
                     <div class="tuan_list" v-if="collectives && collective_list.length>0">
                         <a-carousel autoplay :autoplaySpeed="3000" speed="1000" :vertical="true" :adaptiveHeight="true" :dots="false">

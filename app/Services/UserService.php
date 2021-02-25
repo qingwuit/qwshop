@@ -154,7 +154,7 @@ class UserService extends BaseService{
         $user_model->ip = request()->getClientIp();
         $user_model->inviter_id = request()->inviter_id??0;
         $user_model->password = Hash::make($credentials['password']);
-        $user_model->pay_password = Hash::make($credentials['password']);
+        $user_model->pay_password = Hash::make('123456');
         $user_model->save();
         
         if (! $token = auth($auth)->login($user_model)) {
@@ -340,7 +340,7 @@ class UserService extends BaseService{
                 if(strlen(request()->pay_password)!=6){
                     return $this->format_error(__('users.pay_password_len'));
                 }
-                $user_model->pay_password = md5($user_model->id.request()->pay_password);
+                $user_model->pay_password = Hash::make(request()->pay_password);
             }
             if(isset(request()->phone) || !empty(request()->phone)){
                 $sms_service = new SmsService();

@@ -53,7 +53,7 @@
             <span class="attr"></span>
             <span class="price"></span>
             <span class="num"></span>
-            <span class="total" >已选择 <font color="#ca151e">{{allCount}}</font> 件，总计 <font color="#ca151e">{{allPrice}} </font>元</span>
+            <span class="total" >已选择 <font color="#ca151e">{{allCount}}</font> 件，总计 <font color="#ca151e">{{$formatFloat(allPrice)}} </font>元</span>
             <span class="handle" style="width:140px;text-align:right;"><div class="error_btn" style="padding:5px 30px;" @click="buy">结算</div></span>
         </div>
 
