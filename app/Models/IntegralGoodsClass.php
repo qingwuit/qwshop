@@ -9,6 +9,6 @@ class IntegralGoodsClass extends Model
 {
     use SoftDeletes;
     public function integral_goods(){
-        return $this->hasMany('App\Models\IntegralGoods','cid','id');
+        return $this->hasMany('App\Models\IntegralGoods','cid','id')->withTrashed();
     }
 }

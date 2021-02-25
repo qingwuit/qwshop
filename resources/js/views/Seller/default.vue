@@ -93,7 +93,7 @@
                     <a-col :span="8" :xs="{ span: 24 }" :lg="{ span: 8 }">
                         <div class="sort_list">
                             <div class="list_title">商品销售额排名</div>
-                            <div class="list_block" v-for="v in 6" :key="v"><font style="color:#999;float:right;">{{list[v-1]?list[v-1]['orders_count']:'-'}}</font><span>{{v}}</span>{{list[v-1]?list[v-1]['goods_name']:'-'}}</div>
+                            <div class="list_block" v-for="v in 6" :key="v"><font style="color:#999;float:right;">{{list[v-1]?list[v-1]['orders_count']:'-'}}</font><span>{{v}}</span><div style="width: 70%;display: inline-block;height: 20px;overflow: hidden;">{{list[v-1]?list[v-1]['goods_name']:'-'}}</div></div>
 
                         </div>
                     </a-col>

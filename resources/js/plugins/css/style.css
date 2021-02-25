@@ -145,7 +145,7 @@ ul,li,ol{
     margin-right: 15px;
 }
 .admin_card .sort_list .list_title,.admin_form .sort_list .list_title{margin-bottom:10px;margin-top: 10px;font-weight: bold;}
-.admin_card .sort_list .list_block,.admin_form .sort_list .list_block{padding:10px 10px;}
+.admin_card .sort_list .list_block,.admin_form .sort_list .list_block{padding:10px 10px;overflow: hidden;}
 .admin_card .sort_list .list_block:nth-child(1) span,.admin_form .sort_list .list_block:nth-child(1) span{background: #333;color:#fff;}
 .admin_card .sort_list .list_block:nth-child(2) span,.admin_form .sort_list .list_block:nth-child(2) span{background: #333;color:#fff;}
 .admin_card .sort_list .list_block:nth-child(3) span,.admin_form .sort_list .list_block:nth-child(3) span{background: #333;color:#fff;}

@@ -90,7 +90,7 @@ class StatisticController extends Controller
 
         // 获取商品销售排行
         $data['list'] = $goods_model->select('goods_name','id')->withCount(['order_goods as orders_count'=>function($q){
-            $q->select(DB::raw('sum(total_price)'));
+            $q->select(DB::raw('sum(order_goods.total_price)'))->join('orders','order_goods.order_id','=','orders.id')->where('orders.order_status','>',1);
         }])->orderBy('orders_count','desc')->take(6)->get();
 
         return $this->success($data);

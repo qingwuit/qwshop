@@ -10,11 +10,11 @@ class CollectiveLog extends Model
     use SoftDeletes;
     protected $guarded = [];
     public function goods(){
-        return $this->hasOne("App\Models\Goods","id","goods_id");
+        return $this->hasOne("App\Models\Goods","id","goods_id")->withTrashed();
     }
 
     public function user(){
-        return $this->hasOne("App\Models\User","id","user_id");
+        return $this->hasOne("App\Models\User","id","user_id")->withTrashed();
     }
 
     public function orders(){

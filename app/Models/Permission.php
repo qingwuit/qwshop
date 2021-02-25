@@ -9,6 +9,6 @@ class Permission extends Model
 {
     use SoftDeletes;
     public function permission_group(){
-        return $this->hasOne('App\Models\PermissionGroup','id','pid');
+        return $this->hasOne('App\Models\PermissionGroup','id','pid')->withTrashed();
     }
 }

@@ -12,11 +12,11 @@ class Goods extends Model
     protected $guarded = [];
 
     public function goods_class(){
-        return $this->hasOne('App\Models\GoodsClass','id','class_id');
+        return $this->hasOne('App\Models\GoodsClass','id','class_id')->withTrashed();
     }
 
     public function goods_brand(){
-        return $this->hasOne('App\Models\GoodsBrand','id','brand_id');
+        return $this->hasOne('App\Models\GoodsBrand','id','brand_id')->withTrashed();
     }
 
     public function goods_skus(){
@@ -30,7 +30,7 @@ class Goods extends Model
     //     return $this->hasMany('App\Models\Store','id','store_id');
     // }
     public function store(){
-        return $this->hasOne('App\Models\Store','id','store_id');
+        return $this->hasOne('App\Models\Store','id','store_id')->withTrashed();
     }
 
     // 获取评论数量
@@ -45,16 +45,16 @@ class Goods extends Model
 
     // 获取分销ID
     public function distribution(){
-        return $this->hasOne('App\Models\Distribution','goods_id','id');
+        return $this->hasOne('App\Models\Distribution','goods_id','id')->withTrashed();
     }
 
     // 获取秒杀
     public function seckill(){
-        return $this->hasOne('App\Models\Seckill','goods_id','id');
+        return $this->hasOne('App\Models\Seckill','goods_id','id')->withTrashed();
     }
 
     // 获取拼团
     public function collective(){
-        return $this->hasOne('App\Models\Collective','goods_id','id');
+        return $this->hasOne('App\Models\Collective','goods_id','id')->withTrashed();
     }
 }
