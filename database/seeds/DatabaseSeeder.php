@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('goods')->truncate();
 
+        DB::table('goods_brands')->truncate();
 
         DB::table('goods_classes')->truncate();
 
