@@ -9,7 +9,7 @@
             <a-button class="admin_delete_btn" type="danger" icon="delete" @click="del">批量删除</a-button>
         </div>
         <div class="admin_table_list">
-            <a-table :columns="columns" :data-source="list" :pagination="false" @expand="expanded" :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" row-key="id">
+            <a-table :columns="columns" :data-source="list" :pagination="false" @expand="expanded" :loading="loading" :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" row-key="id">
                 <span slot="expand"><!-- -> --></span>
                 <span slot="name" slot-scope="rows">
                     <div class="admin_pic_txt">
