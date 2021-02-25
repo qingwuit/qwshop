@@ -20,6 +20,7 @@ class CreateGoodsClassesTable extends Migration
             $table->string('name',20)->default('')->comment('栏目名称');
             $table->unsignedInteger('is_sort')->default(0)->comment('排序');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

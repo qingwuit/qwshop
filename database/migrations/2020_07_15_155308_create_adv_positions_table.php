@@ -19,6 +19,7 @@ class CreateAdvPositionsTable extends Migration
             $table->unsignedInteger('ap_width')->default(0)->comment('建议宽度');
             $table->unsignedInteger('ap_height')->default(0)->comment('建议高度');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

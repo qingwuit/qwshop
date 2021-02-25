@@ -21,6 +21,7 @@ class CreateSeckillsTable extends Migration
             $table->timestamp('start_time')->default(now())->comment('开始时间');
             $table->timestamp('end_time')->default(now()->addDays(5))->comment('结束');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

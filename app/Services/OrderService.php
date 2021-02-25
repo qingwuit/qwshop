@@ -58,7 +58,7 @@ class OrderService extends BaseService{
         // 地址验证
         $address_resp = $this->checkAddress();
         if(!$address_resp['status']){
-            return $this->format_error($rs['msg']);
+            return $this->format_error($address_resp['msg']);
         }
         $address_info = $address_resp['data'];
 

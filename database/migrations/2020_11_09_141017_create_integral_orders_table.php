@@ -32,6 +32,7 @@ class CreateIntegralOrdersTable extends Migration
             $table->timestamp('delivery_time')->default(now())->comment('发货时间');
             $table->string('remark',150)->default('')->comment('备注');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

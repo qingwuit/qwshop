@@ -29,6 +29,7 @@ class CreateIntegralGoodsTable extends Migration
             $table->text('goods_content')->default('')->comment('详情');
             $table->text('goods_content_mobile')->default('')->comment('手机端详情');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

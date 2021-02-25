@@ -23,6 +23,7 @@ class CreateCollectiveLogsTable extends Migration
             $table->unsignedTinyInteger('need')->default(5)->comment('需要人数');
             $table->unsignedTinyInteger('status')->default(2)->comment('状态 0取消 1完成  2 拼团中');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

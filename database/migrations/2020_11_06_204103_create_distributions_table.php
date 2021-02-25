@@ -21,6 +21,7 @@ class CreateDistributionsTable extends Migration
             $table->unsignedDecimal('lev_2',6,2)->default(0.00)->comment('二级分销');
             $table->unsignedDecimal('lev_3',6,2)->default(0.00)->comment('三级分销');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

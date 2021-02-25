@@ -47,6 +47,7 @@ class CreateStoresTable extends Migration
             $table->string('store_refuse_info',20)->comment('拒绝原因');
             $table->text('after_sale_service')->comment('售后服务');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

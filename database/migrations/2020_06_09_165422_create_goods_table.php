@@ -38,6 +38,7 @@ class CreateGoodsTable extends Migration
             $table->unsignedTinyInteger('is_recommend')->default(0)->comment('是否推荐商家首页');
             $table->unsignedTinyInteger('is_matser')->default(0)->comment('是否推荐主站首页');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -346,6 +346,7 @@ export default {
                 display: block;
             }
             li{
+                cursor: pointer;
                 float: left;
                 box-sizing: border-box;
                 width: 292px;

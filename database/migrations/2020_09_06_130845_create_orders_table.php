@@ -43,6 +43,7 @@ class CreateOrdersTable extends Migration
             $table->timestamp('comment_time')->default(now())->comment('评论时间');
             $table->string('remark',150)->default('')->comment('备注');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

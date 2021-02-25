@@ -26,6 +26,7 @@ class CreateDistributionLogsTable extends Migration
             $table->unsignedDecimal('commission',9,2)->default(0.00)->comment('分佣金额');
             $table->unsignedTinyInteger('status')->default(0)->comment('处理结果 0 等待分佣 1 分佣');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

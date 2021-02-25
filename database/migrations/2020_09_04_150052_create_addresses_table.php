@@ -25,6 +25,7 @@ class CreateAddressesTable extends Migration
             $table->unsignedInteger('region_id')->default(0)->comment('区县');
             $table->unsignedTinyInteger('is_default')->default(0)->comment('是否默认');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

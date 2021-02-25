@@ -18,6 +18,7 @@ class CreateExpressesTable extends Migration
             $table->string('name',10)->default('')->comment('快递公司名');
             $table->string('code',10)->default('')->comment('快递编码');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

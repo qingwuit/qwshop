@@ -20,6 +20,7 @@ class CreatePermissionsTable extends Migration
             $table->string('apis',35)->default('')->comment('接口名称');
             $table->string('content',25)->default('')->comment('接口描述');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

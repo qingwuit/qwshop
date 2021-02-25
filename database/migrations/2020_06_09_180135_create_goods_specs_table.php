@@ -18,6 +18,7 @@ class CreateGoodsSpecsTable extends Migration
             $table->unsignedInteger('attr_id')->default(0)->comment('所属属性');
             $table->string('name',20)->default('')->comment('规格名称');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

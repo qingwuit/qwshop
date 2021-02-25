@@ -20,6 +20,7 @@ class CreateAreasTable extends Migration
             $table->string('code',20)->comment("编码");
             $table->unsignedTinyInteger('deep')->comment("深度");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

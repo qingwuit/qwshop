@@ -23,6 +23,7 @@ class CreateAdminsTable extends Migration
             $table->timestamp('login_time')->default(now())->comment('登陆时间');
             $table->timestamp('last_login_time')->default(now())->comment('最后一次登陆');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

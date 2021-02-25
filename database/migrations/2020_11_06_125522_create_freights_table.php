@@ -26,6 +26,7 @@ class CreateFreightsTable extends Migration
             $table->text('area_name')->comment('内容中文');
             $table->unsignedTinyInteger('is_type')->default(0)->comment('0默认运费 1 配置运费');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -21,6 +21,7 @@ class CreateCollectivesTable extends Migration
             $table->unsignedTinyInteger('need')->default(5)->comment('需要人数');
  
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

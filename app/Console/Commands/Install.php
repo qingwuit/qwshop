@@ -41,6 +41,13 @@ class Install extends Command
     {
         
         $domain = $this->anticipate('Please enter your Domain name (https://xxx.com)', ['http://127.0.0.1', 'localhost']);
+
+        
+        if(stripos($domain,'https://')===false && stripos($domain,'http://')===false){
+            $this->error('Domain name error. Please fill in again...');
+            return;
+        }
+
         $mysqlHost = $this->anticipate('Please enter your MySQL address (Host)', ['127.0.0.1', 'localhost']);
         $dbPort = $this->anticipate('Please enter your MySQL port ', ['3306']);
         $dbName = $this->anticipate('Please enter your MySQL DBName ', ['qwshop', 'shop']);
@@ -71,20 +78,14 @@ class Install extends Command
         $bar->advance(); // 第一步
         $this->line('');
         $this->line('');
-        $this->line('Creating table. Please wait...');
-        Artisan::call('config:cache');
+        $this->line('Data migration. Please wait...');
         Artisan::call('migrate'); // 原本想使用这个太麻烦
+        $this->line('');
+        $this->line('Creating table. Please wait...');
         Artisan::call('qwshop:mysql'); // 导入数据结构
         $this->line('');
         $this->info('Database imported successfully.');
         
-
-        // 执行seeder
-        // Artisan::call('db:seed --class=AdminSeeder');
-        // Artisan::call('db:seed --class=ConfigSeeder');
-        // Artisan::call('db:seed --class=MenuSeeder');
-        // $bar->advance(); // 第二步
-
         // 创建软链接链接storage
         $bar->advance(); // 第二步
         Artisan::call('storage:link');
@@ -110,7 +111,7 @@ class Install extends Command
         $this->line('Seller url :  /Seller/login');
         $this->line('Admin username :  admin');
         $this->line('Admin password :  123456');
-        return;;
+        return;
         
     }
 

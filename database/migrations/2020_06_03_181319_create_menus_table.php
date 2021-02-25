@@ -23,6 +23,7 @@ class CreateMenusTable extends Migration
             $table->unsignedTinyInteger('is_type')->default(0)->comment('类型0 后台 1商家');
             $table->unsignedTinyInteger('is_sort')->default(0)->comment('排序');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

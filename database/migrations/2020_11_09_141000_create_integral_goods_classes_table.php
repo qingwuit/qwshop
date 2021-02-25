@@ -17,6 +17,7 @@ class CreateIntegralGoodsClassesTable extends Migration
             $table->increments('id');
             $table->string('name',20)->comment('积分栏目');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

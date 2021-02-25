@@ -17,6 +17,7 @@ class CreatePermissionGroupsTable extends Migration
             $table->increments('id');
             $table->string('name',35)->default('')->comment('权限分组名称');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
