@@ -28,7 +28,7 @@
                         <span>{{v.created_at}}<font :color="v.order_status==6?'#42b983':'#ca151e'">{{v.order_status_cn||'-'}}</font></span>
                         订单号：{{v.order_no||'-'}}
                     </div>
-                    <div class="order_item_list">
+                    <div class="order_item_list"  @click="$router.push('/user/order/'+v.id)">
                         <ul>
                             <li v-for="(vo,key) in v.order_goods" :key="key"><router-link to="">
                                 <div class="order_thumb"><img :src="vo.goods_image||require('@/asset/order/default.png')" :alt="vo.goods_name"></div>

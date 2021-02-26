@@ -59,6 +59,7 @@ export default [
             {path: '/user/safe/edit_check',name: 'home_user_safe_edit_check',component: () => import('@/views/Home/users/safe/edit_check')}, // 身份认证
             {path: '/user/oauth',name: 'home_user_oauth',component: () => import('@/views/Home/users/oauth/index')}, // 用户账户绑定
             {path: '/user/order',name: 'home_user_order',component: () => import('@/views/Home/users/order/index')}, // 用户订单
+            {path: '/user/order/:id',name: 'home_user_order_info',component: () => import('@/views/Home/users/order/info')}, // 用户订单详情
             {path: '/user/comment/add/:id',name: 'home_user_order_comment',component: () => import('@/views/Home/users/order/comment')}, // 用户添加评论
 
             // 积分订单
