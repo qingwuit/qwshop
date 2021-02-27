@@ -98,7 +98,7 @@ class StoreService extends BaseService{
             DB::raw('avg(speed) as speedAll'),
         ])->toArray();
         foreach($info as &$v){
-            $v = intval($v);
+            $v = intval($v)==0?5:intval($v);
         }
         $store_info['rate'] = $info;
         return $this->format($store_info);
