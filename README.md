@@ -55,24 +55,6 @@ app\Workerman\run.bat
 ## Exchange of views 意见交流 
 欢迎各位提交建议。**联系方式 私人QQ：364825702 QQ群:1062159788** 添加请写上说明如：`青梧商城`
 
-## Precautions for use 注意事项
+## 详细文档
+[[详细文档] click it](http://doc.qingwuit.com/ "点击它[详细文档]")
 
-1、需要自行配置PHP环境、和node 环境(安装扩展尽量使用国内镜像)
-
-2、npm run 打包过程失败，请查看`node-sass` 是否有下载成功，尝试重新下载或者去淘宝镜像下载 确定`node版本是否过低`。
-
-3、安装后无法打开，是否忘记配置伪静态ngnix  linux 查看 `chmod -R 777 storage` 是否给权限
-
-4、安装后无法打开，是否将目录解析到public
-
-5、演示得到链接为1.0版本，如需看最新版本得自己本地安装
-
-6、`暂时没有APP 小程序版本，还在开发`，如果有做完我会第一时间发出来的
-
-## Common Problem 常见问题
-
-## Version 更新记录
-
-
-#### 20210208
-非常感谢@jiangslee的提交！做了部分修改
