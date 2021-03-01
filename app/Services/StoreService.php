@@ -40,7 +40,7 @@ class StoreService extends BaseService{
                     $store_model = $store_model->where('store_name','like','%'.$params_array['keywords'].'%');
                 }
             }
-            $list = $store_model->paginate(request()->per_page??30);
+            $list = $store_model->where('store_status',1)->paginate(request()->per_page??30);
             return $this->format(new StoreCollection($list) );
         }catch(\Exception $e){
             return $this->format_error($e->getMessage());
