@@ -1,0 +1,420 @@
+/* 
+ * 公共样式 
+ * 20200616
+ *
+*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {margin:0;padding:0;} 
+ul,li,ol{
+   list-style: none;
+}
+.home a{
+    color:#333;
+}
+/* 投影 */
+.base_shadow{
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+}
+/* 字体图标标准大小 */
+.base_font_size{
+    font-size: 18px;
+    cursor: pointer;
+}
+/* 圆点绿色和灰色黄色 */
+.green_round{
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #67c23a;
+}
+.gray_round{
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #d3d4d6;
+}
+.yellow_round{
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #e6a23c;
+}
+.red_round{
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #f56c6c;
+}
+
+
+/* 宽度1200 左右居中 */
+.width_center_1200{
+    width: 1200px;
+    margin:0 auto;
+}
+.width_center_1200:after{
+    display: block;
+    clear:both;
+    content:'';
+}
+
+/* 公共左浮动 */
+.float_left{
+    float: left;
+}
+.float_right{
+    float: right;
+}
+
+/* 清除浮动 */
+.clear{
+    clear: both;
+}
+
+/* 线条 */
+.unline{
+    border-bottom: 1px solid #EBEEF5;
+}
+.unline.underm{
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+/* 自定义图标 */
+.afont.anticon {
+    font-size: 18px;
+    color:#333;
+}
+
+.admin_card{
+    background: #fff;
+    margin-bottom: 30px;
+    border: 1px solid #EBEEF5;
+    transition: .3s;
+    padding: 0px 20px;
+    border-radius: 3px;
+    font-size: 16px;
+}
+.admin_card:hover{
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+.admin_card .title{
+    border-bottom: 1px solid #efefef;
+    line-height: 30px;
+    padding:15px 0;
+}
+.admin_card .content{
+    margin-top: 12px;
+}
+.admin_card .content .total_price{
+    font-size: 30px;
+}
+.admin_card .content .total_rate{
+    font-size: 16px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    display: flex;
+}
+.admin_card .content .total_rate span{
+    flex: 1;
+}
+.admin_card .content  .today_price{
+    margin-top: 10px;
+    padding-bottom: 25px;
+}
+.admin_card .content .color_block{
+    padding:10px 15px;
+    background: #f9f9f9;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.admin_card .content .color_blcok_font{
+    font-size: 20px;
+    margin-top: 10px;
+    padding-left: 5px;
+    line-height: 20px;
+}
+
+.admin_card .sort_list .list_block span,.admin_form  .sort_list .list_block span{
+    width: 20px;
+    height: 20px;
+    background-color: #f5f5f5;
+    border-radius: 50%;
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+    line-height: 20px;
+    margin-right: 15px;
+}
+.admin_card .sort_list .list_title,.admin_form .sort_list .list_title{margin-bottom:10px;margin-top: 10px;font-weight: bold;}
+.admin_card .sort_list .list_block,.admin_form .sort_list .list_block{padding:10px 10px;overflow: hidden;}
+.admin_card .sort_list .list_block:nth-child(1) span,.admin_form .sort_list .list_block:nth-child(1) span{background: #333;color:#fff;}
+.admin_card .sort_list .list_block:nth-child(2) span,.admin_form .sort_list .list_block:nth-child(2) span{background: #333;color:#fff;}
+.admin_card .sort_list .list_block:nth-child(3) span,.admin_form .sort_list .list_block:nth-child(3) span{background: #333;color:#fff;}
+.admin_card .sort_list .list_block:nth-child(4) span,.admin_form .sort_list .list_block:nth-child(4) span{background: #333;color:#fff;}
+.admin_card .default_gd{height: 320px;margin-top: 20px;margin-bottom: 20px;}
+.admin_card .content .color_block:hover{
+    background: #f2f2f2;
+}
+.admin_card .month_rate{
+    margin-top: 10px;
+}
+.admin_card .copyright{
+    line-height: 60px;
+    display: flex;
+}
+.admin_card .copyright .copyright_title{
+    margin-right: 20px;
+    height: 60px;
+    overflow: hidden;
+}
+.admin_card .copyright .copyright_rs{
+    height: 60px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.admin_card .title .right_block{
+    float: right;
+}
+.admin_card .title .right_block ul li{
+    float: left;
+    font-size: 14px;
+    margin-right: 10px;
+    padding:2px 15px;
+    border-radius: 3px;
+}
+.admin_card .title .right_block ul{
+    float: left;
+}
+.admin_card .title .right_block .daterange{
+    float: left;
+}
+.admin_card .title .right_block ul li.ck{
+    background: #1890ff;
+    color:#fff;
+}
+
+/* 后台列表 table 标题 */
+.admin_table_page_title{
+    font-size: 14px;
+    font-weight: bold;
+}
+/* 后台table list */
+.admin_table_handle_btn{
+    margin: 20px 0;
+}
+/* 总后台删除按钮 */
+.admin_delete_btn{
+    float: right;
+}
+/* 后台table list 分页 */
+.admin_pagination{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.home_pagination{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+/* 后台 条件框 lable */
+.admin_table_page_where .ant-form-inline .ant-form-item>.ant-form-item-label{
+    width: auto;
+    line-height: 38px;
+    padding-right: 8px;
+}
+/* 后台时间框 */
+.admin_table_page_where .ant-time-picker{
+    width: 100%;
+}
+/* 后台 搜索条件框  */
+.admin_table_page_where .ant-form-inline .ant-form-item{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 8px;
+    margin-right: 0;
+}
+/* 后台搜索按钮 */
+.table-page-search-submitButtons{
+    display: block;
+    margin-bottom: 15px;
+    white-space: nowrap;
+}
+
+/* 后台卡片上传按钮文字 */
+.admin_form .ant-upload-select-picture-card i {
+    font-size: 32px;
+    color: #999;
+}
+
+/* 后台 搜索框 */
+.admin_table_page_where .ant-form-inline .ant-form-item .ant-form-item-control-wrapper{
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1;
+    flex: 1 1;
+    /* display: inline-block; */
+    vertical-align: middle;
+}
+/* 编辑框 */
+.w-e-toolbar{
+    flex-wrap:wrap;
+}
+
+.admin_pic_txt i{
+    font-size: 16px;
+    line-height: 50px;
+    text-align: center;
+    width: 50px;
+}
+.admin_pic_txt img{
+    width: 50px;
+    height: 50px;
+}
+.admin_pic_txt .text{
+    float: left;
+    line-height: 50px;
+}
+.admin_pic_txt .img{
+    width: 50px;
+    height: 50px;
+    display: block;
+    float: left;
+    color:#999;
+    margin-right: 15px;
+    background: #f5f7fa;
+}
+
+/* 商品图文 */
+.admin_goods_pic_txt i{
+    font-size: 16px;
+    line-height: 80px;
+    text-align: center;
+    width: 80px;
+}
+.admin_goods_pic_txt img{
+    width: 80px;
+    height: 80px;
+    border:1px solid #f1f1f1;
+}
+.admin_goods_pic_txt .text{
+    max-width: 240px;
+    height: 40px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 5px;
+    /* overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis; */
+}
+.admin_goods_pic_txt .block{
+    float: left;
+}
+/* .admin_goods_pic_txt .text:after{
+    content: "..."; position: absolute; bottom: 0; right: 0; padding-left: 20px;
+	background: -webkit-linear-gradient(left, transparent, #fff 55%);
+	background: -o-linear-gradient(right, transparent, #fff 55%);
+	background: -moz-linear-gradient(right, transparent, #fff 55%);
+	background: linear-gradient(to right, transparent, #fff 55%);
+} */
+.admin_goods_pic_txt .tag{
+    color: #999;
+    font-size: 12px;
+    margin-top: 10px;
+    display: block;
+    /* float: left; */
+}
+.admin_goods_pic_txt .tag .ant-tag{
+    margin-right: 0px;
+    line-height: 14px;
+    font-size: 12px;
+}
+.admin_goods_pic_txt .img{
+    width: 80px;
+    height: 80px;
+    display: block;
+    float: left;
+    color:#999;
+    margin-right: 25px;
+    background: #f5f7fa;
+}
+/* 过度动画 */
+/* 可以设置不同的进入和离开动画 */
+/* 设置持续时间和动画函数 */
+.slide-fade{
+position: fixed;left:0;right: 0;
+width: 100%;
+background-color: white;
+}
+.slide-fade-enter, .slide-fade-leave-to
+{
+left:0;top: 15px;right: 0;
+position: absolute;
+transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+opacity:0.1;
+}
+.slide-fade-enter-active {
+background-color: white;
+transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-leave-active {
+transition: all 0.6s ease;
+background-color: white;
+transform:translateX(220px) scale(1);
+z-index: 100;
+opacity: 0;
+}
+/* 饿了么动画效果 */
+.el-zoom-in-top-enter-active,.el-zoom-in-top-leave-active{opacity:1;transform:scaleY(1);transition:transform .3s cubic-bezier(.23,1,.32,1),opacity .3s cubic-bezier(.23,1,.32,1);transform-origin:center top}.el-zoom-in-top-enter,.el-zoom-in-top-leave-active{opacity:0;transform:scaleY(0)}
+
+/* 商品属性attr modal */
+.attr_modal .ant-tag-checkable{
+    border-color:#f1f1f1;
+}
+
+
+
+/* 菜单Item 颜色 */
+.admin_menu .ant-menu-dark, .admin_menu .ant-menu-dark .ant-menu-sub{
+    background: #111;
+}
+/* .admin_menu .ant-menu-dark .ant-menu-inline.ant-menu-sub{
+    background: #141414;
+} */
+.admin_menu .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected,.admin_menu  .ant-menu.ant-menu-dark .ant-menu-item-selected{
+    background: #111;
+}
+/* .admin_menu ul .ant-menu-item,.admin_menu ul .ant-menu-subitem{
+    line-height: 40px;
+    height: 40px;
+} */
+.admin_menu .ant-menu-dark .ant-menu-item:hover,.admin_menu .ant-menu-dark .ant-menu-subitem:hover{
+    background: #1a1a1a;
+}
+.admin_menu .ant-menu-dark .ant-menu-item, .ant-menu-dark .ant-menu-item-group-title, .ant-menu-dark .ant-menu-item>a{
+    color:hsla(0,0%,100%,.85);
+}
+.ant-menu-dark,.ant-menu-dark .ant-menu-sub{
+    background: #111;
+}
+
+.admin_menu .ant-menu-dark, .ant-menu-dark .ant-menu-sub{
+    color:hsla(0,0%,100%,.85);
+    line-height: 50px;
+    /* height: 50px; */
+}
+/* 订单详情 */
+.admin_form .order_info_list{
+    margin-bottom: 20px;
+}
+.admin_form .order_info_list .content{
+    color:#999;
+}
+.order_info_right_price{
+    text-align: right;
+    color: #ca151e;
+    padding: 20px 20px 40px 20px;
+    font-size: 18px;
+}
+.order_info_right_price span{
+    color: #999;
+    font-size: 12px;
+    margin-left: 20px;
+}
