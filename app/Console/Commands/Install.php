@@ -78,6 +78,9 @@ class Install extends Command
         $bar->advance(); // 第一步
         $this->line('');
         $this->line('');
+        $this->line('Config Clear. Please wait...');
+        Artisan::call('config:clear'); // 清空缓冲
+        Artisan::call('config:cache'); // 继续缓冲
         $this->line('Data migration. Please wait...');
         Artisan::call('migrate'); // 原本想使用这个太麻烦
         $this->line('');
