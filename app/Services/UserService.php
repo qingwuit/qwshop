@@ -55,47 +55,45 @@ class UserService extends BaseService{
     public function oauthLogin($oauth,$oauth_name="weixinweb"){
         $user_model = new User();
         $auth = 'user';
-
+        
         try{
             DB::beginTransaction();
+            
             // 判断是否存在该ID
-            if($oauth_name == 'weixinweb'){
-                $isLogin = false; // 登录还是注册
+            if($oauth_name == 'weixinweb' || empty($oauth_name)){
                 $uw_model = new UserWechat();
-                $uwInfo = $uw_model->where('unionid',$oauth['unionid'])->fisrt();
+                $uwInfo = $uw_model->where('unionid',$oauth['unionid'])->first();
                 
                 // 不存在则开始创建
                 if(!$uwInfo){
-                    $user_model->username = 'wx'.date('Ymd').mt_rand(100,999);
-                    $user_model->nickname = $oauth['nickname'];
-                    $user_model->ip = request()->getClientIp();
-                    $user_model->inviter_id = request()->inviter_id??0;
-                    $user_model->password = Hash::make('123456');
-                    $user_model->pay_password = Hash::make('123456');
-                    $user_model->save();
-                    $user_id = $user_model->id;
-
+                    $userInsertData = [];
+                    $userInsertData['username'] = 'wx'.date('Ymd').mt_rand(100,999);
+                    $userInsertData['nickname'] = $oauth['nickname'];
+                    $userInsertData['avatar'] = $oauth['avatar'];
+                    $userInsertData['ip'] = request()->getClientIp();
+                    $userInsertData['inviter_id'] = request()->inviter_id??0;
+                    $userInsertData['password'] = Hash::make('123456');
+                    $userInsertData['pay_password'] = Hash::make('123456');
+                    $user_id = $user_model->create($userInsertData)->id;
+                    
                     // 插入第三方表
                     $uw_model->create([
-                        'openid'        =>  $oauth['id'],
+                        'openid'        =>  $oauth['openid'],
                         'nickname'      =>  $oauth['nickname'],
                         'user_id'       =>  $user_id,
                         'unionid'       =>  $oauth['unionid'],
-                        'headimgurl'    =>  $oauth['avatar'],
+                        'headimgurl'    =>  $oauth['avatar']??'',
                     ]);
                 }else{
-                    $isLogin = true;
-                    $user_id = $uw_model['user_id'];
+                    $user_id = $uwInfo->user_id;
                 }
  
             }
 
-            $user_info = User::select('username','password')->where('id',$user_id)->first();
-
-            $user_model->login_time = now();
-            $user_model->last_login_time = $user_info['login_time'];
-            $user_model->ip = request()->getClientIp();
-            $user_model->save();
+            $user_info = $user_model->where('id',$user_id)->first();
+            $user_info->login_time = now();
+            $user_info->last_login_time = $user_info['login_time'];
+            $user_info->save();
            
             if (! $token = auth($auth)->login($user_info)) {
                 return $this->format_error(__('auth.error'));
@@ -118,10 +116,30 @@ class UserService extends BaseService{
             DB::commit();
             return $this->format($data);
         }catch(\Exception $e){
-            return $this->format_error($e->getMessage());
+            return $this->format_error($e->getLine());
         }
         
         
+    }
+
+    // 绑定微信
+    public function bindWechat($oauth){
+        $user_id = auth()->id();
+        $uw_model = new UserWechat();
+        $uwInfo = $uw_model->where('unionid',$oauth['unionid'])->first();
+        // 不存在则开始创建
+        if($uwInfo){
+            return $this->format_error(__('users.bind_wechat_error'));
+        }
+        // 插入第三方表
+        $uw_model->create([
+            'openid'        =>  $oauth['openid'],
+            'nickname'      =>  $oauth['nickname'],
+            'user_id'       =>  $user_id,
+            'unionid'       =>  $oauth['unionid'],
+            'headimgurl'    =>  $oauth['avatar']??'',
+        ]);
+        return $this->format();
     }
 
     // 注册
@@ -131,20 +149,10 @@ class UserService extends BaseService{
         if($user_model->where($username,$credentials[$username])->exists()){
             return $this->format_error(__('auth.user_exists'));
         }
-        $sms_log_model = new SmsLog();
-        if(empty($smsInfo = $sms_log_model->where([
-            'ip'    =>  request()->getClientIp(),
-            'content'    =>  $credentials['code'],
-            'status'    =>  1,
-            $username   =>  $credentials[$username],
-        ])->first())){
-            return $this->format_error(__('auth.sms_error'));
-        }
-
-        // 验证码失效 十分钟
-        $ct = strtotime($smsInfo->created_at->format('Y-m-d H:i:s'));
-        if(($ct+600)<time()){
-            return $this->format_error(__('auth.sms_invalid'));
+        $sms_service = new SmsService();
+        $smsRes = $sms_service->checkSms(request()->phone,request()->code);
+        if(!$smsRes['status']){
+            return $this->format_error($smsRes['msg']);
         }
 
         $randNickName = $credentials[$username].'_'.mt_rand(100,999);
@@ -184,20 +192,11 @@ class UserService extends BaseService{
         if(!$user_model->where($username,$credentials[$username])->exists()){
             return $this->format_error(__('auth.user_not_exists'));
         }
-        $sms_log_model = new SmsLog();
-        if(empty($smsInfo = $sms_log_model->where([
-            'ip'    =>  request()->getClientIp(),
-            'content'    =>  $credentials['code'],
-            'status'    =>  1,
-            $username   =>  $credentials[$username],
-        ])->first())){
-            return $this->format_error(__('auth.sms_error'));
-        }
 
-        // 验证码失效 十分钟
-        $ct = strtotime($smsInfo->created_at->format('Y-m-d H:i:s'));
-        if(($ct+600)<time()){
-            return $this->format_error(__('auth.sms_invalid'));
+        $sms_service = new SmsService();
+        $smsRes = $sms_service->checkSms(request()->phone,request()->code);
+        if(!$smsRes['status']){
+            return $this->format_error($smsRes['msg']);
         }
 
         $user_model = $user_model->where($username,$credentials[$username])->first();
@@ -281,6 +280,21 @@ class UserService extends BaseService{
         $sms = $config_service->getFormatConfig('alisms');
 
         $user_model = User::find($user_info['id']);
+        
+        // 微信绑定
+        if(isset(request()->oauth)){
+            try{
+                $oauth = json_decode(request()->oauth,true);
+            }catch(\Exception $e){
+                return $this->format_error();
+            }
+            
+            $bindRes = $this->bindWechat($oauth);
+            if(!$bindRes['status']){
+                return $this->format_error($bindRes['msg']);
+            }
+            return $this->format([]);
+        }
 
         // 昵称
         if(isset(request()->nickname)){
@@ -298,6 +312,7 @@ class UserService extends BaseService{
         if(isset(request()->sex)){
             $user_model->sex = abs(intval(request()->sex));
         }
+
         // 密码
         if(
             (isset(request()->password) && !empty(request()->password)) ||
@@ -316,20 +331,10 @@ class UserService extends BaseService{
                     return $this->format_error(__('users.edit_code_error'));
                 }
 
-                $sms_log_model = new SmsLog();
-                if(empty($smsInfo = $sms_log_model->where([
-                    'ip'    =>  request()->getClientIp(),
-                    'content'    =>  request()->code,
-                    'status'    =>  1,
-                    'phone'   =>  $user_model->phone,
-                ])->first())){
-                    return $this->format_error(__('auth.sms_error'));
-                }
-
-                // 验证码失效 十分钟
-                $ct = strtotime($smsInfo->created_at->format('Y-m-d H:i:s'));
-                if(($ct+600)<time()){
-                    return $this->format_error(__('auth.sms_invalid'));
+                $sms_service = new SmsService();
+                $smsRes = $sms_service->checkSms(request()->phone,request()->code);
+                if(!$smsRes['status']){
+                    return $this->format_error($smsRes['msg']);
                 }
             }
             
@@ -348,7 +353,7 @@ class UserService extends BaseService{
                 if(!$phone_check){
                     return $this->format_error(__('sms.phone_error'));
                 }
-                $user_model->phone = md5($user_model->id.request()->phone);
+                $user_model->phone = request()->phone;
             }
 
         }

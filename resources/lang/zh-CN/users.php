@@ -15,6 +15,9 @@ return [
     // 未实名认证
     'user_check_error'                           =>  '未实名认证.',
 
+    // 微信绑定
+    'bind_wechat_error'                          =>  '微信绑定失败，或已经绑定其他账号.',
+
     // 支付密码为6位字符
     'pay_password_len'                           =>  '支付密码为6位字符',
 

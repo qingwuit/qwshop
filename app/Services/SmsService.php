@@ -105,15 +105,37 @@ class SmsService extends BaseService{
         
     }
 
+    // 验证短信是否正确
+    public function checkSms($phone,$code){
+        $failureTime = 600; // 失效时间
+        $sms_log_model = new SmsLog();
+        if(empty($smsInfo = $sms_log_model->where([
+            'ip'    =>  request()->getClientIp(),
+            'content'    =>  $code,
+            'status'    =>  1,
+            'phone'   =>  $phone,
+        ])->first())){
+            return $this->format_error(__('auth.sms_error'));
+        }
+
+        // 验证码失效 十分钟
+        $ct = strtotime($smsInfo->created_at->format('Y-m-d H:i:s'));
+        if(($ct+$failureTime)<time()){
+            return $this->format_error(__('auth.sms_invalid'));
+        }
+
+        return $this->format();
+    }
+
     // 短信判断是否能发送
     public function sendBefore($phone,$name){
         // IP 加时间验证
         $sms_log_model = new SmsLog();
         $smsInfo = $sms_log_model->where('ip',request()->getClientIp())->where('phone',$phone)->where('name',$name)->first();
-        // 验证码失效 十分钟
+        // 验证码失效 
         if(!empty($smsInfo)){
             $ct = strtotime($smsInfo->created_at->format('Y-m-d H:i:s'));
-            if(($ct+59)<time()){
+            if(($ct+20)<time()){
                 return $this->format_error(__('sms.re_send'));
             }
         }
