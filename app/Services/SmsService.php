@@ -131,7 +131,7 @@ class SmsService extends BaseService{
     public function sendBefore($phone,$name){
         // IP 加时间验证
         $sms_log_model = new SmsLog();
-        $smsInfo = $sms_log_model->where('ip',request()->getClientIp())->where('phone',$phone)->where('name',$name)->first();
+        $smsInfo = $sms_log_model->where('ip',request()->getClientIp())->where('phone',$phone)->where('name',$name)->orderBy('id','desc')->first();
         // 验证码失效 
         if(!empty($smsInfo)){
             $ct = strtotime($smsInfo->created_at->format('Y-m-d H:i:s'));
