@@ -55,10 +55,6 @@ export default
     'adminGoodsBrands' : baseUrl + 'Admin/goods_brands', // 商品品牌
     'adminGoodsBrandsUploadThumb' : baseUrl + 'Admin/goods_brands/upload/thumb', // 品牌缩略图上传
 
-    // 商品品牌管理
-    'adminGoodsBrands' : baseUrl + 'Admin/goods_brands', // 商品品牌
-    'adminGoodsBrandsUploadThumb' : baseUrl + 'Admin/goods_brands/upload/thumb', // 品牌缩略图上传
-
     // 商品管理
     'adminGoods' : baseUrl + 'Admin/goods', // 商品列表
 
@@ -73,9 +69,6 @@ export default
 
     // 订单管理
     'adminOrders' : baseUrl + 'Admin/orders',
-    
-    // 积分订单管理
-    'adminIntegralOrders' : baseUrl + 'Admin/integral_orders',
     
     // 订单评论
     'adminOrderComments' : baseUrl + 'Admin/order_comments',  

@@ -116,7 +116,7 @@ class UserService extends BaseService{
             DB::commit();
             return $this->format($data);
         }catch(\Exception $e){
-            return $this->format_error($e->getLine());
+            return $this->format_error($e->getMessage());
         }
         
         
