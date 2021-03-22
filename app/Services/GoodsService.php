@@ -394,6 +394,11 @@ class GoodsService extends BaseService{
                 $goods_model = $goods_model->whereHas('collective');
             }
 
+            // 是否是分销产品
+            if(isset(request()->is_distribution) && !empty(request()->is_distribution)){
+                $goods_model = $goods_model->whereHas('distribution');
+            }
+
             $list = $goods_model->where($this->status)
                         ->with(['goods_sku'=>function($q){
                             return $q->select('goods_id','goods_price','goods_stock')->orderBy('goods_price','asc');
