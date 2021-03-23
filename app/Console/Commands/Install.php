@@ -39,9 +39,25 @@ class Install extends Command
      */
     public function handle()
     {
+
+        // 判断是否解开禁用函数
+        $disable_functions = ['shell_exec','exec','symlink','proc_open','putenv'];
+        $disabled = false;
+        for($i=0;$i<count($disable_functions);$i++){
+            if(!function_exists($disable_functions[$i])){
+                $disabled = true;
+                break;
+            }
+        }
+        
+        if($disabled){
+            $this->line('');
+            $this->error('disabled_functions error. Please go php.ini Delete [shell_exec|exec|symlink|proc_open|putenv]...');
+            $this->line('');
+            return;
+        }
         
         $domain = $this->anticipate('Please enter your Domain name (https://xxx.com)', ['http://127.0.0.1', 'localhost']);
-
         
         if(stripos($domain,'https://')===false && stripos($domain,'http://')===false){
             $this->error('Domain name error. Please fill in again...');
@@ -51,8 +67,8 @@ class Install extends Command
         $mysqlHost = $this->anticipate('Please enter your MySQL address (Host)', ['127.0.0.1', 'localhost']);
         $dbPort = $this->anticipate('Please enter your MySQL port ', ['3306']);
         $dbName = $this->anticipate('Please enter your MySQL DBName ', ['qwshop', 'shop']);
-        $dbUserName = $this->anticipate('Please enter your MySQL DBusername ', ['root']);
-        $dbPassword = $this->anticipate('Please enter your MySQL DBpassword ', ['root']);
+        $dbUserName = $this->anticipate('Please enter your MySQL DBusername ', ['root','qwshop']);
+        $dbPassword = $this->anticipate('Please enter your MySQL DBpassword ', ['root','qwshop']);
 
         // 设置成功Mysql
         $this->table(['domain','host','prot','dbname','username','password'], [[$domain,$mysqlHost,$dbPort,$dbName,$dbUserName,$dbPassword]]);
@@ -110,8 +126,8 @@ class Install extends Command
         $this->line('');
         $this->info('Install Successfully , Welcome Qwshop.');
         $this->line('');
-        $this->line('Admin url :  /Admin/login');
-        $this->line('Seller url :  /Seller/login');
+        $this->line('Admin url :  '.$domain.'/Admin/login');
+        $this->line('Seller url :  '.$domain.'/Seller/login');
         $this->line('Admin username :  admin');
         $this->line('Admin password :  123456');
         return;
