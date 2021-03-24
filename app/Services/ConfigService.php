@@ -168,6 +168,18 @@ class ConfigService extends BaseService{
         $user_service = new UserService;
         $userInfo = $user_service->getUserInfo();
         $ml_service = new MoneyLogService();
+
+        // 如果是登录积分赠送则判断用户今日是否已经登录过
+        if($name == 'login'){
+            $last_time = $userInfo->last_login_time;
+            if(!empty($last_time) && !is_string($last_time)){
+                $last_time = $last_time->format('Y-m-d');
+            }
+            if(empty($last_time) || ($last_time != now()->format('Y-m-d'))){
+                 return true;
+            }
+        }
+
         $rs = $ml_service->editMoney(__('users.money_log_integral_'.$name),$userInfo['id'],$info['integral'],2);
         return $rs;
     }
