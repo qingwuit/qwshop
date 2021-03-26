@@ -36,7 +36,11 @@ export default {
         get_info(){
             this.$get(this.$api.adminConfigs).then(res=>{
                 res.data.goods_verify = res.data.goods_verify==0?false:true;
-                this.info = res.data;
+                let data = {
+                    goods_verify:res.data.goods_verify,
+                    cash_rate:res.data.cash_rate
+                }
+                this.info = data
             })
         },
         // 获取列表

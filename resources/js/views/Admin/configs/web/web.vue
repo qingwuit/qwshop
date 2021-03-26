@@ -87,7 +87,20 @@ export default {
         },
         get_info(){
             this.$get(this.$api.adminConfigs).then(res=>{
-                this.info = res.data;
+                let data = {
+                    web_name:res.data.web_name,
+                    title:res.data.title,
+                    keywords:res.data.keywords,
+                    description:res.data.description,
+                    logo:res.data.logo,
+                    icon:res.data.icon,
+                    mobile:res.data.mobile,
+                    email:res.data.email,
+                    icp:res.data.icp,
+                    web_status:res.data.web_status,
+                    web_close_info:res.data.web_close_info
+                }
+                this.info = data;
             })
         },
         // 获取列表
