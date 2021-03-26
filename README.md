@@ -13,7 +13,7 @@
 [[详细文档] click it](http://doc.qingwuit.com/ "点击它[详细文档]")
 
 ## Code address 代码地址
-[[Gitee地址] click it](https://gitee.com/qingwuitcn/qwshop "点击它[代码地址]") - [[Github地址] click it](https://gitee.com/qingwuitcn/qwshop "点击它[代码地址]")
+[[Gitee地址] click it](https://gitee.com/qingwuitcn/qwshop "点击它[代码地址]") - [[Github地址] click it](https://github.com/qingwuit/qwshop "点击它[代码地址]")
 
 ## Demo address 演示地址
 [[演示地址] click it](http://pc.qingwuit.com "点击它[演示地址]")
@@ -59,5 +59,7 @@ app\Workerman\run.bat
 **QQ群:1062159788**
 
 **私人QQ：364825702**
+
+**Email:bishashiwo@gmail.com**
 
 添加请写上说明如：`青梧商城`
