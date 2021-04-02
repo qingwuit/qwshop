@@ -35,7 +35,7 @@
                     <a-input type="number" v-model="info.discount" placeholder="不能超过 100" suffix="%"></a-input>
                 </a-form-model-item>
                 <a-form-model-item label="开始时间" :rules="{ required: true}">
-                    <a-date-picker v-model="info.start_time" :show-time="{format:'HH'}" format="YYY-MM-DD HH"  />
+                    <a-date-picker v-model="info.start_time" :show-time="{format:'HH'}" format="YYYY-MM-DD HH"  />
                 </a-form-model-item>
                 <a-form-model-item :wrapper-col="{ span: 12, offset: 5 }">
                     <a-button type="primary" @click="handleSubmit">提交</a-button>
