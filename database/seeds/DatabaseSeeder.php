@@ -12,7 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
         DB::table('addresses')->truncate();
 
         DB::table('admins')->truncate();
@@ -78,8 +77,5 @@ class DatabaseSeeder extends Seeder
        
        
         DB::table('users')->truncate();
-        
-      
-
     }
 }

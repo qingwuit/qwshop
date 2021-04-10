@@ -17,7 +17,7 @@ class MoneyLogCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item) {
+            'data'=>$this->collection->map(function ($item) {
                 return [
                     'id'                    =>  $item->id,
                     'name'                  =>  $item->name,
@@ -28,7 +28,7 @@ class MoneyLogCollection extends ResourceCollection
                 ];
             }),
             // 'data'=>$this->collection,
-            'store_info'=>$this->get_store(false,'store_money,store_frozen_money'),
+            'store_info'=>$this->get_store(false, 'store_money,store_frozen_money'),
             'total'=>$this->total(), // 数据总数
             'per_page'=>$this->perPage(), // 每页数量
             'current_page'=>$this->currentPage(), // 当前页码

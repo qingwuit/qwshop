@@ -14,14 +14,12 @@ class GoodsBrandController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,GoodsBrand $goods_brand_model)
+    public function index(Request $request, GoodsBrand $goods_brand_model)
     {
-        if(!empty($request->name)){
-            $goods_brand_model = $goods_brand_model->where('name','like','%'.$request->name.'%');
+        if (!empty($request->name)) {
+            $goods_brand_model = $goods_brand_model->where('name', 'like', '%'.$request->name.'%');
         }
-        $list = $goods_brand_model->orderBy('id','desc')->paginate($request->per_page??30);
+        $list = $goods_brand_model->orderBy('id', 'desc')->paginate($request->per_page??30);
         return $this->success(new GoodsBrandCollection($list));
     }
-
-    
 }

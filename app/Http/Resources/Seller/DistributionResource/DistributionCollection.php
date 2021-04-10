@@ -17,7 +17,7 @@ class DistributionCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item){
+            'data'=>$this->collection->map(function ($item) {
                 return [
                     'id'                    =>  $item->id,
                     'lev_1'                 =>  $item->lev_1,
@@ -30,7 +30,7 @@ class DistributionCollection extends ResourceCollection
                     'updated_at'            =>  $item->updated_at->format('Y-m-d H:i:s'),
                     'goods'                 =>  [
                                                     'goods_name'                =>  $item->goods->goods_name??__('goods.goods_not_found'),
-                                                    'goods_master_image'        =>  empty($item->goods)?'':$this->thumb($item->goods->goods_master_image,150),
+                                                    'goods_master_image'        =>  empty($item->goods)?'':$this->thumb($item->goods->goods_master_image, 150),
                                                 ],
                 ];
             }),

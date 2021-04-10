@@ -10,12 +10,13 @@ use Illuminate\Support\Facades\Log;
 class PaymentController extends Controller
 {
     // 回调处理
-    public function payment($payment_name){
+    public function payment($payment_name)
+    {
         $payment_service = new PayMentService();
         $rs = $payment_service->payment($payment_name);
-        if($rs['status']){
+        if ($rs['status']) {
             return $rs['data'];
-        }else{
+        } else {
             Log::channel('qwlog')->debug($payment_name.'-'.$rs['msg']);
         }
     }

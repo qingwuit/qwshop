@@ -34,8 +34,8 @@ class OrderResource extends JsonResource
             'created_at'            =>  $this->created_at->format('Y-m-d H:i:s'),
             'order_status'          =>  $this->order_status,
             'order_status_cn'       =>  $order_service->getOrderStatusCn($this),
-            'order_goods'           =>  $this->order_goods->map(function($q){
-                                        return [
+            'order_goods'           =>  $this->order_goods->map(function ($q) {
+                return [
                                             'goods_id'=>$q->goods_id,
                                             'goods_image'=>$q->goods_image,
                                             'goods_name'=>$q->goods_name,

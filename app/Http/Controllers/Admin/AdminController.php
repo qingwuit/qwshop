@@ -16,9 +16,9 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,Admin $admin_model)
+    public function index(Request $request, Admin $admin_model)
     {
-        $list = new AdminListCollection($admin_model->with('roles')->orderBy('id','desc')->paginate($request->per_page??30));
+        $list = new AdminListCollection($admin_model->with('roles')->orderBy('id', 'desc')->paginate($request->per_page??30));
         return $this->success($list);
     }
 
@@ -28,9 +28,9 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,Admin $admin_model)
+    public function store(Request $request, Admin $admin_model)
     {
-        if($admin_model->where('username',$request->username)->exists()){
+        if ($admin_model->where('username', $request->username)->exists()) {
             return $this->error(__('admins.username_existence'));
         }
         $admin_model = $admin_model->create([
@@ -41,7 +41,7 @@ class AdminController extends Controller
         ]);
        
         $admin_model->roles()->sync($request->role_id??[]);
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -50,7 +50,7 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Admin $admin_model,$id)
+    public function show(Admin $admin_model, $id)
     {
         $info = new AdminResource($admin_model->with('roles')->find($id));
         return $this->success($info);
@@ -63,24 +63,24 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Admin $admin_model, $id)
+    public function update(Request $request, Admin $admin_model, $id)
     {
-        if($admin_model->where('username',$request->username)
-                        ->where('id','<>',$id)
+        if ($admin_model->where('username', $request->username)
+                        ->where('id', '<>', $id)
                         ->exists()
-        ){
+        ) {
             return $this->error(__('admins.username_existence'));
         }
         $admin_model = $admin_model->find($id);
         $admin_model->username = $request->username;
-        if(!empty($request->password)){
+        if (!empty($request->password)) {
             $admin_model->password = Hash::make($request->password??'123456');
         }
         $admin_model->nickname = $request->nickname??'神秘人';
         $admin_model->avatar = $request->avatar??'';
         $admin_model->save();
         $admin_model->roles()->sync($request->role_id??[]);
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -89,17 +89,17 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Admin $admin_model,$id)
+    public function destroy(Admin $admin_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
-        foreach($idArray as $v){
+        foreach ($idArray as $v) {
             $admin_model = $admin_model->find($v);
             $admin_model->roles()->detach();
             $admin_model->refresh();
         }
         $admin_model->destroy($idArray);
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 }

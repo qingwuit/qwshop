@@ -19,10 +19,10 @@ class CreateOrderCommentsTable extends Migration
             $table->unsignedInteger('order_id')->default(0)->comment('订单ID');
             $table->unsignedInteger('goods_id')->default(0)->comment('商品ID');
             $table->unsignedInteger('store_id')->default(0)->comment('店铺ID');
-            $table->unsignedDecimal('score',5,2)->default(5.00)->comment('综合评分');
-            $table->unsignedDecimal('agree',5,2)->default(5.00)->comment('描述相符');
-            $table->unsignedDecimal('service',5,2)->default(5.00)->comment('服务态度');
-            $table->unsignedDecimal('speed',5,2)->default(5.00)->comment('发货速度');
+            $table->unsignedDecimal('score', 5, 2)->default(5.00)->comment('综合评分');
+            $table->unsignedDecimal('agree', 5, 2)->default(5.00)->comment('描述相符');
+            $table->unsignedDecimal('service', 5, 2)->default(5.00)->comment('服务态度');
+            $table->unsignedDecimal('speed', 5, 2)->default(5.00)->comment('发货速度');
             $table->text('reply')->comment('回复内容');
             $table->timestamp('reply_time')->default(now())->comment('回复时间');
             $table->text('content')->comment('内容');

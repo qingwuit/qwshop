@@ -12,6 +12,4 @@ use App\Traits\ResourceTrait;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests,ResourceTrait;
-    
-    
 }

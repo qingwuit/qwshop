@@ -8,11 +8,13 @@ class OrderGoods extends Model
 {
     protected $guarded = [];
 
-    public function distribution(){
-        return $this->hasOne("App\Models\Distribution","goods_id",'goods_id');
+    public function distribution()
+    {
+        return $this->hasOne("App\Models\Distribution", "goods_id", 'goods_id');
     }
 
-    public function user(){
-        return $this->hasOne("App\Models\User","id",'user_id');
+    public function user()
+    {
+        return $this->hasOne("App\Models\User", "id", 'user_id');
     }
 }

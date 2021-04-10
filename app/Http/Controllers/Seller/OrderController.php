@@ -29,9 +29,9 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(OrderService $order_service,$id)
+    public function show(OrderService $order_service, $id)
     {
-        $rs = $order_service->getOrderInfoById($id,'seller');
+        $rs = $order_service->getOrderInfoById($id, 'seller');
         return $rs['status']?$this->success(new OrderResource($rs['data'])):$this->error($rs['msg']);
     }
 
@@ -42,7 +42,7 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Order $order_model, $id)
+    public function update(Request $request, Order $order_model, $id)
     {
         $store_id = $this->get_store(true);
         $order_model = $order_model->where(['id'=>$id,'store_id'=>$store_id])->first();
@@ -50,12 +50,11 @@ class OrderController extends Controller
         $order_model->delivery_no = $request->delivery_no??'123456';
 
         // 判断是否需要修改订单状态
-        if($order_model->order_status==2){
+        if ($order_model->order_status==2) {
             $order_model->order_status = 3;
             $order_model->delivery_time = now();
         }
         $order_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
-
 }

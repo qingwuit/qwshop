@@ -14,9 +14,9 @@ class SmsSignController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,SmsSign $sms_sign_model)
+    public function index(Request $request, SmsSign $sms_sign_model)
     {
-        $list = $sms_sign_model->orderBy('id','desc')->paginate($request->per_page??30);
+        $list = $sms_sign_model->orderBy('id', 'desc')->paginate($request->per_page??30);
         return $this->success(new SmsSignCollection($list));
     }
 
@@ -26,14 +26,14 @@ class SmsSignController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,SmsSign $sms_sign_model)
+    public function store(Request $request, SmsSign $sms_sign_model)
     {
         $sms_sign_model->name = $request->name??'';
         $sms_sign_model->val = $request->val??'';
         $sms_sign_model->code = $request->code??'';
         $sms_sign_model->content = $request->content??'';
         $sms_sign_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -42,7 +42,7 @@ class SmsSignController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(SmsSign $sms_sign_model,$id)
+    public function show(SmsSign $sms_sign_model, $id)
     {
         $info = $sms_sign_model->find($id);
         return $this->success($info);
@@ -55,7 +55,7 @@ class SmsSignController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,SmsSign $sms_sign_model, $id)
+    public function update(Request $request, SmsSign $sms_sign_model, $id)
     {
         $sms_sign_model = $sms_sign_model->find($id);
         $sms_sign_model->name = $request->name??'';
@@ -63,7 +63,7 @@ class SmsSignController extends Controller
         $sms_sign_model->code = $request->code??'';
         $sms_sign_model->content = $request->content??'';
         $sms_sign_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -72,12 +72,12 @@ class SmsSignController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SmsSign $sms_sign_model,$id)
+    public function destroy(SmsSign $sms_sign_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
         $sms_sign_model->destroy($idArray);
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 }

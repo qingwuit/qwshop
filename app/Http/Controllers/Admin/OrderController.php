@@ -31,7 +31,7 @@ class OrderController extends Controller
      */
     public function show(OrderService $order_service, $id)
     {
-        $rs = $order_service->getOrderInfoById($id,'admin');
+        $rs = $order_service->getOrderInfoById($id, 'admin');
         return $rs['status']?$this->success(new OrderResource($rs['data'])):$this->error($rs['msg']);
     }
 
@@ -55,7 +55,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
         $order_model->destroy($idArray);

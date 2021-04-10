@@ -20,7 +20,7 @@ class OrderCommentController extends Controller
     {
         $store_id = $this->get_store(true);
         $oc_model = new OrderComment();
-        $list = $oc_model->where('store_id',$store_id)->paginate($request->per_page??30);
+        $list = $oc_model->where('store_id', $store_id)->paginate($request->per_page??30);
         return $this->success(new OrderCommentCollection($list));
     }
 
@@ -35,11 +35,10 @@ class OrderCommentController extends Controller
     public function show($id)
     {
         $oc_model = new OrderComment();
-        $list = $oc_model->with(['goods'=>function($q){
-            return $q->select('id','goods_name','goods_master_image');
-        }])->where('store_id',$this->get_store(true))->where('id',$id)->first();
+        $list = $oc_model->with(['goods'=>function ($q) {
+            return $q->select('id', 'goods_name', 'goods_master_image');
+        }])->where('store_id', $this->get_store(true))->where('id', $id)->first();
         return $this->success(new OrderCommentResource($list));
-        
     }
 
     /**
@@ -52,9 +51,7 @@ class OrderCommentController extends Controller
     public function update(Request $request, $id)
     {
         $oc_service = new OrderCommentService();
-        $rs = $oc_service->edit($id,'seller');
-        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
+        $rs = $oc_service->edit($id, 'seller');
+        return $rs['status']?$this->success($rs['data'], $rs['msg']):$this->error($rs['msg']);
     }
-
-
 }

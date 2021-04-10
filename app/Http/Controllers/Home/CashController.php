@@ -28,8 +28,6 @@ class CashController extends Controller
     public function store(CashService $cash_service)
     {
         $rs = $cash_service->add();
-        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
+        return $rs['status']?$this->success($rs['data'], $rs['msg']):$this->error($rs['msg']);
     }
-
-    
 }

@@ -15,9 +15,9 @@ class ExpressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,Express $express_model)
+    public function index(Request $request, Express $express_model)
     {
-        $list = $express_model->orderBy('id','asc')->get();
+        $list = $express_model->orderBy('id', 'asc')->get();
         return $this->success($list);
     }
 
@@ -38,10 +38,10 @@ class ExpressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order_model,KuaibaoService $kb_service,$id)
+    public function show(Order $order_model, KuaibaoService $kb_service, $id)
     {
         $order_model = $order_model->find($id);
-        $list = $kb_service->getExpressInfo($order_model->delivery_no,$order_model->delivery_code,$order_model->receive_tel);
+        $list = $kb_service->getExpressInfo($order_model->delivery_no, $order_model->delivery_code, $order_model->receive_tel);
         return $this->success($list);
     }
 

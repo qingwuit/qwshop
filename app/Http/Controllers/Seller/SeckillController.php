@@ -21,9 +21,9 @@ class SeckillController extends Controller
     public function index(Seckill $seckill_model)
     {
         $store_id = $this->get_store(true);
-        $list = $seckill_model->with(['goods'=>function($q){
-            $q->select('id','goods_name','goods_master_image');
-        }])->where('store_id',$store_id)->orderBy('id','desc')->paginate(request()->per_page??30);
+        $list = $seckill_model->with(['goods'=>function ($q) {
+            $q->select('id', 'goods_name', 'goods_master_image');
+        }])->where('store_id', $store_id)->orderBy('id', 'desc')->paginate(request()->per_page??30);
         return $this->format(new SeckillCollection($list));
     }
 
@@ -33,7 +33,7 @@ class SeckillController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,Seckill $seckill_model)
+    public function store(Request $request, Seckill $seckill_model)
     {
         $seckill_model->goods_id = intval($request->goods_id);
         $seckill_model->store_id = $this->get_store(true);
@@ -42,7 +42,7 @@ class SeckillController extends Controller
         $seckill_model->end_time = Carbon::parse($seckill_model->start_time)->addHours(1);
 
         $seckill_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -51,9 +51,9 @@ class SeckillController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Seckill $seckill_model,$id)
+    public function show(Seckill $seckill_model, $id)
     {
-        $info = $seckill_model->where('store_id',$this->get_store(true))->find($id);
+        $info = $seckill_model->where('store_id', $this->get_store(true))->find($id);
         return $this->success(new SeckillResource($info));
     }
 
@@ -64,16 +64,16 @@ class SeckillController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Seckill $seckill_model,$id)
+    public function update(Request $request, Seckill $seckill_model, $id)
     {
-        $seckill_model = $seckill_model->where('store_id',$this->get_store(true))->find($id);
+        $seckill_model = $seckill_model->where('store_id', $this->get_store(true))->find($id);
         $seckill_model->goods_id = intval($request->goods_id);
         $seckill_model->discount = floatval($request->discount);
         $seckill_model->start_time = empty($request->start_time)?now():$request->start_time;
         $seckill_model->end_time = Carbon::parse($seckill_model->start_time)->addHours(1);
 
         $seckill_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -82,27 +82,28 @@ class SeckillController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Seckill $seckill_model,$id)
+    public function destroy(Seckill $seckill_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
-        $seckill_model->where('store_id',$this->get_store(true))->whereIn('id',$idArray)->delete();
-        return $this->success([],__('base.success'));
+        $seckill_model->where('store_id', $this->get_store(true))->whereIn('id', $idArray)->delete();
+        return $this->success([], __('base.success'));
     }
 
     // 获取商品
-    public function get_seckill_goods(){
+    public function get_seckill_goods()
+    {
         $goods_model = new Goods();
         $store_id = $this->get_store(true);
 
-        if(isset(request()->goods_name) && !empty(request()->goods_name)){
-            $goods_model = $goods_model->where('goods_name','like','%'.request()->goods_name.'%');
+        if (isset(request()->goods_name) && !empty(request()->goods_name)) {
+            $goods_model = $goods_model->where('goods_name', 'like', '%'.request()->goods_name.'%');
         }
 
-        $list = $goods_model->with(['seckill'=>function($q){
+        $list = $goods_model->with(['seckill'=>function ($q) {
             $q->select('goods_id');
-        }])->where('store_id',$store_id)->paginate(request()->per_page??30);
+        }])->where('store_id', $store_id)->paginate(request()->per_page??30);
         return $this->success(new SeckillGoodsCollection($list));
     }
 }

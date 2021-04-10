@@ -15,9 +15,9 @@ class CreateConfigsTable extends Migration
     {
         Schema::create('configs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',20)->default('')->comment('名称');
+            $table->string('name', 20)->default('')->comment('名称');
             $table->text('val')->default('')->comment('值');
-            $table->string('content',40)->default('')->comment('描述');
+            $table->string('content', 40)->default('')->comment('描述');
         });
     }
 

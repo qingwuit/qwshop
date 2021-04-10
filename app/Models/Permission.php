@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Permission extends Model
 {
     use SoftDeletes;
-    public function permission_group(){
-        return $this->hasOne('App\Models\PermissionGroup','id','pid')->withTrashed();
+    public function permission_group()
+    {
+        return $this->hasOne('App\Models\PermissionGroup', 'id', 'pid')->withTrashed();
     }
 }

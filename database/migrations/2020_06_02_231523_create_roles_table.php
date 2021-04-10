@@ -15,7 +15,7 @@ class CreateRolesTable extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',10)->default('')->comment('角色名称');
+            $table->string('name', 10)->default('')->comment('角色名称');
             $table->timestamps();
             $table->softDeletes();
         });

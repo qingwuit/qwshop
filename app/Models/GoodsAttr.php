@@ -10,7 +10,8 @@ class GoodsAttr extends Model
     use SoftDeletes;
     protected $table = 'goods_attrs';
     protected $fillable = ['name','store_id'];
-    public function specs(){
-        return $this->hasMany('App\Models\GoodsSpec','attr_id','id');
+    public function specs()
+    {
+        return $this->hasMany('App\Models\GoodsSpec', 'attr_id', 'id');
     }
 }

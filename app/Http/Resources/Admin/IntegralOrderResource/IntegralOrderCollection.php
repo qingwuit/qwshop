@@ -17,7 +17,7 @@ class IntegralOrderCollection extends ResourceCollection
     {
         $order_service = new OrderService();
         return [
-            'data'=>$this->collection->map(function($item) use($order_service){
+            'data'=>$this->collection->map(function ($item) use ($order_service) {
                 return [
                     'id'                    =>  $item->id,
                     'order_no'              =>  $item->order_no,

@@ -15,12 +15,12 @@ class GoodsBrandController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,GoodsBrand $goods_brand_model)
+    public function index(Request $request, GoodsBrand $goods_brand_model)
     {
-        if(!empty($request->name)){
-            $goods_brand_model = $goods_brand_model->where('name','like','%'.$request->name.'%');
+        if (!empty($request->name)) {
+            $goods_brand_model = $goods_brand_model->where('name', 'like', '%'.$request->name.'%');
         }
-        $list = $goods_brand_model->orderBy('id','desc')->paginate($request->per_page??30);
+        $list = $goods_brand_model->orderBy('id', 'desc')->paginate($request->per_page??30);
         return $this->success(new GoodsBrandCollection($list));
     }
 
@@ -30,12 +30,12 @@ class GoodsBrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,GoodsBrand $goods_brand_model)
+    public function store(Request $request, GoodsBrand $goods_brand_model)
     {
         $goods_brand_model->name = $request->name;
         $goods_brand_model->thumb = $request->thumb??'';
         $goods_brand_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -44,7 +44,7 @@ class GoodsBrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(GoodsBrand $goods_brand_model,$id)
+    public function show(GoodsBrand $goods_brand_model, $id)
     {
         $info = $goods_brand_model->find($id);
         return $this->success($info);
@@ -57,13 +57,13 @@ class GoodsBrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,GoodsBrand $goods_brand_model, $id)
+    public function update(Request $request, GoodsBrand $goods_brand_model, $id)
     {
         $goods_brand_model = $goods_brand_model->find($id);
         $goods_brand_model->name = $request->name;
         $goods_brand_model->thumb = $request->thumb??'';
         $goods_brand_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -72,21 +72,22 @@ class GoodsBrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(GoodsBrand $goods_brand_model,$id)
+    public function destroy(GoodsBrand $goods_brand_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
         $goods_brand_model->destroy($idArray);
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     // 品牌缩略图上传
-    public function goods_brand_upload(UploadService $upload_service){
+    public function goods_brand_upload(UploadService $upload_service)
+    {
         $rs = $upload_service->goods_brand();
-        if($rs['status']){
-            return $this->success($rs['data'],$rs['msg']);
-        }else{
+        if ($rs['status']) {
+            return $this->success($rs['data'], $rs['msg']);
+        } else {
             return $this->error($rs['msg']);
         }
     }

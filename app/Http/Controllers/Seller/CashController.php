@@ -25,10 +25,10 @@ class CashController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,CashService $cash_service)
+    public function store(Request $request, CashService $cash_service)
     {
         $rs = $cash_service->add('seller');
-        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
+        return $rs['status']?$this->success($rs['data'], $rs['msg']):$this->error($rs['msg']);
     }
 
     /**

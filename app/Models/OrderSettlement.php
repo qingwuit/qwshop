@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderSettlement extends Model
 {
-    public function order(){
-        return $this->hasOne('App\Models\Order','id','order_id');
+    public function order()
+    {
+        return $this->hasOne('App\Models\Order', 'id', 'order_id');
     }
 }

@@ -15,8 +15,8 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',80)->comment('标题');
-            $table->string('ename',80)->comment('英文标题');
+            $table->string('name', 80)->comment('标题');
+            $table->string('ename', 80)->comment('英文标题');
             $table->text('content')->comment('内容');
             $table->unsignedInteger('click_num')->default(0)->comment('点击数量');
             $table->unsignedInteger('is_sort')->default(0)->comment('排序');

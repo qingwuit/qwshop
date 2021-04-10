@@ -18,7 +18,7 @@ class FreightController extends Controller
     public function index(Freight $freight_model)
     {
         $store_id = $this->get_store(true);
-        $list = $freight_model->where('store_id',$store_id)->orderBy('is_type','asc')->orderBy('id','desc')->get();
+        $list = $freight_model->where('store_id', $store_id)->orderBy('is_type', 'asc')->orderBy('id', 'desc')->get();
         return $this->success(new FreightCollection($list));
     }
 
@@ -31,7 +31,7 @@ class FreightController extends Controller
     public function store(FreightService $freight_service)
     {
         $rs = $freight_service->edit();
-        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
+        return $rs['status']?$this->success($rs['data'], $rs['msg']):$this->error($rs['msg']);
     }
 
     /**
@@ -65,11 +65,11 @@ class FreightController extends Controller
      */
     public function destroy(Freight $freight_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
 
         $freight_model->destroy($idArray);
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 }

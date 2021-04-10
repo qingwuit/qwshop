@@ -40,7 +40,7 @@ class Mysql extends Command
     public function handle()
     {
         $name = $this->argument('name');
-        if($name == 'insert'){
+        if ($name == 'insert') {
             // 执行seeder 清空数据
             Artisan::call('db:seed --class=DatabaseSeeder');
             DB::unprepared(file_get_contents(app_path('Console'.DIRECTORY_SEPARATOR.'Commands'.DIRECTORY_SEPARATOR.'qwshop.sql'))); // 直接执行sql文件 导入数据

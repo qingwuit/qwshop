@@ -1,6 +1,6 @@
 <?php
 namespace App\Services;
 
-class PermissionService extends BaseService{
-    
+class PermissionService extends BaseService
+{
 }

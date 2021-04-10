@@ -16,10 +16,10 @@ class SmsLogController extends Controller
      */
     public function index(Request $request, SmsLog $sms_log)
     {
-        if(!empty($request->phone)){
-            $sms_log = $sms_log->where('phone','like','%'.$request->phone.'%');
+        if (!empty($request->phone)) {
+            $sms_log = $sms_log->where('phone', 'like', '%'.$request->phone.'%');
         }
-        $list = $sms_log->orderBy('id','desc')->paginate($request->per_page??30);
+        $list = $sms_log->orderBy('id', 'desc')->paginate($request->per_page??30);
         return $this->success(new SmsLogCollection($list));
     }
 
@@ -30,13 +30,12 @@ class SmsLogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SmsLog $sms_log_model,$id)
+    public function destroy(SmsLog $sms_log_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
         $sms_log_model->destroy($idArray);
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
-    
 }

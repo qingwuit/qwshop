@@ -17,7 +17,7 @@ class OrderCollection extends ResourceCollection
     {
         $order_service = new OrderService();
         return [
-            'data'=>$this->collection->map(function($item) use($order_service){
+            'data'=>$this->collection->map(function ($item) use ($order_service) {
                 return [
                     'id'                    =>  $item->id,
                     'order_no'              =>  $item->order_no,
@@ -29,8 +29,8 @@ class OrderCollection extends ResourceCollection
                     'refund_status'         =>  $item->refund_status,
                     'user'                  =>  $item->user,
                     'created_at'            =>  $item->created_at->format('Y-m-d H:i'),
-                    'order_goods'           =>  $item->order_goods->map(function($v){
-                                                return [
+                    'order_goods'           =>  $item->order_goods->map(function ($v) {
+                        return [
                                                     'goods_image'=>$v->goods_image,
                                                     'goods_name'=>$v->goods_name,
                                                     'goods_price'=>$v->goods_price,

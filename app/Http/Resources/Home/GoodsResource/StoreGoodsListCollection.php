@@ -17,13 +17,12 @@ class StoreGoodsListCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item){
-                
+            'data'=>$this->collection->map(function ($item) {
                 $goods_price = $item->goods_price;
                 $goods_market_price = $item->goods_market_price;
 
                 // 判断是否存在sku
-                if(isset($item->goods_sku)){
+                if (isset($item->goods_sku)) {
                     $goods_price = $item->goods_sku['goods_price'];
                     $goods_market_price = $item->goods_sku['goods_market_price'];
                 }
@@ -34,7 +33,7 @@ class StoreGoodsListCollection extends ResourceCollection
                     'goods_price'           =>  $goods_price,
                     'goods_market_price'    =>  $goods_market_price,
                     'goods_sale'            =>  $item->goods_sale,
-                    'goods_master_image'    =>  $this->thumb($item->goods_master_image,300),
+                    'goods_master_image'    =>  $this->thumb($item->goods_master_image, 300),
              
                 ];
             }),

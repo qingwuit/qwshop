@@ -25,10 +25,10 @@ class OrderCommentResource extends JsonResource
             'goods'                         =>  [
                                                     'id'                    =>  $this->goods->id,
                                                     'goods_name'            =>  $this->goods->goods_name??__('goods.goods_not_found'),
-                                                    'goods_master_image'    =>  empty($this->goods)?'':$this->thumb($this->goods->goods_master_image,150),
+                                                    'goods_master_image'    =>  empty($this->goods)?'':$this->thumb($this->goods->goods_master_image, 150),
                                                 ],
             'content'                       =>  $this->content,
-            'image'                         =>  empty($this->image)?[]:explode(',',$this->image),
+            'image'                         =>  empty($this->image)?[]:explode(',', $this->image),
             'reply'                         =>  $this->reply,
             'reply_time'                    =>  $this->reply_time,
             'created_at'                    =>  $this->created_at->format('Y-m-d H:i:s'),

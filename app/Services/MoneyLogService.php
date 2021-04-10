@@ -9,7 +9,8 @@ use App\Models\Store;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
-class MoneyLogService extends BaseService{
+class MoneyLogService extends BaseService
+{
 
     /**
      * 修改用户金额 增加日志 function
@@ -22,8 +23,9 @@ class MoneyLogService extends BaseService{
      * @Description
      * @author hg <www.qingwuit.com>
      */
-    public function editMoney($name,$user_id,$money,$type=0,$info=''){
-        try{
+    public function editMoney($name, $user_id, $money, $type=0, $info='')
+    {
+        try {
             DB::beginTransaction();
             $user_model = new User();
             $ml_model = new MoneyLog();
@@ -34,7 +36,7 @@ class MoneyLogService extends BaseService{
             $ml_model->info = $info;
             $ml_model->save();
             $user_model = $user_model->find($user_id);
-            switch($type){
+            switch ($type) {
                 case 0:
                     $user_model->money += $money;
                 break;
@@ -48,7 +50,7 @@ class MoneyLogService extends BaseService{
             $user_model->save();
             DB::commit();
             return $this->format([]);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
             return $this->format_error(__('users.money_log_error'));
         }
@@ -65,8 +67,9 @@ class MoneyLogService extends BaseService{
      * @Description
      * @author hg <www.qingwuit.com>
      */
-    public function editSellerMoney($name,$store_id,$money,$type=0,$info=''){
-        try{
+    public function editSellerMoney($name, $store_id, $money, $type=0, $info='')
+    {
+        try {
             DB::beginTransaction();
             $store_model = new Store();
             $ml_model = new MoneyLog();
@@ -78,7 +81,7 @@ class MoneyLogService extends BaseService{
             $ml_model->info = $info;
             $ml_model->save();
             $store_model = $store_model->find($store_id);
-            switch($type){
+            switch ($type) {
                 case 0:
                     $store_model->store_money += $money;
                 break;
@@ -89,7 +92,7 @@ class MoneyLogService extends BaseService{
             $store_model->save();
             DB::commit();
             return $this->format([]);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());
             return $this->format_error(__('users.money_log_error'));
@@ -97,22 +100,23 @@ class MoneyLogService extends BaseService{
     }
 
     // 获取日志列表
-    public function getMoneyLog($auth="user"){
+    public function getMoneyLog($auth="user")
+    {
         $money_log_model = new MoneyLog();
-        if($auth == 'user'){
+        if ($auth == 'user') {
             $user_service = new UserService;
             $user_info = $user_service->getUserInfo();
-            $money_log_model = $money_log_model->where('user_id',$user_info['id'])->where('is_seller',0);
+            $money_log_model = $money_log_model->where('user_id', $user_info['id'])->where('is_seller', 0);
         }
-        if($auth=='seller'){
-            $money_log_model = $money_log_model->where('user_id',$this->get_store(true))->where('is_seller',1);
+        if ($auth=='seller') {
+            $money_log_model = $money_log_model->where('user_id', $this->get_store(true))->where('is_seller', 1);
         }
-        if(isset(request()->user_id)){
-            $money_log_model = $money_log_model->where('user_id',request()->user_id);
+        if (isset(request()->user_id)) {
+            $money_log_model = $money_log_model->where('user_id', request()->user_id);
         }
 
-        if(isset(request()->is_seller)){
-            $money_log_model = $money_log_model->where('is_seller',request()->is_seller);
+        if (isset(request()->is_seller)) {
+            $money_log_model = $money_log_model->where('is_seller', request()->is_seller);
         }
 
         // if(isset(request()->phone) && request()->is_seller==1){
@@ -122,18 +126,17 @@ class MoneyLogService extends BaseService{
         // if(isset(request()->phone) && request()->is_seller==0){
         //     $money_log_model = $money_log_model->where('phone',request()->phone);
         // }
-        if(isset(request()->is_type)){
-            $money_log_model = $money_log_model->where('is_type',request()->is_type??0);
+        if (isset(request()->is_type)) {
+            $money_log_model = $money_log_model->where('is_type', request()->is_type??0);
         }
-        $list = $money_log_model->orderBy('id','desc')->paginate(request()->per_page??30);
+        $list = $money_log_model->orderBy('id', 'desc')->paginate(request()->per_page??30);
 
-        if($auth == 'user'){
+        if ($auth == 'user') {
             return $this->format(new MoneyLogCollection($list));
         }
-        if($auth == 'seller'){
+        if ($auth == 'seller') {
             return $this->format(new SellerMoneyLogCollection($list));
         }
         return $this->format(new AdminMoneyLogCollection($list));
-        
     }
 }

@@ -14,15 +14,14 @@ class AdvCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->collection->map(function($item){
-                    return [
+        return $this->collection->map(function ($item) {
+            return [
                         'id'                    =>  $item->id,
                         'name'                  =>  $item->name,
                         'url'                   =>  $item->url,
                         'image_url'             =>  $item->image_url,
                         'adv_type'              =>  $item->adv_type,
                     ];
-                });
-    
+        });
     }
 }

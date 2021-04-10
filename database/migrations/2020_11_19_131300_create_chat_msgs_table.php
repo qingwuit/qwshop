@@ -17,7 +17,7 @@ class CreateChatMsgsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id')->default(0)->comment('用户ID');
             $table->unsignedInteger('store_id')->default(0)->comment('店铺ID');
-            $table->string('type',20)->default('text')->comment('类型');
+            $table->string('type', 20)->default('text')->comment('类型');
             $table->text('content')->comment('内容');
             $table->unsignedTinyInteger('user_read')->dedfault(0)->comment('用户是否查看');
             $table->unsignedTinyInteger('store_read')->dedfault(0)->comment('店铺是否查看');

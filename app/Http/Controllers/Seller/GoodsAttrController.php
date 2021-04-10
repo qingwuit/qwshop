@@ -17,9 +17,9 @@ class GoodsAttrController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,GoodsAttr $goods_attr_model)
+    public function index(Request $request, GoodsAttr $goods_attr_model)
     {
-        $list = $goods_attr_model->where('store_id',$this->get_store(true))->with('specs')->orderBy('id','desc')->paginate($request->per_page??30);
+        $list = $goods_attr_model->where('store_id', $this->get_store(true))->with('specs')->orderBy('id', 'desc')->paginate($request->per_page??30);
         return $this->success(new GoodsAttrCollection($list));
     }
 
@@ -29,21 +29,21 @@ class GoodsAttrController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,GoodsAttr $goods_attr_model)
+    public function store(Request $request, GoodsAttr $goods_attr_model)
     {
         $goods_attr_model = $goods_attr_model->create([
                                 'store_id'=>$this->get_store(true),
                                 'name'=>$request->name??''
                             ]);
-        if(!empty($request->spec_name)){
+        if (!empty($request->spec_name)) {
             $spec_list = [];
-            foreach($request->spec_name as $v){
+            foreach ($request->spec_name as $v) {
                 $spec_list[] = ['name'=>$v];
             }
             $goods_attr_model->specs()->createMany($spec_list);
         }
         
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -52,7 +52,7 @@ class GoodsAttrController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(GoodsAttr $goods_attr_model,$id)
+    public function show(GoodsAttr $goods_attr_model, $id)
     {
         $info = $goods_attr_model->with('specs')->find($id);
         return $this->success($info);
@@ -65,38 +65,38 @@ class GoodsAttrController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,GoodsAttr $goods_attr_model,GoodsSpec $goods_spec_model,GoodsSku $goods_sku_model, $id)
+    public function update(Request $request, GoodsAttr $goods_attr_model, GoodsSpec $goods_spec_model, GoodsSku $goods_sku_model, $id)
     {
         $goods_attr_model = $goods_attr_model->find($id);
         $goods_attr_model->name = $request->name;
         $goods_attr_model->store_id = $this->get_store(true);
-        $not_spec = $goods_spec_model->where('attr_id',$id)->whereNotIn('name',$request->spec_name)->get();
+        $not_spec = $goods_spec_model->where('attr_id', $id)->whereNotIn('name', $request->spec_name)->get();
 
         $spec_id = [];
 
-        if(!empty($not_spec)){
-            foreach($not_spec as $v){
+        if (!empty($not_spec)) {
+            foreach ($not_spec as $v) {
                 $spec_id[] = $v['id'];
             }
         }
 
-        if(!empty($spec_id)){
-            if($goods_sku_model->whereIn('spec_id',$spec_id)->exists()){
+        if (!empty($spec_id)) {
+            if ($goods_sku_model->whereIn('spec_id', $spec_id)->exists()) {
                 return $this->error(__('admins.goods_attr_delete'));
             }
         }
 
-        if(!empty($request->spec_name)){
-            foreach($request->spec_name as $v){
-                if(!$goods_spec_model->where(['attr_id'=>$id,'name'=>$v])->exists()){
+        if (!empty($request->spec_name)) {
+            foreach ($request->spec_name as $v) {
+                if (!$goods_spec_model->where(['attr_id'=>$id,'name'=>$v])->exists()) {
                     $goods_spec_model->create(['name'=>$v,'attr_id'=>$id]);
                 }
             }
         }
         
         $goods_attr_model->save();
-        $goods_spec_model->whereIn('id',$spec_id)->delete();
-        return $this->success([],__('base.success'));
+        $goods_spec_model->whereIn('id', $spec_id)->delete();
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -105,16 +105,16 @@ class GoodsAttrController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(GoodsAttr $goods_attr_model,GoodsSpec $goods_spec_model,GoodsSku $goods_sku_model,$id)
+    public function destroy(GoodsAttr $goods_attr_model, GoodsSpec $goods_spec_model, GoodsSku $goods_sku_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
-        if($goods_sku_model->whereIn('attr_id',$idArray)->exists()){
+        if ($goods_sku_model->whereIn('attr_id', $idArray)->exists()) {
             return $this->error(__('admins.goods_attr_delete'));
         }
-        $goods_spec_model->whereIn('attr_id',$idArray)->delete();
+        $goods_spec_model->whereIn('attr_id', $idArray)->delete();
         $goods_attr_model->destroy($idArray);
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 }

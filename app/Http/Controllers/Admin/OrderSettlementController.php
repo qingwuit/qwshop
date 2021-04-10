@@ -17,9 +17,9 @@ class OrderSettlementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,OrderSettlement $os_model)
+    public function index(Request $request, OrderSettlement $os_model)
     {
-        $list = $os_model->select(DB::raw("*,sum(total_price) as total,sum(settlement_price) as settlement"))->groupBy('settlement_no')->orderBy('id','desc')->paginate($request->per_page??30);
+        $list = $os_model->select(DB::raw("*,sum(total_price) as total,sum(settlement_price) as settlement"))->groupBy('settlement_no')->orderBy('id', 'desc')->paginate($request->per_page??30);
         return $this->success(new OrderSettlementCollection($list));
     }
 
@@ -33,7 +33,7 @@ class OrderSettlementController extends Controller
     {
         // 手动处理
         $rs = $os_service->add(false);
-        return $rs['status']?$this->success($rs['data'],__('base.success')):$this->error($rs['msg']);
+        return $rs['status']?$this->success($rs['data'], __('base.success')):$this->error($rs['msg']);
     }
 
     /**
@@ -42,9 +42,9 @@ class OrderSettlementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request,OrderSettlement $os_model,$id)
+    public function show(Request $request, OrderSettlement $os_model, $id)
     {
-        $list = $os_model->where('settlement_no',$id)->with('order:id,order_no')->orderBy('id','desc')->paginate($request->per_page??30);
+        $list = $os_model->where('settlement_no', $id)->with('order:id,order_no')->orderBy('id', 'desc')->paginate($request->per_page??30);
         return $this->success(new OrderSettlementInfoCollection($list));
     }
 

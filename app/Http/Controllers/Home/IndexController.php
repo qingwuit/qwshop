@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 class IndexController extends Controller
 {
     // 获取首页信息
-    public function index(GoodsClassService $goods_class_service,AdvService $adv_service,SeckillService $seckill_service){
+    public function index(GoodsClassService $goods_class_service, AdvService $adv_service, SeckillService $seckill_service)
+    {
         $data['goods'] = $goods_class_service->is_master(8)['data']; // 获取商品首页信息
         $data['banner_bottom_adv'] = $adv_service->getAdvList('PC_幻灯片下广告')['data'];
         $data['class_left_adv'] = $adv_service->getAdvList('PC_栏目左侧广告')['data'];

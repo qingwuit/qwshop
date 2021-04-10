@@ -20,9 +20,9 @@ class CollectiveController extends Controller
     public function index(Collective $collective_model)
     {
         $store_id = $this->get_store(true);
-        $list = $collective_model->with(['goods'=>function($q){
-            $q->select('id','goods_name','goods_master_image');
-        }])->where('store_id',$store_id)->orderBy('id','desc')->paginate(request()->per_page??30);
+        $list = $collective_model->with(['goods'=>function ($q) {
+            $q->select('id', 'goods_name', 'goods_master_image');
+        }])->where('store_id', $store_id)->orderBy('id', 'desc')->paginate(request()->per_page??30);
         return $this->format(new CollectiveCollection($list));
     }
 
@@ -32,7 +32,7 @@ class CollectiveController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,Collective $collective_model)
+    public function store(Request $request, Collective $collective_model)
     {
         $collective_model->goods_id = intval($request->goods_id);
         $collective_model->store_id = $this->get_store(true);
@@ -40,7 +40,7 @@ class CollectiveController extends Controller
         $collective_model->need = intval(abs($request->need));
 
         $collective_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -49,9 +49,9 @@ class CollectiveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Collective $collective_model,$id)
+    public function show(Collective $collective_model, $id)
     {
-        $info = $collective_model->where('store_id',$this->get_store(true))->find($id);
+        $info = $collective_model->where('store_id', $this->get_store(true))->find($id);
         return $this->success(new CollectiveResource($info));
     }
 
@@ -62,14 +62,14 @@ class CollectiveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Collective $collective_model,$id)
+    public function update(Request $request, Collective $collective_model, $id)
     {
-        $collective_model = $collective_model->where('store_id',$this->get_store(true))->find($id);
+        $collective_model = $collective_model->where('store_id', $this->get_store(true))->find($id);
         $collective_model->goods_id = intval($request->goods_id);
         $collective_model->discount = floatval($request->discount);
         $collective_model->need = intval(abs($request->need));
         $collective_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -78,27 +78,28 @@ class CollectiveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Collective $collective_model,$id)
+    public function destroy(Collective $collective_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
-        $collective_model->where('store_id',$this->get_store(true))->whereIn('id',$idArray)->delete();
-        return $this->success([],__('base.success'));
+        $collective_model->where('store_id', $this->get_store(true))->whereIn('id', $idArray)->delete();
+        return $this->success([], __('base.success'));
     }
 
     // 获取分销商品
-    public function get_collective_goods(){
+    public function get_collective_goods()
+    {
         $goods_model = new Goods();
         $store_id = $this->get_store(true);
 
-        if(isset(request()->goods_name) && !empty(request()->goods_name)){
-            $goods_model = $goods_model->where('goods_name','like','%'.request()->goods_name.'%');
+        if (isset(request()->goods_name) && !empty(request()->goods_name)) {
+            $goods_model = $goods_model->where('goods_name', 'like', '%'.request()->goods_name.'%');
         }
 
-        $list = $goods_model->with(['collective'=>function($q){
+        $list = $goods_model->with(['collective'=>function ($q) {
             $q->select('goods_id');
-        }])->where('store_id',$store_id)->paginate(request()->per_page??30);
+        }])->where('store_id', $store_id)->paginate(request()->per_page??30);
         
         return $this->success(new CollectiveGoodsCollection($list));
     }

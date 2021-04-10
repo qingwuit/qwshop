@@ -17,12 +17,12 @@ class FavoriteCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item){
+            'data'=>$this->collection->map(function ($item) {
                 return [
                     'id'                    =>  $item->id,
                     'out_id'                =>  $item->out_id,
                     'goods_name'            =>  $item->goods->goods_name??__('goods.goods_not_found'),
-                    'goods_master_image'    =>  empty($item->goods)?'':$this->thumb($item->goods->goods_master_image,150),
+                    'goods_master_image'    =>  empty($item->goods)?'':$this->thumb($item->goods->goods_master_image, 150),
                     'goods_price'           =>  empty($item->goods)?'0.00':(empty($item->goods->goods_sku)?$item->goods->goods_price:$item->goods->goods_sku->goods_price),
                 ];
             }),

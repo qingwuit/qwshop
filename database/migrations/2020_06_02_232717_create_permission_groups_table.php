@@ -15,7 +15,7 @@ class CreatePermissionGroupsTable extends Migration
     {
         Schema::create('permission_groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',35)->default('')->comment('权限分组名称');
+            $table->string('name', 35)->default('')->comment('权限分组名称');
             $table->timestamps();
             $table->softDeletes();
         });

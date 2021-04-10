@@ -19,5 +19,4 @@ class MoneyLogController extends Controller
         $list = $money_log_service->getMoneyLog()['data'];
         return $this->success($list);
     }
-
 }

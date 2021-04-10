@@ -26,7 +26,7 @@ class AreaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,Area $area_model)
+    public function store(Request $request, Area $area_model)
     {
         $area_model->pid = $request->pid??'';
         $area_model->name = $request->name;
@@ -34,7 +34,7 @@ class AreaController extends Controller
         $area_model->deep = $request->deep??0;
         $area_model->save();
         $this->clear_cache(); // 修改则清空缓存
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -43,7 +43,7 @@ class AreaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Area $area_model,$id)
+    public function show(Area $area_model, $id)
     {
         $info = $area_model->find($id);
         return $this->success($info);
@@ -56,7 +56,7 @@ class AreaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Area $area_model, $id)
+    public function update(Request $request, Area $area_model, $id)
     {
         $area_model = $area_model->find($id);
         $area_model->pid = $request->pid??'';
@@ -65,7 +65,7 @@ class AreaController extends Controller
         $area_model->deep = $request->deep??0;
         $area_model->save();
         $this->clear_cache(); // 修改则清空缓存
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -74,19 +74,20 @@ class AreaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Area $area_model,$id)
+    public function destroy(Area $area_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
         $area_model->destroy($idArray);
         $this->clear_cache(); // 修改则清空缓存
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
-    public function clear_cache(){
+    public function clear_cache()
+    {
         $area_service = new AreaService();
         $area_service->clearCache();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 }

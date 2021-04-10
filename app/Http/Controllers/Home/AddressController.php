@@ -32,7 +32,7 @@ class AddressController extends Controller
     {
         $address_service = new AddressService;
         $rs = $address_service->add();
-        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
+        return $rs['status']?$this->success($rs['data'], $rs['msg']):$this->error($rs['msg']);
     }
 
     /**
@@ -41,11 +41,11 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Address $address_model,$id)
+    public function show(Address $address_model, $id)
     {
         $user_service = new UserService;
         $user_info = $user_service->getUserInfo();
-        $rs = $address_model->where('id',$id)->where('user_id',$user_info['id'])->first();
+        $rs = $address_model->where('id', $id)->where('user_id', $user_info['id'])->first();
         $rs['area_id'] = [$rs['province_id'],$rs['city_id'],$rs['region_id']];
         return $this->success($rs);
     }
@@ -61,7 +61,7 @@ class AddressController extends Controller
     {
         $address_service = new AddressService;
         $rs = $address_service->edit($id);
-        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
+        return $rs['status']?$this->success($rs['data'], $rs['msg']):$this->error($rs['msg']);
     }
 
     /**
@@ -70,9 +70,9 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Address $address_model,$id)
+    public function destroy(Address $address_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
 
@@ -80,21 +80,23 @@ class AddressController extends Controller
         $user_service = new UserService;
         $user_info = $user_service->getUserInfo();
 
-        $address_model->whereIn('id',$idArray)->where('user_id',$user_info['id'])->delete();
-        return $this->success([],__('base.success'));
+        $address_model->whereIn('id', $idArray)->where('user_id', $user_info['id'])->delete();
+        return $this->success([], __('base.success'));
     }
 
     // 设置默认地址
-    public function set_default(Request $request){
+    public function set_default(Request $request)
+    {
         $address_service = new AddressService;
         $rs = $address_service->setDefault($request->id);
-        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
+        return $rs['status']?$this->success($rs['data'], $rs['msg']):$this->error($rs['msg']);
     }
 
     // 获取默认地址
-    public function get_default(){
+    public function get_default()
+    {
         $address_service = new AddressService;
         $rs = $address_service->getDefault();
-        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
+        return $rs['status']?$this->success($rs['data'], $rs['msg']):$this->error($rs['msg']);
     }
 }

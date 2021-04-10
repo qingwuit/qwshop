@@ -13,11 +13,11 @@ class PermissionGroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,PermissionGroup $permission_group_model)
+    public function index(Request $request, PermissionGroup $permission_group_model)
     {
-        $list = $permission_group_model->with(['permissions'=>function($q){
-            return $q->select('id','pid','name','apis');
-        }])->orderBy('id','desc')->paginate($request->per_page??30);
+        $list = $permission_group_model->with(['permissions'=>function ($q) {
+            return $q->select('id', 'pid', 'name', 'apis');
+        }])->orderBy('id', 'desc')->paginate($request->per_page??30);
         return $this->success($list);
     }
 
@@ -27,11 +27,12 @@ class PermissionGroupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,PermissionGroup $permission_group_model)
+    public function store(Request $request, PermissionGroup $permission_group_model)
     {
-        $permission_group_model->name = $request->name??'';;
+        $permission_group_model->name = $request->name??'';
+        ;
         $permission_group_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -40,7 +41,7 @@ class PermissionGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(PermissionGroup $permission_group_model,$id)
+    public function show(PermissionGroup $permission_group_model, $id)
     {
         $info = $permission_group_model->find($id);
         return $this->success($info);
@@ -53,12 +54,12 @@ class PermissionGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,PermissionGroup $permission_group_model, $id)
+    public function update(Request $request, PermissionGroup $permission_group_model, $id)
     {
         $permission_group_model = $permission_group_model->find($id);
         $permission_group_model->name = $request->name??'';
         $permission_group_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -67,12 +68,12 @@ class PermissionGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PermissionGroup $permission_group_model,$id)
+    public function destroy(PermissionGroup $permission_group_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
         $permission_group_model->destroy($idArray);
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 }

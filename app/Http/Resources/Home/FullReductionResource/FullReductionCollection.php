@@ -14,7 +14,7 @@ class FullReductionCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->map(function($item){
+        return $this->map(function ($item) {
             return [
                 'id'                        =>  $item->id,
                 'money'                     =>  intval($item->money),

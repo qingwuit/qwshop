@@ -15,9 +15,9 @@ class FullReductionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,FullReduction $fr_model)
+    public function index(Request $request, FullReduction $fr_model)
     {
-        $list = $fr_model->where('store_id',$this->get_store(true))->orderBy('id','desc')->paginate($request->per_page??30);
+        $list = $fr_model->where('store_id', $this->get_store(true))->orderBy('id', 'desc')->paginate($request->per_page??30);
         return $this->success(new FullReductionCollection($list));
     }
 
@@ -27,7 +27,7 @@ class FullReductionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,FullReduction $fr_model)
+    public function store(Request $request, FullReduction $fr_model)
     {
         $fr_model->store_id = $this->get_store(true);
         $fr_model->name = $request->name??'coupon';
@@ -36,12 +36,12 @@ class FullReductionController extends Controller
         $fr_model->start_time = empty($request->times)?now():$request->times[0];
         $fr_model->end_time = empty($request->times)?now():$request->times[1];
 
-        if($fr_model->money>=$fr_model->use_money){
+        if ($fr_model->money>=$fr_model->use_money) {
             return $this->error(__('markets.full_reduction_money_error'));
         }
 
         $fr_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -50,9 +50,9 @@ class FullReductionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(FullReduction $fr_model,$id)
+    public function show(FullReduction $fr_model, $id)
     {
-        $info = $fr_model->where('store_id',$this->get_store(true))->find($id);
+        $info = $fr_model->where('store_id', $this->get_store(true))->find($id);
         return $this->success(new FullReductionResource($info));
     }
 
@@ -63,21 +63,21 @@ class FullReductionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,FullReduction $fr_model, $id)
+    public function update(Request $request, FullReduction $fr_model, $id)
     {
-        $fr_model = $fr_model->where('store_id',$this->get_store(true))->find($id);
+        $fr_model = $fr_model->where('store_id', $this->get_store(true))->find($id);
         $fr_model->name = $request->name??'coupon';
         $fr_model->money = intval($request->money);
         $fr_model->use_money = intval($request->use_money);
         $fr_model->start_time = empty($request->times)?now():$request->times[0];
         $fr_model->end_time = empty($request->times)?now():$request->times[1];
 
-        if($fr_model->money>=$fr_model->use_money){
+        if ($fr_model->money>=$fr_model->use_money) {
             return $this->error(__('markets.full_reduction_money_error'));
         }
 
         $fr_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -86,12 +86,12 @@ class FullReductionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FullReduction $fr_model,$id)
+    public function destroy(FullReduction $fr_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
-        $fr_model->where('store_id',$this->get_store(true))->whereIn('id',$idArray)->delete();
-        return $this->success([],__('base.success'));
+        $fr_model->where('store_id', $this->get_store(true))->whereIn('id', $idArray)->delete();
+        return $this->success([], __('base.success'));
     }
 }

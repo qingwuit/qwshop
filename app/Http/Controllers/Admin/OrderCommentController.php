@@ -28,7 +28,7 @@ class OrderCommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(OrderComment $oc_model,$id)
+    public function show(OrderComment $oc_model, $id)
     {
         $info = $oc_model->find($id);
         return $this->success(new OrderCommentResource($info));
@@ -40,13 +40,13 @@ class OrderCommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OrderComment $oc_model,$id)
+    public function destroy(OrderComment $oc_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
    
         $oc_model->destroy($idArray);
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 }

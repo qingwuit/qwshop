@@ -15,8 +15,8 @@ class CreateAgreementsTable extends Migration
     {
         Schema::create('agreements', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title',20)->default('')->comment('标题');
-            $table->string('ename',20)->default('')->comment('英文标题');
+            $table->string('title', 20)->default('')->comment('标题');
+            $table->string('ename', 20)->default('')->comment('英文标题');
             $table->text('content')->default('')->comment('内容');
             $table->timestamps();
         });

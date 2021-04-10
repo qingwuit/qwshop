@@ -18,5 +18,4 @@ class DistributionLogController extends Controller
         $rs = $dis_service->getLogList('seller');
         return $rs['status']?$this->success($rs['data']):$this->error();
     }
- 
 }

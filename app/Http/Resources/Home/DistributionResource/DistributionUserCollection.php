@@ -15,7 +15,7 @@ class DistributionUserCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item){
+            'data'=>$this->collection->map(function ($item) {
                 return [
                     'nickname'              =>  $item->nickname,
                     'avatar'                =>  $item->avatar,

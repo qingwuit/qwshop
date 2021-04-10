@@ -51,6 +51,4 @@ class MakeService extends GeneratorCommand
     {
         return $rootNamespace . '\Services';
     }
-
-
 }

@@ -15,7 +15,7 @@ class OrderSettlementInfoCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item) {
+            'data'=>$this->collection->map(function ($item) {
                 return [
                     'order_no'          =>  $item->order->order_no,
                     'total_price'       =>  $item->total_price,

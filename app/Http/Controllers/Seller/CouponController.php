@@ -15,9 +15,9 @@ class CouponController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,Coupon $coupon_model)
+    public function index(Request $request, Coupon $coupon_model)
     {
-        $list = $coupon_model->where('store_id',$this->get_store(true))->orderBy('id','desc')->paginate($request->per_page??30);
+        $list = $coupon_model->where('store_id', $this->get_store(true))->orderBy('id', 'desc')->paginate($request->per_page??30);
         return $this->success(new CouponCollection($list));
     }
 
@@ -27,7 +27,7 @@ class CouponController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,Coupon $coupon_model)
+    public function store(Request $request, Coupon $coupon_model)
     {
         $coupon_model->store_id = $this->get_store(true);
         $coupon_model->name = $request->name??'coupon';
@@ -38,12 +38,12 @@ class CouponController extends Controller
         $coupon_model->start_time = empty($request->times)?now():$request->times[0];
         $coupon_model->end_time = empty($request->times)?now():$request->times[1];
 
-        if($coupon_model->money>=$coupon_model->use_money){
+        if ($coupon_model->money>=$coupon_model->use_money) {
             return $this->error(__('markets.coupon_money_error'));
         }
 
         $coupon_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -52,9 +52,9 @@ class CouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Coupon $coupon_model,$id)
+    public function show(Coupon $coupon_model, $id)
     {
-        $info = $coupon_model->where('store_id',$this->get_store(true))->find($id);
+        $info = $coupon_model->where('store_id', $this->get_store(true))->find($id);
         return $this->success(new CouponResource($info));
     }
 
@@ -65,9 +65,9 @@ class CouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Coupon $coupon_model, $id)
+    public function update(Request $request, Coupon $coupon_model, $id)
     {
-        $coupon_model = $coupon_model->where('store_id',$this->get_store(true))->find($id);
+        $coupon_model = $coupon_model->where('store_id', $this->get_store(true))->find($id);
         $coupon_model->name = $request->name??'coupon';
         $coupon_model->money = intval($request->money);
         $coupon_model->use_money = intval($request->use_money);
@@ -76,12 +76,12 @@ class CouponController extends Controller
         $coupon_model->start_time = empty($request->times)?now():$request->times[0];
         $coupon_model->end_time = empty($request->times)?now():$request->times[1];
 
-        if($coupon_model->money>=$coupon_model->use_money){
+        if ($coupon_model->money>=$coupon_model->use_money) {
             return $this->error(__('markets.coupon_money_error'));
         }
 
         $coupon_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -90,12 +90,12 @@ class CouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Coupon $coupon_model,$id)
+    public function destroy(Coupon $coupon_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
-        $coupon_model->where('store_id',$this->get_store(true))->whereIn('id',$idArray)->delete();
-        return $this->success([],__('base.success'));
+        $coupon_model->where('store_id', $this->get_store(true))->whereIn('id', $idArray)->delete();
+        return $this->success([], __('base.success'));
     }
 }

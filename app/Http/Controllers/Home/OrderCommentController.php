@@ -23,9 +23,9 @@ class OrderCommentController extends Controller
         $user_service = new UserService();
         $user_info = $user_service->getUserInfo();
         $oc_model = new OrderComment();
-        $list = $oc_model->with(['goods'=>function($q){
-            return $q->select('id','goods_name','goods_master_image');
-        }])->where('user_id',$user_info['id'])->paginate($request->per_page??30);
+        $list = $oc_model->with(['goods'=>function ($q) {
+            return $q->select('id', 'goods_name', 'goods_master_image');
+        }])->where('user_id', $user_info['id'])->paginate($request->per_page??30);
         return $this->success(new OrderCommentCollection($list));
     }
 
@@ -39,7 +39,7 @@ class OrderCommentController extends Controller
     {
         $oc_service = new OrderCommentService();
         $rs = $oc_service->add();
-        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
+        return $rs['status']?$this->success($rs['data'], $rs['msg']):$this->error($rs['msg']);
     }
 
     /**
@@ -53,9 +53,9 @@ class OrderCommentController extends Controller
         $user_service = new UserService();
         $user_info = $user_service->getUserInfo();
         $oc_model = new OrderComment();
-        $list = $oc_model->with(['goods'=>function($q){
-            return $q->select('id','goods_name','goods_master_image');
-        }])->where('user_id',$user_info['id'])->where('id',$id)->first();
+        $list = $oc_model->with(['goods'=>function ($q) {
+            return $q->select('id', 'goods_name', 'goods_master_image');
+        }])->where('user_id', $user_info['id'])->where('id', $id)->first();
         return $this->success(new OrderCommentResource($list));
     }
 
@@ -70,7 +70,7 @@ class OrderCommentController extends Controller
     {
         $oc_service = new OrderCommentService();
         $rs = $oc_service->edit($id);
-        return $rs['status']?$this->success($rs['data'],$rs['msg']):$this->error($rs['msg']);
+        return $rs['status']?$this->success($rs['data'], $rs['msg']):$this->error($rs['msg']);
     }
 
     /**
@@ -85,13 +85,14 @@ class OrderCommentController extends Controller
     }
 
     // 图片上传
-    public function comment_upload(UploadService $upload_service){
+    public function comment_upload(UploadService $upload_service)
+    {
         $user_service = new UserService();
         $user_info = $user_service->getUserInfo();
         $rs = $upload_service->comment($user_info['id']);
-        if($rs['status']){
-            return $this->success($rs['data'],$rs['msg']);
-        }else{
+        if ($rs['status']) {
+            return $this->success($rs['data'], $rs['msg']);
+        } else {
             return $this->error($rs['msg']);
         }
     }

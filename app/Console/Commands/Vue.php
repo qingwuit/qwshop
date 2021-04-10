@@ -40,7 +40,7 @@ class Vue extends Command
         $url = $this->argument('host');
         $path = resource_path('js/plugins/apis/common.js');
         $content = file_get_contents($path);
-        $content = preg_replace("/\'.*\'/i","'".$url.'/api/'."'",$content);
-        file_put_contents($path,$content);
+        $content = preg_replace("/\'.*\'/i", "'".$url.'/api/'."'", $content);
+        file_put_contents($path, $content);
     }
 }

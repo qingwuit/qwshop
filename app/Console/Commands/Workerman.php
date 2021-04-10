@@ -51,7 +51,7 @@ class Workerman extends Command
         // $argv[1] = $cmd;
         // $argv[2] = $this->option('d') ? '-d' : '';
 
-        switch($cmd){
+        switch ($cmd) {
             case 'start':
                 $this->start();
                 break;
@@ -68,7 +68,6 @@ class Workerman extends Command
         }
 
         /// start 123 是windows下
-        
     }
 
     private function start()
@@ -80,20 +79,23 @@ class Workerman extends Command
     }
 
     // 停止
-    private function stop(){
+    private function stop()
+    {
         // 运行worker
         Worker::runAll();
     }
 
     // 重启
-    private function reload(){
+    private function reload()
+    {
         // $worker = new Worker('tcp://0.0.0.0:8383');
         // $worker->reloadable = true;
         Worker::runAll();
     }
 
     // 状态
-    private function status(){
+    private function status()
+    {
         Worker::runAll();
     }
 

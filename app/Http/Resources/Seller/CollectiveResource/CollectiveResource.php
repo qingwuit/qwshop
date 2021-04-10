@@ -24,7 +24,7 @@ class CollectiveResource extends JsonResource
             'goods_info'            =>  [
                                             'id'                        =>  $this->goods->id,
                                             'goods_name'                =>  $this->goods->goods_name,
-                                            'goods_master_image'        =>  $this->thumb($this->goods->goods_master_image,150),
+                                            'goods_master_image'        =>  $this->thumb($this->goods->goods_master_image, 150),
                                         ],
         ];
     }

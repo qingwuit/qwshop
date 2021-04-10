@@ -48,10 +48,10 @@ class CashController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,CashService $cash_service, $id)
+    public function update(Request $request, CashService $cash_service, $id)
     {
         $rs = $cash_service->edit($id);
-        return $rs['status']?$this->success($rs['data'],__('base.success')):$this->error(__('base.error'));
+        return $rs['status']?$this->success($rs['data'], __('base.success')):$this->error(__('base.error'));
     }
 
     /**

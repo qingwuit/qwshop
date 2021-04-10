@@ -14,7 +14,7 @@ class FreightCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->collection->map(function($item){
+        return $this->collection->map(function ($item) {
             return [
                 'id'                        =>  $item->id,
                 'name'                      =>  $item->name,
@@ -22,7 +22,7 @@ class FreightCollection extends ResourceCollection
                 'f_price'                   =>  floatval($item->f_price),
                 'o_weight'                  =>  floatval($item->o_weight),
                 'o_price'                   =>  floatval($item->o_price),
-                'area_id'                   =>  empty($item->area_id)?[]:explode(',',$item->area_id),
+                'area_id'                   =>  empty($item->area_id)?[]:explode(',', $item->area_id),
                 'area_show'                 =>  false,
             ];
         });

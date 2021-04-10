@@ -17,19 +17,19 @@ class SeckillCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item){
+            'data'=>$this->collection->map(function ($item) {
                 return [
                     'id'                    =>  $item->id,
                     'discount'              =>  $item->discount,
                     'goods_id'              =>  $item->goods_id,
-                    'status'                =>  now()->gt($item->end_time)?0:(now()->between($item->start_time,$item->end_time)?1:2),
+                    'status'                =>  now()->gt($item->end_time)?0:(now()->between($item->start_time, $item->end_time)?1:2),
                     'start_time'            =>  $item->start_time->format('Y-m-d H:i:s'),
                     'end_time'              =>  $item->end_time->format('Y-m-d H:i:s'),
                     'created_at'            =>  $item->created_at->format('Y-m-d H:i:s'),
                     'updated_at'            =>  $item->updated_at->format('Y-m-d H:i:s'),
                     'goods'                 =>  [
                                                     'goods_name'                =>  $item->goods->goods_name,
-                                                    'goods_master_image'        =>  $this->thumb($item->goods->goods_master_image,150),
+                                                    'goods_master_image'        =>  $this->thumb($item->goods->goods_master_image, 150),
                                                 ],
                 ];
             }),

@@ -14,15 +14,15 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,Article $article_model)
+    public function index(Request $request, Article $article_model)
     {
-        if(!empty($request->name)){
-            $article_model = $article_model->where('name','like','%'.$request->name.'%');
+        if (!empty($request->name)) {
+            $article_model = $article_model->where('name', 'like', '%'.$request->name.'%');
         }
-        if(!empty($request->ename)){
-            $article_model = $article_model->where('ename','like','%'.$request->ename.'%');
+        if (!empty($request->ename)) {
+            $article_model = $article_model->where('ename', 'like', '%'.$request->ename.'%');
         }
-        $list = $article_model->orderBy('id','desc')->paginate($request->per_page??30);
+        $list = $article_model->orderBy('id', 'desc')->paginate($request->per_page??30);
         return $this->success(new ArticleCollection($list));
     }
 
@@ -32,13 +32,13 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,Article $article_model)
+    public function store(Request $request, Article $article_model)
     {
         $article_model->name = $request->name??'';
         $article_model->ename = $request->ename??'';
         $article_model->content = $request->content??'';
         $article_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -47,7 +47,7 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article_model,$id)
+    public function show(Article $article_model, $id)
     {
         $info = $article_model->find($id);
         return $this->success($info);
@@ -60,14 +60,14 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Article $article_model, $id)
+    public function update(Request $request, Article $article_model, $id)
     {
         $article_model = $article_model->find($id);
         $article_model->name = $request->name;
         $article_model->ename = $request->ename??'';
         $article_model->content = $request->content??'';
         $article_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -76,12 +76,12 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article_model,$id)
+    public function destroy(Article $article_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
         $article_model->destroy($idArray);
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 }

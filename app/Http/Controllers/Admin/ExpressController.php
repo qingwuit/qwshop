@@ -13,9 +13,9 @@ class ExpressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,Express $express_model)
+    public function index(Request $request, Express $express_model)
     {
-        $list = $express_model->orderBy('id','asc')->paginate($request->per_page??30);
+        $list = $express_model->orderBy('id', 'asc')->paginate($request->per_page??30);
         return $this->success($list);
     }
 
@@ -25,10 +25,12 @@ class ExpressController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,Express $express_model)
+    public function store(Request $request, Express $express_model)
     {
-        $express_model->name = $request->name??'';;
-        $express_model->code = $request->code??'';;
+        $express_model->name = $request->name??'';
+        ;
+        $express_model->code = $request->code??'';
+        ;
         $express_model->save();
         return $this->success(__('base.success'));
     }
@@ -39,7 +41,7 @@ class ExpressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Express $express_model,$id)
+    public function show(Express $express_model, $id)
     {
         $info = $express_model->find($id);
         return $this->success($info);
@@ -52,7 +54,7 @@ class ExpressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Express $express_model, $id)
+    public function update(Request $request, Express $express_model, $id)
     {
         $express_model = $express_model->find($id);
         $express_model->name = $request->name??'';
@@ -67,9 +69,9 @@ class ExpressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Express $express_model,$id)
+    public function destroy(Express $express_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
         $express_model->destroy($idArray);

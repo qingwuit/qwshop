@@ -18,6 +18,4 @@ class MoneyLogController extends Controller
         $rs = $ml_service->getMoneyLog('seller');
         return $rs['status']?$this->success($rs['data']):$this->error($rs['msg']);
     }
-
-    
 }

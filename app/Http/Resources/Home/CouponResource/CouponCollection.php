@@ -14,7 +14,7 @@ class CouponCollection extends JsonResource
      */
     public function toArray($request)
     {
-        return $this->map(function($item){
+        return $this->map(function ($item) {
             return [
                 'id'                        =>  $item->id,
                 'money'                     =>  intval($item->money),

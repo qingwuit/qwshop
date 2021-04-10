@@ -22,13 +22,15 @@ class DistributionLogController extends Controller
     }
 
     // 获取分销下所有用户
-    public function user(DistributionService $dis_service){
+    public function user(DistributionService $dis_service)
+    {
         $rs = $dis_service->getUser();
         return $rs['status']?$this->success($rs['data']):$this->error();
     }
 
     // 获取分享链接和图片
-    public function link(){
+    public function link()
+    {
         $user_service = new UserService();
         $tool_service = new ToolService();
         $user_info = $user_service->getUserInfo();
@@ -36,6 +38,4 @@ class DistributionLogController extends Controller
         $link = env('APP_URL').'/user/register?inviter_id='.$user_info['id'];
         return $this->success(['qrcode'=>$qrcode,'link'=>$link]);
     }
-
-    
 }

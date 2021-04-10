@@ -17,11 +17,11 @@ class CollectiveLogCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item){
+            'data'=>$this->collection->map(function ($item) {
                 return [
                     'id'                        =>  $item->id,
                     'goods_name'                =>  $item->goods->goods_name,
-                    'goods_masteer_image'       =>  $this->thumb($item->goods->goods_masteer_image,300),
+                    'goods_masteer_image'       =>  $this->thumb($item->goods->goods_masteer_image, 300),
                     'discount'                  =>  $item->discount,
                     'need'                      =>  $item->need,
                     'orders_count'              =>  $item->orders_count,

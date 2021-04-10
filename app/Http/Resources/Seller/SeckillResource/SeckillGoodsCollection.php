@@ -17,11 +17,11 @@ class SeckillGoodsCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item){
+            'data'=>$this->collection->map(function ($item) {
                 return [
                     'id'                    =>  $item->id,
                     'goods_name'            =>  $item->goods_name,
-                    'goods_master_image'    =>  $this->thumb($item->goods_master_image,150),
+                    'goods_master_image'    =>  $this->thumb($item->goods_master_image, 150),
                     'is_use'                =>  !empty($item->seckill->goods_id)?true:false,
                 ];
             }),

@@ -16,16 +16,15 @@ class GoodsListCollection extends ResourceCollection
     use HelperTrait;
     public function toArray($request)
     {
-         
-        return $this->collection->map(function($item){
+        return $this->collection->map(function ($item) {
             $goods_price = $item->goods_price;
             $goods_market_price = $item->goods_market_price;
             $goods_stock = $item->goods_stock;
 
             // 判断是否存在sku
-            if(isset($item->goods_skus) && count($item->goods_skus)>0){
+            if (isset($item->goods_skus) && count($item->goods_skus)>0) {
                 $goods_stock = 0;
-                foreach($item->goods_skus as $v){
+                foreach ($item->goods_skus as $v) {
                     $goods_stock += $v['goods_stock'];
                 }
                 
@@ -43,6 +42,5 @@ class GoodsListCollection extends ResourceCollection
                 'goods_master_image'    =>  $this->thumb($item->goods_master_image),
             ];
         });
-        
     }
 }

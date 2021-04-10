@@ -15,7 +15,7 @@ class OrderSettlementCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item) {
+            'data'=>$this->collection->map(function ($item) {
                 return [
                     'settlement_no'     =>  $item->settlement_no,
                     'settlement_no'     =>  $item->settlement_no,

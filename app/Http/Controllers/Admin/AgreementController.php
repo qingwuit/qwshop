@@ -14,15 +14,15 @@ class AgreementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,Agreement $agree_model)
+    public function index(Request $request, Agreement $agree_model)
     {
-        if(!empty($request->title)){
-            $agree_model = $agree_model->where('title','like','%'.$request->title.'%');
+        if (!empty($request->title)) {
+            $agree_model = $agree_model->where('title', 'like', '%'.$request->title.'%');
         }
-        if(!empty($request->ename)){
-            $agree_model = $agree_model->where('ename','like','%'.$request->ename.'%');
+        if (!empty($request->ename)) {
+            $agree_model = $agree_model->where('ename', 'like', '%'.$request->ename.'%');
         }
-        $list = $agree_model->orderBy('id','desc')->paginate($request->per_page??30);
+        $list = $agree_model->orderBy('id', 'desc')->paginate($request->per_page??30);
         return $this->success(new AgreementCollection($list));
     }
 
@@ -32,13 +32,13 @@ class AgreementController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,Agreement $agree_model)
+    public function store(Request $request, Agreement $agree_model)
     {
         $agree_model->title = $request->title??'';
         $agree_model->ename = $request->ename??'';
         $agree_model->content = $request->content??'';
         $agree_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -47,7 +47,7 @@ class AgreementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Agreement $agree_model,$id)
+    public function show(Agreement $agree_model, $id)
     {
         $info = $agree_model->find($id);
         return $this->success($info);
@@ -60,14 +60,14 @@ class AgreementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Agreement $agree_model, $id)
+    public function update(Request $request, Agreement $agree_model, $id)
     {
         $agree_model = $agree_model->find($id);
         $agree_model->title = $request->title;
         $agree_model->ename = $request->ename??'';
         $agree_model->content = $request->content??'';
         $agree_model->save();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -76,12 +76,12 @@ class AgreementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Agreement $agree_model,$id)
+    public function destroy(Agreement $agree_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
         $agree_model->destroy($idArray);
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 }

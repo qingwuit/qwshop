@@ -14,15 +14,18 @@ class Admin extends Authenticatable implements JWTSubject
     protected $table = 'admins';
     protected $guarded = [];
 
-    public function roles(){
-        return $this->belongsToMany('App\Models\Role','admin_role','admin_id','role_id');
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\Role', 'admin_role', 'admin_id', 'role_id');
     }
 
-    public function getJWTIdentifier(){
+    public function getJWTIdentifier()
+    {
         return $this->getKey();
     }
 
-    public function getJWTCustomClaims(){
+    public function getJWTCustomClaims()
+    {
         return [];
     }
 }

@@ -15,15 +15,15 @@ class GoodsCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item){
+            'data'=>$this->collection->map(function ($item) {
                 return [
                     'id'                    =>  $item->id,
-                    'brand_name'            =>  $item->goods_brand->map(function($goodsItem){
-                                                    return $goodsItem->name;
-                                                }),
-                    'class_name'            =>  $item->goods_class->map(function($goodsItem){
-                                                    return $goodsItem->name;
-                                                }),
+                    'brand_name'            =>  $item->goods_brand->map(function ($goodsItem) {
+                        return $goodsItem->name;
+                    }),
+                    'class_name'            =>  $item->goods_class->map(function ($goodsItem) {
+                        return $goodsItem->name;
+                    }),
                     'goods_no'              =>  $item->goods_no,
                     'goods_status'          =>  $item->goods_status,
                     'goods_verify'          =>  $item->goods_verify,

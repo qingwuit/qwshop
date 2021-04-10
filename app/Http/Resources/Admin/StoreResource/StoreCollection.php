@@ -16,14 +16,14 @@ class StoreCollection extends ResourceCollection
     public function toArray($request)
     {
         $store_model = new Store();
-        $pass = $store_model->where('store_verify',3)->count();
-        $wait = $store_model->where('store_verify',2)->count();
-        $write = $store_model->where('store_verify',1)->count();
-        $refuse = $store_model->where('store_verify',0)->count();
+        $pass = $store_model->where('store_verify', 3)->count();
+        $wait = $store_model->where('store_verify', 2)->count();
+        $write = $store_model->where('store_verify', 1)->count();
+        $refuse = $store_model->where('store_verify', 0)->count();
         return [
-            'data'=>$this->collection->map(function($item){
+            'data'=>$this->collection->map(function ($item) {
                 $verify_cn = '非法入驻';
-                switch($item->store_verify){
+                switch ($item->store_verify) {
                     case 0:
                         $verify_cn = '审核失败';
                         break;

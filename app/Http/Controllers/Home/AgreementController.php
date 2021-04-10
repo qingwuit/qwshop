@@ -8,11 +8,12 @@ use Illuminate\Http\Request;
 
 class AgreementController extends Controller
 {
-    public function show(AgreementService $agreement_service,$ename){
+    public function show(AgreementService $agreement_service, $ename)
+    {
         $info = $agreement_service->getAgreement($ename);
-        if($info['status']){
+        if ($info['status']) {
             return $this->success($info['data']);
-        }else{
+        } else {
             return $this->error($info['msg']);
         }
     }

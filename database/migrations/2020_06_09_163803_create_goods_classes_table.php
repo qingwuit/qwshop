@@ -16,8 +16,8 @@ class CreateGoodsClassesTable extends Migration
         Schema::create('goods_classes', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('pid')->default(0)->commentg('父栏目ID');
-            $table->string('thumb',150)->default('')->commentg('缩略图');
-            $table->string('name',20)->default('')->comment('栏目名称');
+            $table->string('thumb', 150)->default('')->commentg('缩略图');
+            $table->string('name', 20)->default('')->comment('栏目名称');
             $table->unsignedInteger('is_sort')->default(0)->comment('排序');
             $table->timestamps();
             $table->softDeletes();

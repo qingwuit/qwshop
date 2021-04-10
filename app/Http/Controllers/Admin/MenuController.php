@@ -27,7 +27,7 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,Menu $menu_model)
+    public function store(Request $request, Menu $menu_model)
     {
         $menu_model->pid = $request->pid??0;
         $menu_model->name = $request->name;
@@ -37,7 +37,7 @@ class MenuController extends Controller
         $menu_model->is_type = $request->is_type??0;
         $menu_model->save();
         $this->clear_cache(); // 修改则清空缓存
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -46,7 +46,7 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Menu $menu_model,$id)
+    public function show(Menu $menu_model, $id)
     {
         $info = $menu_model->find($id);
         return $this->success($info);
@@ -59,7 +59,7 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Menu $menu_model, $id)
+    public function update(Request $request, Menu $menu_model, $id)
     {
         $menu_model = $menu_model->find($id);
         $menu_model->pid = $request->pid??0;
@@ -71,7 +71,7 @@ class MenuController extends Controller
         $menu_model->is_sort = $request->is_sort??0;
         $menu_model->save();
         $this->clear_cache(); // 修改则清空缓存
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     /**
@@ -80,20 +80,21 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Menu $menu_model,$id)
+    public function destroy(Menu $menu_model, $id)
     {
-        $idArray = array_filter(explode(',',$id),function($item){
+        $idArray = array_filter(explode(',', $id), function ($item) {
             return is_numeric($item);
         });
         $menu_model->destroy($idArray);
         $this->clear_cache(); // 修改则清空缓存
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 
     // 清除菜单缓存
-    public function clear_cache(){
+    public function clear_cache()
+    {
         $menu_service = new MenuService;
         $menu_service->clearCache();
-        return $this->success([],__('base.success'));
+        return $this->success([], __('base.success'));
     }
 }

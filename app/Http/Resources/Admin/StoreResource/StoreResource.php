@@ -15,7 +15,7 @@ class StoreResource extends JsonResource
     public function toArray($request)
     {
         $verify_cn = '非法入驻';
-        switch($this->store_verify){
+        switch ($this->store_verify) {
             case 0:
                 $verify_cn = '审核失败';
                 break;

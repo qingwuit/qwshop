@@ -19,9 +19,9 @@ class Admin extends JsonResource
             'username'              =>  $this->username,
             'nickname'              =>  $this->nickname,
             'avatar'                =>  $this->avatar,
-            'role_id'               =>  $this->roles->map(function($roleItem){
-                                        return $roleItem->id;
-                                    }),
+            'role_id'               =>  $this->roles->map(function ($roleItem) {
+                return $roleItem->id;
+            }),
             // 'ip'                    =>  $this->ip,
             // 'login_time'            =>  $this->login_time,
             // 'last_login_time'       =>  $this->last_login_time,
