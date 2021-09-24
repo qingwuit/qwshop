@@ -132,10 +132,10 @@ class SmsService extends BaseService{
         // IP 加时间验证
         $sms_log_model = new SmsLog();
         $smsInfo = $sms_log_model->where('ip',request()->getClientIp())->where('phone',$phone)->where('name',$name)->orderBy('id','desc')->first();
-        // 验证码失效 
+        // 验证码是否20s内发送过，发送过则不能频繁发送 
         if(!empty($smsInfo)){
             $ct = strtotime($smsInfo->created_at->format('Y-m-d H:i:s'));
-            if(($ct+20)<time()){
+            if(($ct+20)>time()){
                 return $this->format_error(__('sms.re_send'));
             }
         }

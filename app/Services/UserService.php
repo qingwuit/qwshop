@@ -52,7 +52,7 @@ class UserService extends BaseService{
     }
 
     // 第三方登录
-    public function oauthLogin($oauth,$oauth_name="weixinweb"){
+    public function oauthLogin($oauth,$oauth_name="weixinapp"){
         $user_model = new User();
         $auth = 'user';
         
@@ -62,6 +62,37 @@ class UserService extends BaseService{
             // 判断是否存在该ID
             if($oauth_name == 'weixinweb' || empty($oauth_name)){
                 $uw_model = new UserWechat();
+                $uwInfo = $uw_model->where('unionid',$oauth->unionid)->first();
+                
+                // 不存在则开始创建
+                if(!$uwInfo){
+                    $userInsertData = [];
+                    $userInsertData['username'] = 'wx'.date('Ymd').mt_rand(100,999);
+                    $userInsertData['nickname'] = $oauth->nickname;
+                    $userInsertData['avatar'] = $oauth->avatar??'';
+                    $userInsertData['ip'] = request()->getClientIp();
+                    $userInsertData['inviter_id'] = request()->inviter_id??0;
+                    $userInsertData['password'] = Hash::make('123456');
+                    $userInsertData['pay_password'] = Hash::make('123456');
+                    $user_id = $user_model->create($userInsertData)->id;
+                    
+                    // 插入第三方表
+                    $uw_model->create([
+                        'openid'        =>  $oauth->openid,
+                        'nickname'      =>  $oauth->nickname,
+                        'user_id'       =>  $user_id,
+                        'unionid'       =>  $oauth->unionid,
+                        'headimgurl'    =>  $oauth->avatar??'',
+                    ]);
+                }else{
+                    $user_id = $uwInfo->user_id;
+                }
+ 
+            }
+
+            // APP
+            if($oauth_name == 'weixinapp' || empty($oauth_name)){
+                $uw_model = new UserWechat();
                 $uwInfo = $uw_model->where('unionid',$oauth['unionid'])->first();
                 
                 // 不存在则开始创建
@@ -69,7 +100,7 @@ class UserService extends BaseService{
                     $userInsertData = [];
                     $userInsertData['username'] = 'wx'.date('Ymd').mt_rand(100,999);
                     $userInsertData['nickname'] = $oauth['nickname'];
-                    $userInsertData['avatar'] = $oauth['avatar'];
+                    $userInsertData['avatar'] = $oauth['avatar']??'';
                     $userInsertData['ip'] = request()->getClientIp();
                     $userInsertData['inviter_id'] = request()->inviter_id??0;
                     $userInsertData['password'] = Hash::make('123456');
@@ -89,6 +120,8 @@ class UserService extends BaseService{
                 }
  
             }
+
+
 
             $user_info = $user_model->where('id',$user_id)->first();
             $user_info->login_time = now();

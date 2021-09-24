@@ -14,6 +14,7 @@ export default
     "homeLogout" : baseUrl + "logout", // 登出
     "homeCheckLogin" : baseUrl + "check_login", // 检测是否登录
     "homeSendSms" : baseUrl + "send_sms", // 发送短信
+    "homeWechatLogin" : baseUrl + "oauth/callback/weixinweb", // 微信登录
 
     'homeCommon' : baseUrl + 'common',  // pC公共数据获取
     'homeAgreement' : baseUrl + 'agreement',  // 站点协议
