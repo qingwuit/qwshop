@@ -1,5 +1,5 @@
 <template>
-    <div class="home_login" :style="'background: url('+ require('@/asset/login/user_login__bgs.png') +');'">
+    <div class="home_login" :style="'background: url('+ require('@/assets/Home/user_login__bgs.png').default +');'">
         <div class="login_block w1200">
             <div class="login_item">
                 <div class="login_title">
@@ -10,19 +10,19 @@
                     </ul>
                 </div>
                 <div class="login_input">
-                    <div class="input_block"><input type="text" v-model="username" placeholder="手机" @keyup.enter="login"></div>
-                    <div class="input_block"><input type="password" v-model="password" placeholder="密码" @keyup.enter="login"></div>
+                    <div class="input_block"><input type="text" v-model="data.username" placeholder="手机" @keyup.enter="login"></div>
+                    <div class="input_block"><input type="password" v-model="data.password" placeholder="密码" @keyup.enter="login"></div>
                 </div>
 
                 <div class="login_btn" @click="login">登 录</div>
 
                 <div class="login_btn_b">
-                    <router-link to="/user/register">注册</router-link>|<router-link to="/user/forget_password">忘记密码？</router-link>
+                    <router-link to="/register">注册</router-link>|<router-link to="/forget_password">忘记密码？</router-link>
                 </div>
 
-                <a-divider>其他登录方式</a-divider>
-                <div class="other_login_block" @click="wechat_login()">
-                    <a-font type="iconweixin" />
+                <el-divider>其他登录方式</el-divider>
+                <div class="other_login_block" @click="wechatLogin()">
+                    <img width="35" :src="require('@/assets/Home/wechat.png').default" alt="">
                     <p>微信登录</p>
                 </div>
             </div>
@@ -31,74 +31,75 @@
 </template>
 
 <script>
+import {reactive,getCurrentInstance} from "vue"
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 export default {
-    components: {},
-    props: {},
-    data() {
-      return {
-          username: "",
-          password: "",
-      };
-    },
-    watch: {},
-    computed: {},
-    methods: {
-        // 登录
-        login: function() {
-            // 重新赋值vm使 axios可用vue实例
-            var vm = this;
+    setup(props) {
+        const {proxy} = getCurrentInstance()
+        const store = useStore()
+        const router = useRouter()
+        const data = reactive({
+            username:"",
+            password:"",
+            provider:"users"
+        })
 
-            if (this.username == "" || this.password == "") {
-                this.$message.error("用户名和密码不能为空！");
+        const login = async ()=>{
+            if (data.username == "" || data.password == "") {
+                proxy.$message.error(proxy.$t('msg.loginAbn'));
                 return;
             }
+            
+            let loginData = await proxy.R.post('/login',data)
+            loginData.routeUriIndex = store.state.load.routeUriIndex
+            loginData.path = '/login'
+            if(!loginData.code){
+                await store.commit('login/loginAfter',loginData)
+                router.push('/') 
+            }
+            
+        }
 
-            this.$post(this.$api.homeLogin, {
-                phone: this.username,
-                password: this.password
-            }).then(function(res) {
-                if (res.code == 200) {
-                    // console.log(res);
-                    // 存储用户的token
-                    localStorage.setItem("token", res.data.token);
-                    vm.$store.dispatch('homeLogin/login',res);
-                    vm.$message.success('登录成功！');
-                    vm.$router.push({ name: "home_user_default" });
-                }else{
-                    vm.$message.error(res.msg);
-                }
-            });
-        },
-        wechat_login(){
+        const wechatLogin = ()=>{
             window.location.href="/api/oauth/weixinweb"
         }
-    },
-    created: function() {
-        var _this = this;
-        // 判断token是否失效
 
-        // 判断是否有微信code则直接请求接口获取token
-        if(this.$route.query.code){
-            this.$get(this.$api.homeWechatLogin,{code:this.$route.query.code}).then(function(res) {
-                // console.log(res);
-                if (res.code == 200) {
-                    localStorage.setItem("token", res.data.token);
-                    _this.$store.dispatch('homeLogin/login',res);
-                    _this.$message.success('登录成功！');
-                    _this.$router.push({ name: "home_user_default" });
-                }
-            });
-            return
+        return {
+            data,
+            wechatLogin,login
         }
-
-        this.$get(this.$api.homeCheckLogin).then(function(res) {
-            // console.log(res);
-            if (res.code == 200) {
-                _this.$router.push({ name: "home_user_default" });
-            }
-        });
     },
-    mounted() {}
+  
+    methods: {
+      
+  
+    },
+    // created: function() {
+    //     var _this = this;
+    //     // 判断token是否失效
+
+    //     // 判断是否有微信code则直接请求接口获取token
+    //     if(this.$route.query.code){
+    //         this.$get(this.$api.homeWechatLogin,{code:this.$route.query.code}).then(function(res) {
+    //             // console.log(res);
+    //             if (res.code == 200) {
+    //                 localStorage.setItem("token", res.data.token);
+    //                 _this.$store.dispatch('homeLogin/login',res);
+    //                 _this.$message.success('登录成功！');
+    //                 _this.$router.push({ name: "home_user_default" });
+    //             }
+    //         });
+    //         return
+    //     }
+
+    //     this.$get(this.$api.homeCheckLogin).then(function(res) {
+    //         // console.log(res);
+    //         if (res.code == 200) {
+    //             _this.$router.push({ name: "home_user_default" });
+    //         }
+    //     });
+    // },
 };
 </script>
 <style lang="scss" scoped>

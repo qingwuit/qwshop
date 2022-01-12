@@ -1,134 +1,202 @@
 <template>
-    <div class="qingwu">
-        <div class="admin_table_page_title"><a-button @click="$router.back()" class="float_right" icon="arrow-left">返回</a-button>订单管理</div>
-        <div class="unline underm"></div>
-
-        <admin-search :searchConfig="searchConfig" @searchParams="search"></admin-search>
-
-        <div class="admin_table_handle_btn">
-            <!-- <a-button @click="$router.push('/Admin/orders/form')" type="primary" icon="plus">添加</a-button>
-            <a-button class="admin_delete_btn" type="danger" icon="delete" @click="del">批量删除</a-button> -->
-        </div>
-        <div class="admin_table_list">
-            <a-table :columns="columns" :data-source="list" :pagination="false" :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" row-key="id">
-                <span slot="name" slot-scope="rows">
-                    <div class="admin_pic_txt">
-                        <div class="img"><img v-if="rows.order_image" :src="rows.order_image"><a-icon v-else type="picture" /></div>
-                        <div class="text">{{rows.order_name}}</div>
-                        <div class="clear"></div>
-                    </div>
-                </span>
-                <span slot="total_price" slot-scope="rows">
-                    <font color="red">￥{{rows.total_price}}</font>
-                </span>
-                <span slot="order_status" slot-scope="rows">
-                    <a-tag color="red" v-if="rows.order_status==0">{{rows.order_status_cn}}</a-tag>
-                    <a-tag color="orange" v-if="rows.order_status==1">{{rows.order_status_cn}}</a-tag>
-                    <a-tag color="blue" v-if="rows.order_status>1&&rows.order_status<6">{{rows.order_status_cn}}</a-tag>
-                    <a-tag color="cyan" v-if="rows.order_status==6">{{rows.order_status_cn}}</a-tag>
-                    <a-tag color="green" v-if="rows.order_status>=7">{{rows.order_status_cn}}</a-tag>
-                </span>
-                <span slot="action" slot-scope="rows">
-                    <a-button icon="read" @click="$router.push('/Seller/orders/form/'+rows.id)">查看详情</a-button>
-                </span>
-            </a-table>
-            <div class="admin_pagination" v-if="total>0">
-                <a-pagination v-model="params.page" :page-size.sync="params.per_page" :total="total" @change="onChange" show-less-items />
+    <div class="qwit">
+        <table-view  :params="params" :btnConfig="btnConfigs" :options="options" :dialogParam="dialogParam">
+            <template #table_topleft_hook="{dialogParams}">
+                <el-button type="primary" :icon="Promotion" @click="openAddDialog(dialogParams)">订单发货</el-button>
+                <el-button type="primary" :icon="Printer" @click="$message.info('暂无功能')">打印面单</el-button>
+            </template>
+        </table-view>
+        <el-dialog custom-class="table_dialog_class" v-model="data.vis" title="订单处理">
+            <div class="order_list" v-for="(v,k) in data.order" :key="k">
+                <div class="order_title">
+                    <span class="order_no">订单号：{{v.order_no}}</span>
+                </div>
+                <div class="order_goods">
+                    <el-row :gutter="20" v-for="(vo,key) in v.order_goods" :key="key">
+                        <el-col :span="4">
+                            <el-image :style="{width:'30px',height:'30px'}" :fit="'cover'" :hide-on-click-modal="true" :src="vo.goods_image" lazy >
+                                <template #error>
+                                    <el-icon :color="'#888'" :size="26"><Picture /></el-icon>
+                                </template>
+                            </el-image>
+                        </el-col>
+                        <el-col :span="4">{{vo.goods_name||'-'}}</el-col>
+                        <el-col :span="4">{{vo.sku_name||'-'}}</el-col>
+                        <el-col :span="4">{{$t('btn.money')}}{{vo.goods_price||'-'}}</el-col>
+                        <el-col :span="4">x {{vo.buy_num||'-'}}</el-col>
+                        <el-col :span="4" style="color:red">{{$t('btn.money')}}{{vo.total_price||'0.00'}}</el-col>
+                    </el-row>
+                </div>
+                <div class="delivery_input">
+                    <el-form label-position="right" :label-width="'70px'">
+                        <el-row :gutter="20" >
+                            <el-col :span="12">
+                                <el-form-item label="物流公司"><q-input v-model:formData="data.order[k].delivery_code" :params="{label:'物流公司',value:'delivery_code',type:'select',labelName:'name',valueName:'code'}" :dictData="{delivery_code:data.delivery}" /></el-form-item>
+                            </el-col>
+                            <el-col :span="12">
+                                <el-form-item label="快递单号"><el-input  v-model="data.order[k].delivery_no" placeholder="275811554411" /></el-form-item>
+                            </el-col>
+                        </el-row>
+                    </el-form>
+                </div>
             </div>
-        </div>
+            <div class="dialog_btn">
+                <el-button type="primary" :loading="data.loading" @click="postDelivery" :icon="Promotion" >订单发货</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
 <script>
-import adminSearch from '@/components/admin/search'
+import {reactive,getCurrentInstance} from "vue"
+import { Promotion,Printer,Picture  } from '@element-plus/icons'
+import tableView from "@/components/common/table"
+import {useRoute} from "vue-router"
 export default {
-    components: {adminSearch},
-    props: {},
-    data() {
-      return {
-          params:{
-              page:1,
-              per_page:30,
-          },
-          total:0, //总页数
-          searchConfig:[
-              {label:'订单号',name:'order_no',type:'text'},
-              {label:'下单时间',name:'created_at',type:'date_picker'},
-              {label:'订单状态',name:'order_status',type:'select',data:[
-                  {label:'订单取消',value:0},
-                  {label:'等待支付',value:1},
-                  {label:'等待发货',value:2},
-                  {label:'确认收货',value:3},
-                  {label:'等待评论',value:4},
-                  {label:'售后订单',value:5},
-                  {label:'订单完成',value:6},
-              ]},
-              {label:'用户ID',name:'user_id',type:'text'},
-          ],
-          selectedRowKeys:[], // 被选择的行
-          columns:[
-            //   {title:'#',dataIndex:'id',fixed:'left'},
-              {title:'订单名称',key:'id',fixed:'left',scopedSlots: { customRender: 'name' }},
-              {title:'订单号',dataIndex:'order_no'},
-              {title:'店铺',dataIndex:'store_name'},
-              {title:'买家',dataIndex:'buyer_name'},
-              {title:'订单总额',key:'id',scopedSlots: { customRender: 'total_price' }},
-              {title:'订单状态',key:'id',scopedSlots: { customRender: 'order_status' }},
-              {title:'下单时间',dataIndex:'created_at'},
-              {title:'操作',key:'id',fixed:'right',scopedSlots: { customRender: 'action' }},
-          ],
-          list:[],
-      };
-    },
-    watch: {},
-    computed: {},
-    methods: {
-        search(params){
-            let page = this.params.page;
-            let per_page = this.params.per_page;
+    components:{tableView},
+    setup(props) {
+        const {ctx,proxy} = getCurrentInstance()
+        const route  = useRoute()
+        const data = reactive({
+            selected:[],
+            vis:false,
+            order:[],
+            delivery:[],
+            loading:false,
+        })
+        const options = reactive([
+            {label:'订单图片',value:'order_image',type:'avatar'},
+            {label:'订单名称',value:'order_name'},
+            {label:'店铺名称',value:'store_name'},
+            {label:'买家昵称',value:'buyer_name'},
+            {label:'订单总额',value:'total_price'},
+            {label:'订单状态',value:'order_status_cn',type:'tags'},
+            {label:'创建时间',value:'created_at'},
+        ]);
 
-            // 事件需要格式化，后面再看看有没有更好得到办法
-            if(!this.$isEmpty(params.created_at) && !this.$isEmpty(params.created_at[0])){
-                params.created_at[0] = moment(params.created_at[0]).format('YYYY-MM-DD HH:mm:ss');
-                params.created_at[1] = moment(params.created_at[1]).format('YYYY-MM-DD HH:mm:ss');
-            }
-            this.params = params;
-            this.params.page = page;
-            this.params.per_page = per_page;
-            this.onload();
-        },
-        // 选择框被点击
-        onSelectChange(selectedRowKeys) {
-            this.selectedRowKeys = selectedRowKeys;
-        },
-        // 选择分页
-        onChange(e){
-            this.params.page = e;
-        },
-      
- 
-        onload(){
-            if(!this.$isEmpty(this.$route.query.is_refund)){
-                this.params.is_refund = 1;
-            }
-            if(!this.$isEmpty(this.$route.query.is_return)){
-                this.params.is_return = 1;
-            }
-            this.$get(this.$api.sellerOrders,this.params).then(res=>{
-                this.total = res.data.total;
-                this.list = res.data.data;
-            });
-        },
-    },
-    created() {
-        if(!this.$isEmpty(this.$route.query.collective_id)){
-            this.params.collective_id = this.$route.query.collective_id
+        const params = {
+            isWith:'store,user,refund'
         }
-        this.onload();
-    },
-    mounted() {}
-};
-</script>
-<style lang="scss" scoped>
 
+        const btnConfigs = reactive({
+            store:{show:false},
+            destroy:{show:false},
+        })
+
+
+        // 表单配置 
+        const addColumn = [
+            {label:'订单图片',value:'order_image',type:'avatar',span:24},
+            {label:'订单名称',value:'order_name'},
+            {label:'店铺名称',value:'store_name'},
+            {label:'买家昵称',value:'buyer_name'},
+            {label:'订单总额',value:'total_price'},
+            {label:'商品总额',value:'order_price'},
+            {label:'优惠价格',value:'coupon_money'},
+            {label:'收件人名',value:'receive_name'},
+            {label:'收件人手机',value:'receive_tel'},
+            {label:'地址信息',value:'receive_area'},
+            {label:'详细地址',value:'receive_address'},
+            {label:'快递订单号',value:'delivery_no'},
+            {label:'订单状态',value:'order_status_cn'},
+        ]
+        const editColumn = [
+            {label:'收件人名',value:'receive_name'},
+            {label:'收件人手机',value:'receive_tel'},
+            {label:'地址信息',value:'receive_area'},
+            {label:'详细地址',value:'receive_address'},
+            {label:'快递订单号',value:'delivery_no'},
+        ]
+        const dialogParam = reactive({
+            rules:{
+                name:[{required:true,message:'不能为空'}]
+            },
+            view:{column:addColumn},
+            edit:{column:editColumn},
+        })
+
+        const loadData = async ()=>{
+            delivery() // 加载物流公司
+            let base64Code = window.btoa(JSON.stringify({order_id:data.selected}))
+            const res = await proxy.R.get('/Seller/orders/find/all',{params:base64Code})
+            if(!res.code) data.order = res
+        }
+
+        const delivery = ()=>{
+            if(data.delivery.length != 0) return
+            proxy.R.get('/expresses',{isAll:true}).then(res=>{
+                if(!res.code) data.delivery = res
+            })
+        }
+
+        const openAddDialog = async (dialogParams)=>{
+            const selected = dialogParams.multipleSelection()
+            if(!selected) return proxy.$message.error(proxy.$t('msg.selectErr'))
+            data.selected = selected
+            await loadData()
+            data.order.forEach((item,key)=>{
+                if(item.delivery_code == '') item.delivery_code = 'yd'
+                item.status = 3
+            })
+            data.vis = true
+        }
+
+        const postDelivery = async ()=>{
+            data.loading = true
+            let sucNum = 0;
+            let allNum = data.order.length
+            const loading = ElementPlus.ElLoading.service({
+                lock: true,
+                text: proxy.$t('order.sendDelivery')+' - '+sucNum+'/'+allNum,
+                background: 'rgba(0, 0, 0, 0.7)',
+            })
+            data.order.map(item=>{
+                proxy.R.put('/Seller/orders/status/edit',item).then(()=>{
+                }).finally(()=>{
+                    sucNum++
+                    loading.setText(proxy.$t('order.sendDelivery')+' - '+sucNum+'/'+allNum)
+                    if(sucNum >= allNum){
+                        loading.close()
+                        data.loading = false
+                        data.vis = false
+                        location.reload()
+                    }
+                })
+            })
+            
+        }
+
+
+        return {
+            Promotion,Printer,Picture,
+            options,dialogParam,btnConfigs,params,data,
+            openAddDialog,postDelivery
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.order_title{
+    border-bottom: 1px solid #efefef;
+    padding-bottom: 15px;
+    .order_no{
+        border-left: 4px solid var(--el-color-primary);
+        padding-left: 10px;
+    }
+}
+.order_goods{
+    margin-top: 15px;
+    line-height: 30px;
+    border-bottom: 1px solid #efefef;
+}
+.delivery_input{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.dialog_btn{
+    padding-top: 15px;
+    border-top: 1px solid #efefef;
+    text-align: center;
+}
 </style>

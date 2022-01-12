@@ -1,3 +1,6 @@
+
+# v3测试版本
+
 ## Welcome to Qingwu mall 欢迎使用 青梧商城系统 (B2B2C)
 ![logo](https://gitee.com/qingwuitcn/qwshop/raw/master/resources/js/asset/pc/logo.png "logo")
 

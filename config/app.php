@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'zh-CN',
+    'locale' => 'zh-cn',
 
     /*
     |--------------------------------------------------------------------------
@@ -161,14 +161,10 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        
+
         /*
          * Package Service Providers...
          */
-
-        Intervention\Image\ImageServiceProvider::class, // 图片处理
-        Barryvdh\Debugbar\ServiceProvider::class,// debuger
-        SocialiteProviders\Manager\ServiceProvider::class, // oauth 第三方
 
         /*
          * Application Service Providers...
@@ -179,8 +175,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        App\Providers\Alioss\AliOssServiceProvider::class, // 阿里云上传
+        // App\Providers\CustomPassportProvider::class, // 自定义令牌验证服务
 
+        App\Qingwuit\Providers\AliOssServiceProvider::class, // 阿里云上传
 
     ],
 
@@ -208,6 +205,7 @@ return [
         'Config' => Illuminate\Support\Facades\Config::class,
         'Cookie' => Illuminate\Support\Facades\Cookie::class,
         'Crypt' => Illuminate\Support\Facades\Crypt::class,
+        'Date' => Illuminate\Support\Facades\Date::class,
         'DB' => Illuminate\Support\Facades\DB::class,
         'Eloquent' => Illuminate\Database\Eloquent\Model::class,
         'Event' => Illuminate\Support\Facades\Event::class,
@@ -221,8 +219,9 @@ return [
         'Notification' => Illuminate\Support\Facades\Notification::class,
         'Password' => Illuminate\Support\Facades\Password::class,
         'Queue' => Illuminate\Support\Facades\Queue::class,
+        'RateLimiter' => Illuminate\Support\Facades\RateLimiter::class,
         'Redirect' => Illuminate\Support\Facades\Redirect::class,
-        'Redis' => Illuminate\Support\Facades\Redis::class,
+        // 'Redis' => Illuminate\Support\Facades\Redis::class,
         'Request' => Illuminate\Support\Facades\Request::class,
         'Response' => Illuminate\Support\Facades\Response::class,
         'Route' => Illuminate\Support\Facades\Route::class,
@@ -233,10 +232,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
-        'Image' => Intervention\Image\Facades\Image::class,// 图片处理
-        'Debugbar' => Barryvdh\Debugbar\Facade::class, // debuger
-        'Socialite' => Laravel\Socialite\Facades\Socialite::class,  // oauth 第三方登录
 
     ],
 

@@ -1,37 +1,43 @@
 const mix = require('laravel-mix');
-
+const path = require('path')
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
  |--------------------------------------------------------------------------
  |
  | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel application. By default, we are compiling the Sass
+ | for your Laravel applications. By default, we are compiling the CSS
  | file for the application as well as bundling up all the JS files.
  |
  */
-
 require('laravel-mix-polyfill');
-mix.js('resources/js/app.js', 'public/dist/js')
-   .sass('resources/sass/app.scss', 'public/dist/css')
-   .setPublicPath('public/dist')
-   .setResourceRoot('/dist/')
-//    .browserSync('127.0.0.1:8000')
-   .polyfill({
-      enabled: true,
-      useBuiltIns: "usage",
-      targets: {"firefox": "50", "ie": 11},
-   })
-   .webpackConfig({
+mix.js('resources/js/app.js', 'public/dist/js').vue({ version: 3 })
+    .sass('resources/js/plugins/css/base.scss','public/css')
+    // .postCss('resources/css/app.css', 'public/dist/css', [
+    //     //
+    // ])
+    .setPublicPath('public/dist')
+    .setResourceRoot('/dist/')
+    .polyfill({
+        enabled: true,
+        useBuiltIns: "usage",
+        targets: {"firefox": "50", "ie": 11},
+    })
+    .webpackConfig({
         externals: {
             'vue': 'Vue',//这些是你不需要webpakc帮你打包的库
             'vue-router': 'VueRouter',
-            'ant-design-vue': 'antd',
-            'moment': 'moment',
-            'vue-amap':'VueAMap',
+            'vuex': 'Vuex',
+            'element-plus': 'ElementPlus',
+            'dayjs':'dayjs',
+            'qrcode.vue':'QrcodeVue',
+            'clipboardjs':'ClipboardJS',
             'g2plot':'G2Plot',
-            'clipboard':'ClipboardJS',
-            // 'element-ui': 'ELEMENT',//这个比较坑　一开始我还以为是ElementUI结果就报错了XD
+            'amap-loader':'AMapLoader',
+            
+            // // 'vue-amap':'VueAMap',
+            // 'clipboard':'ClipboardJS',
+            // 'vue-i18n':'VueI18n',
         },
         output: {
             publicPath: '/dist/',

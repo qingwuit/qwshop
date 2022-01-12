@@ -1,48 +1,50 @@
 <template>
-    <div class="safe">
-        <div class="user_main">
-            <div class="block_title">
-                账号绑定
-            </div>
-            <div class="x20"></div>
-            <div class="safe_block" >
-                <ul>
-                    <li>
-                        <div class="safe_icon"><a-font type="iconweixin" /></div>
-                        <div class="safe_text">微信绑定<p>绑定后可直接使用微信登录，方便快捷。</p></div>
-                        <div class="safe_btn2" v-if="user_info.wechat_check">已经绑定</div>
+    <div class="user_main table_lists">
+        <div class="block_title">
+            第三方登录
+        </div>
+        <div class="x20"></div>
+        <div class="safe_block" >
+            <ul>
+                <li>
+                    <div class="safe_icon "><img :src="require('@/assets/Home/wechat.png').default" alt=""></div>
+                    <div class="safe_text">微信绑定<p>绑定后可直接使用微信登录，方便快捷。</p></div>
+                    <div class="safe_btn2" v-if="data.userInfo.oauthCheck">已经绑定</div>
                         <div class="safe_btn" v-else>立即绑定</div>
-                    </li>
-                    
-                </ul>
-            </div>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
 
 <script>
+import {reactive,onMounted,getCurrentInstance} from "vue"
+import { useStore } from 'vuex'
 export default {
-    components: {},
-    props: {},
-    data() {
-      return {
-          user_info:{},
-      };
-    },
-    watch: {},
-    computed: {},
-    methods: {
-        get_user_info(){
-            this.$get(this.$api.homeUser+'/info').then(res=>{
-                this.user_info = res.data;
-            })
-        },
-    },
-    created() {
-        this.get_user_info();
-    },
-    mounted() {}
-};
+    components:{},
+    setup(props) {
+        const {proxy} = getCurrentInstance()
+        const store = useStore()
+
+        const data = reactive({
+            userInfo:{
+                oauthCheck:false,
+            }
+        })
+       
+
+        const loadData = async ()=>{
+            let user = await store.dispatch('login/getUserSer')
+            data.userInfo = user
+        }
+
+        onMounted( async ()=>{
+            loadData()
+        })
+
+        return {data}
+    }
+}
 </script>
 <style lang="scss" scoped>
 .safe_block{
@@ -62,20 +64,18 @@ export default {
         line-height: 90px;
         margin-right: 40px;
         margin-left: 15px;
+        margin-top: 10px;
         float: left;
-        i{
-            font-size: 34px;
-            color:#333;
-        }
-        &.success i{
-            color: #42b983;
+        img{
+            text-align: center;
+            margin-top: 10px;
         }
     }
     .safe_text{
         float: left;
         font-size: 16px;
         font-weight: bold;
-        padding-top: 10px;
+        padding-top: 20px;
         line-height: 25px;
         p{
             font-size: 14px;
@@ -97,19 +97,6 @@ export default {
             color:#ca151e;
             border-color: #ca151e;
         }
-    }
-    .safe_btn2{
-        border: 1px solid #efefef;
-        width: 100px;
-        line-height: 30px;
-        background: #fff;
-        text-align: center;
-        float: right;
-        margin-top: 28px;
-        margin-right: 15px;
-        color:#ca151e;
-        border-color: #ca151e;
-      
     }
 }
 </style>

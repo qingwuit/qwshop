@@ -1,57 +1,57 @@
 <template>
     <div class="goods_info_temp">
         <div class="mbx w1200">
-            <a-breadcrumb>
-                <a-breadcrumb-item><a href="/">首页</a></a-breadcrumb-item>
-                <a-breadcrumb-item v-for="(v,k) in goods_info.goods_class" :key="k"><a href="#">{{v.name}}</a></a-breadcrumb-item>
-                <a-breadcrumb-item>{{goods_info.goods_name}}</a-breadcrumb-item>
-            </a-breadcrumb>
+            <el-breadcrumb>
+                <el-breadcrumb-item><a href="/">首页</a></el-breadcrumb-item>
+                <el-breadcrumb-item v-for="(v,k) in data.goods_info.classList" :key="k"><a href="#">{{v.name}}</a></el-breadcrumb-item>
+                <el-breadcrumb-item>{{data.goods_info.goods_name}}</el-breadcrumb-item>
+            </el-breadcrumb>
         </div>
 
         <div class="goods_info_top w1200">
             <div class="goods_info_top_left" >
                 <div class="goods_image_item">
-                    <pic-zoom :url="goods_info.goods_images_thumb_400[chose_img_pos]" :highUrl="goods_info.goods_images[chose_img_pos]"></pic-zoom>
+                    <pic-zoom :url="data.goods_info.goods_images_thumb_400 && data.goods_info.goods_images_thumb_400[data.chose_img_pos]" :highUrl="data.goods_info.goods_images_thumb_400 && data.goods_info.goods_images[data.chose_img_pos]"></pic-zoom>
                 </div>
                 <div class="pic_zoom_list">
                     <div class="pic_zoom_list_left" @click="pre_img()">
-                        <a-icon type="left" />
+                        <el-icon><ArrowLeftBold /></el-icon>
                     </div>
                     <ul>
-                        <li v-for="(v,k) in goods_info.goods_images_thumb_150" :key="k" @click="click_silde_img(k)" :class="chose_img_pos==k?'border_color':''"><img :src="v" alt=""></li>
+                        <li v-for="(v,k) in data.goods_info.goods_images_thumb_150" :key="k" @click="click_silde_img(k)" :class="data.chose_img_pos==k?'border_color':''"><img :src="v" alt=""></li>
                     </ul>
                     <div class="pic_zoom_list_right" @click="next_img()">
-                        <a-icon type="right" />
+                        <el-icon><ArrowRightBold /></el-icon>
                     </div>
                 </div>
             </div>
             <div class="goods_info_top_right" >
-                <div class="goods_info_title">{{goods_info.goods_name||'加载中...'}}
-                    <p>{{goods_info.goods_subname||'加载中...'}}</p>
-                    <div :class="isFav?'goods_info_sc red_color':'goods_info_sc'" @click="goods_fav()">{{isFav?'已收藏':'收藏'}}<a-icon type="like" /></div>
+                <div class="goods_info_title">{{data.goods_info.goods_name||'加载中...'}}
+                    <p>{{data.goods_info.goods_subname||'加载中...'}}</p>
+                    <div :class="data.isFav?'goods_info_sc red_color':'goods_info_sc'" @click="goods_fav()">{{data.isFav?'已收藏':'收藏'}}<el-icon><Star /></el-icon></div>
                 </div>
                 <div class="goods_info_group">
-                    <template v-if="seckills">
-                        <div class="goods_info_price"><span>秒杀价：</span>￥{{goods_info.goods_price*(1-seckills.discount/100)||'0.00'}}</div>
-                        <div class="goods_info_market_price"><span>市场价：</span><div class="overx_goods_info">￥{{goods_info.goods_market_price||'0.00'}}</div></div>
+                    <template v-if="data.seckills">
+                        <div class="goods_info_price"><span>秒杀价：</span>{{$t('btn.money')}}{{data.goods_info.goods_price*(1-data.seckills.discount/100)||'0.00'}}</div>
+                        <div class="goods_info_market_price"><span>市场价：</span><div class="overx_goods_info">{{$t('btn.money')}}{{data.goods_info.goods_market_price||'0.00'}}</div></div>
                     </template>
                     <template v-else>
-                        <div class="goods_info_price"><span>商城价：</span>￥{{goods_info.goods_price||'0.00'}}</div>
-                        <div class="goods_info_market_price"><span>市场价：</span><div class="overx_goods_info">￥{{goods_info.goods_market_price||'0.00'}}</div></div>
+                        <div class="goods_info_price"><span>商城价：</span>{{$t('btn.money')}}{{data.goods_info.goods_price||'0.00'}}</div>
+                        <div class="goods_info_market_price"><span>市场价：</span><div class="overx_goods_info">{{$t('btn.money')}}{{data.goods_info.goods_market_price||'0.00'}}</div></div>
                     </template>
                 
                     <!-- <div class="goods_info_active"><span>优惠：</span><font class="noy" v-if="goods_info.goods_freight<=0 && goods_info.freight_id<=0">包邮</font><font v-else-if="store_info.free_freight>0">满{{store_info.free_freight}}包邮</font><font class="noz" v-else>暂无优惠</font></div> -->
-                    <div class="goods_info_sale_num">累计销量<font color="#ca151e">{{goods_info.goods_sale}}</font></div>
-                    <div class="goods_info_phone_read">手机查看<a-icon style="font-size:16px" type="qrcode" /></div>
+                    <div class="goods_info_sale_num">累计销量<em color="#ca151e">{{data.goods_info.goods_sale||0}}</em></div>
+                    <div class="goods_info_phone_read">手机查看<i style="font-size:16px" class="fa fa-qrcode"></i></div>
 
                     <!-- 优惠券 S -->
-                    <div class="coupons_block" v-if="coupons.length>0">
+                    <div class="coupons_block" v-if="data.coupons.length>0">
                         <ul>
-                            <li v-for="(v,k) in coupons" :key="k" @click="receiveCoupon(v.id)">
-                                <div class="price">￥{{v.money}} </div>
+                            <li v-for="(v,k) in data.coupons" :key="k" @click="receiveCoupon(v.id)">
+                                <div class="price">{{$t('btn.money')}}{{v.money}} </div>
                                 <div class="block">
                                     <div>优 惠 券</div>
-                                    <div>满￥{{v.use_money}}可用</div>
+                                    <div>满{{$t('btn.money')}}{{v.use_money}}可用</div>
                                 </div>
                             </li>
                         </ul>
@@ -61,60 +61,60 @@
                 </div>
                 <!-- 参加活动 -->
                 <div class="goods_info_active">
-                    <div class="goods_skill" v-if="seckills">
-                        <span><a-icon type="history" /></span>
-                        <span>参加秒杀活动</span>
-                        <span class="span_time">距离结束 {{seckills.format_time||'0 天 00 时 00 分 00 秒'}}</span>
+                    <div class="goods_skill" v-if="data.seckills">
+                        <span><el-icon style="margin:0 10px"><Timer /></el-icon>参加秒杀活动</span>
+                        <span class="span_time">距离结束 {{data.seckills.format_time||'0 天 00 时 00 分 00 秒'}}</span>
                     </div>
-                    <div class="goods_skill tuan_active" v-if="collectives"  @click="collective_id=-1;buy()">
-                        <span><a-icon type="usergroup-delete" /></span>
-                        <span>参加团购活动 <span style="font-weight:bold; margin-left:15px;" >( 点击开新团 )</span></span>
-                        <span class="span_time">团购价：￥ {{$formatFloat(goods_info.goods_price*(1-collectives.discount/100)||'0.00')}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 需要 {{collectives.need}} 人</span>
+                    <div class="goods_skill tuan_active" v-if="data.collectives"  @click="data.collective_id=-1;buy()">
+                        <span><el-icon style="margin:0 10px"><UserFilled /></el-icon>参加团购活动 ( 点击开新团 ) </span>
+                        <span class="span_time">团购价：{{$t('btn.money')}} {{R.formatFloat(data.goods_info.goods_price*(1-data.collectives.discount/100)||'0.00')}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 需要 {{data.collectives.need}} 人</span>
                     </div>
-                    <div class="tuan_list" v-if="collectives && collective_list.length>0">
-                        <a-carousel autoplay :autoplaySpeed="3000" speed="1000" :vertical="true" :adaptiveHeight="true" :dots="false">
-                            <div class="tuan_item" v-for="(v,k) in collective_list" :key="k">
-                                <img v-lazy="v.avatar||require('@/asset/user/user_default.png')">
-                                <div class="nickname">{{v.nickname}}</div>
-                                <div class="btn" @click="collective_id=v.id;buy()">参团</div>
-                                <div class="orders_count">已经参团 {{v.orders_count}} / {{v.need}} 人</div>
-                            </div>
-                        </a-carousel>
+                    <div class="tuan_list" v-if="data.collectives && data.collective_list.length>0">
+                        <el-carousel autoplay  :direction="'vertical'" height="30px" indicator-position="none">
+                            <el-carousel-item  v-for="(v,k) in data.collective_list" :key="k">
+                                <div class="tuan_item">
+                                    <img :src="v.avatar||require('@/assets/Home/user_default.png').default">
+                                    <div class="nickname">{{v.nickname}}</div>
+                                    <div class="btn" @click="data.collective_id=v.id;buy()">参团</div>
+                                    <div class="orders_count">已经参团 {{v.orders_count}} / {{v.need}} 人</div>
+                                </div>
+                            </el-carousel-item>
+                        </el-carousel>
                     </div>
                 </div>
                 
                 <!-- 满减 S -->
-                <div class="goods_info_full_reduction" v-if="full_reductions.length>0">
+                <div class="goods_info_full_reduction" v-if="data.full_reductions.length>0">
                     <span class="title">活动：</span>
-                    <span class="act" v-for="(v,k) in full_reductions" :key="k"> 满￥{{v.use_money}}减￥{{v.money}}；</span>
+                    <span class="act" v-for="(v,k) in data.full_reductions" :key="k"> 满{{$t('btn.money')}}{{v.use_money}}减{{$t('btn.money')}}{{v.money}}；</span>
                 </div>
                 <!-- 满减 E -->
 
-                <div class="goods_info_spec" v-show="!this.$isEmpty(goods_info.skuList)">
-                    <div class="spec_list" v-for="(v,k) in goods_info.attrList" :key="k">
+                <div class="goods_info_spec" v-show="!R.isEmpty(data.goods_info.skuList)">
+                    <div class="spec_list" v-for="(v,k) in data.goods_info.attrList" :key="k">
                         <span>{{v.name}}：</span>
                         <ul>
-                            <li :class="($isEmpty(val.is_chose) || val.is_chose==false)?'':'red'" v-for="(val,key) in v.specs" :key="key" @click="attr_click(k,key)" >{{val.name}}</li>
+                            <li :class="(R.isEmpty(val.is_chose) || val.is_chose==false)?'':'red'" v-for="(val,key) in v.specs" :key="key" @click="attr_click(k,key)" >{{val.name}}</li>
                         </ul>
                     </div>
                 </div>
                 
                 <div class="goods_info_num">
                     <div class="goods_info_num_title">购买数量：</div>
-                    <div class="goods_info_num_jian" @click="change_buy_num(false)"><a-icon type="minus" /></div>
-                    <div class="goods_info_num_input"><input v-model="buy_num" type="text" value="1"></div>
-                    <div class="goods_info_num_jia" @click="change_buy_num(true)"><a-icon type="plus" /></div>
-                    <div class="goods_info_num_stock">&nbsp;&nbsp;{{goods_info.goods_stock}} 库存</div>
+                    <div class="goods_info_num_jian" @click="change_buy_num(false)">-</div>
+                    <div class="goods_info_num_input"><input v-model="data.buy_num" type="number"  /></div>
+                    <div class="goods_info_num_jia" @click="change_buy_num(true)">+</div>
+                    <div class="goods_info_num_stock">&nbsp;&nbsp;{{data.goods_info.goods_stock}} 库存</div>
                     <div class="clear"></div>
                 </div>
                 <div class="goods_info_btn">
                     <!-- <div v-show="goods_info.is_groupbuy==1" class="goods_info_add_groupbuy" @click="group_buy()"><i class="icon iconfont">&#xe601;</i>选择团购</div> -->
-                    <template v-if="seckills">
-                        <div class="goods_info_buy" @click="buy()"><a-font type="iconchanpin1" />立即抢购</div>
+                    <template v-if="data.seckills">
+                        <div class="goods_info_buy" @click="buy()"><img :src="require('@/assets/Home/buy.png').default" /> 立即抢购</div>
                     </template>
                     <template v-else>
-                        <div class="goods_info_buy" @click="buy()"><a-font type="iconchanpin1" />立即购买</div>
-                        <div class="goods_info_add_cart" @click="add_cart()"><a-font type="icongouwuche1" />加入购物车</div>
+                        <div class="goods_info_buy" @click="buy()"><img :src="require('@/assets/Home/buy.png').default" /> 立即购买</div>
+                        <div class="goods_info_add_cart" @click="add_cart()"><img :src="require('@/assets/Home/cart.png').default" />加入购物车</div>
                     </template>
                     
                 </div>
@@ -127,52 +127,48 @@
                 <div class="store_info">
                     <div class="store_title">
                         <span class="tip">店铺</span>
-                        <span class="title">{{store_info['store_name']||'加载中...'}}</span>
+                        <span class="title">{{data.store_info['store_name']||'加载中...'}}</span>
                     </div>
                     <div class="rate">
                         <span style="float:left;padding-top:2px;margin-right:10px">综合评分</span>
-                        <a-rate style="font-size:14px;float:left" :value="rate_info.scoreAll" :tooltips="desc" disabled />
-                        <span style="float:left;padding-top:2px;" class="ant-rate-text">{{ desc[rate_info.scoreAll - 1] }}</span>
+                        <el-rate class="rate_class" v-model="data.rate_info.scoreAll"  :score-template="'{value} 分'" text-color="#F7BA2A" show-score disabled />
                         <div class="clear"></div>
                     </div>
                     <div class="store_rate">
                         <div class="title">店铺评分：</div>
                         <div class="item">
                             <span style="float:left;padding-top:2px;margin-right:10px">描述相符</span>
-                            <a-rate style="font-size:14px;float:left" :value="rate_info.agreeAll" :tooltips="desc" disabled />
-                            <span style="float:left;padding-top:2px;" class="ant-rate-text">{{ desc[rate_info.scoreAll - 1] }}</span>
+                            <el-rate class="rate_class other" v-model="data.rate_info.agreeAll"  :score-template="'{value} 分'" text-color="#F7BA2A" show-score disabled />
                             <div class="clear"></div>
                         </div>
                         <div class="item">
                             <span style="float:left;padding-top:2px;margin-right:10px">服务态度</span>
-                            <a-rate style="font-size:14px;float:left" :value="rate_info.serviceAll" :tooltips="desc" disabled />
-                            <span style="float:left;padding-top:2px;" class="ant-rate-text">{{ desc[rate_info.scoreAll - 1] }}</span>
+                            <el-rate class="rate_class other" v-model="data.rate_info.serviceAll"  :score-template="'{value} 分'" text-color="#F7BA2A" show-score disabled />
                             <div class="clear"></div>
                         </div>
                         <div class="item">
                             <span style="float:left;padding-top:2px;margin-right:10px">发货速度</span>
-                            <a-rate style="font-size:14px;float:left" :value="rate_info.speedAll" :tooltips="desc" disabled />
-                            <span style="float:left;padding-top:2px;" class="ant-rate-text">{{ desc[rate_info.scoreAll - 1] }}</span>
+                            <el-rate class="rate_class other" v-model="data.rate_info.speedAll" :score-template="'{value} 分'" text-color="#F7BA2A" show-score  disabled />
                             <div class="clear"></div>
                         </div>
                     </div>
-                    <div class="store_com" style="margin-top:10px">公司名称：<font color="#999">{{store_info.store_company_name}}</font></div>
-                    <div class="store_com" style="margin-bottom:10px">公司地址：<font color="#999">{{store_info.area_info+' '+store_info.store_address}}</font></div>
+                    <div class="store_com" style="margin-top:10px">公司名称：<em style="color:#999">{{data.store_info.store_company_name}}</em></div>
+                    <div class="store_com" style="margin-bottom:10px">公司地址：<em style="color:#999">{{data.store_info.area_info+' '+data.store_info.store_address}}</em></div>
                     <div class="btn">
-                        <span class="navstore" @click="$router.push('/store/'+store_info.id)">进入店铺</span>
-                        <span class="contact" @click="chat=true">联系客服</span>
+                        <span class="navstore" @click="$router.push('/store/'+data.store_info.id)">进入店铺</span>
+                        <span class="contact" @click="data.chat=true">联系客服</span>
                         <div class="clear"></div>
                     </div>
                 </div>
                 <!-- // 销售排行 -->
                 <div class="store_info">
                     <div class="store_title"><span class="title">销售排行</span></div>
-                    <div class="goods_list" v-if="goods_info.sale_list.length>0">
-                        <dl v-for="(v,k) in goods_info.sale_list" :key="k"><a :href="'/goods/'+v.id">
-                            <dt><img v-lazy="v.goods_master_image" :alt="v.goods_name"></dt>
+                    <div class="goods_list" v-if="data.goods_info.sale_list && data.goods_info.sale_list.length>0">
+                        <dl v-for="(v,k) in data.goods_info.sale_list" :key="k"><a :href="'/goods/'+v.id">
+                            <dt><img :src="v.goods_master_image" :alt="v.goods_name"></dt>
                             <dd class="info">
                                 <div class="title">{{v.goods_name||''}}</div>
-                                <div class="price">￥{{v.goods_price}}</div>
+                                <div class="price">{{$t('btn.money')}}{{v.goods_price}}</div>
                                 <div class="round">{{k+1}}</div>
                             </dd></a>
                         </dl>
@@ -181,306 +177,345 @@
                 </div>
             </div>
             <div class="right_item">
-                 <a-tabs default-active-key="1" >
-                <a-tab-pane key="1" tab="商品详情" force-render>
-                    <div v-html="goods_info.goods_content||''"></div>
-                </a-tab-pane>
-                <a-tab-pane key="2" :tab="'用户评价 ('+(comment_statistics.all||0)+')'" force-render>
-                     <!-- 评论 -->
-                    <div class="comment_list_top">
-                        <div class="left_bfb">
-                            {{comment_statistics.rate||100}}<font style="font-size:20px">%</font>
-                            <span>好评率</span>
+                 <el-tabs model-value="1" @tab-click="tabClick">
+                    <el-tab-pane name="1" label="商品详情" >
+                        <div v-html="editorHtml(data.goods_info.goods_content)||''"></div>
+                    </el-tab-pane>
+                    <el-tab-pane name="2" :label="'用户评价 ('+(data.comment_statistics.all||0)+')'" >
+                        <!-- 评论 -->
+                        <div class="comment_list_top">
+                            <div class="left_bfb">
+                                {{data.comment_statistics.rate||100}}<em style="font-size:20px">%</em>
+                                <span>好评率</span>
+                            </div>
+                            <div class="right_comment_list">
+                                <ul>
+                                    <li :class="data.params.is_type==0?'red':''" @click="comment_type_click(0)">全部 ({{data.comment_statistics.all||0}})</li>
+                                    <li :class="data.params.is_type==1?'red':''" @click="comment_type_click(1)">好评 ({{data.comment_statistics.good||0}})</li>
+                                    <li :class="data.params.is_type==2?'red':''" @click="comment_type_click(2)">中评 ({{data.comment_statistics.commonly||0}})</li>
+                                    <li :class="data.params.is_type==3?'red':''" @click="comment_type_click(3)">差评 ({{data.comment_statistics.bad||0}})</li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="right_comment_list">
+                        <div class="user_content_blcok_line"></div>
+                        <div class="comment_list_block">
+                            <!-- <a-list :data-source="data.comments">
+                                <a-list-item slot="renderItem" slot-scope="item">
+                                    <a-comment :author="item.user.nickname" :avatar="item.user.avatar||require('@/assets/Home/user_default.png')">
+                                        {{ item.content }}
+                                        <el-tooltip slot="datetime" :title="item.created_at">
+                                        <span>{{item.created_at}}</span>
+                                        </el-tooltip>
+                                        <a-comment v-if="item.reply != ''" :author="'售后客服'" :avatar="item.user.avatar||require('@/assets/Home/kefu.png')">
+                                            <em style="color:red">{{ item.reply }}</em>
+                                            <el-tooltip slot="datetime" :title="item.reply_time">
+                                            <span>{{item.reply_time}}</span>
+                                            </el-tooltip>
+                    
+                                        </a-comment>
+                                    </a-comment>
+                                </a-list-item>
+                            </a-list> -->
                             <ul>
-                                <li :class="params.is_type==0?'red':''" @click="comment_type_click(0)">全部 ({{comment_statistics.all||0}})</li>
-                                <li :class="params.is_type==1?'red':''" @click="comment_type_click(1)">好评 ({{comment_statistics.good||0}})</li>
-                                <li :class="params.is_type==2?'red':''" @click="comment_type_click(2)">中评 ({{comment_statistics.commonly||0}})</li>
-                                <li :class="params.is_type==3?'red':''" @click="comment_type_click(3)">差评 ({{comment_statistics.bad||0}})</li>
+                                <li v-for="(v,k) in data.comments" :key="k">
+                                    <div class="comment_avatar"><el-image :src="v.avatar||require('@/assets/Home/user_default.png').default"></el-image></div>
+                                    <div class="comment_nickname">{{v.nickname}}</div>
+                                    <div class="comment_star"><em>评价得分：</em><div class="store_star_in"><el-rate disabled v-model="v.score" :score-template="'{value} 分'" text-color="#F7BA2A" show-score></el-rate></div></div>
+                                    <div class="comment_content">评价内容：<em style="color:#999">{{v.content||'good!~'}}</em></div>
+                                    <div class="comment_images" v-if="v.image.length>0">
+                                        <div class="comment_image" v-for="(vo,key) in v.comment_images" :key="key"><el-image class="el_image" :initial-index="key" :preview-src-list="v.comment_images" :fit="'cover'" :src="vo"  /></div>
+                                    </div>
+                                    <div class="reply">
+                                        <div class="comment_avatar"><el-image :src="require('@/assets/Home/kefu.png').default"></el-image></div>
+                                        <div class="comment_nickname">售后客服</div>
+                                        <div class="comment_content">回复内容：<em >{{v.reply||'good!~'}}</em></div>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
-                    </div>
-                    <div class="user_content_blcok_line"></div>
-                    <div class="comment_list_block">
-                        <a-list :data-source="comments">
-                            <a-list-item slot="renderItem" slot-scope="item">
-                                <a-comment :author="item.user.nickname" :avatar="item.user.avatar||require('@/asset/user/user_default.png')">
-                                    <!-- <template slot="actions">
-                                    </template> -->
-                                    {{ item.content }}
-                                    <a-tooltip slot="datetime" :title="item.created_at">
-                                    <span>{{item.created_at}}</span>
-                                    </a-tooltip>
-                                    <a-comment v-if="item.reply != ''" :author="'售后客服'" :avatar="item.user.avatar||require('@/asset/user/kefu.png')">
-                                        <font color="red">{{ item.reply }}</font>
-                                        <a-tooltip slot="datetime" :title="item.reply_time">
-                                        <span>{{item.reply_time}}</span>
-                                        </a-tooltip>
-                
-                                    </a-comment>
-                                </a-comment>
-                            </a-list-item>
-                        </a-list>
-                    </div>
-                    <div class="fy" v-if="comments.length>0" style="margin-top:20px">
-                        <a-pagination v-model="params.page" :default-page-size="params.per_page" :total="params.total" @change="onChange" />
-                    </div>
-                    
-                </a-tab-pane>
-                <a-tab-pane key="3" tab="售后服务" force-render>
-                    <div v-html="store_info.after_sale_service"></div>
-                </a-tab-pane>
-                </a-tabs>
+                        <div class="fy" v-if="data.comments.length>0" style="margin-top:20px">
+                            <div class="fy">
+                                <el-pagination background 
+                                layout="total, prev, pager, next" 
+                                :page-size="data.params.per_page" 
+                                @current-change="handleCurrentChange"
+                                :page-count="data.params.last_page"
+                                :current-page="data.params.current_page"
+                                :total="data.params.total">
+                                </el-pagination>
+                            </div>
+                        </div>
+                        <el-empty v-else />
+                        
+                    </el-tab-pane>
+                    <el-tab-pane name="3" label="售后服务" force-render>
+                        <div v-html="editorHtml(data.store_info.after_sale_service)"></div>
+                    </el-tab-pane>
+                </el-tabs>
             </div>
             <div class="clear"></div>
         </div>
 
         <!-- 聊天 -->
-        <chat v-if="chat" :store_id="store_info.id" />
+        <!-- <chat v-if="chat" :store_id="store_info.id" /> -->
 
     </div>
 </template>
 
 <script>
-import Chat from "@/components/chat/index"
-import PicZoom from '@/components/home/goods/vue-piczoom.vue' // 放大镜组件 
+// import Chat from "@/components/chat/index"
+import {reactive,watch,onMounted,onBeforeUnmount,getCurrentInstance} from "vue"
+import {useRoute,useRouter} from 'vue-router'
+import { useStore } from 'vuex'
+import dayjs from "dayjs"
+import {ArrowLeftBold,ArrowRightBold,Star,Timer,UserFilled,SemiSelect,Plus} from '@element-plus/icons'
+import PicZoom from '@/components/home/vue-piczoom.vue' // 放大镜组件 
+import {editorHandle,formatTime} from '@/plugins/config'
 export default {
-    components: {PicZoom,Chat},
-    props: {},
-    data() {
-      return {
-          goods_info:{
-              goods_images_thumb_400:[],
-              goods_images_thumb_150:[],
-              goods_images:[],
-              sale_list:[],
-          },
-          params:{
+    components: {PicZoom,ArrowLeftBold,ArrowRightBold,Star,Timer,UserFilled,SemiSelect,Plus}, // Chat
+    setup(props) {
+        const {proxy} = getCurrentInstance()
+        const route = useRoute()
+        const router = useRouter()
+        const store = useStore()
+        const data = reactive({
+            goods_info:[],
+            params:{
               page:1,
               per_page:30,
               total:0,
               is_type:0,
-          },
-          comment_statistics:[],
-          comments:[],
-          store_info:{
-              area_info:'',
-              store_address:'',
-          },
-          chat:false,
-          rate_info:{},
-          buy_num:1, // 购买数量
-          goods_id:0,
-          chose_img_pos:0,
-          chose_spec:[],
-          sku_id:0,
-          isFav:false,
-          save_history:true,
-          desc: ['1.0分', '2.0分', '3.0分', '4.0分', '5.0分'],
-          coupons:[], // 优惠券
-          full_reductions:[], // 满减
-          seckills:false, // 秒杀
-          collectives:false, // 拼团
-          collective_list:[], // 正在进行的团
-          collective_id:0,
-      };
-    },
-    watch: {
-        // 监听选择购买数量
-        buy_num:function(e){
-            if(e>this.goods_info.goods_stock || e<=0){
-                if(this.goods_info.goods_stock != 0){
-                    this.$message.error('请认真填写购买数量');
-                    this.buy_num = this.goods_info.goods_stock;
-                }
-            }
-        },
-    },
-    computed: {},
-    methods: {
-        get_goods_info(){
-            this.$get(this.$api.homeGoods+'/'+this.goods_id).then(res=>{
-                if(res.code == 200){
-                    this.goods_info = res.data;
-                    this.store_info = res.data.store_info;
-                    this.rate_info = this.store_info.rate;
-                    this.coupons = res.data.coupons; // 优惠券
-                    this.full_reductions = res.data.full_reductions; // 满减
-                    this.seckills = res.data.seckills; // 秒杀
-                    this.timing(this.seckills); // 倒计时
-                    this.collectives = res.data.collectives; // 拼团
-                    this.collective_list = res.data.collective_list; // 拼团
+            },
+            comment_statistics:[],
+            comments:[],
+            store_info:{
+                area_info:'',
+                store_address:'',
+            },
+            chat:false,
+            rate_info:{},
+            buy_num:1, // 购买数量
+            goods_id:0,
+            chose_img_pos:0,
+            chose_spec:[],
+            sku_id:0,
+            isFav:false,
+            save_history:true,
+            coupons:[], // 优惠券
+            full_reductions:[], // 满减
+            seckills:false, // 秒杀
+            collectives:false, // 拼团
+            collective_list:[], // 正在进行的团
+            collective_id:0,
+            timeObj:null,
+        })
 
-                    this.is_fav(res.data.id); // 获取收藏情况
-                    // 存储游览记录
-                    if(this.save_history){
-                        this.save_history_fun(this.goods_info);
-                    }
-                }else{
-                    this.$message.error(res.msg);
-                    this.$router.go(-1);
+        const loadData = async ()=>{
+            if(!data.goods_id) return
+            const resp = await proxy.R.get('/goods/'+data.goods_id,{saveCheck:true})
+            if(!resp.code){
+                data.goods_info = resp
+                data.store_info = resp.store_info
+                data.rate_info = resp.rate
+                data.comment_statistics = resp.comment_statistics
+                data.coupons = resp.coupons || [] // 优惠券
+                data.full_reductions = resp.full_reductions||[] // 满减
+                data.seckills = resp.seckills // 秒杀
+                timing(data.seckills) // 倒计时
+                data.collectives = resp.collectives // 拼团
+                data.collective_list = resp.collective_list // 拼团
+
+                is_fav() // 获取收藏情况
+                // 存储游览记录
+                if(data.save_history){
+                    save_history_fun(data.goods_info);
                 }
-            })
-        },
-        // 定时器
-        timing(market){
-            if(market){
-                let obj = setInterval(()=>{
-                    let timeVal = moment(market.end_time).format('X') - moment().format('X');
-                    // 时间戳转换
-                    var d = Math.floor(timeVal / (24 * 3600));
-                    var h = Math.floor((timeVal - 24 * 3600 * d) / 3600);
-                    var m = Math.floor((timeVal - 24 * 3600 * d - h * 3600) / 60);
-                    var s = Math.floor((timeVal - 24 * 3600 * d - h * 3600 - m * 60));
-                    // console.log(d + '天' + hh + '时' + mm + '分' + ss + '秒'); // 打印出转换后的时间
-                    //  当时分秒小于10的时候补0
-                    var hh = h < 10 ? '0' + h : h;
-                    var mm = m < 10 ? '0' + m : m;
-                    var ss = s < 10 ? '0' + s : s;
-                    // this.seckills.format_time =  d + '天' + hh + '时' + mm + '分' + ss + '秒';
-                    this.$set(this.seckills,'format_time',d + ' 天 ' + hh + ' 时 ' + mm + ' 分 ' + ss + ' 秒')
-                    if(moment(market.end_time).valueOf()<moment().valueOf()){
-                        clearInterval(obj);
-                        this.$router.go(0);
-                    }
-                },1000)
+            }else{
+                proxy.$message.error(res.msg)
+                router.go(-1);
             }
-            
-        },
-        get_goods_comments(){
-            this.$get(this.$api.homeGoods+'/comments/'+this.goods_id,this.params).then(res=>{
-                if(res.code == 200){
-                    this.params.total = res.data.total;
-                    this.params.per_page = res.data.per_page;
-                    this.params.current_page = res.data.current_page;
-                    this.comments = res.data.data;
-                }else{
-                    this.$message.error(res.msg);
-                }
+               
+        }
+
+        // 图片翻页
+        const pre_img = ()=>{
+            if(data.chose_img_pos<=0){
+                data.chose_img_pos = data.goods_info.goods_images.length-1;
+            }else{
+                data.chose_img_pos -= 1;
+            }
+        }
+        const next_img = ()=>{
+            if(data.chose_img_pos>=data.goods_info.goods_images.length-1){
+                data.chose_img_pos = 0;
+            }else{
+                data.chose_img_pos += 1;
+            }
+        }
+        const click_silde_img = (e)=>{
+            data.chose_img_pos = e;
+        }
+        // 收藏
+        const goods_fav = async ()=>{
+            await proxy.R.post('/user/favorites',{is_type:0,out_id:data.goods_id})
+            is_fav()
+        }
+        // 是否收藏
+        const is_fav = async ()=>{
+            data.isFav = await proxy.R.get('/is_fav',{is_type:0,out_id:data.goods_id})
+        }
+        const receiveCoupon = (id)=>{
+            proxy.R.post('/user/coupon/receive',{id:id}).then(res=>{
+                if(!res.code) return proxy.$message.success(proxy.$t('msg.success'))
             })
-        },
-        onChange(e){
-            this.params.page = e;
-            this.get_goods_comments();
-        },
-        comment_type_click(is_type){
-            this.params.page = 1;
-            this.params.is_type = is_type;
-            this.get_goods_comments();
-        },
-        get_goods_goods_comment_statistics(){
-            this.$get(this.$api.homeGoods+'/comment_statistics/'+this.goods_id).then(res=>{
-                if(res.code == 200){
-                    this.comment_statistics = res.data;
-                }else{
-                    this.$message.error(res.msg);
+        }
+        // 修改购买数量
+        const change_buy_num = (type)=>{
+            if(type){
+                if(data.buy_num+1>data.goods_info.goods_stock){
+                    return proxy.$message.error(proxy.$t('home.goods.stockErr'));
                 }
-            })
-        },
-        // 立即购买
-        buy(){
+                data.buy_num += 1;
+            }else{
+                if(data.buy_num<=1){
+                    return proxy.$message.error(proxy.$t('home.goods.minimumErr'));
+                }
+                data.buy_num -= 1
+            }
+        }
+        // 购买
+        const buy = ()=>{
+            if(data.goods_info.skuList && data.goods_info.skuList.length>0 && data.sku_id == 0) return proxy.$message.error(proxy.$t('home.goods.skuErr')); 
             let params = {
                 order:[
                     {
-                        goods_id:this.goods_info.id, // 商品ID
-                        sku_id:this.sku_id, // SKUid 没有则为0
-                        buy_num:this.buy_num, // 购买数量
-                        collective_id:this.collective_id, // 拼团ID 非必传
+                        goods_id:data.goods_info.id, // 商品ID
+                        sku_id:data.sku_id, // SKUid 没有则为0
+                        buy_num:data.buy_num, // 购买数量
+                        collective_id:data.collective_id, // 拼团ID 非必传
                     },
                 ],
                 ifcart:0, // 是否购物车
             };
 
             // 恢复 collective_id
-            this.collective_id = 0
+            data.collective_id = 0
 
             let str = window.btoa(JSON.stringify(params)); 
-            this.$router.push("/order/create_order/"+str);
-        },
-        // 加入购物车
-        add_cart(){
-            let params = {
-                goods_id:this.goods_info.id, // 商品ID
-                sku_id:this.sku_id, // SKUid 没有则为0
-                buy_num:this.buy_num, // 购买数量
-            };
-            this.$post(this.$api.homeCarts,params).then(res=>{
-                this.cart_count();
-                this.$returnInfo(res);
-            })
-            // this.$get(this.$api.homeCarts).then(res=>{
-            //     this.$returnInfo(res);
-            // })
-        },
-        cart_count(){
-            this.$get(this.$api.homeCarts+'/cart_count').then(res=> {
-                if(res.code == 200){
-                    this.$store.dispatch('homeCart/set_cart_num',res.data);
-                }
-            });
-        },
+            router.push("/order/before/"+str);
 
-        // 属性被选择点击
-        attr_click:function(e,index){
-            console.log(123)
-            this.goods_info.attrList[e]['specs'].forEach((res,key)=>{
+        }
+        // 加入购物车
+        const add_cart = ()=>{
+            let params = {
+                goods_id:data.goods_info.id, // 商品ID
+                sku_id:data.sku_id, // SKUid 没有则为0
+                buy_num:data.buy_num, // 购买数量
+            };
+            proxy.R.post('/user/carts',params).then(res=>{
+                if(!res.code) proxy.$message.success(proxy.$t('msg.success'))
+                store.dispatch('init/loadCart')
+            }).catch((err)=>{
+                console.log(err)
+            })
+        }
+
+        // tabs 选项卡改变
+        const tabClick = (e)=>{
+            if(e.paneName == 2) comment_type_click(0)
+        }
+
+        // 评论选择
+        const comment_type_click = (e)=>{
+            data.params.is_type = e
+            goods_comments()
+        }
+
+        // 获取评论
+        const goods_comments = async ()=>{
+            let resp = await proxy.R.get('/goods_comments/'+data.goods_id,data.params)
+            data.comments = resp.data
+            data.params.total = parseInt(resp.total)
+            data.params.per_page = parseInt(resp.per_page)
+            data.params.current_page = parseInt(resp.current_page)
+        }
+
+        const timing = (market)=>{
+            if(market){
+                if(data.timeObj != null) clearInterval(data.timeObj)
+                data.timeObj = setInterval(()=>{
+                    let timeVal = dayjs(market.end_time).diff(dayjs(),'s')
+                    data.seckills.format_time = formatTime(timeVal)// 时间戳转换
+                    if(dayjs(market.end_time).unix()<dayjs().unix()){
+                        clearInterval(data.timeObj);
+                        router.go(0);
+                    }
+                },1000)
+            }
+        }
+
+        // 规格属性选择
+        const attr_click = (e,index)=>{
+            data.goods_info.attrList[e]['specs'].forEach((res,key)=>{
                 res.is_chose = false;
                 if(key == index){
                     res.is_chose = true;
                 }
             });
-            this.buy_num = 1;
+            data.buy_num = 1;
 
             // 循环获取选择的规格属性
             let chose_spec = [];
-            this.goods_info.attrList.forEach(res=>{
+            data.goods_info.attrList.forEach(res=>{
                 res['specs'].forEach(listRes=>{
-                    if(!this.$isEmpty(listRes.is_chose) && listRes.is_chose == true){
+                    if(!proxy.R.isEmpty(listRes.is_chose) && listRes.is_chose == true){
                         chose_spec.push(listRes.id);
                     }
                 });
             });
             
-            this.chose_spec = chose_spec;
+            data.chose_spec = chose_spec;
             
             // 如果选择数量和规格数量一致则表示选择完所有的规格属性
-            if(this.chose_spec.length == this.goods_info.attrList.length){
-                this.get_spec_attr_data();
+            if(data.chose_spec.length == data.goods_info.attrList.length){
+                get_spec_attr_data();
             }
 
-            this.$forceUpdate();
-        },
+            // this.$forceUpdate();
+        }
+
         // 根据选择的规格属性去获取数据库存在的规格数据
-        get_spec_attr_data:function(){
-            this.goods_info.skuList.forEach(res=>{
+        const get_spec_attr_data = ()=>{
+            data.goods_info.skuList.forEach(res=>{
                 let a = 0;
-                this.chose_spec.forEach(specRes=>{
+                data.chose_spec.forEach(specRes=>{
                     res.spec_id.forEach(itm=>{
                         if(itm == specRes){
                              a += 1;
                         }
                     })
                 });
-                if(a == this.goods_info.attrList.length){
-                    this.chose_spec_info = res;
-                    this.sku_id = res.id;
-                    return this.change_goods_info(res);
+                if(a == data.goods_info.attrList.length){
+                    data.chose_spec_info = res;
+                    data.sku_id = res.id;
+                    return change_goods_info(res);
                 }
             });
-        },
-        change_goods_info:function(res){
-            this.goods_info.goods_price = res.goods_price;
-            this.goods_info.goods_market_price = res.goods_market_price;
-            this.goods_info.goods_stock = res.goods_stock;
-        },
+        }
+
+        const change_goods_info = (res)=>{
+            data.goods_info.goods_price = res.goods_price;
+            data.goods_info.goods_market_price = res.goods_market_price;
+            data.goods_info.goods_stock = res.goods_stock;
+        }
+
         // 存储数据记录
-        save_history_fun:function(goods_info){
-            this.save_history=false;
+        const save_history_fun = (goods_info)=>{
+            data.save_history=false;
             let goods_json = localStorage.getItem('shop_goods_historys');
             let goods_list = [];
 
-            if(!this.$isEmpty(goods_json)){
+            if(!proxy.R.isEmpty(goods_json)){
                 goods_list = JSON.parse(goods_json);
             }
             
@@ -508,94 +543,64 @@ export default {
             let json_str = JSON.stringify(goods_list);
             localStorage.setItem('shop_goods_historys',json_str);
 
-        },
-        pre_img:function(){
-            if(this.chose_img_pos<=0){
-                this.chose_img_pos = this.goods_info.goods_images.length-1;
-            }else{
-                this.chose_img_pos -= 1;
-            }
-        },
-        next_img:function(){
-            if(this.chose_img_pos>=this.goods_info.goods_images.length-1){
-                this.chose_img_pos = 0;
-            }else{
-                this.chose_img_pos += 1;
-            }
-        },
-        // 点击缩略图幻灯片图片
-        click_silde_img:function(e){
-            this.chose_img_pos = e;
-        },
-        // 购买数量修改
-        change_buy_num:function(type){
-            if(type){
-                if(this.buy_num+1>this.goods_info.goods_stock){
-                    return this.$message.error('库存不足');
-                }
-                this.buy_num += 1;
-            }else{
-                if(this.buy_num<=1){
-                    return this.$message.error('最低购买数量为 1');
-                }
-                this.buy_num -= 1
-            }
-        },
-        goods_fav(){
-            if(this.isFav){
-                return this.del_fav(this.goods_info.id);
-            }else{
-                return this.add_fav(this.goods_info.id);
-            }
-        },
-        // 添加收藏
-        add_fav(id){
-            this.$post(this.$api.homeFav,{id:id,is_type:0}).then(res=>{
-                return this.is_fav(id);
-            })
-        },
-        // 删除收藏
-        del_fav(id){
-            this.$delete(this.$api.homeFav+'/'+id,{is_type:0}).then(res=>{
-                return this.is_fav(id);
-            })
-        },
-        // 判断是否收藏该产品
-        is_fav(id){
-            this.$get(this.$api.homeFav+'/'+id,{is_type:0}).then(res=>{
-                if(res.code == 200){
-                    return this.isFav = true;
-                }else{
-                    return this.isFav = false;
-                }
-            })
-        },
-        // 领取优惠券
-        receiveCoupon(id){
-            this.$post(this.$api.homeCoupon+'/receive',{id:id}).then(res=>{
-                return this.$returnInfo(res)
-            })
         }
-        
-    },
-    created() {
-        this.goods_id = this.$route.params.id;
-        this.get_goods_info();
-        this.get_goods_comments();
-        this.get_goods_goods_comment_statistics();
-    },
-    mounted() {},
-    beforeRouteUpdate (to, from, next) {
-        console.log(to,from);
-        if(from.params.id != to.params.id){
-            this.goods_id = to.params.id;
-            this.get_goods_info();
+
+        // 分页
+        const handleCurrentChange = (e)=>{
+            data.params.page = e
+            if(data.params.per_page) loadData()
         }
-        next();
-        // react to route changes...
-        // don't forget to call next()
-    }
-};
+
+        // editor
+        const editorHtml = (e)=>{
+            return editorHandle(e)
+        }
+
+        onMounted( () => {
+            data.goods_id = route.params.id
+            loadData()
+        })
+
+        watch(()=>data.buy_num,(e)=>{
+            if(e>data.goods_info.goods_stock || e<=0){
+                if(data.goods_info.goods_stock != 0){
+                    proxy.$message.error(proxy.$t('home.goods.buyNumErr'));
+                    data.buy_num = data.goods_info.goods_stock;
+                }
+            }
+        })
+
+        watch(()=>route.params.id,(e)=>{
+            if(!e) return
+            data.goods_id = e
+            loadData()
+        })
+
+        // 页面取消挂载
+        onBeforeUnmount(()=>{
+            if(data.timeObj != null) clearInterval(data.timeObj)
+        })
+
+        return {
+            data,handleCurrentChange,tabClick,
+            pre_img,next_img,click_silde_img,goods_fav,receiveCoupon,comment_type_click,editorHtml,
+            change_buy_num,buy,add_cart,attr_click,
+        }
+    },
+   
+    
+  
+    // beforeRouteUpdate (to, from, next) {
+    //     console.log(to,from);
+    //     if(from.params.id != to.params.id){
+    //         this.goods_id = to.params.id;
+    //         this.get_goods_info();
+    //     }
+    //     next();
+    //     // react to route changes...
+    //     // don't forget to call next()
+    // }
+}
 </script>
 <style lang="scss" scoped>
 .goods_info_content{
@@ -603,6 +608,7 @@ export default {
         border:1px solid #efefef;
         padding:20px;
         box-sizing: border-box;
+        min-height: 600px;
         width: 946px;
         float: left;
         .user_content_blcok_line{
@@ -628,21 +634,25 @@ export default {
                     color:#999;
                     position: absolute;
                     top:-16px;
-                    left: 140px;
+                    left: 150px;
                 }
             }
             .right_comment_list{
+                ul{
+                    display: flex;
+                }
                 ul li{
-                    float: left;
+                    cursor: pointer;
+                    flex: 1;
                     line-height: 48px;
                     margin-left: 35px;
                     margin-top: 25px;
                     color:#666;
                     height: 48px;
-                    padding:0 40px;
                     font-size: 14px;
                     background: #efefef;
                     border-radius: 3px;
+                    text-align: center;
                 }
                 ul li.red{
                     background: #efefef;
@@ -693,7 +703,7 @@ export default {
                         position: relative;
                         .title{
                             width: 120px;
-                            height: 45px;
+                            height: 55px;
                             overflow: hidden;
                         }
                         .price{
@@ -816,11 +826,16 @@ export default {
             border:1px solid #efefef;
             width: 25px;
             height: 25px;
-            // line-height: 25px;
+            line-height: 24px;
             text-align: center;
             float: left;
             margin-right: 10px;
             color:#666;
+            &:hover{
+                background: #333;
+                color:#fff;
+                border:1px solid #333;
+            }
         }
         .goods_info_num_stock{
             line-height: 25px;
@@ -853,10 +868,12 @@ export default {
         border-radius: 3px;
         color:#fff;
         padding: 0 15px;
-        i{
-            margin-right: 6px;
-            font-size: 16px;
-            font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+            width: 20px;
+            margin-right: 5px;
         }
     }
     .goods_info_buy{
@@ -864,7 +881,6 @@ export default {
         background: #ca151e;
         i{
             font-size: 16px;
-            font-weight: bold;
         }
     }
 
@@ -899,7 +915,7 @@ export default {
         padding: 20px;
         // padding-bottom: 90px;
         height: 170px;
-        background: url("../../../asset/pc/summary-bg.jpg");
+        background: url("../../../assets/Home/summary-bg.jpg");
     }
     .goods_info_price{
         color:#ca151e;
@@ -929,7 +945,7 @@ export default {
         right: 16px;
         color:#333;
         top: 30px;
-        font{
+        em{
             margin-left: 10px;
             margin-right: 10px;
         }
@@ -951,7 +967,7 @@ export default {
         span{
             color:#999;
         }
-        font{
+        em{
             background: #ff6590;
             color:#fff;
             line-height: 34px;
@@ -959,10 +975,10 @@ export default {
             margin-right: 10px;
             border-radius: 3px;
         }
-        font.noy{
+        em.noy{
             background: #67c23a;
         }
-        font.noz{
+        em.noz{
             background: #999;
         }
         .goods_skill{
@@ -970,19 +986,16 @@ export default {
             background: #fef0f0;
             border:1px solid  #fde2e2;
             font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content:space-between;
             span{
                 color:#f56c6c;
                 line-height: 40px;
-                i{
-                    font-size: 18px;
-                    line-height: 42px;
-                    margin-right: 20px;
-                    margin-left: 20px;
-                    float: left;
-                }
+                display: flex;
+                align-items: center;
             }
             span.span_time{
-                float: right;
                 margin-right: 30px;
             }
         }
@@ -990,6 +1003,7 @@ export default {
             cursor: pointer;
             background: #f0f9eb;
             border: 1px solid #e1f3d8;
+            
             span{
                 color:#67c23a;
             }
@@ -1170,6 +1184,8 @@ export default {
     height: 32px;
     
     .tuan_item{
+        height: 30px;
+        overflow: hidden;
         &:after{
             content:'';
             display: block;
@@ -1207,6 +1223,86 @@ export default {
             line-height: 32px;
             padding:0 10px;
         }
+    }
+}
+.goods_info_temp{
+    .mbx{margin-top:30px;margin-bottom: 30px;}
+}
+.rate_class{
+    font-size: 14px;
+    float: left;
+    margin-top: 10px;
+    &.other{
+        margin-top: 6px;
+    }
+}
+.comment_list_block{
+    ul li{
+        padding-top: 20px;
+        border-bottom: 1px solid #efefef;
+        padding-bottom: 30px;
+        
+    }
+    ul li:after{
+        clear: both;
+        display: block;
+        content:'';
+    }
+    .comment_avatar{
+        width: 40px;
+        height: 40px;
+        float: left;
+        border-radius: 50%;
+        background: #efefef;
+        margin-right: 15px;
+    }
+    .comment_nickname{
+        font-size: 14px;
+        color:#666;
+        font-weight: bold;
+    }
+    .comment_star{
+        height: 30px;
+        font-size: 14px;
+        color:#666;
+        line-height: 30px;
+        em{
+            float: left;
+            margin-right: 10px;
+        }
+        .store_star_in{
+            float: left;
+            margin-top: 5px;
+        }
+    }
+    .comment_content{
+        margin-top: 10px;
+        border-top: 1px dashed #efefef;;
+        padding-top: 10px;
+        margin-left: 55px;
+        font-size: 14px;
+        color:#666;
+    }
+    .comment_images{
+        margin-left: 55px;
+        margin-top: 20px;
+        .comment_image{
+            height: 90px;
+            width: 90px;
+            border:1px solid #efefef;
+            margin-right: 20px;
+            float: left;
+            .el_image{
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+    .reply{
+        margin-left: 40px;
+        .comment_nickname{color:#ca151e}
+        .comment_content{color:#ca151e}
+        .comment_content{color:#ca151e}
     }
 }
 </style>

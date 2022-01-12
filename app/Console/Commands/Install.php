@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
 
 class Install extends Command
 {
@@ -35,7 +34,7 @@ class Install extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
      */
     public function handle()
     {
@@ -88,15 +87,12 @@ class Install extends Command
             'DB_PASSWORD'   =>  $dbPassword,
         ]);
 
-        $bar = $this->output->createProgressBar(3);
+        $bar = $this->output->createProgressBar(4);
 
         // 执行migrate
         $bar->advance(); // 第一步
         $this->line('');
         $this->line('');
-        $this->line('Config Clear. Please wait...');
-        Artisan::call('config:clear'); // 清空缓冲
-        Artisan::call('config:cache'); // 继续缓冲
         $this->line('Data migration. Please wait...');
         Artisan::call('migrate'); // 原本想使用这个太麻烦
         $this->line('');
@@ -112,13 +108,13 @@ class Install extends Command
         $this->line('');
         $this->info('Create soft link link storage successfully.');
 
-        // 修改前端接口链接
+        // 前端打包
         $bar->advance(); // 第三步
-        Artisan::call('qwshop:vue '.$domain);
+        $this->line('npm run prod. Please wait...');
+        exec('npm run prod 2>&1'); 
         $this->line('');
         $this->line('');
-        $this->info('Modify front end interface link successfully.');
-
+        $this->info('Create soft link link storage successfully.');
         $bar->finish();
 
       

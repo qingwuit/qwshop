@@ -1,31 +1,22 @@
 <template>
-    <a-config-provider :locale="locale">
-        <router-view></router-view>
-    </a-config-provider>
+    <router-view></router-view>
 </template>
-
 <script>
-const { locales } = window.antd;
+// import { useStore } from 'vuex'
+import {onBeforeMount,onMounted,getCurrentInstance} from "vue"
 export default {
-    components: {},
-    props: {},
-    data() {
-      return {
-          locale: locales.zh_CN,
-      };
+    setup() {
+        console.log("青梧系统： https//:www.qingwuit.com  QQ群：1062159788")
+        // const store = useStore()
+        // const beforeMount = onBeforeMount(()=>{
+            
+        // })
+        // const mounted = onMounted(()=>{
+            
+        // })
     },
-    watch: {},
-    computed: {},
-    methods: {},
-    created() {console.log('青梧系统： https//:www.qingwuit.com  QQ群：1062159788');},
-    mounted() {},
-    
-};
-</script>
-<style lang="scss">
-#app{
-  color:#333;
-  font-size: 14px;
-  height: 100%;
 }
+</script>
+<style lang="scss" >
+
 </style>

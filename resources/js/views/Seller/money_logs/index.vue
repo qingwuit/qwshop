@@ -1,95 +1,90 @@
 <template>
-    <div class="qingwu">
-        <div class="admin_table_page_title">店铺资金</div>
-        <div class="unline underm"></div>
-
-        <div class="admin_table_handle_btn">
-        </div>
-        <div class="admin_table_list">
-            <div class="money_logs_title">
-                <a-descriptions bordered :column="{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }">
-                    <a-descriptions-item label="店铺余额">
-                    <font color="red">￥{{store_info.store_money||0.00}}</font>
-                    </a-descriptions-item>
-                    <a-descriptions-item label="冻结资金">
-                    <font color="#999">￥{{store_info.store_frozen_money||0.00}}</font>
-                    </a-descriptions-item>
-                    <!-- <a-descriptions-item label="操作">
-                        <a-button type="danger">立即提现</a-button>
-                    </a-descriptions-item>
-                    <a-descriptions-item label="-">
-                    </a-descriptions-item> -->
-                    
-                </a-descriptions>
-            </div>
-            
-            <a-table :columns="columns" :data-source="list" :pagination="false" :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" row-key="id">
-                <span slot="money" slot-scope="rows">
-                    <font v-if="rows.money>=0" color="red">+{{rows.money}}</font>
-                    <font v-if="rows.money<0" color="#42b983">{{rows.money}}</font>
-                </span>
-                <span slot="is_type" slot-scope="rows">
-                    <a-tag v-if="rows.is_type==0">余额</a-tag>
-                    <a-tag v-if="rows.is_type==1">冻结资金</a-tag>
-                    <a-tag v-if="rows.is_type==2">积分</a-tag>
-                </span>
-            </a-table>
-            <div class="admin_pagination" v-if="total>0">
-                <a-pagination v-model="params.page" :page-size.sync="params.per_page" :total="total" @change="onChange" show-less-items />
-            </div>
-        </div>
+    <div class="qwit">
+        <table-view :handleWidth="'80px'" :options="options" :params="params" :btnConfig="btnConfigs" :dialogParam="dialogParam" >
+            <template #table_top_hook>
+                <el-row class="money_log_row">
+                    <el-col class="money_log_col" :span="3">店铺余额</el-col>
+                    <el-col class="money_log_col" :span="9">{{$t('btn.money')}} {{data.store.store_money??0.00}}</el-col>
+                    <el-col class="money_log_col" :span="3">冻结资金</el-col>
+                    <el-col class="money_log_col" :span="9">{{$t('btn.money')}} {{data.store.store_frozen_money??0.00}}</el-col>
+                </el-row>
+            </template>
+        </table-view>
     </div>
 </template>
 
 <script>
+import {reactive,getCurrentInstance} from "vue"
+import tableView from "@/components/common/table"
 export default {
-    components: {},
-    props: {},
-    data() {
-      return {
-          params:{
-              page:1,
-              per_page:30,
-          },
-          total:0, //总页数
-          selectedRowKeys:[], // 被选择的行
-          columns:[
-              {title:'#',dataIndex:'id',fixed:'left'},
-              {title:'名称',dataIndex:'name'},
-              {title:'资金',key:'id',scopedSlots: { customRender: 'money' }},
-              {title:'类型',key:'id',scopedSlots: { customRender: 'is_type' }},
-              {title:'原因',dataIndex:'info'},
-              {title:'创建时间',dataIndex:'created_at'},
-          ],
-          list:[],
-          store_info:{},
-      };
-    },
-    watch: {},
-    computed: {},
-    methods: {
-        // 选择框被点击
-        onSelectChange(selectedRowKeys) {
-            this.selectedRowKeys = selectedRowKeys;
-        },
-       
- 
-        onload(){
-            this.$get(this.$api.sellerMoneyLogs,this.params).then(res=>{
-                this.total = res.data.total;
-                this.store_info = res.data.store_info
-                this.list = res.data.data;
-            });
-        },
-    },
-    created() {
-        this.onload();
-    },
-    mounted() {}
-};
+    components:{tableView},
+    setup(props) {
+        const {proxy} = getCurrentInstance()
+        const options = reactive([
+            {label:'名称',value:'name'},
+            {label:'资金',value:'money',type:'money'},
+            {label:'类型',value:'is_type',type:'dict_tags'},
+            {label:'商家',value:'is_belong',type:'dict_tags'},
+            {label:'创建时间',value:'created_at'},
+        ]);
+        // 表单配置 
+        const addColumn = [
+            {label:'名称',value:'name'},
+            {label:'资金',value:'money'},
+            {label:'类型',value:'is_type',type:'dict_tags'},
+            {label:'商家',value:'is_belong',type:'dict_tags'},
+        ]
+        
+        const btnConfigs = reactive({
+            store:{show:false},
+            update:{show:false},
+            destroy:{show:false},
+        })
+
+        const dialogParam = reactive({
+            dictData:{
+                is_type:[{label:proxy.$t('user.frozen_money'),value:'1'},{label:proxy.$t('user.money'),value:'0'},{label:proxy.$t('user.integral'),value:'2'}],
+                is_belong:[{label:proxy.$t('btn.yes'),value:'1'},{label:proxy.$t('btn.no'),value:'0'}],
+            },
+            view:{column:addColumn},
+        })
+
+        const params = reactive({
+            is_belong:'0|gt',
+        })
+
+        const data = reactive({
+            store:{},
+        })
+
+        const loadData = ()=>{
+            // 获取店铺信息
+            proxy.R.get('/Seller/stores/0').then(res=>{
+                if(!res.code) data.store = res
+            })
+        }
+
+        loadData()
+
+        return {options,btnConfigs,dialogParam,params,data}
+    }
+}
 </script>
+
 <style lang="scss" scoped>
-.money_logs_title{
-    margin-bottom: 30px;
+.money_log_row{
+    border:1px solid #efefef;
+    margin-bottom: 20px;
+    text-align: center;
+    border-radius: 3px;
+}
+.money_log_col{
+    border-right: 1px solid #efefef;
+    padding:20px 0;
+    background: #f5f5f5;
+    &:last-child{border-right: none;}
+    &:nth-child(2n){
+        background: none;
+    }
 }
 </style>

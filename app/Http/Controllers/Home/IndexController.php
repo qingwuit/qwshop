@@ -3,21 +3,32 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
-use App\Services\AdvService;
-use App\Services\GoodsClassService;
-use App\Services\SeckillService;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    // 获取首页信息
-    public function index(GoodsClassService $goods_class_service,AdvService $adv_service,SeckillService $seckill_service){
-        $data['goods'] = $goods_class_service->is_master(8)['data']; // 获取商品首页信息
-        $data['banner_bottom_adv'] = $adv_service->getAdvList('PC_幻灯片下广告')['data'];
-        $data['class_left_adv'] = $adv_service->getAdvList('PC_栏目左侧广告')['data'];
-        $data['class_top_adv'] = $adv_service->getAdvList('PC_栏目顶部广告')['data'];
-        $data['banner'] = $adv_service->getAdvList('PC_首页幻灯片')['data'];
-        $data['seckill_list'] = $seckill_service->getIndexSeckillAndGoods(4)['data'];
+
+    // 首页公共数据
+    public function common(){
+        $data['classes'] = $this->getService('Tool')->getChildren($this->getService('GoodsClass',true)->orderBy('is_sort','asc')->get()); // 商品分类
+        $data['brands'] = $this->getService('GoodsBrand',true)->orderBy('is_sort','asc')->get(); // 商品品牌
+
+        // 可以使用 Resource 控制达到脱敏
+        $data['common'] = $this->getService('Configs')->getFormatConfig([
+            'web_name','logo','index_name','keyword','description','mobile','email','icp','close_status','amap','close_reason'
+        ]);
+        $data['ip'] = request()->getClientIp();
+        
+        // 购物车数据
+        $data['cart'] = $this->getService('Cart')->getCount()['data'];
+        
         return $this->success($data);
     }
+
+    // 首页信息
+    public function home(){
+        $data['goods'] = $this->getService('Goods')->master(8)['data'];
+        return $this->success($data);
+    }
+    
 }

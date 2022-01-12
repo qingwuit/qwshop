@@ -13,14 +13,14 @@ class Mysql extends Command
      *
      * @var string
      */
-    protected $signature = 'qwshop:mysql {name=insert}';
+    protected $signature = 'qwshop:mysql';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'sql handle restart:drop db';
+    protected $description = 'Command description';
 
     /**
      * Create a new command instance.
@@ -35,15 +35,12 @@ class Mysql extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
      */
     public function handle()
     {
-        $name = $this->argument('name');
-        if($name == 'insert'){
-            // 执行seeder 清空数据
-            Artisan::call('db:seed --class=DatabaseSeeder');
-            DB::unprepared(file_get_contents(app_path('Console'.DIRECTORY_SEPARATOR.'Commands'.DIRECTORY_SEPARATOR.'qwshop.sql'))); // 直接执行sql文件 导入数据
-        }
+        Artisan::call('migrate:rollback'); // 先清空
+        Artisan::call('migrate'); // 迁移
+        DB::unprepared(file_get_contents(app_path('Console'.DIRECTORY_SEPARATOR.'Commands'.DIRECTORY_SEPARATOR.'qwshop.sql'))); // 直接执行sql文件 导入数据
     }
 }
