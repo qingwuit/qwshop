@@ -87,7 +87,7 @@ class Install extends Command
             'DB_PASSWORD'   =>  $dbPassword,
         ]);
 
-        $bar = $this->output->createProgressBar(4);
+        $bar = $this->output->createProgressBar(3);
 
         // 执行migrate
         $bar->advance(); // 第一步
@@ -104,14 +104,6 @@ class Install extends Command
         // 创建软链接链接storage
         $bar->advance(); // 第二步
         Artisan::call('storage:link');
-        $this->line('');
-        $this->line('');
-        $this->info('Create soft link link storage successfully.');
-
-        // 前端打包
-        $bar->advance(); // 第三步
-        $this->line('npm run prod. Please wait...');
-        exec('npm run prod 2>&1'); 
         $this->line('');
         $this->line('');
         $this->info('Create soft link link storage successfully.');
