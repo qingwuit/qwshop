@@ -17,9 +17,7 @@
         "postcss": "^8.1.14",
         "resolve-url-loader": "^4.0.0",
         "sass": "^1.43.2",
-        "vue-loader": "^16.8.1",
-        "json-schema": ">=0.4.0",
-        "node-forge": ">=1.0.0"
+        "vue-loader": "^16.8.1"
     },
     "dependencies": {
         "@element-plus/icons": "0.0.11",
