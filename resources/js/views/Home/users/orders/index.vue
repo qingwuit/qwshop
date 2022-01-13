@@ -2,23 +2,34 @@
     <div class="user_order">
         <div class="user_main">
             <div class="block_title">
-                我的订单
+                <div class="user_order_search">
+                    <ul>
+                        <li style="padding:0;">
+                            <el-select style="width:100px" v-model="data.params.order_status">
+                                <el-option v-for="(v,k) in data.searchConfig" :key="k" :label="v.label" :value="v.value"></el-option>
+                            </el-select>
+                        </li>
+                        <li style="padding:0;">
+                            <el-input v-model="data.params.order_no" placeholder="订单号" />
+                        </li>
+                        <li style="padding:0;" >
+                            <el-date-picker
+                                v-model="data.params.created_at"
+                                type="daterange"
+                                :start-placeholder="'Start date'"
+                                :end-placeholder="'End date'"
+                                value-format="YYYY-MM-DD"
+                            />
+                        </li>
+                        <li :class="data.params.is_type==0?'ck':''" @click="typeChange(0)">本周</li>
+                        <li :class="data.params.is_type==1?'ck':''" @click="typeChange(1)">本月</li>
+                        <li :class="'ck'" @click="loadData"> <i class="fa fa-search" /> </li>
+                        
+                    </ul>
+                </div>
+                <em style="line-height:27px">我的订单</em>
             </div>
             <div class="x20"></div>
-
-            <!-- <div class="home_search_block">
-                <a-form layout="inline">
-                    <a-form-item label="订单号码">
-                        <a-input v-model="params['order_no']" :placeholder="'2020091418433488438'"/>
-                    </a-form-item>
-                    <a-form-item label="订单状态">
-                        <a-select  v-model="params['order_status']" style="width:160px" >
-                            <a-select-option v-for="(vo,key) in searchConfig[1].data" :key="key" :value="vo.value">{{vo.label}}</a-select-option>
-                        </a-select>
-                    </a-form-item>
-                    <span class="default_btn" style="margin-top:5px;display:inline-block;padding:4px 15px;" @click="search()"><a-icon type="search" />&nbsp;查询</span>
-                </a-form>
-            </div> -->
 
             <div class="safe_block" >
               <div class="order_list" v-if="data.list.length>0">
@@ -81,12 +92,15 @@
 <script>
 import search from '@/components/common/search'
 import {reactive,onMounted,getCurrentInstance} from "vue"
-import {useRouter} from 'vue-router'
+import {Search} from '@element-plus/icons'
+import {useRouter,useRoute} from 'vue-router'
+import dayjs from 'dayjs'
 export default {
-    components: {search},
+    components: {Search,search},
     setup(props) {
         const {proxy} = getCurrentInstance()
         const router = useRouter()
+        const route = useRoute()
         const data = reactive({
             params:{
                 page:1,
@@ -98,17 +112,14 @@ export default {
             total:0, //总页数
             list:[],
             searchConfig:[
-                {label:'订单号',name:'order_no',type:'text'},
-                {label:'订单状态',name:'order_status',type:'select',data:[
-                    {label:'全部订单',value:-1},
-                    {label:'订单取消',value:0},
-                    {label:'等待支付',value:1},
-                    {label:'等待发货',value:2},
-                    {label:'确认收货',value:3},
-                    {label:'等待评论',value:4},
-                    {label:'售后订单',value:5},
-                    {label:'订单完成',value:6},
-                ]},
+                {label:'全部订单',value:-1},
+                {label:'订单取消',value:0},
+                {label:'等待支付',value:1},
+                {label:'等待发货',value:2},
+                {label:'确认收货',value:3},
+                {label:'等待评论',value:4},
+                {label:'售后订单',value:5},
+                {label:'订单完成',value:6},
             ],
             order_info:{
                 delivery_list:[],
@@ -153,96 +164,26 @@ export default {
             router.push("/order/pay/"+str);
         }
 
+        // 搜索条件
+        const typeChange = (e)=>{
+            if(e==0) data.params.created_at = [dayjs().day(0).format('YYYY-MM-DD'),dayjs().day(6).format('YYYY-MM-DD')]
+            if(e==1) data.params.created_at = [dayjs().date(0).format('YYYY-MM-DD'),dayjs().date(31).format('YYYY-MM-DD')]
+            data.params.is_type = e
+        }
+        
         onMounted(() => {
+            console.log(route.params)
+            if(route.params.status) data.params.order_status = parseInt(route.params.status)
             loadData()
+            // data.params.created_at = [dayjs().format('YYYY-MM-DD'),dayjs().add(1, 'day').format('YYYY-MM-DD')]
         })
 
         return {
             data,
-            handleCurrentChange,edit_order_status,pay_order,
+            handleCurrentChange,edit_order_status,pay_order,typeChange,loadData,
         }
     },
-    // props: {},
-    // data() {
-    //   return {
-    //       params:{
-    //           page:1,
-    //           per_page:20,
-    //           order_status:'',
-    //       },
-    //       total:0, //总页数
-    //       list:[],
-    //       searchConfig:[
-    //           {label:'订单号',name:'order_no',type:'text'},
-    //           {label:'订单状态',name:'order_status',type:'select',data:[
-    //               {label:'全部订单',value:''},
-    //               {label:'订单取消',value:0},
-    //               {label:'等待支付',value:1},
-    //               {label:'等待发货',value:2},
-    //               {label:'确认收货',value:3},
-    //               {label:'等待评论',value:4},
-    //               {label:'售后订单',value:5},
-    //               {label:'订单完成',value:6},
-    //           ]},
-    //       ],
-    //       order_info:{
-    //           delivery_list:[],
-    //       },
-    //       visible:false,
-    //   };
-    // },
-    // watch: {},
-    // computed: {},
-    // methods: {
-    //     // 选择分页
-    //     onChange(e){
-    //         this.params.page = e;
-    //     },
-    //     search(params){
-    //         let page = this.params.page;
-    //         let per_page = this.params.per_page;
-
-    //         // 事件需要格式化，后面再看看有没有更好得到办法
-    //         if(!this.$isEmpty(params.created_at) && !this.$isEmpty(params.created_at[0])){
-    //             params.created_at[0] = moment(params.created_at[0]).format('YYYY-MM-DD HH:mm:ss');
-    //             params.created_at[1] = moment(params.created_at[1]).format('YYYY-MM-DD HH:mm:ss');
-    //         }
-    //         this.params = params;
-    //         this.params.page = page;
-    //         this.params.per_page = per_page;
-    //         this.onload();
-    //     },
-    //     onload(){
-    //         console.log(this.$route)
-    //         if(!this.$isEmpty(this.$route.params.status)){
-    //             this.params.order_status = this.$route.params.status;
-    //         }
-    //         this.$get(this.$api.homeOrder,this.params).then(res=>{
-    //             this.list = res.data.data;
-    //             this.total = res.data.total;
-    //         })
-    //     },
-    //     get_order_info(id){
-    //         this.$get(this.$api.homeOrder+'/get_order_info/'+id).then(res=>{
-    //             this.visible = true;
-    //             this.order_info = res.data;
-    //         })
-    //     },
-    //     pay_order(order_id){
-    //         let str = window.btoa(JSON.stringify({order_id:[order_id]})); 
-    //         this.$router.push("/order/order_pay/"+str);
-    //     },
-    //     edit_order_status(id,order_status=0){
-    //         this.$put(this.$api.homeOrder+'/'+'edit_order_status',{id:id,order_status:order_status}).then(res=>{
-    //             this.onload();
-    //             return this.$returnInfo(res)
-    //         })
-    //     },
-    // },
-    // created() {
-    //     this.onload()
-    // },
-    // mounted() {}
+ 
 };
 </script>
 <style lang="scss" scoped>
@@ -370,5 +311,37 @@ export default {
         }
     }
 }
-
+.user_order_search{
+    float: right;
+    display: block;
+    ul{
+        li{
+            float: left;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+            padding:6px 15px;
+            border-radius: 3px;
+            background: #f1f1f1;
+            &:hover{
+                background:var(--el-color-primary);
+                color:#fff;
+            }
+            &.ck{
+                background:var(--el-color-primary);
+                color:#fff;
+            }
+        }
+    }
+    .el-range-editor.el-input__inner{
+        width: 250px;
+    }
+}
+</style>
+<style lang="scss">
+.user_order_search{
+    .el-range-editor.el-input__inner{
+        width: 250px;
+    }
+}
 </style>

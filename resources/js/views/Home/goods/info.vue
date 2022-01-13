@@ -130,24 +130,24 @@
                         <span class="title">{{data.store_info['store_name']||'加载中...'}}</span>
                     </div>
                     <div class="rate">
-                        <span style="float:left;padding-top:2px;margin-right:10px">综合评分</span>
+                        <span style="padding-top:2px;margin-right:10px">综合评分</span>
                         <el-rate class="rate_class" v-model="data.rate_info.scoreAll"  :score-template="'{value} 分'" text-color="#F7BA2A" show-score disabled />
                         <div class="clear"></div>
                     </div>
                     <div class="store_rate">
                         <div class="title">店铺评分：</div>
                         <div class="item">
-                            <span style="float:left;padding-top:2px;margin-right:10px">描述相符</span>
+                            <span style="float:left;padding-top:2px;margin-right:10px;line-height:32px">描述相符</span>
                             <el-rate class="rate_class other" v-model="data.rate_info.agreeAll"  :score-template="'{value} 分'" text-color="#F7BA2A" show-score disabled />
                             <div class="clear"></div>
                         </div>
                         <div class="item">
-                            <span style="float:left;padding-top:2px;margin-right:10px">服务态度</span>
+                            <span style="float:left;padding-top:2px;margin-right:10px;line-height:32px">服务态度</span>
                             <el-rate class="rate_class other" v-model="data.rate_info.serviceAll"  :score-template="'{value} 分'" text-color="#F7BA2A" show-score disabled />
                             <div class="clear"></div>
                         </div>
                         <div class="item">
-                            <span style="float:left;padding-top:2px;margin-right:10px">发货速度</span>
+                            <span style="float:left;padding-top:2px;margin-right:10px;line-height:32px">发货速度</span>
                             <el-rate class="rate_class other" v-model="data.rate_info.speedAll" :score-template="'{value} 分'" text-color="#F7BA2A" show-score  disabled />
                             <div class="clear"></div>
                         </div>
@@ -199,23 +199,6 @@
                         </div>
                         <div class="user_content_blcok_line"></div>
                         <div class="comment_list_block">
-                            <!-- <a-list :data-source="data.comments">
-                                <a-list-item slot="renderItem" slot-scope="item">
-                                    <a-comment :author="item.user.nickname" :avatar="item.user.avatar||require('@/assets/Home/user_default.png')">
-                                        {{ item.content }}
-                                        <el-tooltip slot="datetime" :title="item.created_at">
-                                        <span>{{item.created_at}}</span>
-                                        </el-tooltip>
-                                        <a-comment v-if="item.reply != ''" :author="'售后客服'" :avatar="item.user.avatar||require('@/assets/Home/kefu.png')">
-                                            <em style="color:red">{{ item.reply }}</em>
-                                            <el-tooltip slot="datetime" :title="item.reply_time">
-                                            <span>{{item.reply_time}}</span>
-                                            </el-tooltip>
-                    
-                                        </a-comment>
-                                    </a-comment>
-                                </a-list-item>
-                            </a-list> -->
                             <ul>
                                 <li v-for="(v,k) in data.comments" :key="k">
                                     <div class="comment_avatar"><el-image :src="v.avatar||require('@/assets/Home/user_default.png').default"></el-image></div>
@@ -223,9 +206,10 @@
                                     <div class="comment_star"><em>评价得分：</em><div class="store_star_in"><el-rate disabled v-model="v.score" :score-template="'{value} 分'" text-color="#F7BA2A" show-score></el-rate></div></div>
                                     <div class="comment_content">评价内容：<em style="color:#999">{{v.content||'good!~'}}</em></div>
                                     <div class="comment_images" v-if="v.image.length>0">
-                                        <div class="comment_image" v-for="(vo,key) in v.comment_images" :key="key"><el-image class="el_image" :initial-index="key" :preview-src-list="v.comment_images" :fit="'cover'" :src="vo"  /></div>
+                                        <div class="comment_image" v-for="(vo,key) in v.image" :key="key"><el-image class="el_image" :initial-index="key" :preview-src-list="v.image" :fit="'cover'" :src="vo"  /></div>
+                                        <div class="clear"></div>
                                     </div>
-                                    <div class="reply">
+                                    <div class="reply" v-if="v.reply!=''">
                                         <div class="comment_avatar"><el-image :src="require('@/assets/Home/kefu.png').default"></el-image></div>
                                         <div class="comment_nickname">售后客服</div>
                                         <div class="comment_content">回复内容：<em >{{v.reply||'good!~'}}</em></div>
@@ -770,7 +754,7 @@ export default {
                 padding-bottom: 10px;
                 border-bottom: 1px solid #efefef;
                 .item{
-                    line-height: 30px;
+                    // line-height: 20px;
                 }
                 .title{
                     color:#000;
@@ -778,8 +762,9 @@ export default {
                 }
             }
             .rate{
-                line-height: 35px;
                 font-size: 14px;
+                display: flex;
+                align-items: center;
                 padding-left:10px;
                 border-bottom: 1px solid #efefef;
             }
@@ -1230,10 +1215,9 @@ export default {
 }
 .rate_class{
     font-size: 14px;
-    float: left;
-    margin-top: 10px;
+    // margin-top: 10px;
     &.other{
-        margin-top: 6px;
+        // margin-top: 6px;
     }
 }
 .comment_list_block{
@@ -1285,7 +1269,7 @@ export default {
     }
     .comment_images{
         margin-left: 55px;
-        margin-top: 20px;
+        margin-top: 10px;
         .comment_image{
             height: 90px;
             width: 90px;
@@ -1299,6 +1283,7 @@ export default {
         }
     }
     .reply{
+        margin-top: 10px;
         margin-left: 40px;
         .comment_nickname{color:#ca151e}
         .comment_content{color:#ca151e}

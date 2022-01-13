@@ -95,6 +95,8 @@ class AuthService extends BaseService{
             'belong_id' =>  0,
         ];
 
+        if(!empty(request('inviter_id'))) $regData['inviter_id'] = request('inviter_id');
+
         if(!$model->create($regData)){
             return; // 账号建立失败
         }

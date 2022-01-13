@@ -30,6 +30,9 @@
                 <div class="delivery_input">
                     <el-form label-position="right" :label-width="'70px'">
                         <el-row :gutter="20" >
+                            <el-col :span="24">
+                                <el-form-item label="发货信息">{{v.receive_name}} | {{v.receive_tel}} ( {{v.receive_area}} {{v.receive_address}} )</el-form-item>
+                            </el-col>
                             <el-col :span="12">
                                 <el-form-item label="物流公司"><q-input v-model:formData="data.order[k].delivery_code" :params="{label:'物流公司',value:'delivery_code',type:'select',labelName:'name',valueName:'code'}" :dictData="{delivery_code:data.delivery}" /></el-form-item>
                             </el-col>

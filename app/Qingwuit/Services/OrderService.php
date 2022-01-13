@@ -382,7 +382,7 @@ class OrderService extends BaseService{
         try {
             DB::beginTransaction();
             $order_model = $this->getService('Order',true)->lockForUpdate()->find($order_id);
-            if(!$order_model) 
+            if(!$order_model) throw new \Exception(__('tip.error'));
             if($auth == 'users'){
                 $userId = $this->getUserId($auth);
                 // 用户不允许随意操作状态，只能修改 取消订单和确定订单
@@ -422,7 +422,7 @@ class OrderService extends BaseService{
                     $delivery_code = request()->delivery_code??'';
                     $delivery_no = request()->delivery_no??'';
                     $order_model->delivery_code = $delivery_code;
-                    $order_model->delivery_code = $delivery_no;
+                    $order_model->delivery_no = $delivery_no;
                     if(empty($delivery_code) || empty($delivery_no)) throw new \Exception(__('tip.order.deliveryEmpty'));
                 break;
                 case 4: // 确认收货 等待评论

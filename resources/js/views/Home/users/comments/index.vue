@@ -1,7 +1,7 @@
 <template>
     <div class="user_main table_lists">
         <div class="block_title">
-            收货地址
+            我的评论
         </div>
         <div class="x20 clear_line"></div>
         <table-view :handleWidth="80" :options="options" :params="{isResource:'HomeUser',isWith:'goods,user'}" :btnConfig="btnConfigs" :dialogParam="dialogParam"></table-view>
@@ -40,6 +40,7 @@ export default {
             show:{show:false},
             export:{show:false},
             destroy:{show:false},
+            update:{show:false},
         })
         const dialogParam = reactive({
             view:{column:addColumn},

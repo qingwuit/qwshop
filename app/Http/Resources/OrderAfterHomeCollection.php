@@ -22,6 +22,12 @@ class OrderAfterHomeCollection extends ResourceCollection
                 'total_price'           =>  $item->total_price,
                 'freight_money'         =>  $item->freight_money,
                 'coupon_money'          =>  $item->coupon_money,
+                'receive_area'          =>  $item->receive_area,
+                'receive_address'       =>  $item->receive_address,
+                'receive_tel'           =>  $item->receive_tel,
+                'receive_name'          =>  $item->receive_name,
+                'delivery_no'           =>  $item->delivery_no,
+                'delivery_code'         =>  $item->delivery_code,
                 'refund'                =>  empty($item->refund)?[]:$item->refund,
                 'remark'                =>  $item->remark,
 

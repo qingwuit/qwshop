@@ -23,33 +23,33 @@
         <div class="order_status_block">
             <ul>
                 <li>
-                    <router-link :to="{path:'/user',params:{status:1}}">
+                    <router-link :to="{name:'user_order',params:{status:1}}">
                     <i class="fa fa-pencil-square-o" />
-                    <span><a-badge :count="data.count[0]" :offset="[11,-7]">待支付</a-badge></span>
+                    <span><el-badge :value="data.count[0]" :hidden="data.count[0]==0" :max="99">待支付</el-badge></span>
                     </router-link>
                 </li>
                 <li>
-                    <router-link :to="{path:'/user',params:{status:2}}">
+                    <router-link :to="{name:'user_order',params:{status:2}}">
                     <i class="fa fa-clock-o" />
-                    <span><a-badge :count="data.count[1]" :offset="[11,-7]">待发货</a-badge></span>
+                    <span><el-badge :value="data.count[1]" :hidden="data.count[1]==0" :max="99">待发货</el-badge></span>
                     </router-link>
                 </li>
                 <li>
-                    <router-link :to="{path:'/user',params:{status:3}}">
+                    <router-link :to="{name:'user_order',params:{status:3}}">
                     <i class="fa fa-briefcase" />
-                    <span><a-badge :count="data.count[2]" :offset="[11,-7]">待收货</a-badge></span>
+                    <span><el-badge :value="data.count[2]" :hidden="data.count[2]==0" :max="99">待收货</el-badge></span>
                     </router-link>
                 </li>
                 <li>
-                    <router-link :to="{path:'/user',params:{status:4}}">
+                    <router-link :to="{name:'user_order',params:{status:4}}">
                     <i class="fa fa-commenting-o" />
-                    <span><a-badge :count="data.count[3]" :offset="[11,-7]">待评论</a-badge></span>
+                    <span><el-badge :value="data.count[3]" :hidden="data.count[3]==0" :max="99">待评论</el-badge></span>
                     </router-link>
                 </li>
                 <li>
-                    <router-link :to="{path:'/user',params:{status:5}}">
+                    <router-link :to="{name:'user_order',params:{status:5}}">
                     <i class="fa fa-history" />
-                    <span><a-badge :count="data.count[4]" :offset="[11,-7]">售后处理</a-badge></span>
+                    <span><el-badge :value="data.count[4]" :hidden="data.count[4]==0" :max="99">售后处理</el-badge></span>
                     </router-link>
                 </li>
             </ul>
@@ -62,7 +62,7 @@
             </div>
             <div class="x20"></div>
             <div class="order_list" v-if="data.order.length>0">
-                <div class="order_item" v-for="(v,k) in order" :key="k">
+                <div class="order_item" v-for="(v,k) in data.order" :key="k">
                     <div class="order_item_title">
                         <span>{{v.created_at}}<font :color="v.order_status==6?'#42b983':'#ca151e'">{{v.order_status_cn||'-'}}</font></span>
                         订单号：{{v.order_no||'-'}}
@@ -90,7 +90,7 @@
             </div>
             <div class="x20"></div>
             <div class="fav_item_list" v-if="data.fav.length>0">
-                <dl v-for="(v,k) in fav" :key="k"><router-link :to="'/goods/'+v.out_id">
+                <dl v-for="(v,k) in data.fav" :key="k"><router-link :to="'/goods/'+v.out_id">
                     <dt><img :src="v.goods_master_image" :alt="v.goods_name"></dt>
                     <dd class="title">{{v.goods_name}}</dd>
                     <dd class="price">￥{{v.goods_price}}</dd>
@@ -105,10 +105,10 @@
             </div>
             <div class="x20"></div>
             <div class="fav_item_list" v-if="data.history.length>0">
-                <dl v-for="(v,k) in history" :key="k"><router-link :to="'/goods/'+v.id">
-                    <dt><img :src="v.image" :alt="v.goods_name"></dt>
-                    <dd class="title">{{v.goods_name}}</dd>
-                    <dd class="price">￥{{v.goods_price}}</dd>
+                <dl v-for="(v,k) in data.history" :key="k"><router-link :to="'/goods/'+v.id">
+                    <dt><img :src="v.image||''" :alt="v.goods_name||''"></dt>
+                    <dd class="title">{{v.goods_name||'-'}}</dd>
+                    <dd class="price">￥{{v.goods_price||'0.00'}}</dd>
                 </router-link></dl>
             </div>
             <el-empty v-else />
@@ -132,11 +132,24 @@ export default {
             isLogin:false,
         })
 
+        const loadData = ()=>{
+            proxy.R.get('/user/default',{per_page:5,isResource:'Home'}).then(res=>{
+                data.order = res.order.data
+                data.count = res.count
+                data.fav = res.fav.data
+            })
+        }
+
         onMounted( async ()=>{
             const token = localStorage.getItem('token')
             if(!proxy.R.isEmpty(token)) data.isLogin = true
             let user = await store.dispatch('login/getUserSer')
             Object.assign(data.user_info,user)
+
+            loadData()
+
+            let history = localStorage.getItem('shop_goods_historys')
+            if(history) data.history = JSON.parse(history)
         })
 
         return {
@@ -352,5 +365,15 @@ export default {
 }
 .item3{
     dt{background: #f56c6c;}
+}
+</style>
+<style lang="scss">
+.order_status_block{
+    .el-badge__content.is-fixed{
+        right:calc(-10px + var(--el-badge-size)/ 2);
+        &:hover{
+            color:#fff;
+        }
+    }
 }
 </style>
