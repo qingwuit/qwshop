@@ -27,7 +27,7 @@
     
     
     <link href="//unpkg.com/font-awesome@4.7.0/css/font-awesome.css" rel="stylesheet" />
-    <link href="//unpkg.com/nprogress@0.2.0/nprogress.css" rel="stylesheet" />
+    <link href="//unpkg.com/nprogress@0.2.0/nprogress.css" rel="stylesheet" /> <!-- 进度条 -->
 
     <!-- edit -->
     <link href="//unpkg.com/@wangeditor/editor@0.13.6/dist/css/style.css" rel="stylesheet">
