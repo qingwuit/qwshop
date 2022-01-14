@@ -1,0 +1,199 @@
+
+// 后台背景颜色
+$admin_background:#f4f4f4;
+
+// 平台页面都为红色主题
+.home{
+    --el-color-primary:#e50e19;
+    --el-color-primary-light-1:#ca242c;
+    --el-color-primary-light-2:#c9383f;
+    --el-color-primary-light-3:#be3e44;
+    --el-color-primary-light-4:#d16e73;
+    --el-color-primary-light-5:#dd7f83;
+    --el-color-primary-light-6:#f0abaf;
+    --el-color-primary-light-7:#f3c5c7;
+    --el-color-primary-light-8:#fce4e5;
+    --el-color-primary-light-9:#fce4e5;
+}
+
+// 阴影
+.shadow{box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)}
+
+
+/* 某些公共样式 */
+.breadcrumb{
+    margin:30px 0;
+}
+
+/* 公共按钮2 */
+.home .default_btn{
+    background: #fff;
+    color:#666;
+    border-radius: 3px;
+    box-sizing: border-box;
+    padding: 6px 15px;
+    display: inline;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: 0 2px 0 rgba(0,0,0,.015);
+    border: 1px solid #d9d9d9;
+}
+.home .error_btn{
+    background: #ca151e;
+    color:#fff;
+    border-radius: 3px;
+    box-sizing: border-box;
+    font-size: 12px;
+    padding: 6px 15px;
+    display: inline;
+    cursor: pointer;
+    box-shadow: 0 2px 0 rgba(0,0,0,.015);
+}
+.home .warn_btn{
+    background: #e6a23c;
+    color:#fff;
+    border-radius: 3px;
+    font-size: 12px;
+    box-sizing: border-box;
+    padding: 6px 15px;
+    display: inline;
+    cursor: pointer;
+    box-shadow: 0 2px 0 rgba(0,0,0,.015);
+}
+.home .success_btn{
+    background:#67c23a;
+    color:#fff;
+    font-size: 12px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    padding: 6px 15px;
+    display: inline;
+    cursor: pointer;
+    box-shadow: 0 2px 0 rgba(0,0,0,.015);
+}
+.home .gray_btn{
+    background:#909399;
+    color:#fff;
+    font-size: 12px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    padding: 6px 15px;
+    display: inline;
+    cursor: pointer;
+    box-shadow: 0 2px 0 rgba(0,0,0,.015);
+}
+
+// 列表条件样式
+.goods_where{
+    border: 1px solid #efefef;
+    line-height: 50px;
+    font-size: 14px;
+    .item{
+        padding:0 20px;
+        box-sizing: border-box;
+        border-bottom: 1px solid #efefef;
+        &:last-child{
+            border-bottom: none;
+        }
+        &:after{
+            clear:both;
+            display: block;
+            content:'';
+        }
+        .title{
+            float: left;
+            margin-right: 20px;
+        }
+        .list{
+            float: left;
+            ul li{
+                cursor: pointer;
+            }
+            .other{
+                ul li{
+                    float: left;
+                    margin-right: 20px;
+                    padding:0 10px;
+                    position: relative;
+                    &:hover{
+                        color:#ca151e;
+                    }
+                    &.red{
+                       color:#ca151e;
+                    }
+                    .sorts{
+                        position: absolute;
+                        top:0;
+                        right: 0;
+                        color:#666;
+                        .caret{
+                            font-size: 12px;
+                            position: absolute;
+                            -webkit-transform-origin-x: 0; //缩小后文字居左
+                            -webkit-transform: scale(0.80);   //关键
+                            &:first-child{
+                               top:16px;
+                               right:-5px; 
+                            }
+                            &:last-child{
+                               top:22px;
+                               right:-5px; 
+                            }
+                            &.red{
+                                color:#ca151e;
+                            }
+                        }
+                    }
+             
+                }
+            }
+        }
+    }
+}
+
+.badge_item{
+    margin-right: 20px;
+}
+
+/* 用户中心usermain */
+.user_main{
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    &.table_lists{
+        min-height: 600px;
+    }   
+}
+.user_main .block_title{
+    font-size: 16px;
+    border-left: 3px solid #ca151e;
+    padding-left: 20px;
+}
+.user_main .block_title:after{
+    clear: both;
+    content:'';
+    display: block;
+}
+.user_main .block_title span a{
+    color:#666;
+    float: right;
+    font-size: 12px;
+}
+.user_main .block_title span .btn{
+    float: right;
+    background:#ca151e;
+    color:#fff;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 3px;
+}
+.x20{
+    height: 1px;
+    background:#efefef;
+    margin:20px 0;
+    &.clear_line{
+        margin-bottom: 0;
+    }
+}
+
