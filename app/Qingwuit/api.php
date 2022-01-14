@@ -50,6 +50,7 @@ Route::middleware('auth:users')->group(function () {
     Route::post('/user/order/create',[App\Http\Controllers\Home\OrdersController::class,'create'])->name('home.order.create');
     Route::post('/user/order/after',[App\Http\Controllers\Home\OrdersController::class,'after'])->name('home.order.after');
     Route::post('/user/order/pay',[App\Http\Controllers\Home\OrdersController::class,'pay'])->name('home.order.pay');
+    Route::post('/user/order/check',[App\Http\Controllers\Home\OrdersController::class,'check'])->name('home.order.check');
     Route::resource('/user/order/refund',App\Http\Controllers\Home\RefundsController::class)->only(['store','show','update']); 
     Route::resource('/user/coupons',App\Http\Controllers\Home\CouponsController::class)->only(['index']); 
     Route::post('/user/coupon/receive',[App\Http\Controllers\Home\CouponsController::class,'receive'])->name('home.coupon.receive'); // 领取优惠劵

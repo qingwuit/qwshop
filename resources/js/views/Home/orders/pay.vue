@@ -93,7 +93,7 @@
         </el-dialog>
 
         <!-- 二维码扫描 -->
-        <el-dialog  v-model="data.dialogVisible" width="30%" title="微信支付扫描" @close="qrcodeClose()" :footer="null" style="text-align:center" > 
+        <el-dialog destroy-on-close  v-model="data.dialogVisible" width="30%" title="支付扫码"  style="text-align:center" > 
             <qrcode-vue :value="data.qr_code" :size="200" class="qrcode_class" />
         </el-dialog>
     </div>
@@ -156,35 +156,24 @@ export default {
             }
             proxy.R.post('/user/order/pay',sendData).then(res=>{
                 if(!res.code){
-                    if(payment_name == 'wechat_scan'){
-                        this.qr_code = res.qr_code;
-                        this.dialogVisible = true;
-                        this.timeObj = setInterval(()=>{
-                            check_pay(this.order[0].order_no);
-                        },1500);
-                    }else if(payment_name == 'ali_scan'){
-                        // var newwindow = window.open("#","_blank");
-                        // newwindow.document.write(res.data); // 打开新页面
-                        const div = document.createElement('div') // 创建div
-                        div.innerHTML = res.data // 将返回的form 放入div
-                        document.body.appendChild(div)
-                        document.forms[0].submit()
-                    }else{
-                        router.push('/order/success')
-                    }
+                    data.qr_code = res
+                    if(payment_name == 'balance') return router.push('/order/success')
+                    data.qr_code = res
+                    data.dialogVisible = true;
+                    if(data.timeObj != null ) qrcodeClose()
+                    data.timeObj = setInterval(()=>{
+                        proxy.R.get('/user/order/check',{order_id:params.order_id[0]||0}).then((checkRes)=>{
+                            if(!checkRes.code){
+                                qrcodeClose()
+                                router.push('/order/success')
+                            }
+                        })
+                    },1000)
                 }
             })
         }
 
-        // 定时查询是否支付成功
-        const check_pay = (out_trade_no)=>{
-            this.$post(this.$api.homeOrder+'/wechat_pay_check',{out_trade_no:out_trade_no}).then(res=>{
-                if(res.code == 200){
-                    clearInterval(this.timeObj);
-                    router.push('/order/success');
-                }
-            });
-        }
+     
         const qrcodeClose = ()=>{
             if(data.timeObj != null) clearInterval(data.timeObj);
         }
@@ -200,7 +189,7 @@ export default {
 
         return {
             data,
-            pay,check_pay,qrcodeClose
+            pay,qrcodeClose
         }
     },
 

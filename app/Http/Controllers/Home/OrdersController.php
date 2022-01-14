@@ -27,6 +27,13 @@ class OrdersController extends Controller
         return $this->handle($this->getService('Order')->payOrder());
     }
 
+    // 验证支付状态
+    public function check(){
+        $check = $this->getService('Payment')->check(request('order_id'));
+        if($check['status']) return $this->success($check['data']);
+        return $this->success(['code'=>'fail','msg'=>$check['msg']]);
+    }
+
     // 订单列表
     public function orders(){
         return $this->handle($this->getService('Order')->getOrders());

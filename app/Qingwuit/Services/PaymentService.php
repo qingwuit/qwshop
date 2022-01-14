@@ -179,6 +179,14 @@ class PaymentService extends BaseService{
 
     }
 
+    // 检测是否订单支付成功
+    public function check($orderId){
+        if(empty($orderId)) return $this->formatError('order not found.');
+        $order = $this->getService('Order',true)->where('id',$orderId)->where('order_status','>',1)->first();
+        if(!$order) return $this->formatError();
+        return $this->format();
+    }
+
     // 配置支付密钥
     public function setConfig($paymentName,$device = 'web',$config = 'default'){
         $this->config['logger']['file'] = storage_path('logs/alipay.log'); // 日志目录
