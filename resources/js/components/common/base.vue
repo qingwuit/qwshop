@@ -342,6 +342,9 @@ export default {
             margin-right: 15px;
             padding-top: 10px;
         }
+        .nickname{
+            padding-top: 23px;
+        }
     }
     .module_ul{
         li{
@@ -574,9 +577,6 @@ $admin_subactive:#409eff;;
     display: block;
     }
 }
-.custom_dropdown .el-dropdown-menu__item{
-    width: 80px;
-    text-align: center;
-}
+
 
 </style>

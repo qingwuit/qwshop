@@ -54,15 +54,8 @@ export default {
 
         // 获取数据列表
         const form = reactive({
-            wechatWap:{},
-            wechatPublic:{},
-            wechatMini:{},
-            wechatApp:{},
-            wechatScan:{},
-            aliWap:{},
-            aliApp:{},
-            aliScan:{},
-            aliMini:{},
+            weixinweb:{},
+            weixin:{},
         })
         const tabsIndex = ref('weixin')
         const loadConfig = async (e) => {

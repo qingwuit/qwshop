@@ -87,6 +87,8 @@ class Install extends Command
             'DB_PASSWORD'   =>  $dbPassword,
         ]);
 
+        // 这里得加下缓存，等数据执行完再清除缓存
+
         $bar = $this->output->createProgressBar(3);
 
         // 执行migrate
@@ -94,6 +96,8 @@ class Install extends Command
         $this->line('');
         $this->line('');
         $this->line('Data migration. Please wait...');
+        Artisan::call('config:clear'); // 清空缓冲
+        Artisan::call('config:cache'); // 继续缓冲
         Artisan::call('migrate'); // 原本想使用这个太麻烦
         $this->line('');
         $this->line('Creating table. Please wait...');
@@ -104,6 +108,7 @@ class Install extends Command
         // 创建软链接链接storage
         $bar->advance(); // 第二步
         Artisan::call('storage:link');
+        Artisan::call('config:clear'); // 清空缓冲
         $this->line('');
         $this->line('');
         $this->info('Create soft link link storage successfully.');
