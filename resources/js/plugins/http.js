@@ -189,9 +189,9 @@ const R = {
     * @param {String} url [请求的url地址] 
     * @param {Object} params [请求时携带的参数] 
     */
-   get:(url, params)=>{ 
+   get:(url, params,isSource=false)=>{ 
        return new Promise((resolve, reject) =>{  
-           axios.get(prefixUri+url, {   
+           axios.get((!isSource?prefixUri:'')+url, {   
                params: params  
            })  
            .then(res => {   
@@ -203,11 +203,11 @@ const R = {
        });
    },
 
-   put:(url, params)=>{ 
+   put:(url, params,isSource=false)=>{ 
        return new Promise((resolve, reject) =>{  
             if( params.is_type == '') params.is_type=0
             if( params.is_sort == '') params.is_sort=0
-            axios.put(prefixUri+url, qs.stringify(params))  
+            axios.put((!isSource?prefixUri:'')+url, qs.stringify(params))  
             .then(res => {   
                resolve(res);  
             })  
@@ -217,9 +217,9 @@ const R = {
        });
    },
 
-   deletes:(url, params)=>{ 
+   deletes:(url, params,isSource=false)=>{ 
        return new Promise((resolve, reject) =>{  
-           axios.delete(prefixUri+url, {   
+           axios.delete((!isSource?prefixUri:'')+url, {   
                params: params  
            })  
            .then(res => {   
@@ -235,11 +235,11 @@ const R = {
     * @param {String} url [请求的url地址] 
     * @param {Object} params [请求时携带的参数] 
     */
-   post:(url, params)=> { 
+   post:(url, params,isSource=false)=> { 
        return new Promise((resolve, reject) => {   
            if(params.is_type == '') params.is_type=0
            if(params.is_sort == '') params.is_sort=0
-           axios.post(prefixUri+url, qs.stringify(params))  
+           axios.post((!isSource?prefixUri:'')+url, qs.stringify(params))  
            .then(res => {   
                resolve(res);  
            })  
@@ -254,9 +254,9 @@ const R = {
     * @param {String} url [请求的url地址] 
     * @param {Object} params [请求时携带的参数] 
     */
-   postfile:(url, params)=> { 
+   postfile:(url, params,isSource=false)=> { 
        return new Promise((resolve, reject) => {   
-           axios.post(prefixUri+url, params,{headers:{'Content-Type': 'multipart/form-data'}})  
+           axios.post((!isSource?prefixUri:'')+url, params,{headers:{'Content-Type': 'multipart/form-data'}})  
            .then(res => {   
                resolve(res);  
            })  

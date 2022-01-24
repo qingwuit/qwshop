@@ -143,13 +143,12 @@ class PaymentService extends BaseService{
         // 充值管理
         if($recharge){
             $this->payData['name'] = __('tip.payment.onlineRecharge');
-            $this->payData['total'] = $orderPay['total'];
         }
 
         // 微信
         if($paymentName == 'wechat'){
-            $this->payData['out_trade_no'] = $orderPay['trade_no'];
-            $this->payData['description'] = $orderPay['name'];
+            $this->payData['out_trade_no'] = $orderPay['pay_no'];
+            $this->payData['description'] = $recharge?$this->payData['name']:$orderPay['name'];
             $this->payData['amount'] = [
                 'total'=>$orderPay['total']*1000,
             ];
@@ -164,8 +163,8 @@ class PaymentService extends BaseService{
 
         // 支付宝
         if($paymentName == 'alipay'){
-            $this->payData['out_trade_no'] = $orderPay['trade_no'];
-            $this->payData['subject'] = $orderPay['name'];
+            $this->payData['out_trade_no'] = $orderPay['pay_no'];
+            $this->payData['subject'] = $recharge?$this->payData['name']:$orderPay['name'];
             $this->payData['total_amount'] = $orderPay['total'];
         }
 
@@ -174,6 +173,8 @@ class PaymentService extends BaseService{
             $result = Pay::$paymentName($this->config)->$device($this->payData);
             return $this->format($result);
         }catch(\Exception $e){
+            dd($e->getMessage());
+            Log::error('['.$paymentName.']:'.$e->getMessage());
             return $this->formatError(__('tip.payment.paymentFailed'));
         }
 
@@ -191,7 +192,17 @@ class PaymentService extends BaseService{
     public function setConfig($paymentName,$device = 'web',$config = 'default'){
         $this->config['logger']['file'] = storage_path('logs/alipay.log'); // 日志目录
         $pay = $this->getService('Configs')->getFormatConfig('pay');
-        $this->config[$paymentName][$config] = array_merge($this->config[$paymentName][$config],$pay[$paymentName.$device]);
+        // 给证书加上绝对链接
+        $payServiceConfig = $pay[$paymentName.$device];
+        if(!empty($payServiceConfig)){
+            foreach($payServiceConfig as $k=>$v){
+                if(stripos($k,'cert') != false && $k != 'app_secret_cert'){
+                    $payServiceConfig[$k] = public_path().$v;
+                }
+            }
+        }
+            
+        $this->config[$paymentName][$config] = array_merge($this->config[$paymentName][$config],$payServiceConfig);
     }
 
     // 支付展示信息
@@ -215,7 +226,7 @@ class PaymentService extends BaseService{
                 // 选填-服务商模式下的服务商 id，当 mode 为 Pay::MODE_SERVICE 时使用该参数
                 'service_provider_id' => '',
                 // 选填-默认为正常模式。可选为： MODE_NORMAL, MODE_SANDBOX, MODE_SERVICE
-                'mode' => Pay::MODE_NORMAL,
+                'mode' => Pay::MODE_SANDBOX,
             ]
         ],
         'wechat' => [

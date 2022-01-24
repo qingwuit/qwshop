@@ -1,7 +1,7 @@
 <template>
     <div class="default_main">
-        <banner-view :banner="[{image:'http://pc.qingwuit.com/storage/adv/2020-08-06/hc30PI0zqFDEFHgCQhJl9K8BpY1LowqsrGAgw2dS.jpg'}]" />
-        <banner-adv :index_adv="[{image:'http://pc.qingwuit.com/storage/adv/2020-08-06/Du1PuYRHlzY76e9yEh7X3e2TyvKIPlwuWBG93nCo.jpg'}]" />
+        <banner-view :banner="[{image:'https://pc.qingwuit.com/storage/adv/2020-08-06/hc30PI0zqFDEFHgCQhJl9K8BpY1LowqsrGAgw2dS.jpg'}]" />
+        <banner-adv :index_adv="[{image:'https://pc.qingwuit.com/storage/adv/2020-08-06/Du1PuYRHlzY76e9yEh7X3e2TyvKIPlwuWBG93nCo.jpg'}]" />
 
         <div class="index_bg">
             <!-- 秒杀 -->

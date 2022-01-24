@@ -35,7 +35,7 @@ class AuthController extends Controller
             if(isset($info['data']['password'])) unset($info['data']['password']);
             if(isset($info['data']['pay_password'])) unset($info['data']['pay_password']);
         }
-        $pro = strtoupper(str_replace('api/','',$request->route()->action['prefix']));
+        $pro = lcfirst(str_replace('api/','',$request->route()->action['prefix']));
         if($request->provider != 'users'){
             $defaultUrl = $this->getService($pro.'Menu',true)->whereRaw('apis!=""')->orderBy('is_sort','asc')->first();
             if($defaultUrl) $info['data']['defaultUrl'] = $defaultUrl->apis??'/';
@@ -47,7 +47,7 @@ class AuthController extends Controller
     public function edit(Request $request){
         $data = $request->except('provider');
         $id = $this->getUserId($request->provider);
-        $pro = strtoupper(str_replace('api/','',$request->route()->action['prefix']));
+        $pro = lcfirst(str_replace('api/','',$request->route()->action['prefix']));
         if($pro != 'Admin') $pro = 'User';
         if(!isset($data['password']) || empty($data['password']) ) unset($data['password']);
         if(isset($data['password'])) $data['password'] = Hash::make($data['password']);

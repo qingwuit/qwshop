@@ -172,7 +172,6 @@ export default {
         }
         
         onMounted(() => {
-            console.log(route.params)
             if(route.params.status) data.params.order_status = parseInt(route.params.status)
             loadData()
             // data.params.created_at = [dayjs().format('YYYY-MM-DD'),dayjs().add(1, 'day').format('YYYY-MM-DD')]

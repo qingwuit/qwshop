@@ -16,7 +16,7 @@ use Illuminate\Http\File;
 class UploadsService extends BaseService{
     protected $path = 'myfiles'; // 文件上传目录，默认地址
     protected $fileName = 'file'; // 上传的字段
-    protected $fileAllow = ['ico','xls','xlsx','png']; // 文件允许上传
+    protected $fileAllow = ['ico','crt','xls','xlsx','png']; // 文件允许上传
     protected $photoAllow = ['jpg','png','gif','jpeg']; // 图片允许上传
 
     // 上传图片
@@ -100,7 +100,7 @@ class UploadsService extends BaseService{
         $this->path .= '/'.date('Y-m-d'); // 加上日期
 
         if(empty($filename)){
-            $rs = Storage::disk($disk)->putFile($this->path, $file);
+            $rs = Storage::disk($disk)->putFileAs($this->path, $file,time().mt_rand(1000,9999).'.'.$ext);
         }else{
             $rs = Storage::disk($disk)->putFileAs($this->path, $file ,$filename.'.'.$ext);
         }
@@ -108,7 +108,7 @@ class UploadsService extends BaseService{
         if($disk != 'public'){
             $rs = Storage::disk($disk)->url($rs);
         }else{
-            $rs = '/'.$rs;
+            $rs = '/storage/'.$rs;
         }
 
         return $this->format($rs,__('tip.success'));

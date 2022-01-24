@@ -73,7 +73,7 @@ export default {
             if(inviterId == 0 && !proxy.R.isEmpty(inviterIdSession)) inviterId = inviterIdSession 
             sessionStorage.setItem('inviterId',inviterId)
             if(!proxy.R.isEmpty(route.query.code)){
-                proxy.R.get('/callback/oauth/weixinweb',{code:route.query.code,inviter_id:route.query.inviter_id||0}).then(res=>{
+                proxy.R.get('/callback/oauth/weixinweb',{code:route.query.code,inviter_id:route.query.inviter_id||0}).then( async res=>{
                     if(!res.code && res.access_token){
                         await store.commit('login/loginAfter',res)
                         router.push('/') 

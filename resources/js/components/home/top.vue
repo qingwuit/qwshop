@@ -51,50 +51,39 @@ export default {
         const amapKey = computed( () => store.state.init.common.common.amap.key )
         const ip = computed( () => store.state.init.common.ip )
 
+        let localCity = localStorage.getItem('city')
+        if(!proxy.R.isEmpty(localCity)) data.city = localCity
+        
         const logout = ()=>{
             store.commit('login/logout')
         }
 
         const loadCity = ()=>{
-            const ipLocal = localStorage.getItem('ip')
-            const city = localStorage.getItem('ip')
-            if(ip.value == ipLocal && city) return
-            localStorage.setItem('ip',ip.value)
-            if(!navigator.geolocation) return console.log('geolocation not allow')
-            if(!amapKey) return
-            const amapUrl = 'https://restapi.amap.com/v3/geocode/regeo?parameters'
-            const optionsMap = {
-                enableHighAccuracy:true,
-                timeout:10000,
-                maximumAge:60000
-            }
-            navigator.geolocation.getCurrentPosition((position)=>{
-                var x = position.coords.longitude+''
-                var y = position.coords.latitude+''
-                x = x.substr(0,7)
-                y = y.substr(0,7)
-                console.log("经度为:"+x+"纬度为:"+y)
-                proxy.R.get(amapUrl,{key:amapKey.value,location:x+','+y}).then(res=>{
-                    if(res.status == 0) return
-                    data.city = res.regeocodes.formatted_address.addressComponent.city
-                    localStorage.setItem('city',data.city)
-                    localStorage.setItem('lonlat',x+','+y)
+            try{
+                const ipLocal = localStorage.getItem('ip')
+                const city = localStorage.getItem('city')
+                if(ip.value == ipLocal && city) return
+                localStorage.setItem('ip',ip.value)
+                // if(!navigator.geolocation) return console.log('geolocation not allow')
+                if(!amapKey) return
+                const amapUrl = 'https://restapi.amap.com/v5/ip?parameters'
+                proxy.R.get(amapUrl,{key:amapKey.value,ip:ip.value,type:4},true).then(res=>{
+                    if(res.data.status == 0){
+                        return console.log(res.data.info)
+                    }
+                    localStorage.setItem('city',res.data.city)
+                    localStorage.setItem('lonlat',res.data.location)
+                    data.city = res.data.city
                 })
-            },(err)=>{
-                let errorTypes={
-                    1:"用户拒绝定位服务",
-                    2:"获取不到定位信息",
-                    3:"获取定位信息超时"
-                }
-                console.error(errorTypes[err.code]);
-            },optionsMap)
-            
+            }catch(error){
+                console.error(error)
+            }
         }
 
         onMounted(()=>{
             setTimeout(()=>{
                 loadCity()
-            },300)
+            },1000)
         })
 
         return {

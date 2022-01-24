@@ -22,8 +22,8 @@
             <div class="pay">
                 <ul>
                     <li @click="data.visible=true;"><img :src="require('@/assets/Home/pc_money_pay.png').default" alt="mpay"></li>
-                    <li @click="pay('wechat_scan')"><img :src="require('@/assets/Home/pc_wxpay.jpg').default" alt="wechatpay"></li>
-                    <li @click="pay('ali_scan')"><img :src="require('@/assets/Home/pc_alipay.jpg').default" alt="alipay"></li>
+                    <li @click="pay('wechat')"><img :src="require('@/assets/Home/pc_wxpay.jpg').default" alt="wechatpay"></li>
+                    <li @click="pay('alipay')"><img :src="require('@/assets/Home/pc_alipay.jpg').default" alt="alipay"></li>
                 </ul>
             </div>
         </div>
@@ -93,8 +93,8 @@
         </el-dialog>
 
         <!-- 二维码扫描 -->
-        <el-dialog destroy-on-close  v-model="data.dialogVisible" width="30%" title="支付扫码"  style="text-align:center" > 
-            <qrcode-vue :value="data.qr_code" :size="200" class="qrcode_class" />
+        <el-dialog destroy-on-close  v-model="data.dialogVisible" width="30%" title="支付扫码"  @closed="qrcodeClose" style="text-align:center;" > 
+            <qrcode-vue style="margin-bottom:30px" :value="data.qr_code" :size="200" class="qrcode_class" />
         </el-dialog>
     </div>
 </template>
@@ -150,19 +150,19 @@ export default {
         const pay = (payment_name)=>{
             const params = JSON.parse(window.atob(route.params.params));
             let order_id = params.order_id.join(',');
-            let sendData = {order_id:order_id,payment_name:payment_name,pay_password:''};
+            let sendData = {order_id:order_id,payment_name:payment_name,device:'scan',pay_password:''};
             if(payment_name == 'balance'){
                 sendData.pay_password = data.pay_password;
             }
             proxy.R.post('/user/order/pay',sendData).then(res=>{
-                if(!res.code){
-                    data.qr_code = res
+                if(res.qr_code || res.code_url){
                     if(payment_name == 'balance') return router.push('/order/success')
-                    data.qr_code = res
+                    if(payment_name == 'alipay') data.qr_code = res.qr_code
+                    if(payment_name == 'wechat') data.qr_code = res.code_url
                     data.dialogVisible = true;
                     if(data.timeObj != null ) qrcodeClose()
                     data.timeObj = setInterval(()=>{
-                        proxy.R.get('/user/order/check',{order_id:params.order_id[0]||0}).then((checkRes)=>{
+                        proxy.R.post('/user/order/check',{order_id:params.order_id[0]||0}).then((checkRes)=>{
                             if(!checkRes.code){
                                 qrcodeClose()
                                 router.push('/order/success')
@@ -170,6 +170,7 @@ export default {
                         })
                     },1000)
                 }
+                
             })
         }
 

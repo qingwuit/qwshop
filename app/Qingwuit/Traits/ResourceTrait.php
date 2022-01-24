@@ -4,7 +4,8 @@ namespace App\Qingwuit\Traits;
 trait ResourceTrait{
     protected $servicePath = 'App\Qingwuit\Services\\';
     protected $modelPath = 'App\Qingwuit\Models\\';
-    protected $resourcePath = 'App\Http\Resources\\';
+    protected $resourcePath = 'app\Http\Resources\\';
+    protected $resourceNameSpacePath = 'App\Http\Resources\\';
 
     // 返回服务层地址
     protected function getService($serviceName = 'Users', $isModel = false , $servicePath = null){
@@ -19,8 +20,8 @@ trait ResourceTrait{
         $ext = '.php';
         if($type == 1) $typeName = 'Resource';
         $pathName = $this->resourcePath.$name.$typeName.$ext;
-        $nameSpace = $this->resourcePath.$name.$typeName;
-        if(!file_exists(base_path($pathName))){
+        $nameSpace = $this->resourceNameSpacePath.$name.$typeName;
+        if(!file_exists(base_path(str_replace('\\','/',$pathName)))){
             return false;
         }
         return new $nameSpace($data);

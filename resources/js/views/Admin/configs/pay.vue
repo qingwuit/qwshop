@@ -142,7 +142,7 @@
                         <el-input v-model="form.alipaywap.app_id"  />
                     </el-form-item>
                     <el-form-item :label="$t('config.configPay.app_secret_cert')" prop="app_secret_cert">
-                        <q-input v-model:formData="form.alipaywap.app_secret_cert" :params="{type:'file',value:'crt' }" />
+                        <el-input type="textarea" v-model="form.alipaywap.app_secret_cert"  />
                     </el-form-item>
                     <el-form-item :label="$t('config.configPay.app_public_cert_path')" prop="app_public_cert_path">
                         <q-input v-model:formData="form.alipaywap.app_public_cert_path" :params="{type:'file',value:'crt' }" />
@@ -172,7 +172,7 @@
                         <el-input v-model="form.alipayapp.app_id"  />
                     </el-form-item>
                     <el-form-item :label="$t('config.configPay.app_secret_cert')" prop="app_secret_cert">
-                        <q-input v-model:formData="form.alipayapp.app_secret_cert" :params="{type:'file',value:'crt' }" />
+                        <el-input type="textarea" v-model="form.alipayapp.app_secret_cert"  />
                     </el-form-item>
                     <el-form-item :label="$t('config.configPay.app_public_cert_path')" prop="app_public_cert_path">
                         <q-input v-model:formData="form.alipayapp.app_public_cert_path" :params="{type:'file',value:'crt' }" />
@@ -202,7 +202,7 @@
                         <el-input v-model="form.alipayscan.app_id"  />
                     </el-form-item>
                     <el-form-item :label="$t('config.configPay.app_secret_cert')" prop="app_secret_cert">
-                        <q-input v-model:formData="form.alipayscan.app_secret_cert" :params="{type:'file',value:'crt' }" />
+                        <el-input type="textarea" v-model="form.alipayscan.app_secret_cert"  />
                     </el-form-item>
                     <el-form-item :label="$t('config.configPay.app_public_cert_path')" prop="app_public_cert_path">
                         <q-input v-model:formData="form.alipayscan.app_public_cert_path" :params="{type:'file',value:'crt' }" />
@@ -232,7 +232,7 @@
                         <el-input v-model="form.alipaymini.app_id"  />
                     </el-form-item>
                     <el-form-item :label="$t('config.configPay.app_secret_cert')" prop="app_secret_cert">
-                        <q-input v-model:formData="form.alipaymini.app_secret_cert" :params="{type:'file',value:'crt' }" />
+                        <el-input type="textarea" v-model="form.alipaymini.app_secret_cert"  />
                     </el-form-item>
                     <el-form-item :label="$t('config.configPay.app_public_cert_path')" prop="app_public_cert_path">
                         <q-input v-model:formData="form.alipaymini.app_public_cert_path" :params="{type:'file',value:'crt' }" />

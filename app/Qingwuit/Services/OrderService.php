@@ -346,6 +346,7 @@ class OrderService extends BaseService{
             }
             $create_data = [
                 'belong_id'                 =>  $params['user_id'],
+                'name'                      =>  mb_substr($params['order_list'][0]['order_name'],0,60),
                 'pay_no'                    =>  $params['pay_no'],
                 'order_ids'                 =>  implode(',',$order_ids),
                 'payment_name'              =>  $params['payment_name'],
