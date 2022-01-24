@@ -31,14 +31,15 @@
 </template>
 
 <script>
-import {reactive,getCurrentInstance} from "vue"
+import {reactive,onMounted,getCurrentInstance} from "vue"
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import { useRouter,useRoute } from 'vue-router'
 export default {
     setup(props) {
         const {proxy} = getCurrentInstance()
         const store = useStore()
         const router = useRouter()
+        const route = useRoute()
         const data = reactive({
             username:"",
             password:"",
@@ -64,6 +65,22 @@ export default {
         const wechatLogin = ()=>{
             window.location.href="/api/oauth/weixinweb"
         }
+        
+        // onMounted
+        onMounted(()=>{
+            let inviterId = route.query.inviter_id||0
+            let inviterIdSession = sessionStorage.getItem('inviterId')
+            if(inviterId == 0 && !proxy.R.isEmpty(inviterIdSession)) inviterId = inviterIdSession 
+            sessionStorage.setItem('inviterId',inviterId)
+            if(!proxy.R.isEmpty(route.query.code)){
+                proxy.R.get('/callback/oauth/weixinweb',{code:route.query.code,inviter_id:route.query.inviter_id||0}).then(res=>{
+                    if(!res.code && res.access_token){
+                        await store.commit('login/loginAfter',res)
+                        router.push('/') 
+                    }
+                })
+            }
+        })
 
         return {
             data,

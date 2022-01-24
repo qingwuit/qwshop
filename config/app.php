@@ -178,6 +178,7 @@ return [
         // App\Providers\CustomPassportProvider::class, // 自定义令牌验证服务
 
         App\Qingwuit\Providers\AliOssServiceProvider::class, // 阿里云上传
+        \SocialiteProviders\Manager\ServiceProvider::class, // 第三方登录
 
     ],
 

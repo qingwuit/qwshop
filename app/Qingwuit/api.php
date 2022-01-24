@@ -119,7 +119,7 @@ Route::prefix('Admin')->middleware('auth:admins')->group(function () {
     Route::resource('expresses',App\Http\Controllers\Admin\Exts\ExpressesController::class);
     Route::resource('integral_goods_classes',App\Http\Controllers\Admin\Exts\IntegralGoodsClassesController::class);
     Route::resource('integral_goods',App\Http\Controllers\Admin\Exts\IntegralGoodsController::class);
-    Route::get('/orders/find/all',[App\Http\Controllers\Exts\Admin\OrdersController::class,'all'])->name('admin.order.findall');
+    Route::get('/orders/find/all',[App\Http\Controllers\Admin\Exts\OrdersController::class,'all'])->name('admin.order.findall');
     Route::get('/dashboard/all',[App\Http\Controllers\Admin\DashboardController::class,'all'])->name('admin.dashboard.all'); // 仪表盘
     Route::get('/dashboard/order',[App\Http\Controllers\Admin\DashboardController::class,'order'])->name('admin.dashboard.order'); // 数据统计
     Route::get('/dashboard/user',[App\Http\Controllers\Admin\DashboardController::class,'user'])->name('admin.dashboard.user'); // 数据统计
@@ -141,7 +141,7 @@ Route::prefix('Seller')->middleware('auth:users')->group(function () {
     Route::resource('goods',App\Http\Controllers\Seller\GoodsController::class);
     Route::resource('goods_brands',App\Http\Controllers\Seller\GoodsBrandsController::class)->only('index');
     Route::resource('goods_attrs',App\Http\Controllers\Seller\GoodsAttrsController::class);
-    Route::resource('goods_specs',App\Http\Controllers\Seller\GoodsSpecsController::class);
+    // Route::resource('goods_specs',App\Http\Controllers\Seller\GoodsSpecsController::class);
     Route::resource('order_comments',App\Http\Controllers\Seller\OrderCommentsController::class);
     Route::get('store_classes',[App\Http\Controllers\Seller\StoresController::class,'store_classes'])->name('seller.store.classes');
     Route::resource('stores',App\Http\Controllers\Seller\StoresController::class)->except(['store','destroy']);
@@ -172,8 +172,8 @@ Route::prefix('Seller')->middleware('auth:users')->group(function () {
  */
 Route::namespace('PayCallBack')->group(function(){
 
-    Route::any('/payment/{name}/{device}','PaymentController@payment'); // 回调地址  [/api/payment/wechat/web] | [/api/payment/alipay/mini]
-    Route::any('/oauth/{name}','OauthController@oauth'); // Oauth 第三方登录  [/api/oauth/weixin] | [/api/oauth/weixinweb] | [/api/oauth/github]
-    Route::any('/oauth/callback/{name}','OauthController@oauthCallback'); // Oauth 第三方登录回调地址  [/api/oauth/callback/weixin|/api/callback/oauth/weixinweb] | [/api/payment/github]
+    Route::any('/payment/{name}/{device}',[App\Http\Controllers\PayCallBack\PaymentController::class,'payment']); // 回调地址  [/api/payment/wechat/web] | [/api/payment/alipay/mini]
+    Route::any('/oauth/{name}',[App\Http\Controllers\PayCallBack\OauthController::class,'oauth']); // Oauth 第三方登录  [/api/oauth/weixin] | [/api/oauth/weixinweb] | [/api/oauth/github]
+    Route::any('/oauth/callback/{name}',[App\Http\Controllers\PayCallBack\OauthController::class,'oauthCallback']); // Oauth 第三方登录回调地址  [/api/oauth/callback/weixin|/api/callback/oauth/weixinweb] | [/api/payment/github]
     
 });
