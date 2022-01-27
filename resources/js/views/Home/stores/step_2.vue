@@ -22,7 +22,7 @@
             </el-form>
         </div>
 
-        <div class="agreement_btn"><el-button type="primary" :loading="loading" @click="nextStep">确认资料，提交审核</el-button></div>
+        <div class="agreement_btn"><el-button color="#e50e19" type="primary" :loading="loading" @click="nextStep">确认资料，提交审核</el-button></div>
     </div>
 </template>
 

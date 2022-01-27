@@ -11,7 +11,7 @@
         <el-divider style="width:420px;margin:0 auto;"><em style="font-size:20px;">入驻协议</em></el-divider>
         <el-scrollbar class="agreement_content"  v-html="data.info.content||''"></el-scrollbar>
         <div class="agreement_btn"><el-checkbox v-model="data.checked">是否了解且同意商家入驻协议</el-checkbox></div>
-        <div class="agreement_btn"><el-button type="primary" @click="nextStep">同意协议，下一步</el-button></div>
+        <div class="agreement_btn"><el-button color="#e50e19" type="primary" @click="nextStep">同意协议，下一步</el-button></div>
     </div>
 </template>
 

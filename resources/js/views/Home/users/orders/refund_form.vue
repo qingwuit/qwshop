@@ -56,7 +56,7 @@
                 <el-row :gutter="20">
                     <el-col :span="24">
                         <el-form-item>
-                            <el-button :loading="loading" type="primary" v-if="data.info.refund_step==0 && data.info.refund_type==1 && data.info.refund_verify==1" @click="editData">{{$t('btn.determine')}}</el-button>
+                            <el-button color="#e50e19" :loading="loading" type="primary" v-if="data.info.refund_step==0 && data.info.refund_type==1 && data.info.refund_verify==1" @click="editData">{{$t('btn.determine')}}</el-button>
                             <el-button :loading="loading" type="success" v-if="data.info.refund_step==2" @click="editData2">{{$t('btn.determine')}}</el-button>
                         </el-form-item>
                     </el-col>

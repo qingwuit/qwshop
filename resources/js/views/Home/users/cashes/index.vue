@@ -34,7 +34,7 @@
                 <el-row :gutter="20">
                     <el-col :span="24">
                         <el-form-item >
-                            <el-button :loading="data.loading" type="primary" @click="storeData">{{$t('btn.determine')}}</el-button>
+                            <el-button color="#e50e19" :loading="data.loading" type="primary" @click="storeData">{{$t('btn.determine')}}</el-button>
                             <el-button @click="data.addVis = false">{{$t('btn.cancel')}}</el-button>
                         </el-form-item>
                     </el-col>

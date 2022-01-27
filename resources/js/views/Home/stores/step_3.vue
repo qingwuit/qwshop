@@ -14,8 +14,8 @@
             :sub-title="data.subTitle"
         >
         </el-result>
-        <div class="agreement_btn" v-if="data.info.store_verify==3"><el-button type="primary" @click="nextStep">入驻资料,前往修改</el-button></div>
-        <div class="agreement_btn" v-if="data.info.store_verify==4"><el-button type="primary" @click="nextStep">店铺配置,登录店铺</el-button></div>
+        <div class="agreement_btn" v-if="data.info.store_verify==3"><el-button color="#e50e19" type="primary" @click="nextStep">入驻资料,前往修改</el-button></div>
+        <div class="agreement_btn" v-if="data.info.store_verify==4"><el-button color="#e50e19" type="primary" @click="nextStep">店铺配置,登录店铺</el-button></div>
     </div>
 </template>
 

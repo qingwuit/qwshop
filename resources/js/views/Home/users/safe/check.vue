@@ -17,7 +17,7 @@
             <el-row :gutter="20">
                 <el-col :span="24">
                     <el-form-item>
-                        <el-button :loading="loading" type="primary" @click="editData">{{$t('btn.determine')}}</el-button>
+                        <el-button color="#e50e19" :loading="loading" type="primary" @click="editData">{{$t('btn.determine')}}</el-button>
                         <el-button @click="$refs['addForm'].resetFields()">{{$t('btn.reset')}}</el-button>
                     </el-form-item>
                 </el-col>
