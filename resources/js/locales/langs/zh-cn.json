@@ -133,6 +133,13 @@
             "jsapi":"高德JSAPI",
             "security":"安全密钥"
         },
+        "configTask":"定时任务",
+        "task":{
+            "cancel":"取消订单",
+            "confirm":"确定订单",
+            "settlement":"结算订单",
+            "day":"天"
+        },
         "configSms":"短信配置",
         "sms":{
             "other":"其他配置",

@@ -4049,6 +4049,7 @@ INSERT INTO `configs` VALUES (14, 'oauth', '{\"weixin\":{\"client_id\":\"asd\",\
 INSERT INTO `configs` VALUES (15, 'pay', '{\"wechatwap\":{\"app_id\":\"asd\",\"mach_id\":\"asd\",\"mch_secret_key\":\"asd\",\"mch_secret_cert\":\"\\/crt\\/2022-01-12\\/ecxGbUEqcBneDzh0k0b3Szkk57fwNYiwvbigHsQV.png\",\"mch_public_cert_path\":\"\\/crt\\/2022-01-12\\/sd4Y6cH63hgLfUtmla4MvafPK6dqmQlM7YnrBtgT.png\",\"notify_url\":\"dsa\"}}', '支付配置', 1, NULL, '2022-01-12 21:28:42', NULL);
 INSERT INTO `configs` VALUES (16, 'amap', '{\"key\":\"79f3a628c906e1fc7384a6f19d478ae3\",\"jsapi\":\"f7619d49a4aea5cb76631ce884ea1817\"}', '高德地图', 1, NULL, '2022-01-09 22:00:05', NULL);
 INSERT INTO `configs` VALUES (17, 'store', '{\"goods_verify\":false,\"cash\":\"0\"}', '店铺配置', 1, NULL, '2022-01-11 12:48:09', NULL);
+INSERT INTO `configs` VALUES (18, 'task', '{}', '定时任务', 1, NULL, '2022-01-11 12:48:09', NULL);
 
 -- ----------------------------
 -- Table structure for coupon_logs
@@ -4567,86 +4568,6 @@ CREATE TABLE `integral_orders`  (
 -- ----------------------------
 INSERT INTO `integral_orders` VALUES (1, 6, '2022010517055763843', 'dsddds111', '/storage/goods/2022-01-04/2O0pDzJEjxe2pJ18Rn11f5dvakq5W3rAgNRMCvuh_150.png', 1.00, 1.00, 2, '111111', 'yd', '张三', '18888888888', '河北省 淄博市', '面馆', '2022-01-04 16:24:26', '2022-01-04 16:24:26', '', '2022-01-05 17:05:57', '2022-01-05 17:46:49', NULL);
 
--- ----------------------------
--- Table structure for migrations
--- ----------------------------
-DROP TABLE IF EXISTS `migrations`;
-CREATE TABLE `migrations`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 122 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of migrations
--- ----------------------------
-INSERT INTO `migrations` VALUES (23, '2016_06_01_000001_create_oauth_auth_codes_table', 1);
-INSERT INTO `migrations` VALUES (24, '2016_06_01_000002_create_oauth_access_tokens_table', 1);
-INSERT INTO `migrations` VALUES (25, '2016_06_01_000003_create_oauth_refresh_tokens_table', 1);
-INSERT INTO `migrations` VALUES (26, '2016_06_01_000004_create_oauth_clients_table', 1);
-INSERT INTO `migrations` VALUES (27, '2016_06_01_000005_create_oauth_personal_access_clients_table', 1);
-INSERT INTO `migrations` VALUES (28, '2019_12_14_000001_create_personal_access_tokens_table', 1);
-INSERT INTO `migrations` VALUES (60, '2021_09_20_162946_create_user_menus_table', 2);
-INSERT INTO `migrations` VALUES (59, '2021_09_20_162938_create_user_to_menus_table', 2);
-INSERT INTO `migrations` VALUES (58, '2021_09_20_162918_create_admin_menus_table', 2);
-INSERT INTO `migrations` VALUES (57, '2021_09_20_162908_create_admin_to_menus_table', 2);
-INSERT INTO `migrations` VALUES (56, '2021_09_20_084859_create_user_permission_groups_table', 2);
-INSERT INTO `migrations` VALUES (55, '2021_09_20_084830_create_user_permissions_table', 2);
-INSERT INTO `migrations` VALUES (54, '2021_09_20_084820_create_user_to_permissions_table', 2);
-INSERT INTO `migrations` VALUES (53, '2021_09_20_084638_create_user_roles_table', 2);
-INSERT INTO `migrations` VALUES (52, '2021_09_20_084624_create_user_to_roles_table', 2);
-INSERT INTO `migrations` VALUES (51, '2021_09_20_084034_create_users_table', 2);
-INSERT INTO `migrations` VALUES (50, '2021_09_20_083107_create_admin_permission_groups_table', 2);
-INSERT INTO `migrations` VALUES (49, '2021_09_20_083055_create_admin_permissions_table', 2);
-INSERT INTO `migrations` VALUES (48, '2021_09_20_083042_create_admin_to_permissions_table', 2);
-INSERT INTO `migrations` VALUES (47, '2021_09_20_082233_create_admin_roles_table', 2);
-INSERT INTO `migrations` VALUES (46, '2021_09_20_082115_create_admin_to_roles_table', 2);
-INSERT INTO `migrations` VALUES (45, '2021_09_20_074956_create_admins_table', 2);
-INSERT INTO `migrations` VALUES (62, '2021_11_25_211658_create_configs_table', 3);
-INSERT INTO `migrations` VALUES (65, '2021_11_27_165759_create_sms_table', 4);
-INSERT INTO `migrations` VALUES (66, '2021_11_27_165918_create_sms_logs_table', 4);
-INSERT INTO `migrations` VALUES (69, '2021_11_30_161646_create_agreements_table', 5);
-INSERT INTO `migrations` VALUES (70, '2021_11_30_210723_create_article_menus_table', 6);
-INSERT INTO `migrations` VALUES (71, '2021_11_30_210731_create_articles_table', 6);
-INSERT INTO `migrations` VALUES (72, '2021_11_30_210849_create_notices_table', 6);
-INSERT INTO `migrations` VALUES (76, '2021_12_01_180556_create_adv_spaces_table', 7);
-INSERT INTO `migrations` VALUES (77, '2021_12_01_180609_create_advs_table', 7);
-INSERT INTO `migrations` VALUES (78, '2021_12_02_192750_create_order_pays_table', 8);
-INSERT INTO `migrations` VALUES (81, '2021_12_04_170133_create_goods_classes_table', 9);
-INSERT INTO `migrations` VALUES (82, '2021_12_04_170340_create_goods_brands_table', 9);
-INSERT INTO `migrations` VALUES (83, '2021_12_04_170727_create_goods_table', 9);
-INSERT INTO `migrations` VALUES (84, '2021_12_04_170929_create_goods_skus_table', 9);
-INSERT INTO `migrations` VALUES (85, '2021_12_04_170942_create_goods_attrs_table', 9);
-INSERT INTO `migrations` VALUES (86, '2021_12_04_171016_create_goods_specs_table', 9);
-INSERT INTO `migrations` VALUES (87, '2021_12_04_172113_create_stores_table', 9);
-INSERT INTO `migrations` VALUES (88, '2021_12_04_172237_create_store_classes_table', 9);
-INSERT INTO `migrations` VALUES (89, '2021_12_06_175753_create_areas_table', 9);
-INSERT INTO `migrations` VALUES (90, '2021_12_22_234135_create_order_comments_table', 10);
-INSERT INTO `migrations` VALUES (91, '2021_12_23_173015_create_addresses_table', 11);
-INSERT INTO `migrations` VALUES (92, '2021_12_24_155954_create_user_checks_table', 12);
-INSERT INTO `migrations` VALUES (93, '2021_12_25_113940_create_cashes_table', 13);
-INSERT INTO `migrations` VALUES (94, '2021_12_25_155127_create_favorites_table', 14);
-INSERT INTO `migrations` VALUES (96, '2021_12_25_203720_create_money_logs_table', 15);
-INSERT INTO `migrations` VALUES (97, '2021_12_26_171848_create_carts_table', 16);
-INSERT INTO `migrations` VALUES (100, '2021_12_26_210445_create_orders_table', 17);
-INSERT INTO `migrations` VALUES (101, '2021_12_26_210453_create_order_goods_table', 17);
-INSERT INTO `migrations` VALUES (102, '2021_12_30_140506_create_coupons_table', 18);
-INSERT INTO `migrations` VALUES (103, '2021_12_30_140556_create_coupon_logs_table', 18);
-INSERT INTO `migrations` VALUES (104, '2021_12_30_141319_create_seckills_table', 19);
-INSERT INTO `migrations` VALUES (105, '2021_12_30_141351_create_collectives_table', 19);
-INSERT INTO `migrations` VALUES (106, '2021_12_30_141419_create_collective_logs_table', 19);
-INSERT INTO `migrations` VALUES (107, '2021_12_30_141748_create_full_reductions_table', 20);
-INSERT INTO `migrations` VALUES (108, '2021_12_30_150650_create_refunds_table', 21);
-INSERT INTO `migrations` VALUES (109, '2021_12_30_181923_create_expresses_table', 22);
-INSERT INTO `migrations` VALUES (110, '2022_01_01_200458_create_freights_table', 23);
-INSERT INTO `migrations` VALUES (113, '2022_01_03_135219_create_distributions_table', 24);
-INSERT INTO `migrations` VALUES (114, '2022_01_03_135228_create_distribution_logs_table', 24);
-INSERT INTO `migrations` VALUES (115, '2022_01_04_160706_create_integral_goods_classes_table', 25);
-INSERT INTO `migrations` VALUES (116, '2022_01_04_160722_create_integral_goods_table', 25);
-INSERT INTO `migrations` VALUES (117, '2022_01_04_160743_create_integral_orders_table', 25);
-INSERT INTO `migrations` VALUES (118, '2022_01_04_160753_create_integral_order_goods_table', 25);
-INSERT INTO `migrations` VALUES (121, '2022_01_12_155950_create_oauths_table', 26);
 
 -- ----------------------------
 -- Table structure for money_logs

@@ -105,6 +105,31 @@
                     </el-form-item>
                 </el-form>
             </el-tab-pane>
+
+            <!-- 定时任务配置 -->
+            <el-tab-pane :label="$t('config.configTask')" name="cfgTaskForm">
+                <el-form style="width:60%;margin-top:8px;" :model="form.cfgAmapForm" ref="cfgTaskForm" label-position="right" label-width="140px">
+                    <el-form-item :label="$t('config.task.cancel')" prop="cancel">
+                        <el-input type="number" v-model="form.cfgTaskForm.cancel"  >
+                            <template #suffix>{{$t('config.task.day')}}</template>
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('config.task.confirm')" prop="confirm">
+                        <el-input type="number" v-model="form.cfgTaskForm.confirm"  >
+                            <template #suffix>{{$t('config.task.day')}}</template>
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('config.task.settlement')" prop="settlement">
+                        <el-input type="number" v-model="form.cfgTaskForm.settlement"  >
+                            <template #suffix>{{$t('config.task.day')}}</template>
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item >
+                        <el-button type="primary" :loading="loading" @click="onSubmit('cfgTaskForm')">{{$t('btn.determine')}}</el-button>
+                        <el-button @click="$refs['cfgTaskForm'].resetFields()">{{$t('btn.reset')}}</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -123,7 +148,8 @@ export default {
         const form = reactive({
             cfgForm:{},
             cfgUploadForm:{},
-            cfgAmapForm:{}
+            cfgAmapForm:{},
+            cfgTaskForm:{}
         })
         const tabsIndex = ref('cfgForm')
         const loadConfig = async (e) => {
@@ -140,6 +166,11 @@ export default {
             if(e == 'cfgAmapForm'){
                 let names = 'amap';
                 form.cfgAmapForm = await proxy.R.get('/Admin/configs',{name:names})
+            }
+
+            if(e == 'cfgTaskForm'){
+                let names = 'task';
+                form.cfgTaskForm = await proxy.R.get('/Admin/configs',{name:names})
             }
         }
 
@@ -204,6 +235,29 @@ export default {
                     loading.value = true
                     try {
                         proxy.R.put('/Admin/configs/update',{amap:form.cfgAmapForm}).then(res=>{
+                            loading.value = false
+                            if(!res.code){
+                                loadConfig(e)
+                                proxy.$message.success(proxy.$t('msg.success'))
+                            }
+                        }).catch((err)=>{
+                            console.error(err)
+                        }).finally(()=>{
+                            loading.value = false
+                        })
+                    } catch (error) {
+                        loading.value = false
+                    }
+                })
+            }
+
+            if(e == 'cfgTaskForm'){
+                proxy.$refs.cfgForm.validate((valid)=>{
+                    // 验证失败直接断点
+                    if (!valid) return false
+                    loading.value = true
+                    try {
+                        proxy.R.put('/Admin/configs/update',{amap:form.cfgTaskForm}).then(res=>{
                             loading.value = false
                             if(!res.code){
                                 loadConfig(e)

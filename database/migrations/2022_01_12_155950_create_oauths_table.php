@@ -24,6 +24,7 @@ class CreateOauthsTable extends Migration
             $table->string('openid',60)->comment('微信单一平台指定标识');
             $table->string('unionid',60)->comment('微信平台唯一标识');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

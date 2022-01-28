@@ -24,6 +24,7 @@ class CreateIntegralOrderGoodsTable extends Migration
             $table->unsignedDecimal('total_price',9,2)->default(0.00)->comment('总价格');
             $table->unsignedDecimal('goods_price',9,2)->default(0.00)->comment('商品单价');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

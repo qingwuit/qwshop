@@ -115,5 +115,7 @@ return [
         'moneyNotEnough'    =>  '余额不足.',
         'moneyPay'  =>  '重复创建支付订单.',
         'deliveryEmpty'  =>  '物流信息不能为空.',
+        'orderSettlement'  =>  '系统订单结算.',
+        'orderSettlementHandle'  =>  '手动订单结算.',
     ]
 ];
