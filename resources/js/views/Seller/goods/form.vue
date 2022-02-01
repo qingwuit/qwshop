@@ -88,29 +88,27 @@
                     <el-col :span="12">
                         <el-form-item :label="'平台价格'" prop="goods_price">
                             <el-input type="number" v-model="data.form.goods_price" >
-                                <template #append>{{$t('btn.money')}}</template>
+                                <template #suffix>{{$t('btn.money')}}</template>
                             </el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item :label="'市场价格'" prop="goods_market_price">
                             <el-input type="number" v-model="data.form.goods_market_price" >
-                                <template #append>{{$t('btn.money')}}</template>
+                                <template #suffix>{{$t('btn.money')}}</template>
                             </el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item :label="'商品重量'" prop="goods_weight">
                             <el-input type="number" v-model="data.form.goods_weight" >
-                                <template #append>Kg</template>
+                                <template #suffix>Kg</template>
                             </el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item :label="'商品库存'" prop="goods_stock">
-                            <el-input type="number" v-model="data.form.goods_stock" >
-                                <template #append> <el-icon><PieChart /></el-icon> </template>
-                            </el-input>
+                            <el-input type="number" v-model="data.form.goods_stock" :suffix-icon="PieChart" />
                         </el-form-item>
                     </el-col>
                     <!-- <el-form-item :label="'规格属性(SKU)'" prop="name"><el-input v-model="data.form.name" /></el-form-item> -->
@@ -157,12 +155,12 @@
                             <div class="goods_specs" v-if="data.form.skuList && data.form.skuList.length>0">
                                 <div class="row_th">
                                     <el-row :gutter="16">
-                                        <el-col class="col_th" :span="4">SKU</el-col>
-                                        <el-col class="col_th" :span="4">市场价</el-col>
-                                        <el-col class="col_th" :span="4">平台价</el-col>
-                                        <el-col class="col_th" :span="4">重量</el-col>
-                                        <el-col class="col_th" :span="4">库存</el-col>
-                                        <el-col class="col_th" :span="4">图片</el-col>
+                                        <el-col class="col_th thc" :span="4">SKU</el-col>
+                                        <el-col class="col_th thc" :span="4">市场价</el-col>
+                                        <el-col class="col_th thc" :span="4">平台价</el-col>
+                                        <el-col class="col_th thc" :span="4">重量</el-col>
+                                        <el-col class="col_th thc" :span="4">库存</el-col>
+                                        <el-col class="col_th thc" :span="4">图片</el-col>
                                     </el-row>
                                 </div>
                                 <div class="row_td">
@@ -170,23 +168,21 @@
                                         <el-col class="col_th" :span="4">{{v.sku_name.join(' ')}}</el-col>
                                         <el-col class="col_th" :span="4">
                                             <el-input v-model="v.goods_market_price" type="number" >
-                                                <template #append>{{$t('btn.money')}}</template>
+                                                <template #suffix>{{$t('btn.money')}}</template>
                                             </el-input>
                                         </el-col>
                                         <el-col class="col_th" :span="4">
                                             <el-input v-model="v.goods_price" type="number" >
-                                                <template #append>{{$t('btn.money')}}</template>
+                                                <template #suffix>{{$t('btn.money')}}</template>
                                             </el-input>
                                         </el-col>
                                         <el-col class="col_th" :span="4">
                                             <el-input v-model="v.goods_weight" type="number" >
-                                                <template #append>Kg</template>
+                                                <template #suffix>Kg</template>
                                             </el-input>
                                         </el-col>
                                         <el-col class="col_th" :span="4">
-                                            <el-input type="number" v-model="v.goods_stock">
-                                                <template #append><el-icon><PieChart /></el-icon></template>
-                                            </el-input>
+                                            <el-input type="number" v-model="v.goods_stock" :suffix-icon="PieChart" />
                                         </el-col>
                                         <el-col class="col_th" :span="4">-</el-col>
                                     </el-row>
@@ -371,12 +367,12 @@ export default {
             // data.goodsAttr = []
             data.centerDialogVisible = false
             if(data.attrListCheck.length<=0) return
-            
+            if(!data.goodsAttr) data.goodsAttr = []
             data.attrListCheck.map(items=>{
                 let attrId = items
                 let status = false
                 data.goodsAttr.map((attrItems)=>{
-                    console.log(attrItems.id,items.id)
+                    // console.log(attrItems.id,items.id)
                     if(attrItems.id == items){
                         status = true
                         attrId = items.id
@@ -388,9 +384,7 @@ export default {
                     })
                     
                 }
-
-                
-
+     
             })
         }
 
@@ -403,7 +397,7 @@ export default {
             })
             data.goodsAttr[index].specs.map((items,itemsKey)=>{
                 if(items.id == specs.id){
-                    console.log(items.check)
+                    // console.log(items.check)
                     if(items.check == undefined ){
                         data.goodsAttr[index].specs[itemsKey].check = true
                     }else{
@@ -534,7 +528,7 @@ export default {
         return {
             nextStep,chose,handleSuccess,setMaster,deleteImg,specChange,
             attrChose,openAttrWin,goodsBack,editGoods,data,
-            Picture,Upload,CircleCheck,Token,uploadPath,loading
+            Picture,PieChart,Upload,CircleCheck,Token,uploadPath,loading
         }
     }
 }
@@ -738,6 +732,14 @@ export default {
 .col_th{
     text-align: center;
     padding-top: 10px;
+    &.thc{
+        padding-top: 0;
+    }
+}
+.goods_form_attr{
+    .attr_item{
+        width: 100%;
+    }
 }
 </style>
 <style lang="scss">

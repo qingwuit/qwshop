@@ -4050,6 +4050,7 @@ INSERT INTO `configs` VALUES (15, 'pay', '{\"wechatwap\":{\"app_id\":\"asd\",\"m
 INSERT INTO `configs` VALUES (16, 'amap', '{\"key\":\"79f3a628c906e1fc7384a6f19d478ae3\",\"jsapi\":\"f7619d49a4aea5cb76631ce884ea1817\"}', '高德地图', 1, NULL, '2022-01-09 22:00:05', NULL);
 INSERT INTO `configs` VALUES (17, 'store', '{\"goods_verify\":false,\"cash\":\"0\"}', '店铺配置', 1, NULL, '2022-01-11 12:48:09', NULL);
 INSERT INTO `configs` VALUES (18, 'task', '{}', '定时任务', 1, NULL, '2022-01-11 12:48:09', NULL);
+INSERT INTO `configs` VALUES (19, 'kuaibao', '{}', '物流配置', 1, NULL, '2022-01-11 12:48:09', NULL);
 
 -- ----------------------------
 -- Table structure for coupon_logs

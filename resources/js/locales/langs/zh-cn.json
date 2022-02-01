@@ -140,6 +140,12 @@
             "settlement":"结算订单",
             "day":"天"
         },
+        "configKuaibao":"快宝配置",
+        "configKuaibaoDesc":"物流接口为[快宝]第三方查询",
+        "kuaibao":{
+            "appid":"APPID",
+            "appkey":"APPkEY"
+        },
         "configSms":"短信配置",
         "sms":{
             "other":"其他配置",
