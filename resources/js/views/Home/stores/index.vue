@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Banner height="420" :banner="[{image:require('@/assets/home/store_join_banner.jpg').default,name:'#'}]" />
+        <Banner height="420" :banner="[{image:require('@/assets/Home/store_join_banner.jpg').default,name:'#'}]" />
         <div class="store_join w1200">
             <div class="store_join_btn float_left">
                 <h4>入驻申请</h4>
