@@ -19,7 +19,6 @@ class CustomPassportProvider extends PassportServiceProvider
 {
     protected function makePasswordGrant()
     {
-       
         $grant = new PasswordGrant(
             // 这个类路径有问题 如果有需要则修改下
             $this->app->make(CustomPassportRepositor::class),

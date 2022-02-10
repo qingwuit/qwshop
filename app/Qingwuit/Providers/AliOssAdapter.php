@@ -96,8 +96,7 @@ class AliOssAdapter extends AbstractAdapter
         $cdnDomain,
         $prefix = null,
         array $options = []
-    )
-    {
+    ) {
         $this->debug = $debug;
         $this->client = $client;
         $this->bucket = $bucket;
@@ -176,7 +175,8 @@ class AliOssAdapter extends AbstractAdapter
         return $this->write($path, $contents, $config);
     }
 
-    public function writeFile($path, $filePath, Config $config){
+    public function writeFile($path, $filePath, Config $config)
+    {
         $object = $this->applyPathPrefix($path);
         $options = $this->getOptions($this->options, $config);
 
@@ -232,7 +232,7 @@ class AliOssAdapter extends AbstractAdapter
      */
     public function rename($path, $newpath)
     {
-        if (! $this->copy($path, $newpath)){
+        if (! $this->copy($path, $newpath)) {
             return false;
         }
 
@@ -246,7 +246,7 @@ class AliOssAdapter extends AbstractAdapter
     {
         $object = $this->applyPathPrefix($path);
         $newObject = $this->applyPathPrefix($newpath);
-        try{
+        try {
             $this->client->copyObject($this->bucket, $object, $this->bucket, $newObject);
         } catch (OssException $e) {
             $this->logErr(__FUNCTION__, $e);
@@ -264,9 +264,9 @@ class AliOssAdapter extends AbstractAdapter
         $bucket = $this->bucket;
         $object = $this->applyPathPrefix($path);
 
-        try{
+        try {
             $this->client->deleteObject($bucket, $object);
-        }catch (OssException $e) {
+        } catch (OssException $e) {
             $this->logErr(__FUNCTION__, $e);
             return false;
         }
@@ -282,10 +282,8 @@ class AliOssAdapter extends AbstractAdapter
         $dirname = rtrim($this->applyPathPrefix($dirname), '/').'/';
         $dirObjects = $this->listDirObjects($dirname, true);
 
-        if(count($dirObjects['objects']) > 0 ){
-
-            foreach($dirObjects['objects'] as $object)
-            {
+        if (count($dirObjects['objects']) > 0) {
+            foreach ($dirObjects['objects'] as $object) {
                 $objects[] = $object['Key'];
             }
 
@@ -295,7 +293,6 @@ class AliOssAdapter extends AbstractAdapter
                 $this->logErr(__FUNCTION__, $e);
                 return false;
             }
-
         }
 
         try {
@@ -324,7 +321,7 @@ class AliOssAdapter extends AbstractAdapter
         //存储结果
         $result = [];
 
-        while(true){
+        while (true) {
             $options = [
                 'delimiter' => $delimiter,
                 'prefix'    => $dirname,
@@ -346,7 +343,6 @@ class AliOssAdapter extends AbstractAdapter
 
             if (!empty($objectList)) {
                 foreach ($objectList as $objectInfo) {
-
                     $object['Prefix']       = $dirname;
                     $object['Key']          = $objectInfo->getKey();
                     $object['LastModified'] = $objectInfo->getLastModified();
@@ -357,7 +353,7 @@ class AliOssAdapter extends AbstractAdapter
 
                     $result['objects'][] = $object;
                 }
-            }else{
+            } else {
                 $result["objects"] = [];
             }
 
@@ -365,14 +361,14 @@ class AliOssAdapter extends AbstractAdapter
                 foreach ($prefixList as $prefixInfo) {
                     $result['prefix'][] = $prefixInfo->getPrefix();
                 }
-            }else{
+            } else {
                 $result['prefix'] = [];
             }
 
             //递归查询子目录所有文件
-            if($recursive){
-                foreach( $result['prefix'] as $pfix){
-                    $next  =  $this->listDirObjects($pfix , $recursive);
+            if ($recursive) {
+                foreach ($result['prefix'] as $pfix) {
+                    $next  =  $this->listDirObjects($pfix, $recursive);
                     $result["objects"] = array_merge($result['objects'], $next["objects"]);
                 }
             }
@@ -410,7 +406,7 @@ class AliOssAdapter extends AbstractAdapter
     public function setVisibility($path, $visibility)
     {
         $object = $this->applyPathPrefix($path);
-        $acl = ( $visibility === AdapterInterface::VISIBILITY_PUBLIC ) ? OssClient::OSS_ACL_TYPE_PUBLIC_READ : OssClient::OSS_ACL_TYPE_PRIVATE;
+        $acl = ($visibility === AdapterInterface::VISIBILITY_PUBLIC) ? OssClient::OSS_ACL_TYPE_PUBLIC_READ : OssClient::OSS_ACL_TYPE_PRIVATE;
 
         $this->client->putObjectAcl($this->bucket, $object, $acl);
 
@@ -517,8 +513,9 @@ class AliOssAdapter extends AbstractAdapter
      */
     public function getMimetype($path)
     {
-        if( $object = $this->getMetadata($path))
+        if ($object = $this->getMetadata($path)) {
             $object['mimetype'] = $object['content-type'];
+        }
         return $object;
     }
 
@@ -527,8 +524,9 @@ class AliOssAdapter extends AbstractAdapter
      */
     public function getTimestamp($path)
     {
-        if( $object = $this->getMetadata($path))
-            $object['timestamp'] = strtotime( $object['last-modified'] );
+        if ($object = $this->getMetadata($path)) {
+            $object['timestamp'] = strtotime($object['last-modified']);
+        }
         return $object;
     }
 
@@ -545,9 +543,9 @@ class AliOssAdapter extends AbstractAdapter
             return false;
         }
         
-        if ($acl == OssClient::OSS_ACL_TYPE_PUBLIC_READ ){
+        if ($acl == OssClient::OSS_ACL_TYPE_PUBLIC_READ) {
             $res['visibility'] = AdapterInterface::VISIBILITY_PUBLIC;
-        }else{
+        } else {
             $res['visibility'] = AdapterInterface::VISIBILITY_PRIVATE;
         }
 
@@ -560,10 +558,12 @@ class AliOssAdapter extends AbstractAdapter
      *
      * @return string
      */
-    public function getUrl( $path )
+    public function getUrl($path)
     {
-        if (!$this->has($path)) throw new FileNotFoundException($filePath.' not found');
-        return ( $this->ssl ? 'https://' : 'http://' ) . ( $this->isCname ? ( $this->cdnDomain == '' ? $this->endPoint : $this->cdnDomain ) : $this->bucket . '.' . $this->endPoint ) . '/' . ltrim($path, '/');
+        if (!$this->has($path)) {
+            throw new FileNotFoundException($filePath.' not found');
+        }
+        return ($this->ssl ? 'https://' : 'http://') . ($this->isCname ? ($this->cdnDomain == '' ? $this->endPoint : $this->cdnDomain) : $this->bucket . '.' . $this->endPoint) . '/' . ltrim($path, '/');
     }
 
     /**
@@ -666,8 +666,9 @@ class AliOssAdapter extends AbstractAdapter
      * @param $fun string function name : __FUNCTION__
      * @param $e
      */
-    protected function logErr($fun, $e){
-        if( $this->debug ){
+    protected function logErr($fun, $e)
+    {
+        if ($this->debug) {
             Log::error($fun . ": FAILED");
             Log::error($e->getMessage());
         }

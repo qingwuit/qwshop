@@ -17,13 +17,13 @@ class FavoriteHomeCollection extends ResourceCollection
     {
         $tool = new ToolService;
         return [
-            'data'=>$this->collection->map(function($item) use($tool){
+            'data'=>$this->collection->map(function ($item) use ($tool) {
                 return [
                     'id'                    =>  $item->id,
                     'out_id'                =>  $item->out_id,
                     'is_type'               =>  $item->is_type,
                     'goods_name'            =>  $item->goods->goods_name??'-',
-                    'goods_master_image'    =>  empty($item->goods)?'':$tool->thumb($item->goods->goods_master_image,150),
+                    'goods_master_image'    =>  empty($item->goods)?'':$tool->thumb($item->goods->goods_master_image, 150),
                     'goods_price'           =>  empty($item->goods)?'0.00':(empty($item->goods->goods_skus)?$item->goods->goods_price:((empty($item->goods->goods_skus))?'0.00':$item->goods->goods_skus[0]->goods_price)),
                     'created_at'            =>  empty($this->created_at)?now()->format('Y-m-d H:i:s'):$this->created_at->format('Y-m-d H:i:s'),
                 ];

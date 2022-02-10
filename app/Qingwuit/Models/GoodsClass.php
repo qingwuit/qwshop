@@ -13,7 +13,8 @@ class GoodsClass extends Model
 
     protected $guarded = [];
 
-    public function hasChildren(){
-        return $this->hasOne('App\Qingwuit\Models\GoodsClass','pid','id');
+    public function hasChildren()
+    {
+        return $this->hasOne('App\Qingwuit\Models\GoodsClass', 'pid', 'id');
     }
 }

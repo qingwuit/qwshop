@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class DistributionsController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         return $this->handle($this->getService('Distribution')->getHomeUser());
     }
 }

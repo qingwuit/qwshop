@@ -10,7 +10,8 @@ class RefundsController extends Controller
     protected $modelName = 'Order';
     protected $auth = 'users';
 
-    public function update(Request $request,$id){
-        return $this->handle($this->getService('Refund')->edit($id,'seller'));
+    public function update(Request $request, $id)
+    {
+        return $this->handle($this->getService('Refund')->edit($id, 'seller'));
     }
 }

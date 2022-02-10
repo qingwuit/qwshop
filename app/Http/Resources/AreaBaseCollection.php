@@ -14,7 +14,7 @@ class AreaBaseCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->collection->map(function($item){
+        return $this->collection->map(function ($item) {
             return [
                 'id'                    =>  $item->id,
                 'code'                  =>  $item->code,

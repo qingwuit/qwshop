@@ -12,7 +12,8 @@ class CouponsController extends Controller
     protected $auth = 'users';
     protected $belongName = 'user_id';
 
-    public function receive(){
+    public function receive()
+    {
         return $this->handle($this->getService('Coupon')->receive());
     }
 }

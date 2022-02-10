@@ -9,9 +9,9 @@ class DistributionLogsController extends Controller
 {
     protected $modelName = 'DistributionLog';
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $storeId = $this->getService('Store')->getStoreId()['data'];
-        return $this->handle($this->getService('base')->getPageData($this->modelName,['store_id'=>$storeId]));
+        return $this->handle($this->getService('base')->getPageData($this->modelName, ['store_id'=>$storeId]));
     }
-
 }

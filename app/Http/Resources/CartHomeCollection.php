@@ -18,7 +18,7 @@ class CartHomeCollection extends ResourceCollection
     {
         $this->tool = new ToolService;
         return [
-            'data'=>$this->collection->map(function($item){
+            'data'=>$this->collection->map(function ($item) {
                 return [
                     'store_id'              =>  $item->store->id,
                     'user_id'               =>  $item->user_id,
@@ -26,17 +26,17 @@ class CartHomeCollection extends ResourceCollection
                     'store_logo'            =>  $item->store->store_logo??'',
                     'checked'               =>  false,
                     'css'                   =>  false,
-                    'cart_list'             =>  $item->carts->map(function($cartItem){
+                    'cart_list'             =>  $item->carts->map(function ($cartItem) {
 
-                                                    // 是否存在sku 
-                                                    $goods_image = empty($cartItem->goods)?'':$this->tool->thumb($cartItem->goods->goods_master_image,150);
-                                                    $goods_price = $cartItem->goods->goods_price??'0.00';
-                                                    $sku_name = '-';
-                                                    if(!empty($cartItem->goods_sku)){
-                                                        $goods_price = $cartItem->goods_sku->goods_price??'0.00';
-                                                        $sku_name = $cartItem->goods_sku->sku_name??'-';
-                                                    }
-                                                    return [
+                                                    // 是否存在sku
+                        $goods_image = empty($cartItem->goods)?'':$this->tool->thumb($cartItem->goods->goods_master_image, 150);
+                        $goods_price = $cartItem->goods->goods_price??'0.00';
+                        $sku_name = '-';
+                        if (!empty($cartItem->goods_sku)) {
+                            $goods_price = $cartItem->goods_sku->goods_price??'0.00';
+                            $sku_name = $cartItem->goods_sku->sku_name??'-';
+                        }
+                        return [
                                                         'cart_id'               =>  $cartItem->id,
                                                         'goods_id'              =>  $cartItem->goods_id,
                                                         'sku_id'                =>  $cartItem->sku_id,
@@ -47,7 +47,7 @@ class CartHomeCollection extends ResourceCollection
                                                         'sku_name'              =>  $sku_name,
                                                         'checked'               =>  false,
                                                     ];
-                                                }),
+                    }),
                 ];
             }),
             'last_page'=>$this->lastPage(), // 最后页面

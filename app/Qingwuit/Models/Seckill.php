@@ -15,7 +15,8 @@ class Seckill extends Model
 
     protected $dates = ['start_time','end_time'];
 
-    public function goods(){
-        return $this->hasOne('App\Qingwuit\Models\Goods','id','goods_id')->withTrashed();
+    public function goods()
+    {
+        return $this->hasOne('App\Qingwuit\Models\Goods', 'id', 'goods_id')->withTrashed();
     }
 }

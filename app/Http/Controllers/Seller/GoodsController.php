@@ -9,34 +9,40 @@ class GoodsController extends Controller
 {
     public $modelName = 'Goods';
     public $auth = 'users';
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $rs = $this->getService('Goods')->addGoods();
         return $this->handle($rs);
     }
 
-    public function update(Request $request,$id){
+    public function update(Request $request, $id)
+    {
         $rs = $this->getService('Goods')->editGoods($id);
         return $this->handle($rs);
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $rs = $this->getService('Goods')->getGoodsInfo($id);
         return $this->handle($rs);
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $storeId = $this->getService('Store')->getStoreId()['data'];
-        $idArray = array_filter(explode(',',$id),function($item){
-            return (is_numeric($item)); 
+        $idArray = array_filter(explode(',', $id), function ($item) {
+            return (is_numeric($item));
         });
-        $goodsList = $this->getService('Goods',true)->select('id')->where('store_id',$storeId)->whereIn('id',$idArray)->get();
-        if(empty($goodsList)) return $this->success();
+        $goodsList = $this->getService('Goods', true)->select('id')->where('store_id', $storeId)->whereIn('id', $idArray)->get();
+        if (empty($goodsList)) {
+            return $this->success();
+        }
         $goodsId = [];
-        foreach($goodsList as $v){
+        foreach ($goodsList as $v) {
             $goodsId[] = $v->id;
         }
-        $this->getService('GoodSku',true)->where('goods_id',$goodsId)->delete();
-        $this->getService('Goods',true)->whereIn('id',$goodsId)->delete();
+        $this->getService('GoodSku', true)->where('goods_id', $goodsId)->delete();
+        $this->getService('Goods', true)->whereIn('id', $goodsId)->delete();
         return $this->success();
     }
 }

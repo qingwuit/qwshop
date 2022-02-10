@@ -9,7 +9,6 @@ use RuntimeException;
 
 class CustomPassportProvider extends UserRepository
 {
- 
     public function getUserEntityByUserCredentials($username, $password, $grantType, ClientEntityInterface $clientEntity)
     {
         $provider = $clientEntity->provider ?: config('auth.guards.api.provider');

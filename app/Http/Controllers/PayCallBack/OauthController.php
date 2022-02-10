@@ -13,7 +13,8 @@ class OauthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function oauth($payment_name){
+    public function oauth($payment_name)
+    {
         $info = $this->getService('Configs')->getFormatConfig('oauth')[$payment_name];
         $config = new \SocialiteProviders\Manager\Config($info['client_id'], $info['key'], $info['return_url'], []);
         return Socialite::driver($payment_name)->setConfig($config)->redirect();
@@ -29,8 +30,7 @@ class OauthController extends Controller
         $info = $this->getService('Configs')->getFormatConfig('oauth')[$oauth_name];
         $config = new \SocialiteProviders\Manager\Config($info['client_id'], $info['key'], $info['return_url'], []);
         $user = Socialite::driver($oauth_name)->setConfig($config)->stateless()->user(); // 无认证状态#
-        $rs = $this->getService('Auth')->oauthLogin($user,$oauth_name);
+        $rs = $this->getService('Auth')->oauthLogin($user, $oauth_name);
         return $rs['status']?$this->success($rs['data']):$this->error($rs['msg']);
     }
-
 }

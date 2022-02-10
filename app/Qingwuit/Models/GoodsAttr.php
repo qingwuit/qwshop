@@ -13,7 +13,8 @@ class GoodsAttr extends Model
 
     protected $guarded = [];
 
-    public function specs(){
-        return $this->hasMany('App\Qingwuit\Models\GoodsSpecs','attr_id','id');
+    public function specs()
+    {
+        return $this->hasMany('App\Qingwuit\Models\GoodsSpecs', 'attr_id', 'id');
     }
 }

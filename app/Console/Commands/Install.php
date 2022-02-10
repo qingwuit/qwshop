@@ -42,14 +42,14 @@ class Install extends Command
         // 判断是否解开禁用函数
         $disable_functions = ['shell_exec','exec','symlink','proc_open','putenv'];
         $disabled = false;
-        for($i=0;$i<count($disable_functions);$i++){
-            if(!function_exists($disable_functions[$i])){
+        for ($i=0;$i<count($disable_functions);$i++) {
+            if (!function_exists($disable_functions[$i])) {
                 $disabled = true;
                 break;
             }
         }
         
-        if($disabled){
+        if ($disabled) {
             $this->line('');
             $this->error('disabled_functions error. Please go php.ini Delete [shell_exec|exec|symlink|proc_open|putenv]...');
             $this->line('');
@@ -58,7 +58,7 @@ class Install extends Command
         
         $domain = $this->anticipate('Please enter your Domain name (https://xxx.com)', ['http://127.0.0.1', 'localhost']);
         
-        if(stripos($domain,'https://')===false && stripos($domain,'http://')===false){
+        if (stripos($domain, 'https://')===false && stripos($domain, 'http://')===false) {
             $this->error('Domain name error. Please fill in again...');
             return;
         }
@@ -72,7 +72,7 @@ class Install extends Command
         // 设置成功Mysql
         $this->table(['domain','host','prot','dbname','username','password'], [[$domain,$mysqlHost,$dbPort,$dbName,$dbUserName,$dbPassword]]);
         $this->line('');
-        if(empty($domain) || empty($mysqlHost) || empty($dbPort) || empty($dbName) || empty($dbUserName)){
+        if (empty($domain) || empty($mysqlHost) || empty($dbPort) || empty($dbName) || empty($dbUserName)) {
             return $this->error('Setting Error.');
         }
 
@@ -124,26 +124,25 @@ class Install extends Command
         $this->line('Admin username :  admin');
         $this->line('Admin password :  123456');
         return;
-        
     }
 
     // 修改env
-    function modifyEnv(array $data){
+    public function modifyEnv(array $data)
+    {
         $envPath = base_path()  . DIRECTORY_SEPARATOR . '.env';
         $contentArray = collect(file($envPath, FILE_IGNORE_NEW_LINES));
         
-        $contentArray->transform(function ($item) use ($data){
-            foreach ($data as $key => $value){
-                if(str_contains($item, $key)){
-                return $key . '=' . $value;
+        $contentArray->transform(function ($item) use ($data) {
+            foreach ($data as $key => $value) {
+                if (str_contains($item, $key)) {
+                    return $key . '=' . $value;
                 }
             }
             return $item;
         });
 
         // 修改.env数据
-        $content = implode(PHP_EOL,$contentArray->toArray());
+        $content = implode(PHP_EOL, $contentArray->toArray());
         file_put_contents($envPath, $content);
-        
     }
 }

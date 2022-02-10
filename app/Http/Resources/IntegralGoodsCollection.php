@@ -17,7 +17,7 @@ class IntegralGoodsCollection extends ResourceCollection
     {
         $tool = new ToolService();
         return [
-            'data'=>$this->collection->map(function($item) use($tool){
+            'data'=>$this->collection->map(function ($item) use ($tool) {
                 return [
                     'id'                    =>  $item->id,
                     'goods_name'            =>  $item->goods_name,

@@ -13,7 +13,8 @@ class UserMenu extends Model
 
     protected $guarded = [];
 
-    public function hasChildren(){
-        return $this->hasOne('App\Qingwuit\Models\UserMenu','pid','id');
+    public function hasChildren()
+    {
+        return $this->hasOne('App\Qingwuit\Models\UserMenu', 'pid', 'id');
     }
 }

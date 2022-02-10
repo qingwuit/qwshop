@@ -17,7 +17,7 @@ class CreateSeckillsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('store_id')->default(0)->comment('店铺ID');
             $table->unsignedInteger('goods_id')->default(0)->comment('商品ID');
-            $table->unsignedDecimal('discount',6,2)->default(0.00)->comment('折扣');
+            $table->unsignedDecimal('discount', 6, 2)->default(0.00)->comment('折扣');
             $table->timestamp('start_time')->default(now())->comment('开始时间');
             $table->timestamp('end_time')->default(now()->addDays(5))->comment('结束');
             $table->timestamps();

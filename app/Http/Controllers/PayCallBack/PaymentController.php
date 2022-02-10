@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class PaymentController extends Controller
 {
     // 回调处理
-    public function payment($name,$device){
-        return $this->getService('Payment')->payment($name,$device);
+    public function payment($name, $device)
+    {
+        return $this->getService('Payment')->payment($name, $device);
     }
 }

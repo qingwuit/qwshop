@@ -14,6 +14,4 @@ class Coupon extends Model
     protected $guarded = [];
 
     protected $dates = ['start_time','end_time'];
-
-    
 }

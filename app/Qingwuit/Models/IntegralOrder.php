@@ -13,7 +13,8 @@ class IntegralOrder extends Model
 
     protected $guarded = [];
 
-    public function user(){
-        return $this->hasOne('App\Qingwuit\Models\User','id','user_id');
+    public function user()
+    {
+        return $this->hasOne('App\Qingwuit\Models\User', 'id', 'user_id');
     }
 }

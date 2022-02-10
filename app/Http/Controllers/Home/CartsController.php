@@ -12,21 +12,23 @@ class CartsController extends Controller
     protected $auth = 'users';
     protected $belongName = 'user_id';
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         return $this->handle($this->getService('Cart')->getCart());
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         return $this->handle($this->getService('Cart')->addCart());
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         return $this->handle($this->getService('Cart')->editCart($id));
     }
 
-    public function count(){
+    public function count()
+    {
         return $this->handle($this->getService('Cart')->getCount());
     }
-
-
 }

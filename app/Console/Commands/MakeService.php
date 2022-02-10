@@ -37,7 +37,7 @@ class MakeService extends GeneratorCommand // 重点需要注意的地方，之�
 
     protected function getStub()
     {
-        return __DIR__ . '/Stubs/service.stub'; 
+        return __DIR__ . '/Stubs/service.stub';
     }
 
     /**
@@ -50,10 +50,9 @@ class MakeService extends GeneratorCommand // 重点需要注意的地方，之�
     protected function getDefaultNamespace($rootNamespace)
     {
         $path = app_path('Services');
-        if(!is_dir(app_path('Services'))) mkdir($path,0777,true);
+        if (!is_dir(app_path('Services'))) {
+            mkdir($path, 0777, true);
+        }
         return $rootNamespace . '\Services';
     }
-
-
 }
-

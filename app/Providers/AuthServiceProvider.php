@@ -38,8 +38,8 @@ class AuthServiceProvider extends ServiceProvider
      * @Author hg <bishashiwo@gmail.com>
      * @Time 2021-09-21
      */
-    public function passportConfig(){
-        
+    public function passportConfig()
+    {
         Passport::routes();
 
         Passport::tokensExpireIn(now()->addDays(7));

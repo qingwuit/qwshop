@@ -36,8 +36,8 @@ class OrderHomeResource extends JsonResource
             'order_status'          =>  $this->order_status,
             'order_status_cn'       =>  $orderService->getOrderStatusCn($this),
             'delivery_list'         =>  empty($this->delivery_no)?[]:'', //$kb_service->getExpressInfo($this->delivery_no,$this->delivery_code,$this->receive_tel),
-            'order_goods'           =>  $this->order_goods->map(function($q){
-                                        return [
+            'order_goods'           =>  $this->order_goods->map(function ($q) {
+                return [
                                             'goods_id'=>$q->goods_id,
                                             'goods_image'=>$q->goods_image,
                                             'goods_name'=>$q->goods_name,

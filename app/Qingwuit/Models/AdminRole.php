@@ -13,11 +13,13 @@ class AdminRole extends Model
 
     protected $guarded = [];
 
-    public function permissions(){
-        return $this->belongsToMany('App\Qingwuit\Models\AdminPermission','admin_to_permissions','role_id','permission_id');
+    public function permissions()
+    {
+        return $this->belongsToMany('App\Qingwuit\Models\AdminPermission', 'admin_to_permissions', 'role_id', 'permission_id');
     }
 
-    public function menus(){
-        return $this->belongsToMany('App\Qingwuit\Models\AdminMenu','admin_to_menus','role_id','menu_id');
+    public function menus()
+    {
+        return $this->belongsToMany('App\Qingwuit\Models\AdminMenu', 'admin_to_menus', 'role_id', 'menu_id');
     }
 }

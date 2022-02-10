@@ -13,7 +13,8 @@ class AdminPermissionGroup extends Model
 
     protected $guarded = [];
 
-    public function permissions(){
-        return $this->hasMany('App\Qingwuit\Models\AdminPermission','pid','id');
+    public function permissions()
+    {
+        return $this->hasMany('App\Qingwuit\Models\AdminPermission', 'pid', 'id');
     }
 }

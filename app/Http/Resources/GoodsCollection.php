@@ -17,21 +17,21 @@ class GoodsCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item){
+            'data'=>$this->collection->map(function ($item) {
                 $tool = new ToolService();
                 $goods_class = new GoodsClass();
                 $goods_price = $item->goods_price;
                 $goods_stock = $item->goods_stock;
 
                 // 判断是否存在sku
-                if(isset($item->goods_skus) && count($item->goods_skus)>0){
+                if (isset($item->goods_skus) && count($item->goods_skus)>0) {
                     $goods_stock = 0;
-                    foreach($item->goods_skus as $v){
+                    foreach ($item->goods_skus as $v) {
                         $goods_stock += $v['goods_stock'];
                     }
-                    if(count($item->goods_skus)>1){
+                    if (count($item->goods_skus)>1) {
                         $goods_price = $item->goods_skus[0]['goods_price'].' ~ '.$item->goods_skus[count($item->goods_skus)-1]['goods_price'];
-                    }else{
+                    } else {
                         $goods_price = $item->goods_skus[0]['goods_price'];
                     }
                 }
@@ -41,7 +41,7 @@ class GoodsCollection extends ResourceCollection
                     'goods_price'           =>  $goods_price,
                     'goods_stock'           =>  $goods_stock,
                     'goods_sale'            =>  $item->goods_sale,
-                    'goods_master_image'    =>  $tool->thumb($item->goods_master_image,150),
+                    'goods_master_image'    =>  $tool->thumb($item->goods_master_image, 150),
                     'brand_name'            =>  $item->goods_brand->name??'',
                     'class_name'            =>  $item->goods_class->name??'',
                     // 'class_id'              =>  [$goods_class->withTrashed()->where('id',$item->goods_class->pid)->first()['pid'],$item->goods_class->pid,$item->goods_class->id],

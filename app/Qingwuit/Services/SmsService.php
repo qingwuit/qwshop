@@ -3,7 +3,8 @@ namespace App\Qingwuit\Services;
 
 use Overtrue\EasySms\EasySms;
 
-class SmsService extends BaseService{
+class SmsService extends BaseService
+{
     private $configs = [
         // HTTP 请求的超时时间（秒）
         'timeout' => 5.0,
@@ -42,18 +43,21 @@ class SmsService extends BaseService{
      * @Description 发送短信
      * @author hg <www.qingwuit.com>
      */
-    public function sendSms($phone,$name){
-    	
-    	// 检测手机号码
-    	if(!$this->check_phone($phone)){
-    		return $this->formatError(__('tip.sms.phoneError'));
-    	}
-    	
+    public function sendSms($phone, $name)
+    {
+        
+        // 检测手机号码
+        if (!$this->check_phone($phone)) {
+            return $this->formatError(__('tip.sms.phoneError'));
+        }
+        
         $configService = $this->getService('Configs');
         $alisms = $configService->getFormatConfig('sms'); // 获取下签名密钥
-        $sms = $this->getService('Sms',true)->where('name',$name)->first();// 获取签名配置
+        $sms = $this->getService('Sms', true)->where('name', $name)->first();// 获取签名配置
 
-        if(!$sms) return $this->formatError(__('tip.sms.signEmpty'));
+        if (!$sms) {
+            return $this->formatError(__('tip.sms.signEmpty'));
+        }
 
         $this->configs['gateways']['aliyun']['access_key_id'] = $alisms['key'];
         $this->configs['gateways']['aliyun']['access_key_secret'] = $alisms['secret'];
@@ -61,21 +65,21 @@ class SmsService extends BaseService{
 
         $easySms = new EasySms($this->configs);
 
-        $sendBefore = $this->sendBefore($phone,$name);
-        if(!$sendBefore['status']){
+        $sendBefore = $this->sendBefore($phone, $name);
+        if (!$sendBefore['status']) {
             return $this->formatError($sendBefore['msg']);
         }
 
-        $rand = mt_rand(1000,9999);
+        $rand = mt_rand(1000, 9999);
 
 
-        try{
+        try {
             // 插入日志
-            $smsLog = $this->getService('SmsLog',true);
+            $smsLog = $this->getService('SmsLog', true);
             $saveData = [
                 'phone'     =>  $phone,
                 'content'   =>  $rand,
-                'status'    =>  1,  
+                'status'    =>  1,
                 'name'      =>  $name,
                 'error_msg' =>  '[]',
                 'ip'        =>  request()->getClientIp(),
@@ -88,7 +92,7 @@ class SmsService extends BaseService{
                 'data' => ['code'=>$rand],
             ]);
         } catch (\Overtrue\EasySms\Exceptions\NoGatewayAvailableException $e) {
-        	$error_msg = $e->getException('aliyun')->getMessage();
+            $error_msg = $e->getException('aliyun')->getMessage();
             $smsLog->error_msg = $error_msg;
             $smsLog->status = 0;
             $smsLog->save();
@@ -96,32 +100,32 @@ class SmsService extends BaseService{
         }
         
 
-        if(isset($rs) && $rs['aliyun']['status'] == 'success' && $rs['aliyun']['result']['Code'] == 'OK'){
-            return $this->format([],__('sms.send_success'));
-        }else{
+        if (isset($rs) && $rs['aliyun']['status'] == 'success' && $rs['aliyun']['result']['Code'] == 'OK') {
+            return $this->format([], __('sms.send_success'));
+        } else {
             $smsLog->error_msg = json_encode($rs);
             $smsLog->status = 0;
             $smsLog->save();
             return $this->formatError(__('tip.sms.sendErr'));
         }
-        
     }
 
     // 验证短信是否正确
-    public function checkSms($phone,$code){
+    public function checkSms($phone, $code)
+    {
         $failureTime = 600; // 失效时间
-        if(empty($smsInfo = $this->getService('SmsLog',true)->where([
+        if (empty($smsInfo = $this->getService('SmsLog', true)->where([
             'ip'    =>  request()->getClientIp(),
             'content'    =>  $code,
             'status'    =>  1,
             'phone'   =>  $phone,
-        ])->first())){
+        ])->first())) {
             return $this->formatError(__('tip.sms.smsErr'));
         }
 
         // 验证码失效 十分钟
         $ct = strtotime($smsInfo->created_at->format('Y-m-d H:i:s'));
-        if(($ct+$failureTime)<time()){
+        if (($ct+$failureTime)<time()) {
             return $this->formatError(__('tip.sms.smsInvalid'));
         }
 
@@ -129,29 +133,30 @@ class SmsService extends BaseService{
     }
 
     // 短信判断是否能发送
-    public function sendBefore($phone,$name){
+    public function sendBefore($phone, $name)
+    {
         // IP 加时间验证
-        $smsInfo = $this->getService('SmsLog',true)->where('ip',request()->getClientIp())->where('phone',$phone)->where('name',$name)->orderBy('id','desc')->first();
-        // 验证码失效 
-        if($smsInfo){
+        $smsInfo = $this->getService('SmsLog', true)->where('ip', request()->getClientIp())->where('phone', $phone)->where('name', $name)->orderBy('id', 'desc')->first();
+        // 验证码失效
+        if ($smsInfo) {
             $ct = strtotime($smsInfo->created_at->format('Y-m-d H:i:s'));
-            if(($ct+30)>time()){
+            if (($ct+30)>time()) {
                 return $this->formatError(__('tip.sms.reSend'));
             }
         }
         
 
         // 创建注册的时候判断是否存在账号
-        if($name == 'register'){
-            if($this->getService('User',true)->where('phone',$phone)->exists()){
+        if ($name == 'register') {
+            if ($this->getService('User', true)->where('phone', $phone)->exists()) {
                 return $this->formatError(__('tip.sms.phoneExists'));
             }
         }
 
 
         // 忘记密码 和 修改资料的时候判断是否存在
-        if($name == 'forget_password' || $name == 'edit_user'){
-            if(!$this->getService('User',true)->where('phone',$phone)->exists()){
+        if ($name == 'forget_password' || $name == 'edit_user') {
+            if (!$this->getService('User', true)->where('phone', $phone)->exists()) {
                 return $this->formatError(__('tip.sms.phoneNoExists'));
             }
         }
@@ -160,13 +165,12 @@ class SmsService extends BaseService{
     }
 
     // 验证是否手机号码正确
-    public function check_phone($phone){
-    	$g = "/^1[3456789]\d{9}$/";
-    	if(preg_match($g, $phone)){
-    		return true;
-    	}
-    	return false;
+    public function check_phone($phone)
+    {
+        $g = "/^1[3456789]\d{9}$/";
+        if (preg_match($g, $phone)) {
+            return true;
+        }
+        return false;
     }
-
- 
 }

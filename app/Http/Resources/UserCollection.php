@@ -15,12 +15,14 @@ class UserCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item){
+            'data'=>$this->collection->map(function ($item) {
                 return [
                     'id'                    =>  $item->id,
                     'username'              =>  $item->username,
                     'nickname'              =>  $item->nickname,
-                    'role_name'             =>  $item->roles->map(function($roleItem){return $roleItem->name;}),
+                    'role_name'             =>  $item->roles->map(function ($roleItem) {
+                        return $roleItem->name;
+                    }),
                     'phone'                 =>  $item->phone,
                     'avatar'                =>  $item->avatar,
                     'ip'                    =>  $item->ip,

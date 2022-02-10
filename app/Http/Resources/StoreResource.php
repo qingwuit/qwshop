@@ -15,20 +15,26 @@ class StoreResource extends JsonResource
      */
     public function toArray($request)
     {
-        $stroeClass = DB::table('store_classes')->where('store_id',$this->id)->first();
+        $stroeClass = DB::table('store_classes')->where('store_id', $this->id)->first();
         $classId = [];
-        if($stroeClass && !empty($stroeClass->class_id)){
-            $classId = json_decode($stroeClass->class_id,true); 
-            foreach($classId as $classKey=>$classItem){
-                foreach($classItem as $k=>$v){
+        if ($stroeClass && !empty($stroeClass->class_id)) {
+            $classId = json_decode($stroeClass->class_id, true);
+            foreach ($classId as $classKey=>$classItem) {
+                foreach ($classItem as $k=>$v) {
                     $classId[$classKey][$k] = intval($v);
                 }
             }
         }
         $area = [];
-        if(!empty($this->province_id)) $area[] = $this->province_id;
-        if(!empty($this->city_id)) $area[] = $this->city_id;
-        if(!empty($this->region_id)) $area[] = $this->region_id;
+        if (!empty($this->province_id)) {
+            $area[] = $this->province_id;
+        }
+        if (!empty($this->city_id)) {
+            $area[] = $this->city_id;
+        }
+        if (!empty($this->region_id)) {
+            $area[] = $this->region_id;
+        }
         return [
             'id'                            =>  $this->id,
             'store_name'                    =>  $this->store_name,
@@ -38,8 +44,8 @@ class StoreResource extends JsonResource
             'area_info'                     =>  $this->area_info,
             'area'                          =>  $area,
             'class_id'                      =>  $classId,
-            'store_slide'                   =>  !empty($this->store_slide)?explode(',',$this->store_slide):[],
-            'store_mobile_slide'            =>  !empty($this->store_mobile_slide)?explode(',',$this->store_mobile_slide):[],
+            'store_slide'                   =>  !empty($this->store_slide)?explode(',', $this->store_slide):[],
+            'store_mobile_slide'            =>  !empty($this->store_mobile_slide)?explode(',', $this->store_mobile_slide):[],
             'store_address'                 =>  $this->store_address,
             'store_lat'                     =>  $this->store_lat,
             'store_lng'                     =>  $this->store_lng,

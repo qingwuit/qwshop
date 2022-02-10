@@ -13,15 +13,18 @@ class Store extends Model
 
     protected $guarded = [];
 
-    public function storeClasses(){
-        return $this->hasOne('App\Qingwuit\Models\StoreClass','store_id','id');
+    public function storeClasses()
+    {
+        return $this->hasOne('App\Qingwuit\Models\StoreClass', 'store_id', 'id');
     }
 
-    public function comments(){
-        return $this->hasMany('App\Qingwuit\Models\OrderComment','store_id','id');
+    public function comments()
+    {
+        return $this->hasMany('App\Qingwuit\Models\OrderComment', 'store_id', 'id');
     }
 
-    public function orders(){
-        return $this->hasMany('App\Qingwuit\Models\Order','store_id','id');
+    public function orders()
+    {
+        return $this->hasMany('App\Qingwuit\Models\Order', 'store_id', 'id');
     }
 }

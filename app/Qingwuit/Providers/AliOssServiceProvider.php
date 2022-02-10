@@ -32,8 +32,7 @@ class AliOssServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Storage::extend('alioss', function($app, $config)
-        {
+        Storage::extend('alioss', function ($app, $config) {
             $configService = new ConfigsService;
             $config = $configService->getFormatConfig('upload');
             $accessId  = $config['key'];
@@ -41,7 +40,7 @@ class AliOssServiceProvider extends ServiceProvider
 
             $cdnDomain = empty($config['cdn']) ? '' : $config['cdn'];
             $bucket    = $config['bucket'];
-            $ssl       = empty($config['ssl']) ? false : true; 
+            $ssl       = empty($config['ssl']) ? false : true;
             $isCname   = empty($config['cdn']) ? false : true; // 不是非空全为true不做验证  是否使用域名
             $debug     = env('APP_DEBUG');
 

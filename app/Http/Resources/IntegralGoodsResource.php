@@ -29,9 +29,9 @@ class IntegralGoodsResource extends JsonResource
             'goods_content'         =>  $this->goods_content,
             'is_recommend'          =>  $this->is_recommend,
             'goods_status'          =>  empty($this->goods_status)?false:true,
-            'goods_images'          =>  empty($this->goods_images)?[]:explode(',',$this->goods_images),
-            'goods_images_thumb_150'=>  $tool->thumb_array(empty($this->goods_images)?[]:explode(',',$this->goods_images),150),
-            'goods_images_thumb_400'=>  $tool->thumb_array(empty($this->goods_images)?[]:explode(',',$this->goods_images),400),
+            'goods_images'          =>  empty($this->goods_images)?[]:explode(',', $this->goods_images),
+            'goods_images_thumb_150'=>  $tool->thumb_array(empty($this->goods_images)?[]:explode(',', $this->goods_images), 150),
+            'goods_images_thumb_400'=>  $tool->thumb_array(empty($this->goods_images)?[]:explode(',', $this->goods_images), 400),
             'created_at'            =>  $this->created_at->format('Y-m-d H:i:s'),
         ];
     }

@@ -17,7 +17,7 @@ class OrderCollection extends ResourceCollection
     {
         $orderService = new OrderService();
         return [
-            'data'=>$this->collection->map(function($item) use($orderService){
+            'data'=>$this->collection->map(function ($item) use ($orderService) {
                 return [
                     'id'                    =>  $item->id,
                     'order_no'              =>  $item->order_no,
@@ -49,14 +49,27 @@ class OrderCollection extends ResourceCollection
         ];
     }
 
-    public function refundStatusCn($info){
+    public function refundStatusCn($info)
+    {
         $cn = '';
-        if($info->refund->refund_verify == 0) $cn = '等待审核';
-        if($info->refund->refund_verify == 2) $cn = '拒绝审核';
-        if($info->refund->refund_verify == 1 && $info->refund->refund_step==0) $cn = '等待用户发货';
-        if($info->refund->refund_step==1) $cn = '等待商家确认';
-        if($info->refund->refund_step==2) $cn = '等待用户确认';
-        if($info->refund->refund_step==3) $cn = '售后处理完成';
+        if ($info->refund->refund_verify == 0) {
+            $cn = '等待审核';
+        }
+        if ($info->refund->refund_verify == 2) {
+            $cn = '拒绝审核';
+        }
+        if ($info->refund->refund_verify == 1 && $info->refund->refund_step==0) {
+            $cn = '等待用户发货';
+        }
+        if ($info->refund->refund_step==1) {
+            $cn = '等待商家确认';
+        }
+        if ($info->refund->refund_step==2) {
+            $cn = '等待用户确认';
+        }
+        if ($info->refund->refund_step==3) {
+            $cn = '售后处理完成';
+        }
         return $cn;
     }
 }

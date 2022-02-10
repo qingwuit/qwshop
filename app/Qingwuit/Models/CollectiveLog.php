@@ -13,11 +13,13 @@ class CollectiveLog extends Model
 
     protected $guarded = [];
 
-    public function user(){
-        return $this->hasOne('App\Qingwuit\Models\User','id','user_id')->withTrashed();
+    public function user()
+    {
+        return $this->hasOne('App\Qingwuit\Models\User', 'id', 'user_id')->withTrashed();
     }
 
-    public function orders(){
-        return $this->hasMany('App\Qingwuit\Models\Order','collective_id','id')->withTrashed();
+    public function orders()
+    {
+        return $this->hasMany('App\Qingwuit\Models\Order', 'collective_id', 'id')->withTrashed();
     }
 }

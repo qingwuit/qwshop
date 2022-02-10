@@ -16,7 +16,7 @@ class CreateUserRolesTable extends Migration
         Schema::create('user_roles', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('belong_id')->default(0)->comment('所属');
-            $table->string('name',15)->default('')->comment('角色名称');
+            $table->string('name', 15)->default('')->comment('角色名称');
             $table->timestamps();
             $table->softDeletes();
         });

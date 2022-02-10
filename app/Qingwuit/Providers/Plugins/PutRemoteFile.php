@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Qingwuit\Providers\Plugins;
+
 use League\Flysystem\Config;
 use League\Flysystem\Plugin\AbstractPlugin;
+
 class PutRemoteFile extends AbstractPlugin
 {
     /**
@@ -15,7 +17,8 @@ class PutRemoteFile extends AbstractPlugin
         return 'putRemoteFile';
     }
 
-    public function handle($path, $remoteUrl, array $options = []){
+    public function handle($path, $remoteUrl, array $options = [])
+    {
         $config = new Config($options);
         if (method_exists($this->filesystem, 'getConfig')) {
             $config->setFallback($this->filesystem->getConfig());

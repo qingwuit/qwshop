@@ -16,7 +16,7 @@ class CollectiveLogHomeCollection extends ResourceCollection
     public function toArray($request)
     {
         $tool_service = new ToolService();
-        return $this->collection->map(function($item) use($tool_service){
+        return $this->collection->map(function ($item) use ($tool_service) {
             return [
                 'id'                        =>  $item->id,
                 'need'                      =>  $item->need,
