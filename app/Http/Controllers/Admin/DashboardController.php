@@ -19,12 +19,12 @@ class DashboardController extends Controller
 
         
         $data['total_price'] = $this->getService('Order', true)->where('order_status', '>', 1)->sum('total_price');// 总销售额
-        $data['today_price'] = $this->getService('Order', true)->where('order_status', '>', 1)->where('pay_time', '>=', now()->toDateTimeString())->sum('total_price'); // 今日销售额
-        $data['yesterday_price'] = $this->getService('Order', true)->where('order_status', '>', 1)->where('pay_time', '<', now()->toDateTimeString())->where('pay_time', '>=', Carbon::yesterday()->toDateTimeString())->sum('total_price'); // 昨日销售额
-        $data['week_price'] = $this->getService('Order', true)->where('order_status', '>', 1)->where('pay_time', '>=', Carbon::now()->startOfWeek()->toDateTimeString())->sum('total_price'); // 这周销售额
-        $data['last_week_price'] = $this->getService('Order', true)->where('order_status', '>', 1)->where('pay_time', '<', Carbon::now()->startOfWeek()->toDateTimeString())->where('pay_time', '>=', Carbon::now()->subWeeks(1)->startOfWeek()->toDateTimeString())->sum('total_price'); // 上周销售额
-        $data['month_price'] = $this->getService('Order', true)->where('order_status', '>', 1)->where('pay_time', '>=', Carbon::now()->startOfMonth()->toDateTimeString())->sum('total_price'); // 这月销售额
-        $data['last_month_price'] = $this->getService('Order', true)->where('order_status', '>', 1)->where('pay_time', '<', Carbon::now()->startOfMonth()->toDateTimeString())->where('pay_time', '>=', Carbon::now()->subMonths(1)->startOfMonth()->toDateTimeString())->sum('total_price'); // 上月销售额
+        $data['today_price'] = $this->getService('Order', true)->where('order_status', '>', 1)->where('pay_time', '>=', now()->startOfDay()->toDateTimeString())->sum('total_price'); // 今日销售额
+        $data['yesterday_price'] = $this->getService('Order', true)->where('order_status', '>', 1)->where('pay_time', '<', now()->startOfDay()->toDateTimeString())->where('pay_time', '>=', Carbon::yesterday()->startOfDay()->toDateTimeString())->sum('total_price'); // 昨日销售额
+        $data['week_price'] = $this->getService('Order', true)->where('order_status', '>', 1)->where('pay_time', '>=', Carbon::now()->startOfWeek()->startOfDay()->toDateTimeString())->sum('total_price'); // 这周销售额
+        $data['last_week_price'] = $this->getService('Order', true)->where('order_status', '>', 1)->where('pay_time', '<', Carbon::now()->startOfWeek()->startOfDay()->toDateTimeString())->where('pay_time', '>=', Carbon::now()->subWeeks(1)->startOfWeek()->startOfDay()->toDateTimeString())->sum('total_price'); // 上周销售额
+        $data['month_price'] = $this->getService('Order', true)->where('order_status', '>', 1)->where('pay_time', '>=', Carbon::now()->startOfMonth()->startOfDay()->toDateTimeString())->sum('total_price'); // 这月销售额
+        $data['last_month_price'] = $this->getService('Order', true)->where('order_status', '>', 1)->where('pay_time', '<', Carbon::now()->startOfMonth()->startOfDay()->toDateTimeString())->where('pay_time', '>=', Carbon::now()->subMonths(1)->startOfMonth()->startOfDay()->toDateTimeString())->sum('total_price'); // 上月销售额
         $data['order_wait'] = $this->getService('Order', true)->where('order_status', 1)->count(); // 等待支付
         $data['order_send'] = $this->getService('Order', true)->where('order_status', 2)->count(); // 等待发货
         $data['order_complete'] = $this->getService('Order', true)->where('order_status', 6)->count(); // 完成
