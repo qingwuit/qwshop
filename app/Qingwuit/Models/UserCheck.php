@@ -12,5 +12,4 @@ class UserCheck extends Model
     use HasFactory,SoftDeletes,TimeTrait;
 
     protected $guarded = [];
-
 }

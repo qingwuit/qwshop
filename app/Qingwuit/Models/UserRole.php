@@ -13,11 +13,13 @@ class UserRole extends Model
 
     protected $guarded = [];
 
-    public function permissions(){
-        return $this->belongsToMany('App\Qingwuit\Models\UserPermission','user_to_permissions','role_id','permission_id');
+    public function permissions()
+    {
+        return $this->belongsToMany('App\Qingwuit\Models\UserPermission', 'user_to_permissions', 'role_id', 'permission_id');
     }
 
-    public function menus(){
-        return $this->belongsToMany('App\Qingwuit\Models\UserMenu','user_to_menus','role_id','menu_id');
+    public function menus()
+    {
+        return $this->belongsToMany('App\Qingwuit\Models\UserMenu', 'user_to_menus', 'role_id', 'menu_id');
     }
 }

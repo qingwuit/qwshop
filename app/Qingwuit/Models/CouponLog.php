@@ -15,7 +15,8 @@ class CouponLog extends Model
 
     protected $dates = ['start_time','end_time'];
 
-    public function user(){
-        return $this->hasOne('App\Qingwuit\Models\User','id','user_id')->withTrashed();
+    public function user()
+    {
+        return $this->hasOne('App\Qingwuit\Models\User', 'id', 'user_id')->withTrashed();
     }
 }

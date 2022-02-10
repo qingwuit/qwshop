@@ -13,7 +13,8 @@ class AdminMenu extends Model
 
     protected $guarded = [];
 
-    public function hasChildren(){
-        return $this->hasOne('App\Qingwuit\Models\AdminMenu','pid','id');
+    public function hasChildren()
+    {
+        return $this->hasOne('App\Qingwuit\Models\AdminMenu', 'pid', 'id');
     }
 }

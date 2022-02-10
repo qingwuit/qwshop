@@ -15,14 +15,16 @@ class AdminCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item){
+            'data'=>$this->collection->map(function ($item) {
                 return [
                     'id'                    =>  $item->id,
                     'username'              =>  $item->username,
                     'nickname'              =>  $item->nickname,
                     'avatar'                =>  $item->avatar,
                     'ip'                    =>  $item->ip,
-                    'role_name'             =>  $item->roles->map(function($roleItem){return $roleItem->name;}),
+                    'role_name'             =>  $item->roles->map(function ($roleItem) {
+                        return $roleItem->name;
+                    }),
                     'login_time'            =>  $item->login_time,
                     'created_at'            =>  $item->created_at->format('Y-m-d H:i:s'),
                 ];

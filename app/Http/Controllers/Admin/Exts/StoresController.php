@@ -9,11 +9,12 @@ class StoresController extends Controller
 {
     protected $modelName = 'Store';
 
-    public function update(Request $request, $id){
-        try{
-            $rs = $this->getService($this->modelName)->editStore($id,'id','admins');
+    public function update(Request $request, $id)
+    {
+        try {
+            $rs = $this->getService($this->modelName)->editStore($id, 'id', 'admins');
             return $this->handle($rs);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return $this->error($e->getMessage());
         }
     }

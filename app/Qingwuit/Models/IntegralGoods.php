@@ -13,7 +13,8 @@ class IntegralGoods extends Model
 
     protected $guarded = [];
 
-    public function class(){
-        return $this->hasOne('App\Qingwuit\Models\IntegralGoodsClass','id','cid');
+    public function class()
+    {
+        return $this->hasOne('App\Qingwuit\Models\IntegralGoodsClass', 'id', 'cid');
     }
 }

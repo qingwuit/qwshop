@@ -17,7 +17,9 @@ class GoodsAttrResource extends JsonResource
         return [
             'id'                    =>  $this->id,
             'name'                  =>  $this->name,
-            'specs'                 =>  $this->specs->map(function($specsItem){return $specsItem->name;}),
+            'specs'                 =>  $this->specs->map(function ($specsItem) {
+                return $specsItem->name;
+            }),
             'created_at'            =>  empty($this->created_at)?now()->format('Y-m-d H:i:s'):$this->created_at->format('Y-m-d H:i:s'),
         ];
     }

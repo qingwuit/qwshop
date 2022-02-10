@@ -15,7 +15,7 @@ class FollowHomeCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item){
+            'data'=>$this->collection->map(function ($item) {
                 return [
                     'id'                    =>  $item->id,
                     'out_id'                =>  $item->out_id,

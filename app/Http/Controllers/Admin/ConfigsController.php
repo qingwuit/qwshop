@@ -7,11 +7,10 @@ use Illuminate\Http\Request;
 
 class ConfigsController extends Controller
 {
-    
     public function index(Request $request)
     {
         try {
-            $info = $this->getService('Configs')->getFormatConfig($request->name,$request->many_name??null,$request->many??false);
+            $info = $this->getService('Configs')->getFormatConfig($request->name, $request->many_name??null, $request->many??false);
         } catch (\Exception $e) {
             return $this->error($e->getMessage());
         }
@@ -23,8 +22,6 @@ class ConfigsController extends Controller
     public function edit(Request $request)
     {
         $isCustom = $request->is_custom??null;
-        return $this->handle($this->getService('Configs')->editConfig($isCustom,$request->many_name??null,$request->many??false));
+        return $this->handle($this->getService('Configs')->editConfig($isCustom, $request->many_name??null, $request->many??false));
     }
-
-    
 }

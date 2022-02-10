@@ -15,10 +15,10 @@ class CreateSmsTable extends Migration
     {
         Schema::create('sms', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',15)->default('')->comment('签名名称');
-            $table->string('code',20)->comment('签名模板');
-            $table->string('content',25)->comment('签名内容');
-            $table->string('description',20)->comment('描述');
+            $table->string('name', 15)->default('')->comment('签名名称');
+            $table->string('code', 20)->comment('签名模板');
+            $table->string('content', 25)->comment('签名内容');
+            $table->string('description', 20)->comment('描述');
             $table->timestamps();
             $table->softDeletes();
         });

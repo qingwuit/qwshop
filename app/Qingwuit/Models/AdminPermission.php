@@ -13,7 +13,8 @@ class AdminPermission extends Model
 
     protected $guarded = [];
 
-    public function permission_groups(){
-        return $this->hasOne('App\Qingwuit\Models\AdminPermissionGroup','id','pid');
+    public function permission_groups()
+    {
+        return $this->hasOne('App\Qingwuit\Models\AdminPermissionGroup', 'id', 'pid');
     }
 }

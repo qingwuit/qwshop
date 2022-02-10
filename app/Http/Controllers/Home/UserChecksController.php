@@ -12,11 +12,13 @@ class UserChecksController extends Controller
     protected $auth = 'users';
     protected $belongName = 'user_id';
 
-    public function edit(){
+    public function edit()
+    {
         return $this->handle($this->getService('UserCheck')->edit());
     }
 
-    public function check(){
+    public function check()
+    {
         return $this->handle($this->getService('UserCheck')->check());
     }
 }

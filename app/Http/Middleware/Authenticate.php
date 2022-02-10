@@ -25,7 +25,8 @@ class Authenticate extends Middleware
     }
 
     // 重新定义未认证用户返回信息
-    protected function unauthenticated($request, array $guards){
+    protected function unauthenticated($request, array $guards)
+    {
         throw new \Exception(__('tip.loginInv'));
     }
 
@@ -38,29 +39,35 @@ class Authenticate extends Middleware
         }
 
         // 判断是否有权限访问
-        try{
+        try {
             $thrMsg = ['code'=>403,'msg'=>__('tip.pmsThr'),'data'=>[]];
             $hasPermission = false;
             $act = $request->route()->getAction();
-            $auth = explode(':',$act['middleware'][1])[1];
-            if($auth == 'users') return $next($request);
-            if($this->getService('base')->getSuper($auth)) $hasPermission = true; // 超级管理员拥有所有权限
-            $roles = $this->getService('base')->getRoles($auth,['permission']);
-            if(empty($roles['roles']) && !$hasPermission){
+            $auth = explode(':', $act['middleware'][1])[1];
+            if ($auth == 'users') {
+                return $next($request);
+            }
+            if ($this->getService('base')->getSuper($auth)) {
+                $hasPermission = true;
+            } // 超级管理员拥有所有权限
+            $roles = $this->getService('base')->getRoles($auth, ['permission']);
+            if (empty($roles['roles']) && !$hasPermission) {
                 return response()->json($thrMsg);
             }
-            if(isset($roles['roles']['permissions'])){
-                foreach($roles['roles']['permissions'] as $v){
-                    if($v['apis'] === $act['as']) $hasPermission = true;
+            if (isset($roles['roles']['permissions'])) {
+                foreach ($roles['roles']['permissions'] as $v) {
+                    if ($v['apis'] === $act['as']) {
+                        $hasPermission = true;
+                    }
                 }
             }
-            if(!$hasPermission) return response()->json($thrMsg);
-        }catch(\Exception $th){
+            if (!$hasPermission) {
+                return response()->json($thrMsg);
+            }
+        } catch (\Exception $th) {
             return response()->json($thrMsg);
         }
         
         return $next($request);
     }
-
-    
 }

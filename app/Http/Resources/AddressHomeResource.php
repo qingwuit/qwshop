@@ -15,9 +15,15 @@ class AddressHomeResource extends JsonResource
     public function toArray($request)
     {
         $area = [];
-        if(!empty($this->province_id)) $area[] = $this->province_id;
-        if(!empty($this->city_id)) $area[] = $this->city_id;
-        if(!empty($this->region_id)) $area[] = $this->region_id;
+        if (!empty($this->province_id)) {
+            $area[] = $this->province_id;
+        }
+        if (!empty($this->city_id)) {
+            $area[] = $this->city_id;
+        }
+        if (!empty($this->region_id)) {
+            $area[] = $this->region_id;
+        }
         return [
             'id'                    =>  $this->id,
             'receive_name'          =>  $this->receive_name,

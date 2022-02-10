@@ -12,7 +12,8 @@ class CashesController extends Controller
     protected $auth = 'users';
     protected $belongName = 'user_id';
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         return $this->handle($this->getService('Cash')->add());
     }
 }

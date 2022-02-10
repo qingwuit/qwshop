@@ -17,16 +17,18 @@ class AddressesController extends Controller
         return $this->handle($this->getService('Address')->add());
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         return $this->handle($this->getService('Address')->edit($id));
     }
 
-    public function set_default($id){
+    public function set_default($id)
+    {
         return $this->handle($this->getService('Address')->setDefault($id));
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $this->handle($this->getService('Address')->getDefault());
     }
 }

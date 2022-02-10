@@ -13,7 +13,8 @@ class ArticleMenu extends Model
 
     protected $guarded = [];
 
-    public function hasChildren(){
-        return $this->hasOne('App\Qingwuit\Models\ArticleMenu','pid','id');
+    public function hasChildren()
+    {
+        return $this->hasOne('App\Qingwuit\Models\ArticleMenu', 'pid', 'id');
     }
 }

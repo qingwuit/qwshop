@@ -15,8 +15,8 @@ class CreateGoodsBrandsTable extends Migration
     {
         Schema::create('goods_brands', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('thumb',150)->default('')->comment('缩略图');
-            $table->string('name',20)->default('')->comment('品牌名称');
+            $table->string('thumb', 150)->default('')->comment('缩略图');
+            $table->string('name', 20)->default('')->comment('品牌名称');
             $table->unsignedInteger('is_sort')->default(0)->comment('排序');
             $table->timestamps();
             $table->softDeletes();

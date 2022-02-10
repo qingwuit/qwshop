@@ -15,7 +15,7 @@ class IntegralOrderCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item){
+            'data'=>$this->collection->map(function ($item) {
                 return [
                     'id'                    =>  $item->id,
                     'order_no'              =>  $item->order_no,

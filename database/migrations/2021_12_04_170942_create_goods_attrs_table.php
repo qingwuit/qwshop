@@ -16,7 +16,7 @@ class CreateGoodsAttrsTable extends Migration
         Schema::create('goods_attrs', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('store_id')->default(0)->comment('所属店铺');
-            $table->string('name',20)->default('')->comment('属性名称');
+            $table->string('name', 20)->default('')->comment('属性名称');
             $table->timestamps();
             $table->softDeletes();
         });

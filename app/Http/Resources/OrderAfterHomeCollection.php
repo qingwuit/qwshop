@@ -14,7 +14,7 @@ class OrderAfterHomeCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->collection->map(function($item){
+        return $this->collection->map(function ($item) {
             return [
                 'id'                    =>  $item->id,
                 'order_no'              =>  $item->order_no,
@@ -31,8 +31,8 @@ class OrderAfterHomeCollection extends ResourceCollection
                 'refund'                =>  empty($item->refund)?[]:$item->refund,
                 'remark'                =>  $item->remark,
 
-                'order_goods'           =>  $item->order_goods->map(function($v){
-                                            return [
+                'order_goods'           =>  $item->order_goods->map(function ($v) {
+                    return [
                                                 'goods_image'=>$v->goods_image,
                                                 'goods_name'=>$v->goods_name,
                                                 'goods_price'=>$v->goods_price,

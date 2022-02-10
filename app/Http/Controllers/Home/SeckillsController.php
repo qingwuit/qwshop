@@ -9,7 +9,8 @@ class SeckillsController extends Controller
 {
     public $modelName = 'Seckill';
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         return $this->handle($this->getService('Goods')->getHomeSeckillGoods());
     }
 }

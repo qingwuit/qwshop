@@ -55,7 +55,6 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(app_path('Qingwuit/route.php'));
-            
         });
     }
 

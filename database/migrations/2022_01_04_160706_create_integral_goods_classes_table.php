@@ -15,7 +15,7 @@ class CreateIntegralGoodsClassesTable extends Migration
     {
         Schema::create('integral_goods_classes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',20)->comment('积分栏目');
+            $table->string('name', 20)->comment('积分栏目');
             $table->timestamps();
             $table->softDeletes();
         });

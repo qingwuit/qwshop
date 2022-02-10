@@ -12,11 +12,13 @@ class OrderGoods extends Model
     use HasFactory,SoftDeletes,TimeTrait;
     protected $guarded = [];
 
-    public function distribution(){
-        return $this->hasOne("App\Qingwuit\Models\Distribution","goods_id",'goods_id');
+    public function distribution()
+    {
+        return $this->hasOne("App\Qingwuit\Models\Distribution", "goods_id", 'goods_id');
     }
 
-    public function user(){
-        return $this->hasOne("App\Qingwuit\Models\User","id",'user_id');
+    public function user()
+    {
+        return $this->hasOne("App\Qingwuit\Models\User", "id", 'user_id');
     }
 }

@@ -19,7 +19,7 @@ class CreateCollectiveLogsTable extends Migration
             $table->unsignedInteger('user_id')->default(0)->comment('用户ID');
             $table->unsignedInteger('store_id')->default(0)->comment('店铺ID');
             $table->unsignedInteger('goods_id')->default(0)->comment('商品ID');
-            $table->unsignedDecimal('discount',6,2)->default(0.00)->comment('折扣');
+            $table->unsignedDecimal('discount', 6, 2)->default(0.00)->comment('折扣');
             $table->unsignedTinyInteger('need')->default(5)->comment('需要人数');
             $table->unsignedTinyInteger('status')->default(2)->comment('状态 0取消 1完成  2 拼团中');
             $table->timestamps();

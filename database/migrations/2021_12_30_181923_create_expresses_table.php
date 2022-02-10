@@ -15,8 +15,8 @@ class CreateExpressesTable extends Migration
     {
         Schema::create('expresses', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',10)->default('')->comment('快递公司名');
-            $table->string('code',10)->default('')->comment('快递编码');
+            $table->string('name', 10)->default('')->comment('快递公司名');
+            $table->string('code', 10)->default('')->comment('快递编码');
             $table->timestamps();
             $table->softDeletes();
         });

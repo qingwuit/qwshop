@@ -30,16 +30,16 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'weixinweb' => [    
-        'client_id' => env('WEIXIN_CLIENT_ID'),  
-        'client_secret' => env('WEIXIN_CLIENT_SECRET'),  
-        'redirect' => env('WEIXIN_REDIRECT_URI') 
+    'weixinweb' => [
+        'client_id' => env('WEIXIN_CLIENT_ID'),
+        'client_secret' => env('WEIXIN_CLIENT_SECRET'),
+        'redirect' => env('WEIXIN_REDIRECT_URI')
     ],
 
-    'weixin' => [    
-        'client_id' => env('WEIXIN_CLIENT_ID'),  
-        'client_secret' => env('WEIXIN_CLIENT_SECRET'),  
-        'redirect' => env('WEIXIN_REDIRECT_URI') 
+    'weixin' => [
+        'client_id' => env('WEIXIN_CLIENT_ID'),
+        'client_secret' => env('WEIXIN_CLIENT_SECRET'),
+        'redirect' => env('WEIXIN_REDIRECT_URI')
     ],
 
 ];

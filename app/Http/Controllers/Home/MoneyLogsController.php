@@ -12,7 +12,8 @@ class MoneyLogsController extends Controller
     protected $auth = 'users';
     protected $belongName = 'user_id';
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         return $this->handle($this->getService('MoneyLog')->getMoneyLog());
     }
 }

@@ -15,7 +15,7 @@ class AddressHomeCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data'=>$this->collection->map(function($item){
+            'data'=>$this->collection->map(function ($item) {
                 return [
                     'id'                    =>  $item->id,
                     'receive_name'          =>  $item->receive_name,

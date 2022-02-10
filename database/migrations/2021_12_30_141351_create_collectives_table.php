@@ -17,7 +17,7 @@ class CreateCollectivesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('store_id')->default(0)->comment('店铺ID');
             $table->unsignedInteger('goods_id')->default(0)->comment('商品ID');
-            $table->unsignedDecimal('discount',6,2)->default(0.00)->comment('折扣');
+            $table->unsignedDecimal('discount', 6, 2)->default(0.00)->comment('折扣');
             $table->unsignedTinyInteger('need')->default(5)->comment('需要人数');
             $table->timestamps();
             $table->softDeletes();

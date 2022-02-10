@@ -25,12 +25,12 @@ class Controller extends BaseController
      */
     public function index(Request $request)
     {
-        try{
+        try {
             $rs = $this->getService($this->serviceName)
                     ->setUserConfig(['setUser'=>($this->isSuper?false:$this->setUser),'auth'=>$this->auth,'belongName'=>$this->belongName])
                     ->getPageData($this->modelName);
             return $this->handle($rs);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return $this->error($e->getMessage());
         }
     }
@@ -43,12 +43,12 @@ class Controller extends BaseController
      */
     public function store(Request $request)
     {
-        try{
+        try {
             $rs = $this->getService($this->serviceName)
                         ->setUserConfig(['setUser'=>($this->isSuper?false:$this->setUser),'auth'=>$this->auth,'belongName'=>$this->belongName])
                         ->addDat($this->modelName);
             return $this->handle($rs);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return $this->error($e->getMessage());
         }
     }
@@ -61,12 +61,12 @@ class Controller extends BaseController
      */
     public function show($id)
     {
-        try{
+        try {
             $rs = $this->getService($this->serviceName)
                         ->setUserConfig(['setUser'=>($this->isSuper?false:$this->setUser),'auth'=>$this->auth,'belongName'=>$this->belongName])
-                        ->findDat($this->modelName,$id);
+                        ->findDat($this->modelName, $id);
             return $this->handle($rs);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return $this->error($e->getMessage());
         }
     }
@@ -80,12 +80,12 @@ class Controller extends BaseController
      */
     public function update(Request $request, $id)
     {
-        try{
+        try {
             $rs = $this->getService($this->serviceName)
                         ->setUserConfig(['setUser'=>($this->isSuper?false:$this->setUser),'auth'=>$this->auth,'belongName'=>$this->belongName])
-                        ->editDat($this->modelName,$id);
+                        ->editDat($this->modelName, $id);
             return $this->handle($rs);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return $this->error($e->getMessage());
         }
     }
@@ -98,38 +98,43 @@ class Controller extends BaseController
      */
     public function destroy($id)
     {
-        try{
+        try {
             $rs = $this->getService('Base')
                         ->setUserConfig(['setUser'=>($this->isSuper?false:$this->setUser),'auth'=>$this->auth,'belongName'=>$this->belongName])
-                        ->delDat($this->modelName,$id);
+                        ->delDat($this->modelName, $id);
             return $this->handle($rs);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return $this->error($e->getMessage());
         }
     }
 
     // get User Info
-    public function getUser($auth = ''){
+    public function getUser($auth = '')
+    {
         return $this->getService('Base')->getUser(empty($auth)?$this->auth:$auth);
     }
 
     // get User Id
-    public function getUserId($auth = ''){
+    public function getUserId($auth = '')
+    {
         return $this->getService('Base')->getUserId(empty($auth)?$this->auth:$auth);
     }
 
     // get belong Id
-    public function getBelongId($auth = ''){
+    public function getBelongId($auth = '')
+    {
         return $this->getService('Base')->getBelongId(empty($auth)?$this->auth:$auth);
     }
 
     // get isSuper Id
-    public function getSuper($auth = ''){
+    public function getSuper($auth = '')
+    {
         return $this->getService('Base')->getSuper(empty($auth)?$this->auth:$auth);
     }
 
     // get Roles
-    public function getRoles($auth = '',$with = ['menus','permissions']){
-        return $this->getService('Base')->getRoles(empty($auth)?$this->auth:$auth,$with);
+    public function getRoles($auth = '', $with = ['menus','permissions'])
+    {
+        return $this->getService('Base')->getRoles(empty($auth)?$this->auth:$auth, $with);
     }
 }

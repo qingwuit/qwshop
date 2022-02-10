@@ -21,10 +21,10 @@ class CreateRefundsTable extends Migration
             $table->unsignedTinyInteger('refund_type')->default(0)->comment('售后类型 0 退款 1退货');
             $table->unsignedTinyInteger('refund_verify')->default(0)->comment('售后状态 0 处理中 1同意 2拒绝');
             $table->unsignedTinyInteger('refund_step')->default(0)->comment('售后步骤  0等待用户填写单号 1等待商家 2商家确定收货并发货 3用户确定收货订单成功');
-            $table->string('delivery_no',20)->default('')->comment('快递订单号');
-            $table->string('delivery_code',10)->default('')->comment('快递公司编码');
-            $table->string('re_delivery_no',20)->default('')->comment('商家快递订单号');
-            $table->string('re_delivery_code',10)->default('')->comment('商家快递公司编码');
+            $table->string('delivery_no', 20)->default('')->comment('快递订单号');
+            $table->string('delivery_code', 10)->default('')->comment('快递公司编码');
+            $table->string('re_delivery_no', 20)->default('')->comment('商家快递订单号');
+            $table->string('re_delivery_code', 10)->default('')->comment('商家快递公司编码');
             $table->text('refund_remark')->comment('售后原因');
             $table->text('images')->comment('图片');
             $table->text('refuse_remark')->comment('拒绝原因');

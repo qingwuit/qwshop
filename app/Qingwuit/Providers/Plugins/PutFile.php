@@ -20,7 +20,8 @@ class PutFile extends AbstractPlugin
         return 'putFile';
     }
 
-    public function handle($path, $filePath, array $options = []){
+    public function handle($path, $filePath, array $options = [])
+    {
         $config = new Config($options);
         if (method_exists($this->filesystem, 'getConfig')) {
             $config->setFallback($this->filesystem->getConfig());

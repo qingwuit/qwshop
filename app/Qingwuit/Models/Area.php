@@ -13,7 +13,8 @@ class Area extends Model
 
     protected $guarded = [];
 
-    public function hasChildren(){
-        return $this->hasOne('App\Qingwuit\Models\Area','pid','code');
+    public function hasChildren()
+    {
+        return $this->hasOne('App\Qingwuit\Models\Area', 'pid', 'code');
     }
 }

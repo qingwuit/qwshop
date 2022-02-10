@@ -18,7 +18,8 @@ class User extends Authenticatable
     {
         return $this->orWhere('username', $username)->orWhere('phone', $username)->first(); // ->orWhere('phone', $login)
     }
-    public function roles(){
-        return $this->belongsToMany('App\Qingwuit\Models\UserRole','user_to_roles','user_id','role_id');
+    public function roles()
+    {
+        return $this->belongsToMany('App\Qingwuit\Models\UserRole', 'user_to_roles', 'user_id', 'role_id');
     }
 }

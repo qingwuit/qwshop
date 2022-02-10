@@ -10,7 +10,8 @@ class OrdersController extends Controller
     protected $modelName = 'Order';
 
     // 获取订单商品格式化列表
-    public function all(){
+    public function all()
+    {
         return $this->handle($this->getService('Order')->createOrderAfter());
-    } 
+    }
 }

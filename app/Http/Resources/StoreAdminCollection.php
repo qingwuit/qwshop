@@ -16,12 +16,12 @@ class StoreAdminCollection extends ResourceCollection
     public function toArray($request)
     {
         $store = new Store();
-        $pass = $store->where('store_verify',4)->count();
-        $wait = $store->where('store_verify',2)->count();
-        $error = $store->where('store_verify',3)->count();
-        $create = $store->where('store_verify',1)->count();
+        $pass = $store->where('store_verify', 4)->count();
+        $wait = $store->where('store_verify', 2)->count();
+        $error = $store->where('store_verify', 3)->count();
+        $create = $store->where('store_verify', 1)->count();
         return [
-            'data'=>$this->collection->map(function($item) use($pass,$wait,$error,$create){
+            'data'=>$this->collection->map(function ($item) use ($pass, $wait, $error, $create) {
                 return [
                     'id'                    =>  $item->id,
                     'store_name'            =>  $item->store_name,

@@ -16,10 +16,10 @@ class CreateAdminsTable extends Migration
         Schema::create('admins', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('belong_id')->default(0)->comment('所属');
-            $table->string('username',20)->default('')->comment('用户名');
-            $table->string('password',60)->default('')->comment('密码');
-            $table->string('nickname',15)->default('')->comment('昵称');
-            $table->string('avatar',150)->default('')->comment('头像');
+            $table->string('username', 20)->default('')->comment('用户名');
+            $table->string('password', 60)->default('')->comment('密码');
+            $table->string('nickname', 15)->default('')->comment('昵称');
+            $table->string('avatar', 150)->default('')->comment('头像');
             $table->unsignedTinyInteger('is_super')->default(0)->comment('超级管理员');
             $table->ipAddress('ip')->default('0.0.0.0')->comment('登陆IP');
             $table->timestamp('login_time')->nullable()->comment('登陆时间');
