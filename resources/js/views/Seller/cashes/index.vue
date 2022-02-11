@@ -14,6 +14,7 @@ export default {
         const options = reactive([
             {label:'真实姓名',value:'name'},
             {label:'提现资金',value:'money',type:'tags'},
+            {label:'手续费',value:'commission',type:"tags"},
             {label:'银行名称',value:'bank_name'},
             {label:'银行卡号',value:'card_no'},
             {label:'提现状态',value:'cash_status',type:'dict_tags'},
@@ -25,6 +26,7 @@ export default {
             {label:'银行名称',value:'bank_name'},
             {label:'银行卡号',value:'card_no'},
             {label:'提现资金',value:'money'},
+            {label:'手续费',value:'commission'},
         ]
         
         const btnConfigs = reactive({

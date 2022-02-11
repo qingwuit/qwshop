@@ -10,7 +10,7 @@ class CashesController extends Controller
 {
     protected $modelName = 'Cash';
     public $auth = 'users';
-    
+
     public function store(Request $request)
     {
         $money = round(abs($request->money), 2);
@@ -18,33 +18,37 @@ class CashesController extends Controller
         if ($money == 0) {
             return $this->error(__('tip.cash.moneyZero'));
         }
-        if ($storeInfo['store_money']<$money) {
+        if ($storeInfo['store_money'] < $money) {
             return $this->error(__('tip.cash.moneyNotEnough'));
         }
+        // 获取店铺提现手续费
+        $storeConfig = $this->getService('Configs')->getFormatConfig('store');
+        $cashRate = !isset($storeConfig['cash']) && empty($storeConfig['cash']) ? 0 : round(floatval($storeConfig['cash']) / 100, 2);
         $model = $this->getService('Cash', true);
-        $model->name = $request->name??'';
-        $model->bank_name = $request->bank_name??'';
-        $model->card_no = $request->card_no??'';
+        $model->name = $request->name ?? '';
+        $model->bank_name = $request->bank_name ?? '';
+        $model->card_no = $request->card_no ?? '';
         $model->store_id = $storeInfo['id'];
-        $model->money = $money;
-        $model->remark = $request->remark??'';
+        $model->commission = round($money * $cashRate, 2);
+        $model->money = $money - $model->commission;
+        $model->remark = $request->remark ?? '';
         try {
             DB::beginTransaction();
             $model->save();
             $rs = $this->getService('MoneyLog')->edit([
-                'name'=>'商家提现',
-                'money'=>-$money,
-                'is_type'=>0,
-                'is_belong'=>1,
+                'name' => '商家提现',
+                'money' => -$money,
+                'is_type' => 0,
+                'is_belong' => 1,
             ]);
             if (!$rs['status']) {
                 throw new \Exception($rs['msg']);
             }
             $rs = $this->getService('MoneyLog')->edit([
-                'name'=>'商家提现',
-                'money'=>$money,
-                'is_type'=>1,
-                'is_belong'=>1,
+                'name' => '商家提现',
+                'money' => $money,
+                'is_type' => 1,
+                'is_belong' => 1,
             ]);
             if (!$rs['status']) {
                 throw new \Exception($rs['msg']);
@@ -54,7 +58,7 @@ class CashesController extends Controller
             DB::rollBack();
             return $this->error($e->getMessage());
         }
-        
+
         return $this->success();
     }
 
@@ -72,16 +76,16 @@ class CashesController extends Controller
         $tableModel = $tableModel->where('store_id', $storeId)->whereIn('id', $idArray)->get();
         foreach ($tableModel as $v) {
             $this->getService('MoneyLog')->edit([
-                'name'=>'取消提现',
-                'money'=>$v['money'],
-                'is_type'=>0,
-                'is_belong'=>1,
+                'name' => '取消提现',
+                'money' => $v['money'],
+                'is_type' => 0,
+                'is_belong' => 1,
             ]);
             $this->getService('MoneyLog')->edit([
-                'name'=>'取消提现',
-                'money'=>-$v['money'],
-                'is_type'=>1,
-                'is_belong'=>1,
+                'name' => '取消提现',
+                'money' => -$v['money'],
+                'is_type' => 1,
+                'is_belong' => 1,
             ]);
         }
 

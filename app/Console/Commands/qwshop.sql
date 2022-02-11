@@ -3912,6 +3912,7 @@ CREATE TABLE `cashes`  (
   `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
   `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
   `money` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '金额',
+  `commission` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '手续费',
   `cash_status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态0 提现申请 1提现成功 2拒绝提现',
   `refuse_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '拒绝原因',
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '提现人名',
