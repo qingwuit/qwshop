@@ -14,6 +14,7 @@ axios.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded;
 const prefixUri = '/api'
 let token = ''
 let tokenName = 'token'
+let loginName = ''
 let loginData = loginBaseData()
 
 // 添加请求拦截器
@@ -59,10 +60,10 @@ axios.interceptors.response.use(function (res) {
         ElMessage.error(res.data.msg);
         if(tokenName != 'token'){
             localStorage.removeItem(tokenName);
-            router.push(loginName+'login');
+            return router.push(loginName+'login');
         }else{
             localStorage.removeItem(tokenName);
-            router.push('login');
+            return router.push('login');
         }
         
         

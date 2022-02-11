@@ -4047,7 +4047,7 @@ INSERT INTO `configs` VALUES (12, 'upload', '{\"save_type\":false,\"key\":\"LTAI
 INSERT INTO `configs` VALUES (13, 'sms', '{\"key\":null,\"secret\":null}', '短信配置', 1, NULL, '2021-11-26 17:52:28', NULL);
 INSERT INTO `configs` VALUES (14, 'oauth', '{\"weixin\":{\"client_id\":\"asd\",\"key\":\"asd\",\"return_url\":\"sda\"},\"weixinweb\":{\"client_id\":\"ads\",\"key\":\"sad\",\"return_url\":\"dsa\"}}', '第三方登录', 1, NULL, '2022-01-12 15:42:37', NULL);
 INSERT INTO `configs` VALUES (15, 'pay', '{\"wechatwap\":{\"app_id\":\"asd\",\"mach_id\":\"asd\",\"mch_secret_key\":\"asd\",\"mch_secret_cert\":\"\\/crt\\/2022-01-12\\/ecxGbUEqcBneDzh0k0b3Szkk57fwNYiwvbigHsQV.png\",\"mch_public_cert_path\":\"\\/crt\\/2022-01-12\\/sd4Y6cH63hgLfUtmla4MvafPK6dqmQlM7YnrBtgT.png\",\"notify_url\":\"dsa\"}}', '支付配置', 1, NULL, '2022-01-12 21:28:42', NULL);
-INSERT INTO `configs` VALUES (16, 'amap', '{\"key\":\"79f3a628c906e1fc7384a6f19d478ae3\",\"jsapi\":\"f7619d49a4aea5cb76631ce884ea1817\"}', '高德地图', 1, NULL, '2022-01-09 22:00:05', NULL);
+INSERT INTO `configs` VALUES (16, 'amap', '{\"key\":\"79f3a628c93\",\"jsapi\":\"f7619d49a4aea5c\"}', '高德地图', 1, NULL, '2022-01-09 22:00:05', NULL);
 INSERT INTO `configs` VALUES (17, 'store', '{\"goods_verify\":false,\"cash\":\"0\"}', '店铺配置', 1, NULL, '2022-01-11 12:48:09', NULL);
 INSERT INTO `configs` VALUES (18, 'task', '{}', '定时任务', 1, NULL, '2022-01-11 12:48:09', NULL);
 INSERT INTO `configs` VALUES (19, 'kuaibao', '{}', '物流配置', 1, NULL, '2022-01-11 12:48:09', NULL);
