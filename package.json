@@ -23,7 +23,7 @@
         "@element-plus/icons": "0.0.11",
         "dayjs": "^1.10.7",
         "laravel-mix-polyfill": "^3.0.1",
-        "node-sass": "^6.0.1",
+        "node-sass": "^7.0.0",
         "qs": "^6.10.1",
         "sass-loader": "^12.1.0",
         "vue-i18n": "^9.2.0-beta.11"
