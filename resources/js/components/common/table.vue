@@ -624,7 +624,7 @@ export default {
             const wb = XLSX.utils.book_new();
             // XLSX.utils.sheet_add_aoa(ws, [[1,2], [2,3], [3,4]], {origin: "A2"});
             XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-            XLSX.writeFile(wb, store.state.load.routeMenuName+".xlsx");
+            XLSX.writeFile(wb, (store.state.load.routeMenuName||'table')+".xlsx");
         }
 
         // excel导入
