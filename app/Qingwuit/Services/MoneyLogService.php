@@ -30,12 +30,6 @@ class MoneyLogService extends BaseService
         $data = array_merge($data, $params);
         $userId = ($data['user_id'] == 0)?$this->getUserId('users'):$data['user_id'];
 
-        // 如果只要日志
-        if ($data['isLog']) {
-            DB::commit();
-            return $this->format([]);
-        }
-        
         try {
             DB::beginTransaction();
             $ml_model = $this->getService('MoneyLog', true);
@@ -45,13 +39,24 @@ class MoneyLogService extends BaseService
             $ml_model->name = $data['name'];
             $ml_model->is_belong = $data['is_belong'];
             $ml_model->info = $data['info'];
-            $ml_model->save();
+
+            // 如果只要日志
+            if ($data['isLog']) {
+                $ml_model->save();
+                DB::commit();
+                return $this->format([]);
+            }
+
             if (!empty($data['is_belong'])) {
                 if ($data['user_id'] == 0) {
                     $store = $this->getService('Store')->getStoreInfo(true)['data'];
                 } else {
                     $store = ['id'=>$data['user_id']];
                 }
+
+                // 店铺的使用店铺ID
+                $ml_model->user_id = $store['id'];
+
                 if ($model = $this->getService('Store', true)->lockForUpdate()->where('id', $store['id'])->first()) {
                     switch ($data['is_type']) {
                         case 0:
@@ -83,8 +88,9 @@ class MoneyLogService extends BaseService
                     throw new \Exception(__('tip.error').' - money log');
                 }
             }
-            
-            
+
+            $ml_model->save();
+
             DB::commit();
             return $this->format([]);
         } catch (\Exception $e) {

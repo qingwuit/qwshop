@@ -9,6 +9,10 @@ class MoneyLogsController extends Controller
 {
     protected $modelName = 'MoneyLog';
     protected $auth = 'users';
-    protected $belongName = 'user_id';
-    protected $setUser = true;
+
+    public function index(Request $request)
+    {
+        $data = $this->getService('base')->getPageData($this->modelName, ['user_id' => $this->getService('Store')->getStoreId()['data'], 'is_belong' => 1]);
+        return $this->handle($data);
+    }
 }

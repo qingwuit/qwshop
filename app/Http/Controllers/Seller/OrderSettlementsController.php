@@ -19,6 +19,6 @@ class OrderSettlementsController extends Controller
     public function show($id)
     {
         $rs = $this->getService($this->modelName, true)->where('id', $id)->where('store_id', $this->getService('Store')->getStoreId()['data'])->first();
-        return $this->handle($rs);
+        return $this->success($rs);
     }
 }

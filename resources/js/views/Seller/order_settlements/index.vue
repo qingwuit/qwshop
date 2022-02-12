@@ -13,7 +13,7 @@ export default {
             {label:'结算单号',value:'settlement_no'},
             {label:'总金额',value:'total_price',type:'tags'},
             {label:'结算金额',value:'settlement_price',type:'tags'},
-            {label:'结算状态',value:'status',type:'tags'},
+            {label:'结算状态',value:'status',type:'dict_tags'},
             {label:'创建时间',value:'created_at'},
         ]);
 
@@ -23,11 +23,14 @@ export default {
             {label:'结算单号',value:'settlement_no'},
             {label:'总金额',value:'total_price'},
             {label:'结算金额',value:'settlement_price'},
-            {label:'结算状态',value:'status'},
+            {label:'结算状态',value:'status',viewType:'dict_tags'},
             {label:'备注',value:'info'},
         ]
         const dialogParam = reactive({
             view:{column:viewColumn},
+            dictData:{
+                status:[{label:proxy.$t('btn.waitExamine'),value:0},{label:proxy.$t('btn.success'),value:1},{label:proxy.$t('btn.rejected'),value:2}],
+            },
         })
 
         const btnConfigs = reactive({

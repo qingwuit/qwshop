@@ -5,6 +5,19 @@
                 <el-button type="primary" :icon="Promotion" @click="openAddDialog(dialogParams)">订单发货</el-button>
                 <el-button type="primary" :icon="Printer" @click="$message.info('暂无功能')">打印面单</el-button>
             </template>
+            <!-- 物流信息 -->
+            <template #table_show_bottom_hook="{dialogParams,formData}">
+                <div class="delivery_list" v-if="!R.isEmpty(formData.view.delivery_no) && !R.isEmpty(formData.view.delivery_code)">
+                    <el-collapse accordion>
+                        <el-collapse-item name="1">
+                            <template #title>
+                                <el-icon><List /></el-icon>
+                                <span style="margin-left:10px">物流信息</span>
+                            </template>
+                        </el-collapse-item>
+                    </el-collapse>
+                </div>
+            </template>
         </table-view>
         <el-dialog custom-class="table_dialog_class" v-model="data.vis" title="订单处理">
             <div class="order_list" v-for="(v,k) in data.order" :key="k">
@@ -52,11 +65,11 @@
 
 <script>
 import {reactive,getCurrentInstance} from "vue"
-import { Promotion,Printer,Picture  } from '@element-plus/icons'
+import { Promotion,Printer,Picture,List  } from '@element-plus/icons'
 import tableView from "@/components/common/table"
 import {useRoute} from "vue-router"
 export default {
-    components:{tableView},
+    components:{tableView,List},
     setup(props) {
         const {ctx,proxy} = getCurrentInstance()
         const route  = useRoute()
@@ -100,7 +113,7 @@ export default {
             {label:'收件人手机',value:'receive_tel'},
             {label:'地址信息',value:'receive_area'},
             {label:'详细地址',value:'receive_address'},
-            {label:'快递订单号',value:'delivery_no'},
+            {label:'快递单号',value:'delivery_no'},
             {label:'订单状态',value:'order_status_cn'},
         ]
         const editColumn = [
@@ -108,7 +121,7 @@ export default {
             {label:'收件人手机',value:'receive_tel'},
             {label:'地址信息',value:'receive_area'},
             {label:'详细地址',value:'receive_address'},
-            {label:'快递订单号',value:'delivery_no'},
+            {label:'快递单号',value:'delivery_no'},
         ]
         const dialogParam = reactive({
             rules:{

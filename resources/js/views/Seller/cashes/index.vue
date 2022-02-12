@@ -26,8 +26,10 @@ export default {
             {label:'银行名称',value:'bank_name'},
             {label:'银行卡号',value:'card_no'},
             {label:'提现资金',value:'money'},
-            {label:'手续费',value:'commission'},
         ]
+
+        let viewColumn = _.cloneDeep(addColumn)
+        viewColumn.push({label:'手续费',value:'commission'})
         
         const btnConfigs = reactive({
             update:{show:false},
@@ -43,7 +45,7 @@ export default {
                 card_no:[{required:true,message:proxy.$t('msg.requiredMsg')}],
                 money:[{required:true,message:proxy.$t('msg.requiredMsg')}],
             },
-            view:{column:addColumn},
+            view:{column:viewColumn},
             add:{column:addColumn},
         })
 

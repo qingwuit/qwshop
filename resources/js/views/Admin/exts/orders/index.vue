@@ -1,12 +1,27 @@
 <template>
-    <table-view :params="params" :btnConfig="btnConfigs" :options="options" :dialogParam="dialogParam"></table-view>
+    <table-view :params="params" :btnConfig="btnConfigs" :options="options" :dialogParam="dialogParam">
+        <!-- 物流信息 -->
+        <template #table_show_bottom_hook="{dialogParams,formData}">
+            <div class="delivery_list" v-if="!R.isEmpty(formData.view.delivery_no) && !R.isEmpty(formData.view.delivery_code)">
+                <el-collapse accordion>
+                    <el-collapse-item name="1">
+                        <template #title>
+                            <el-icon><List /></el-icon>
+                            <span style="margin-left:10px">物流信息</span>
+                        </template>
+                    </el-collapse-item>
+                </el-collapse>
+            </div>
+        </template>
+    </table-view>
 </template>
 
 <script>
 import {reactive,getCurrentInstance} from "vue"
 import tableView from "@/components/common/table"
+import { List  } from '@element-plus/icons'
 export default {
-    components:{tableView},
+    components:{tableView,List},
     setup(props) {
         const {ctx,proxy} = getCurrentInstance()
         const options = reactive([
@@ -41,7 +56,7 @@ export default {
             {label:'收件人手机',value:'receive_tel'},
             {label:'地址信息',value:'receive_area'},
             {label:'详细地址',value:'receive_address'},
-            {label:'快递订单号',value:'delivery_no'},
+            {label:'快递单号',value:'delivery_no'},
             {label:'订单状态',value:'order_status_cn'},
         ]
         const addColumn = [
@@ -55,7 +70,7 @@ export default {
             {label:'收件人手机',value:'receive_tel'},
             {label:'地址信息',value:'receive_area'},
             {label:'详细地址',value:'receive_address'},
-            {label:'快递订单号',value:'delivery_no'},
+            {label:'快递单号',value:'delivery_no'},
         ]
         const dialogParam = reactive({
             view:{column:viewColumn},

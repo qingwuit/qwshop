@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Qingwuit\Services;
 
 use GuzzleHttp\Client;
@@ -13,7 +14,7 @@ class KuaiBaoService extends BaseService
         $data['method'] = 'express.info.get';
         $data['app_id'] = $info['app_id'];
         $data['ts'] = time();
-        $data['sign'] = md5($data['app_id'].$data['method'].$data['ts'].$appkey);
+        $data['sign'] = md5($data['app_id'] . $data['method'] . $data['ts'] . $appkey);
 
         $data2['waybill_no'] = $delivery_no;
         $data2['exp_company_code'] = $delivery_code;
@@ -30,6 +31,6 @@ class KuaiBaoService extends BaseService
             return $this->formatError($kbInfo['msg']);
         }
         $data = $kbInfo['data'][0]['data'];
-        return $data;
+        return $this->format($data);
     }
 }
