@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 12/01/2022 22:48:31
+ Date: 12/02/2022 17:48:00
 */
 
 SET NAMES utf8mb4;
@@ -116,7 +116,7 @@ INSERT INTO `admin_menus` VALUES (44, 43, '商品管理', '', 'fa-shopping-bag',
 INSERT INTO `admin_menus` VALUES (45, 43, '订单管理', '', 'fa-file-text', '/Admin/integral_orders', 'Admin/exts/integral_orders/index', 0, '', 1, '2021-12-29 17:38:44', '2022-01-04 22:18:46', NULL);
 INSERT INTO `admin_menus` VALUES (46, 44, '商品分类', '', '', '/Admin/integral_goods_classes', 'Admin/exts/integral_goods_classes/index', 0, '', 0, '2021-12-29 17:39:12', '2022-01-04 16:42:58', NULL);
 INSERT INTO `admin_menus` VALUES (47, 44, '商品管理', '', '', '/Admin/integral_goods', 'Admin/exts/integral_goods/index', 0, '', 1, '2021-12-29 17:39:23', '2022-01-04 16:43:25', NULL);
-INSERT INTO `admin_menus` VALUES (48, 31, '订单结算', '', '', '', '', 0, '', 2, '2021-12-29 17:45:14', '2021-12-29 17:45:14', NULL);
+INSERT INTO `admin_menus` VALUES (48, 31, '订单结算', '', '', '/Admin/order_settlements', 'Admin/exts/order_settlements/index', 0, '', 2, '2021-12-29 17:45:14', '2022-02-12 16:54:30', NULL);
 INSERT INTO `admin_menus` VALUES (49, 30, '物流中心', '', 'fa-truck', '', '', 0, '', 3, '2021-12-29 17:47:46', '2021-12-29 17:47:46', NULL);
 INSERT INTO `admin_menus` VALUES (50, 49, '区域地址', '', '', '/Admin/areas', 'Admin/exts/areas/index', 0, '', 0, '2021-12-29 17:48:28', '2022-01-01 21:59:40', NULL);
 INSERT INTO `admin_menus` VALUES (51, 49, '物流公司', '', '', '/Admin/expresses', 'Admin/exts/expresses/index', 0, '', 1, '2021-12-29 17:48:36', '2021-12-31 18:11:30', NULL);
@@ -3873,7 +3873,7 @@ CREATE TABLE `articles`  (
 -- ----------------------------
 -- Records of articles
 -- ----------------------------
-INSERT INTO `articles` VALUES (5, 1, 3, '帮助中心', '<p><span>sad</span></p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"sad\"}]}]', 5, '2022-01-11 13:32:27', '2022-01-11 17:48:36', NULL);
+INSERT INTO `articles` VALUES (5, 1, 3, '帮助中心', '<p><span>sad</span></p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"sad\"}]}]', 14, '2022-01-11 13:32:27', '2022-02-11 17:01:22', NULL);
 INSERT INTO `articles` VALUES (4, 1, 3, '其他合作', '<p><span>sad</span></p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"sad\"}]}]', 0, '2022-01-11 13:32:18', '2022-01-11 13:32:18', NULL);
 INSERT INTO `articles` VALUES (3, 1, 3, '网站公告', '<p><span>dsad</span></p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"dsad\"}]}]', 0, '2022-01-11 13:30:16', '2022-01-11 13:30:16', NULL);
 INSERT INTO `articles` VALUES (6, 1, 3, '关于我们', '<p><span>sad</span></p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"sad\"}]}]', 1, '2022-01-11 13:32:35', '2022-01-11 13:56:45', NULL);
@@ -3923,49 +3923,51 @@ CREATE TABLE `cashes`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 39 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 41 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cashes
 -- ----------------------------
-INSERT INTO `cashes` VALUES (1, 6, 0, 10.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:25:27', '2021-12-26 15:25:27', NULL);
-INSERT INTO `cashes` VALUES (2, 6, 0, 10.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:29:49', '2021-12-26 15:29:49', NULL);
-INSERT INTO `cashes` VALUES (3, 6, 0, 10.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:31:20', '2021-12-26 15:31:20', NULL);
-INSERT INTO `cashes` VALUES (4, 6, 0, 10.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:32:42', '2021-12-26 15:32:42', NULL);
-INSERT INTO `cashes` VALUES (5, 6, 0, 10.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:35:16', '2021-12-26 15:35:16', NULL);
-INSERT INTO `cashes` VALUES (6, 6, 0, 1.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:47:13', '2021-12-26 15:47:13', NULL);
-INSERT INTO `cashes` VALUES (7, 6, 0, 1.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:49:31', '2021-12-26 15:49:31', NULL);
-INSERT INTO `cashes` VALUES (8, 6, 0, 1.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:53:43', '2021-12-26 15:53:43', NULL);
-INSERT INTO `cashes` VALUES (9, 6, 0, 1.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:55:05', '2021-12-26 15:55:05', NULL);
-INSERT INTO `cashes` VALUES (10, 6, 0, 1.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:55:41', '2021-12-26 15:55:41', NULL);
-INSERT INTO `cashes` VALUES (11, 6, 0, 1.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:56:25', '2021-12-26 15:56:25', NULL);
-INSERT INTO `cashes` VALUES (12, 6, 0, 1.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:58:07', '2021-12-26 15:58:07', NULL);
-INSERT INTO `cashes` VALUES (13, 6, 0, 1.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:58:33', '2021-12-26 15:58:33', NULL);
-INSERT INTO `cashes` VALUES (14, 6, 0, 1.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:59:12', '2021-12-26 15:59:12', NULL);
-INSERT INTO `cashes` VALUES (15, 6, 0, 5.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 16:00:40', '2021-12-26 16:00:40', NULL);
-INSERT INTO `cashes` VALUES (16, 6, 0, 6.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 16:01:48', '2021-12-26 16:01:48', NULL);
-INSERT INTO `cashes` VALUES (17, 0, 1, 1.00, 0, '', 'dasd', 'das', 'asd', '', '2022-01-01 19:38:01', '2022-01-01 19:38:01', NULL);
-INSERT INTO `cashes` VALUES (18, 0, 1, 1.00, 0, '', 'sc', 'sad', 'sad', '', '2022-01-01 19:41:57', '2022-01-01 19:41:57', NULL);
-INSERT INTO `cashes` VALUES (19, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:43:44', '2022-01-01 19:43:44', NULL);
-INSERT INTO `cashes` VALUES (20, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:46:40', '2022-01-01 19:46:40', NULL);
-INSERT INTO `cashes` VALUES (21, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:46:44', '2022-01-01 19:46:44', NULL);
-INSERT INTO `cashes` VALUES (22, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:47:47', '2022-01-01 19:47:47', NULL);
-INSERT INTO `cashes` VALUES (23, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:48:04', '2022-01-01 19:48:04', NULL);
-INSERT INTO `cashes` VALUES (24, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:48:43', '2022-01-01 19:48:43', NULL);
-INSERT INTO `cashes` VALUES (25, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:49:11', '2022-01-01 19:49:11', NULL);
-INSERT INTO `cashes` VALUES (26, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:49:28', '2022-01-01 19:49:28', NULL);
-INSERT INTO `cashes` VALUES (27, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:49:36', '2022-01-01 19:49:36', NULL);
-INSERT INTO `cashes` VALUES (28, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:50:06', '2022-01-01 19:50:06', NULL);
-INSERT INTO `cashes` VALUES (29, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:50:30', '2022-01-01 19:50:30', NULL);
-INSERT INTO `cashes` VALUES (30, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:51:54', '2022-01-01 19:51:54', NULL);
-INSERT INTO `cashes` VALUES (31, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:52:23', '2022-01-01 19:52:23', NULL);
-INSERT INTO `cashes` VALUES (32, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:52:59', '2022-01-01 19:52:59', NULL);
-INSERT INTO `cashes` VALUES (33, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:53:24', '2022-01-01 19:53:24', NULL);
-INSERT INTO `cashes` VALUES (34, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:53:35', '2022-01-01 19:53:35', NULL);
-INSERT INTO `cashes` VALUES (35, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:53:51', '2022-01-01 19:53:51', NULL);
-INSERT INTO `cashes` VALUES (36, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:53:55', '2022-01-01 19:53:55', NULL);
-INSERT INTO `cashes` VALUES (37, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:54:37', '2022-01-01 19:54:37', NULL);
-INSERT INTO `cashes` VALUES (38, 0, 1, 1.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:58:05', '2022-01-01 19:58:05', NULL);
+INSERT INTO `cashes` VALUES (1, 6, 0, 10.00, 0.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:25:27', '2021-12-26 15:25:27', NULL);
+INSERT INTO `cashes` VALUES (2, 6, 0, 10.00, 0.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:29:49', '2021-12-26 15:29:49', NULL);
+INSERT INTO `cashes` VALUES (3, 6, 0, 10.00, 0.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:31:20', '2021-12-26 15:31:20', NULL);
+INSERT INTO `cashes` VALUES (4, 6, 0, 10.00, 0.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:32:42', '2021-12-26 15:32:42', NULL);
+INSERT INTO `cashes` VALUES (5, 6, 0, 10.00, 0.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:35:16', '2021-12-26 15:35:16', NULL);
+INSERT INTO `cashes` VALUES (6, 6, 0, 1.00, 0.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:47:13', '2021-12-26 15:47:13', NULL);
+INSERT INTO `cashes` VALUES (7, 6, 0, 1.00, 0.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:49:31', '2021-12-26 15:49:31', NULL);
+INSERT INTO `cashes` VALUES (8, 6, 0, 1.00, 0.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:53:43', '2021-12-26 15:53:43', NULL);
+INSERT INTO `cashes` VALUES (9, 6, 0, 1.00, 0.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:55:05', '2021-12-26 15:55:05', NULL);
+INSERT INTO `cashes` VALUES (10, 6, 0, 1.00, 0.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:55:41', '2021-12-26 15:55:41', NULL);
+INSERT INTO `cashes` VALUES (11, 6, 0, 1.00, 0.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:56:25', '2021-12-26 15:56:25', NULL);
+INSERT INTO `cashes` VALUES (12, 6, 0, 1.00, 0.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:58:07', '2021-12-26 15:58:07', NULL);
+INSERT INTO `cashes` VALUES (13, 6, 0, 1.00, 0.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:58:33', '2021-12-26 15:58:33', NULL);
+INSERT INTO `cashes` VALUES (14, 6, 0, 1.00, 0.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 15:59:12', '2021-12-26 15:59:12', NULL);
+INSERT INTO `cashes` VALUES (15, 6, 0, 5.00, 0.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 16:00:40', '2021-12-26 16:00:40', NULL);
+INSERT INTO `cashes` VALUES (16, 6, 0, 6.00, 0.00, 0, '', 'asd', 'asd', 'asd', '', '2021-12-26 16:01:48', '2021-12-26 16:01:48', NULL);
+INSERT INTO `cashes` VALUES (17, 0, 1, 1.00, 0.00, 0, '', 'dasd', 'das', 'asd', '', '2022-01-01 19:38:01', '2022-01-01 19:38:01', NULL);
+INSERT INTO `cashes` VALUES (18, 0, 1, 1.00, 0.00, 0, '', 'sc', 'sad', 'sad', '', '2022-01-01 19:41:57', '2022-01-01 19:41:57', NULL);
+INSERT INTO `cashes` VALUES (19, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:43:44', '2022-01-01 19:43:44', NULL);
+INSERT INTO `cashes` VALUES (20, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:46:40', '2022-01-01 19:46:40', NULL);
+INSERT INTO `cashes` VALUES (21, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:46:44', '2022-01-01 19:46:44', NULL);
+INSERT INTO `cashes` VALUES (22, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:47:47', '2022-01-01 19:47:47', NULL);
+INSERT INTO `cashes` VALUES (23, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:48:04', '2022-01-01 19:48:04', NULL);
+INSERT INTO `cashes` VALUES (24, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:48:43', '2022-01-01 19:48:43', NULL);
+INSERT INTO `cashes` VALUES (25, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:49:11', '2022-01-01 19:49:11', NULL);
+INSERT INTO `cashes` VALUES (26, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:49:28', '2022-01-01 19:49:28', NULL);
+INSERT INTO `cashes` VALUES (27, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:49:36', '2022-01-01 19:49:36', NULL);
+INSERT INTO `cashes` VALUES (28, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:50:06', '2022-01-01 19:50:06', NULL);
+INSERT INTO `cashes` VALUES (29, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:50:30', '2022-01-01 19:50:30', NULL);
+INSERT INTO `cashes` VALUES (30, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:51:54', '2022-01-01 19:51:54', NULL);
+INSERT INTO `cashes` VALUES (31, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:52:23', '2022-01-01 19:52:23', NULL);
+INSERT INTO `cashes` VALUES (32, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:52:59', '2022-01-01 19:52:59', NULL);
+INSERT INTO `cashes` VALUES (33, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:53:24', '2022-01-01 19:53:24', NULL);
+INSERT INTO `cashes` VALUES (34, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:53:35', '2022-01-01 19:53:35', NULL);
+INSERT INTO `cashes` VALUES (35, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:53:51', '2022-01-01 19:53:51', NULL);
+INSERT INTO `cashes` VALUES (36, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:53:55', '2022-01-01 19:53:55', NULL);
+INSERT INTO `cashes` VALUES (37, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:54:37', '2022-01-01 19:54:37', NULL);
+INSERT INTO `cashes` VALUES (38, 0, 1, 1.00, 0.00, 0, '', 'sad', 'asd', 'sad', '', '2022-01-01 19:58:05', '2022-01-01 19:58:05', NULL);
+INSERT INTO `cashes` VALUES (39, 0, 1, 1.00, 0.00, 0, '', '123', '1232', '123', '', '2022-02-11 19:41:22', '2022-02-11 19:41:22', NULL);
+INSERT INTO `cashes` VALUES (40, 0, 1, 0.99, 0.01, 0, '', '123', '1232', '123', '', '2022-02-11 19:41:41', '2022-02-11 19:49:06', NULL);
 
 -- ----------------------------
 -- Table structure for collective_logs
@@ -4028,7 +4030,7 @@ CREATE TABLE `configs`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of configs
@@ -4048,10 +4050,10 @@ INSERT INTO `configs` VALUES (12, 'upload', '{\"save_type\":false,\"key\":\"LTAI
 INSERT INTO `configs` VALUES (13, 'sms', '{\"key\":null,\"secret\":null}', '短信配置', 1, NULL, '2021-11-26 17:52:28', NULL);
 INSERT INTO `configs` VALUES (14, 'oauth', '{\"weixin\":{\"client_id\":\"asd\",\"key\":\"asd\",\"return_url\":\"sda\"},\"weixinweb\":{\"client_id\":\"ads\",\"key\":\"sad\",\"return_url\":\"dsa\"}}', '第三方登录', 1, NULL, '2022-01-12 15:42:37', NULL);
 INSERT INTO `configs` VALUES (15, 'pay', '{\"wechatwap\":{\"app_id\":\"asd\",\"mach_id\":\"asd\",\"mch_secret_key\":\"asd\",\"mch_secret_cert\":\"\\/crt\\/2022-01-12\\/ecxGbUEqcBneDzh0k0b3Szkk57fwNYiwvbigHsQV.png\",\"mch_public_cert_path\":\"\\/crt\\/2022-01-12\\/sd4Y6cH63hgLfUtmla4MvafPK6dqmQlM7YnrBtgT.png\",\"notify_url\":\"dsa\"}}', '支付配置', 1, NULL, '2022-01-12 21:28:42', NULL);
-INSERT INTO `configs` VALUES (16, 'amap', '{\"key\":\"79f3a628c93\",\"jsapi\":\"f7619d49a4aea5c\"}', '高德地图', 1, NULL, '2022-01-09 22:00:05', NULL);
-INSERT INTO `configs` VALUES (17, 'store', '{\"goods_verify\":false,\"cash\":\"0\"}', '店铺配置', 1, NULL, '2022-01-11 12:48:09', NULL);
-INSERT INTO `configs` VALUES (18, 'task', '{}', '定时任务', 1, NULL, '2022-01-11 12:48:09', NULL);
-INSERT INTO `configs` VALUES (19, 'kuaibao', '{}', '物流配置', 1, NULL, '2022-01-11 12:48:09', NULL);
+INSERT INTO `configs` VALUES (18, 'task', '{\"cancel\":\"1\",\"confirm\":\"4\",\"settlement\":\"7\"}', '定时任务', 1, NULL, '2022-02-12 17:39:52', NULL);
+INSERT INTO `configs` VALUES (19, 'kuaibao', '{}', '物流配置', 1, NULL, NULL, NULL);
+INSERT INTO `configs` VALUES (16, 'amap', '{\"key\":\"79f3a628c9\",\"jsapi\":\"f7619d49a4\"}', '高德地图', 1, NULL, '2022-01-09 22:00:05', NULL);
+INSERT INTO `configs` VALUES (17, 'store', '{\"goods_verify\":false,\"cash\":\"0\"}', '店铺配置', 1, NULL, '2022-02-11 19:41:49', NULL);
 
 -- ----------------------------
 -- Table structure for coupon_logs
@@ -4201,11 +4203,12 @@ CREATE TABLE `favorites`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of favorites
 -- ----------------------------
+INSERT INTO `favorites` VALUES (5, 6, 1, 0, '2022-01-13 16:10:57', '2022-01-13 16:10:57', NULL);
 INSERT INTO `favorites` VALUES (4, 6, 1, 0, '2021-12-25 17:18:44', '2021-12-26 19:50:45', '2021-12-26 19:50:45');
 INSERT INTO `favorites` VALUES (3, 6, 1, 0, '2021-12-25 17:14:54', '2021-12-25 17:18:21', '2021-12-25 17:18:21');
 
@@ -4298,7 +4301,7 @@ CREATE TABLE `goods`  (
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES (1, 0, 27, 1, 'as2', '111', '', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1.png', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1.png', 1.00, 2.00, 1, 3.00, 7, 0, 1, 1, '暂无缘由', 0, '<p><span>ss</span></p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"ss\"}]}]', '', 0, 0, '2021-12-18 08:04:42', '2022-01-10 00:47:13', NULL);
+INSERT INTO `goods` VALUES (1, 0, 27, 1, 'as2', '111', '', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1.png', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1.png', 1.00, 2.00, 1, 3.00, 12, 0, 1, 1, '暂无缘由', 0, '<p><span>ss</span></p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"ss\"}]}]', '', 0, 0, '2021-12-18 08:04:42', '2022-01-13 20:23:09', NULL);
 INSERT INTO `goods` VALUES (2, 2, 1, 1, 'Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体', '智能操控 快速冷暖', '', '/storage/goods/3/2021-02-21/K2f0AKQqJgKu4trdQF2zytOMEdRQ0PM9yYRB2srj.jpg', '/storage/goods/3/2021-02-21/K2f0AKQqJgKu4trdQF2zytOMEdRQ0PM9yYRB2srj.jpg', 6819.00, 8999.00, 1000, 10.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 13:59:29', '2021-02-21 13:59:29', NULL);
 INSERT INTO `goods` VALUES (3, 2, 1, 1, 'Xiaomi/小米 小米电视4A 55英寸 4k超高清智能网络电视机 50 60', '小米电视4A 55英寸', '', '/storage/goods/3/2021-02-21/P9H13dxYDx8oDm5QsiYlYlNoBcN1ROEnn8R8mlqE.jpg', '/storage/goods/3/2021-02-21/P9H13dxYDx8oDm5QsiYlYlNoBcN1ROEnn8R8mlqE.jpg', 2300.00, 4500.00, 1000, 5.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:01:35', '2021-02-21 14:01:35', NULL);
 INSERT INTO `goods` VALUES (4, 2, 1, 1, 'Hisense/海信 LED49EC270W 49吋液晶平板电视机网络wifi彩电50', 'Hisense/海信 wifi彩电', '', '/storage/goods/3/2021-02-21/HUEYKEuHCAKTilIWWse4e9J6jNHy4CUSwbCOO63H.jpg', '/storage/goods/3/2021-02-21/HUEYKEuHCAKTilIWWse4e9J6jNHy4CUSwbCOO63H.jpg', 1800.00, 2999.00, 1000, 2.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:05:28', '2021-02-21 14:05:28', NULL);
@@ -4568,8 +4571,89 @@ CREATE TABLE `integral_orders`  (
 -- ----------------------------
 -- Records of integral_orders
 -- ----------------------------
-INSERT INTO `integral_orders` VALUES (1, 6, '2022010517055763843', 'dsddds111', '/storage/goods/2022-01-04/2O0pDzJEjxe2pJ18Rn11f5dvakq5W3rAgNRMCvuh_150.png', 1.00, 1.00, 2, '111111', 'yd', '张三', '18888888888', '河北省 淄博市', '面馆', '2022-01-04 16:24:26', '2022-01-04 16:24:26', '', '2022-01-05 17:05:57', '2022-01-05 17:46:49', NULL);
+INSERT INTO `integral_orders` VALUES (1, 6, '2022010517055763843', 'dsddds111', '/storage/goods/2022-01-04/2O0pDzJEjxe2pJ18Rn11f5dvakq5W3rAgNRMCvuh_150.png', 1.00, 1.00, 2, '111111', 'yd', '张三', '18888888888', '河北省 淄博市', '面馆', '2022-01-04 16:24:26', '2022-01-04 16:24:26', '', '2022-01-05 17:05:57', '2022-02-11 17:11:12', NULL);
 
+-- ----------------------------
+-- Table structure for migrations
+-- ----------------------------
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE `migrations`  (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 123 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of migrations
+-- ----------------------------
+INSERT INTO `migrations` VALUES (23, '2016_06_01_000001_create_oauth_auth_codes_table', 1);
+INSERT INTO `migrations` VALUES (24, '2016_06_01_000002_create_oauth_access_tokens_table', 1);
+INSERT INTO `migrations` VALUES (25, '2016_06_01_000003_create_oauth_refresh_tokens_table', 1);
+INSERT INTO `migrations` VALUES (26, '2016_06_01_000004_create_oauth_clients_table', 1);
+INSERT INTO `migrations` VALUES (27, '2016_06_01_000005_create_oauth_personal_access_clients_table', 1);
+INSERT INTO `migrations` VALUES (28, '2019_12_14_000001_create_personal_access_tokens_table', 1);
+INSERT INTO `migrations` VALUES (60, '2021_09_20_162946_create_user_menus_table', 2);
+INSERT INTO `migrations` VALUES (59, '2021_09_20_162938_create_user_to_menus_table', 2);
+INSERT INTO `migrations` VALUES (58, '2021_09_20_162918_create_admin_menus_table', 2);
+INSERT INTO `migrations` VALUES (57, '2021_09_20_162908_create_admin_to_menus_table', 2);
+INSERT INTO `migrations` VALUES (56, '2021_09_20_084859_create_user_permission_groups_table', 2);
+INSERT INTO `migrations` VALUES (55, '2021_09_20_084830_create_user_permissions_table', 2);
+INSERT INTO `migrations` VALUES (54, '2021_09_20_084820_create_user_to_permissions_table', 2);
+INSERT INTO `migrations` VALUES (53, '2021_09_20_084638_create_user_roles_table', 2);
+INSERT INTO `migrations` VALUES (52, '2021_09_20_084624_create_user_to_roles_table', 2);
+INSERT INTO `migrations` VALUES (51, '2021_09_20_084034_create_users_table', 2);
+INSERT INTO `migrations` VALUES (50, '2021_09_20_083107_create_admin_permission_groups_table', 2);
+INSERT INTO `migrations` VALUES (49, '2021_09_20_083055_create_admin_permissions_table', 2);
+INSERT INTO `migrations` VALUES (48, '2021_09_20_083042_create_admin_to_permissions_table', 2);
+INSERT INTO `migrations` VALUES (47, '2021_09_20_082233_create_admin_roles_table', 2);
+INSERT INTO `migrations` VALUES (46, '2021_09_20_082115_create_admin_to_roles_table', 2);
+INSERT INTO `migrations` VALUES (45, '2021_09_20_074956_create_admins_table', 2);
+INSERT INTO `migrations` VALUES (62, '2021_11_25_211658_create_configs_table', 3);
+INSERT INTO `migrations` VALUES (65, '2021_11_27_165759_create_sms_table', 4);
+INSERT INTO `migrations` VALUES (66, '2021_11_27_165918_create_sms_logs_table', 4);
+INSERT INTO `migrations` VALUES (69, '2021_11_30_161646_create_agreements_table', 5);
+INSERT INTO `migrations` VALUES (70, '2021_11_30_210723_create_article_menus_table', 6);
+INSERT INTO `migrations` VALUES (71, '2021_11_30_210731_create_articles_table', 6);
+INSERT INTO `migrations` VALUES (72, '2021_11_30_210849_create_notices_table', 6);
+INSERT INTO `migrations` VALUES (76, '2021_12_01_180556_create_adv_spaces_table', 7);
+INSERT INTO `migrations` VALUES (77, '2021_12_01_180609_create_advs_table', 7);
+INSERT INTO `migrations` VALUES (78, '2021_12_02_192750_create_order_pays_table', 8);
+INSERT INTO `migrations` VALUES (81, '2021_12_04_170133_create_goods_classes_table', 9);
+INSERT INTO `migrations` VALUES (82, '2021_12_04_170340_create_goods_brands_table', 9);
+INSERT INTO `migrations` VALUES (83, '2021_12_04_170727_create_goods_table', 9);
+INSERT INTO `migrations` VALUES (84, '2021_12_04_170929_create_goods_skus_table', 9);
+INSERT INTO `migrations` VALUES (85, '2021_12_04_170942_create_goods_attrs_table', 9);
+INSERT INTO `migrations` VALUES (86, '2021_12_04_171016_create_goods_specs_table', 9);
+INSERT INTO `migrations` VALUES (87, '2021_12_04_172113_create_stores_table', 9);
+INSERT INTO `migrations` VALUES (88, '2021_12_04_172237_create_store_classes_table', 9);
+INSERT INTO `migrations` VALUES (89, '2021_12_06_175753_create_areas_table', 9);
+INSERT INTO `migrations` VALUES (90, '2021_12_22_234135_create_order_comments_table', 10);
+INSERT INTO `migrations` VALUES (91, '2021_12_23_173015_create_addresses_table', 11);
+INSERT INTO `migrations` VALUES (92, '2021_12_24_155954_create_user_checks_table', 12);
+INSERT INTO `migrations` VALUES (93, '2021_12_25_113940_create_cashes_table', 13);
+INSERT INTO `migrations` VALUES (94, '2021_12_25_155127_create_favorites_table', 14);
+INSERT INTO `migrations` VALUES (96, '2021_12_25_203720_create_money_logs_table', 15);
+INSERT INTO `migrations` VALUES (97, '2021_12_26_171848_create_carts_table', 16);
+INSERT INTO `migrations` VALUES (100, '2021_12_26_210445_create_orders_table', 17);
+INSERT INTO `migrations` VALUES (101, '2021_12_26_210453_create_order_goods_table', 17);
+INSERT INTO `migrations` VALUES (102, '2021_12_30_140506_create_coupons_table', 18);
+INSERT INTO `migrations` VALUES (103, '2021_12_30_140556_create_coupon_logs_table', 18);
+INSERT INTO `migrations` VALUES (104, '2021_12_30_141319_create_seckills_table', 19);
+INSERT INTO `migrations` VALUES (105, '2021_12_30_141351_create_collectives_table', 19);
+INSERT INTO `migrations` VALUES (106, '2021_12_30_141419_create_collective_logs_table', 19);
+INSERT INTO `migrations` VALUES (107, '2021_12_30_141748_create_full_reductions_table', 20);
+INSERT INTO `migrations` VALUES (108, '2021_12_30_150650_create_refunds_table', 21);
+INSERT INTO `migrations` VALUES (109, '2021_12_30_181923_create_expresses_table', 22);
+INSERT INTO `migrations` VALUES (110, '2022_01_01_200458_create_freights_table', 23);
+INSERT INTO `migrations` VALUES (113, '2022_01_03_135219_create_distributions_table', 24);
+INSERT INTO `migrations` VALUES (114, '2022_01_03_135228_create_distribution_logs_table', 24);
+INSERT INTO `migrations` VALUES (115, '2022_01_04_160706_create_integral_goods_classes_table', 25);
+INSERT INTO `migrations` VALUES (116, '2022_01_04_160722_create_integral_goods_table', 25);
+INSERT INTO `migrations` VALUES (117, '2022_01_04_160743_create_integral_orders_table', 25);
+INSERT INTO `migrations` VALUES (118, '2022_01_04_160753_create_integral_order_goods_table', 25);
+INSERT INTO `migrations` VALUES (121, '2022_01_12_155950_create_oauths_table', 26);
+INSERT INTO `migrations` VALUES (122, '2022_01_28_124455_create_order_settlements_table', 27);
 
 -- ----------------------------
 -- Table structure for money_logs
@@ -4588,7 +4672,7 @@ CREATE TABLE `money_logs`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 46 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 52 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of money_logs
@@ -4638,6 +4722,12 @@ INSERT INTO `money_logs` VALUES (42, 6, '积分订单', 'money', -1.00, 2, 0, ''
 INSERT INTO `money_logs` VALUES (43, 6, '订单支付', 'money', -2.00, 0, 0, '', '2022-01-06 00:42:05', '2022-01-06 00:42:05', NULL);
 INSERT INTO `money_logs` VALUES (44, 6, '订单支付', 'money', -2.00, 0, 0, '', '2022-01-06 00:42:42', '2022-01-06 00:42:42', NULL);
 INSERT INTO `money_logs` VALUES (45, 6, '订单支付', 'money', -1.98, 0, 0, '', '2022-01-06 13:46:48', '2022-01-06 13:46:48', NULL);
+INSERT INTO `money_logs` VALUES (46, 6, '订单支付', 'money', -32.90, 0, 0, '', '2022-01-13 20:23:09', '2022-01-13 20:23:09', NULL);
+INSERT INTO `money_logs` VALUES (47, 6, '商家提现', 'money', -1.00, 0, 1, '', '2022-02-11 19:41:22', '2022-02-11 19:41:22', NULL);
+INSERT INTO `money_logs` VALUES (48, 6, '商家提现', 'money', 1.00, 1, 1, '', '2022-02-11 19:41:22', '2022-02-11 19:41:22', NULL);
+INSERT INTO `money_logs` VALUES (49, 6, '商家提现', 'money', -1.00, 0, 1, '', '2022-02-11 19:41:41', '2022-02-11 19:41:41', NULL);
+INSERT INTO `money_logs` VALUES (50, 6, '商家提现', 'money', 1.00, 1, 1, '', '2022-02-11 19:41:41', '2022-02-11 19:41:41', NULL);
+INSERT INTO `money_logs` VALUES (51, 1, '系统订单结算.', 'money', 34.90, 0, 1, '', '2022-02-12 17:37:22', '2022-02-12 17:37:22', NULL);
 
 -- ----------------------------
 -- Table structure for notices
@@ -4809,6 +4899,10 @@ INSERT INTO `oauth_access_tokens` VALUES ('2ab22a3ae3c26d551a3334e425a72325a8d4e
 INSERT INTO `oauth_access_tokens` VALUES ('c8a466d215f25162280e2dff13afe828629438cb5a142d3d6da2e8fbc48016aad6bf08a9f5acd738', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2022-01-10 23:06:55', '2022-01-10 23:06:55', '2022-01-17 23:06:55');
 INSERT INTO `oauth_access_tokens` VALUES ('2d001d86223fe4876789e64f86df67ef4dd2671cae3c99cbe4da32fe1ddf2933a4c77f59dfa4ef5b', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2022-01-12 13:58:57', '2022-01-12 13:58:57', '2022-01-19 13:58:56');
 INSERT INTO `oauth_access_tokens` VALUES ('64369acd371798a898f938e916b0b61f41e0bd3c2d4d30dbebc88695e7fa7c90b7bf9ae83fb967bb', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2022-01-12 17:32:22', '2022-01-12 17:32:22', '2022-01-19 17:32:22');
+INSERT INTO `oauth_access_tokens` VALUES ('5ced3cf34ed13258e109ae696bcc0564bd8fd7c0e4e7c32a8127b003e2f15206fa227e1bef07b06f', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2022-01-13 20:23:52', '2022-01-13 20:23:52', '2022-01-20 20:23:52');
+INSERT INTO `oauth_access_tokens` VALUES ('2387c3eb01e12ac31c66812c78fda50bf82b4450513128dfb2cdd289435f1567fca95c80376d9d1f', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2022-02-11 17:01:52', '2022-02-11 17:01:52', '2022-02-18 17:01:52');
+INSERT INTO `oauth_access_tokens` VALUES ('1de92e1f80f4af31bdfea3e574c341fad8516a284668726147ee71a0d007a80fbcf771b3be5f00b3', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2022-02-11 17:29:05', '2022-02-11 17:29:05', '2022-02-18 17:29:05');
+INSERT INTO `oauth_access_tokens` VALUES ('5328b9e2077b14529151509ad02ba862ddb69e1c6489a68ebbcb85e014e55d1d920a29c5a7d7bea8', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2022-02-12 16:52:20', '2022-02-12 16:52:20', '2022-02-19 16:52:20');
 
 -- ----------------------------
 -- Table structure for oauth_auth_codes
@@ -5039,6 +5133,10 @@ INSERT INTO `oauth_refresh_tokens` VALUES ('b6fe7b9898f902f93607b676c8aa5ed2afe3
 INSERT INTO `oauth_refresh_tokens` VALUES ('0de7435f268d1ab0c32bf08b4813cdef9441ded7855820dc5c2369540df08c003bacf313d1d9fdd3', 'c8a466d215f25162280e2dff13afe828629438cb5a142d3d6da2e8fbc48016aad6bf08a9f5acd738', 0, '2022-01-24 23:06:55');
 INSERT INTO `oauth_refresh_tokens` VALUES ('cd085d3c54b4408ed9e25b3602e7174b29fa63c5a6fb8d9fd899b8639255eafe1210f57ada1d2832', '2d001d86223fe4876789e64f86df67ef4dd2671cae3c99cbe4da32fe1ddf2933a4c77f59dfa4ef5b', 0, '2022-01-26 13:58:56');
 INSERT INTO `oauth_refresh_tokens` VALUES ('ba5221403c8d6d34c7af8a85c00c949d21dc728e2a97770f9056efc37b6e4e74d6ebe545b1d44d72', '64369acd371798a898f938e916b0b61f41e0bd3c2d4d30dbebc88695e7fa7c90b7bf9ae83fb967bb', 0, '2022-01-26 17:32:22');
+INSERT INTO `oauth_refresh_tokens` VALUES ('ceb5dd07a61c9273aaca4a651f53e491e71c40b452d8994794a701ad9b0bb3e7dca5c3798a968971', '5ced3cf34ed13258e109ae696bcc0564bd8fd7c0e4e7c32a8127b003e2f15206fa227e1bef07b06f', 0, '2022-01-27 20:23:52');
+INSERT INTO `oauth_refresh_tokens` VALUES ('7583e29456ee2a3b3981c69dcdcc4796a5f0e977df6cccbb3f57db37a59ef028ba8996269f32fe9a', '2387c3eb01e12ac31c66812c78fda50bf82b4450513128dfb2cdd289435f1567fca95c80376d9d1f', 0, '2022-02-25 17:01:52');
+INSERT INTO `oauth_refresh_tokens` VALUES ('04c45a18028cac4336be38270c9c2537e303581980ff86aa6bc64fd8f6277449c4c994c745113b83', '1de92e1f80f4af31bdfea3e574c341fad8516a284668726147ee71a0d007a80fbcf771b3be5f00b3', 0, '2022-02-25 17:29:05');
+INSERT INTO `oauth_refresh_tokens` VALUES ('836d35e23963bf95fb0f3c49463692f6cb0b3072e7ea39d7d906281946c0fce877cb08dc17060579', '5328b9e2077b14529151509ad02ba862ddb69e1c6489a68ebbcb85e014e55d1d920a29c5a7d7bea8', 0, '2022-02-26 16:52:20');
 
 -- ----------------------------
 -- Table structure for oauths
@@ -5085,12 +5183,16 @@ CREATE TABLE `order_comments`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_comments
 -- ----------------------------
 INSERT INTO `order_comments` VALUES (1, 6, 0, 1, 1, 5.00, 5.00, 5.00, 5.00, '1dsa', '2021-12-31 16:07:29', '1sdasdasdsadsad', '/storage/avatar/2021-12-24/9JpHKKkdPPfWnwgFa2dSh9rV9TvHokOVA9eW5z6x.jpg,/storage/avatar/2021-12-24/9JpHKKkdPPfWnwgFa2dSh9rV9TvHokOVA9eW5z6x.jpg', '2021-12-23 21:56:31', '2021-12-31 16:07:29', NULL);
+INSERT INTO `order_comments` VALUES (2, 6, 25, 1, 1, 0.00, 0.00, 0.00, 0.00, '', '2021-12-22 23:48:31', '大师傅大师傅', '', '2022-01-13 23:27:24', '2022-01-13 23:27:24', NULL);
+INSERT INTO `order_comments` VALUES (3, 6, 25, 1, 1, 5.00, 5.00, 5.00, 5.00, '', '2021-12-22 23:48:31', '大苏打', '', '2022-01-13 23:32:58', '2022-01-13 23:32:58', NULL);
+INSERT INTO `order_comments` VALUES (4, 6, 25, 1, 1, 5.00, 5.00, 5.00, 5.00, '', '2021-12-22 23:48:31', '是否', '', '2022-01-13 23:35:29', '2022-01-13 23:35:29', NULL);
+INSERT INTO `order_comments` VALUES (5, 6, 25, 1, 1, 5.00, 5.00, 5.00, 5.00, '', '2021-12-22 23:48:31', '阿萨大', '/storage/comment/2022-01-13/85zyZglMVs6kTfYwT2RBTJoncdA2fb0TBEK4Od1b.png,/storage/comment/2022-01-13/3wVUCvN1qTkFPS7rMtxw9nlnxnf8K9JSWI8dYwYu.png', '2022-01-13 23:36:42', '2022-01-13 23:36:42', NULL);
 
 -- ----------------------------
 -- Table structure for order_goods
@@ -5166,7 +5268,7 @@ CREATE TABLE `order_pays`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_pays
@@ -5188,6 +5290,35 @@ INSERT INTO `order_pays` VALUES (14, 6, '', '20220106004242693144', '15', '', 'b
 INSERT INTO `order_pays` VALUES (15, 6, '', '20220106134648675631', '18', '', 'balance', 'web', 0, 1.98, 1.98, 1, '2022-01-06 13:46:48', '2022-01-06 13:46:48', '2022-01-06 13:46:48', NULL);
 INSERT INTO `order_pays` VALUES (16, 6, '', '20220106141135626401', '25', '', 'wechat_scan', 'web', 0, 32.90, 0.00, 0, '2022-01-06 14:11:35', '2022-01-06 14:11:35', '2022-01-06 14:11:35', NULL);
 INSERT INTO `order_pays` VALUES (17, 6, '', '20220106141143639302', '25', '', 'ali_scan', 'web', 0, 32.90, 0.00, 0, '2022-01-06 14:11:43', '2022-01-06 14:11:43', '2022-01-06 14:11:43', NULL);
+INSERT INTO `order_pays` VALUES (18, 6, '', '20220113202151641744', '25', '', 'wechat_scan', 'web', 0, 32.90, 0.00, 0, '2022-01-13 20:21:51', '2022-01-13 20:21:51', '2022-01-13 20:21:51', NULL);
+INSERT INTO `order_pays` VALUES (19, 6, '', '20220113202156685849', '25', '', 'wechat_scan', 'web', 0, 32.90, 0.00, 0, '2022-01-13 20:21:56', '2022-01-13 20:21:56', '2022-01-13 20:21:56', NULL);
+INSERT INTO `order_pays` VALUES (20, 6, '', '20220113202309660547', '25', '', 'balance', 'web', 0, 32.90, 32.90, 1, '2022-01-13 20:23:09', '2022-01-13 20:23:09', '2022-01-13 20:23:09', NULL);
+
+-- ----------------------------
+-- Table structure for order_settlements
+-- ----------------------------
+DROP TABLE IF EXISTS `order_settlements`;
+CREATE TABLE `order_settlements`  (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `order_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '订单ID',
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
+  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
+  `settlement_no` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '结算单号',
+  `total_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '订单金额',
+  `settlement_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '结算金额',
+  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '结算状态',
+  `info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '备注',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of order_settlements
+-- ----------------------------
+INSERT INTO `order_settlements` VALUES (1, 2, 6, 1, '202202121737222359', 2.00, 2.00, 1, '手动订单结算.|商品分佣-0', '2022-02-12 17:37:22', '2022-02-12 17:37:22', NULL);
+INSERT INTO `order_settlements` VALUES (2, 25, 6, 1, '202202121737222359', 32.90, 32.90, 1, '手动订单结算.|商品分佣-0', '2022-02-12 17:37:22', '2022-02-12 17:37:22', NULL);
 
 -- ----------------------------
 -- Table structure for orders
@@ -5232,11 +5363,11 @@ CREATE TABLE `orders`  (
 -- Records of orders
 -- ----------------------------
 INSERT INTO `orders` VALUES (1, 6, 1, 0, 0, '20211227160021678520', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 2.00, 2.00, 0.00, 0.00, 0.00, 3, 0, 0, '', '122222544', '张三', '18888888888', '河北省 淄博市', '面馆', 'balance', '2021-12-30 16:36:12', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '4444', '2021-12-27 16:00:21', '2021-12-31 13:55:39', NULL);
-INSERT INTO `orders` VALUES (2, 6, 1, 0, 0, '20211227181022673522', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 2.00, 2.00, 0.00, 0.00, 0.00, 6, 2, 0, '', '', '张三', '18888888888', '河北省 淄博市', '面馆', 'balance', '2021-12-30 14:56:16', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', 'dfsadas', '2021-12-27 18:10:22', '2021-12-31 13:54:22', NULL);
+INSERT INTO `orders` VALUES (2, 6, 1, 0, 0, '20211227181022673522', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 2.00, 2.00, 0.00, 0.00, 0.00, 6, 2, 1, '', '', '张三', '18888888888', '河北省 淄博市', '面馆', 'balance', '2021-12-30 14:56:16', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', 'dfsadas', '2021-12-27 18:10:22', '2022-02-12 17:37:23', NULL);
 INSERT INTO `orders` VALUES (3, 6, 1, 0, 0, '20211227182832656049', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 2.00, 2.00, 0.00, 0.00, 0.00, 0, 0, 0, '', '', '张三', '18888888888', '河北省 淄博市', '面馆', '', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '', '2021-12-27 18:28:32', '2021-12-30 14:08:39', NULL);
 INSERT INTO `orders` VALUES (4, 6, 1, 0, 0, '20211230173649690847', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 2.00, 2.00, 0.00, 0.00, 0.00, 6, 2, 0, '', '', '张三', '18888888887', '河北省 淄博市', '面馆', 'balance', '2021-12-31 14:33:18', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '', '2021-12-30 17:36:49', '2021-12-31 15:22:54', NULL);
 INSERT INTO `orders` VALUES (5, 6, 1, 1, 0, '20220106002441611533', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 0.00, 0.00, 0.00, 0.00, 0.00, 1, 0, 0, '', '', '张三', '18888888888', '河北省 淄博市', '面馆', '', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '', '2022-01-06 00:24:41', '2022-01-06 00:24:41', NULL);
-INSERT INTO `orders` VALUES (6, 6, 1, 1, 0, '20220106002613670342', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 0.00, 0.00, 0.00, 0.00, 0.00, 1, 0, 0, '', '', '张三', '18888888888', '河北省 淄博市', '面馆', '', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '', '2022-01-06 00:26:13', '2022-01-06 00:26:13', NULL);
+INSERT INTO `orders` VALUES (6, 6, 1, 1, 0, '20220106002613670342', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 0.00, 0.00, 0.00, 0.00, 0.00, 1, 0, 1, '', '', '张三', '18888888888', '河北省 淄博市', '面馆', '', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '', '2022-01-06 00:26:13', '2022-02-12 17:37:23', NULL);
 INSERT INTO `orders` VALUES (7, 6, 1, 1, 0, '20220106002650610854', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 0.00, 0.00, 0.00, 0.00, 0.00, 1, 0, 0, '', '', '张三', '18888888888', '河北省 淄博市', '面馆', '', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '', '2022-01-06 00:26:50', '2022-01-06 00:26:50', NULL);
 INSERT INTO `orders` VALUES (8, 6, 1, 1, 0, '20220106003025664222', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 0.00, 0.00, 0.00, 0.00, 0.00, 1, 0, 0, '', '', '张三', '18888888888', '河北省 淄博市', '面馆', '', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '', '2022-01-06 00:30:25', '2022-01-06 00:30:25', NULL);
 INSERT INTO `orders` VALUES (9, 6, 1, 1, 0, '20220106003129686598', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 0.00, 0.00, 0.00, 0.00, 0.00, 1, 0, 0, '', '', '张三', '18888888888', '河北省 淄博市', '面馆', '', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '', '2022-01-06 00:31:29', '2022-01-06 00:31:29', NULL);
@@ -5255,7 +5386,7 @@ INSERT INTO `orders` VALUES (21, 6, 1, 2, 0, '20220106135959625662', 'as2', '/st
 INSERT INTO `orders` VALUES (22, 6, 1, 2, 0, '20220106140541669618', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, '', '', '张三', '18888888888', '河北省 淄博市', '面馆', '', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '', '2022-01-06 14:05:41', '2022-01-06 14:07:02', NULL);
 INSERT INTO `orders` VALUES (23, 6, 1, 2, 0, '20220106140650657658', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 8.90, 10.00, 0.00, 0.00, 1.10, 0, 0, 0, '', '', '张三', '18888888888', '河北省 淄博市', '面馆', '', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '', '2022-01-06 14:06:50', '2022-01-06 14:07:09', NULL);
 INSERT INTO `orders` VALUES (24, 6, 1, 2, 0, '20220106140838691161', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 31.90, 10.00, 0.00, 23.00, 1.10, 1, 0, 0, '', '', '张三', '18888888888', '河北省 淄博市', '面馆', '', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '', '2022-01-06 14:08:38', '2022-01-06 14:08:38', NULL);
-INSERT INTO `orders` VALUES (25, 6, 1, 0, 0, '20220106141105669403', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 32.90, 10.00, 0.00, 23.00, 0.10, 1, 0, 0, '', '', '张三', '18888888888', '河北省 淄博市', '面馆', '', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '', '2022-01-06 14:11:05', '2022-01-06 14:11:05', NULL);
+INSERT INTO `orders` VALUES (25, 6, 1, 0, 0, '20220106141105669403', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 32.90, 10.00, 0.00, 23.00, 0.10, 6, 0, 0, 'asdasd', 'sf', '张三', '18888888888', '河北省 淄博市', '面馆', 'balance', '2022-01-13 20:23:09', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2022-01-13 23:36:42', '', '2022-01-06 14:11:05', '2022-01-13 23:36:42', NULL);
 
 -- ----------------------------
 -- Table structure for refunds
@@ -5426,7 +5557,7 @@ CREATE TABLE `stores`  (
 -- ----------------------------
 -- Records of stores
 -- ----------------------------
-INSERT INTO `stores` VALUES (1, 6, '神秘商户', '/storage/store_logo/2021-12-08/qfhUXnFojC4VWYAO0laiOMAYppWbchfovO9X1DTR.png', '/storage/store_face/2021-12-19/vZug2Wh3P0cY4oB43Np0Hds1d7r5edo0tcx24Mfr.png', '18888888888', '该商户很懒，什么也没留下', '[\"\\/storage\\/store_slide\\/2021-12-19\\/gBdc8TcbznZlhi0fjAXz1KSAnByJAsLuwFSZXHwN.png\",\"\",\"\\/storage\\/store_slide\\/2021-12-19\\/E1F33oz2Mdk5R3NrrQkD0zh2eBtmink0uOZ3nxoI.png\"]', '', 'asd', 1, 2, 3, '39.853106', '116.344857', '北京市 市辖区 东城区', 'asd', '/storage/business_license/2021-12-08/D8Wwqf2oLsUONi1lrDTBhXhCEMHO7Sny3FzOu69G.png', 'ds', 'sd', 'sd', 'sd', '/storage/id_card_t/2021-12-08/V08LXAyh21eGE6xLp78q9qx6o4GTmtMQhL9wADZX.png', '/storage/id_card_b/2021-12-08/v5GeXw1wUJt7Q5id5T7kZOPatlYn0JSRRHkLWYfK.png', 'ad', 'asd', 0.00, 1.00, 1, 4, '暂无原因', '<p>打撒cc</p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"打撒cc\"}]}]', '2021-12-08 00:21:10', '2022-01-09 23:14:24', NULL);
+INSERT INTO `stores` VALUES (1, 6, '神秘商户', '/storage/store_logo/2021-12-08/qfhUXnFojC4VWYAO0laiOMAYppWbchfovO9X1DTR.png', '/storage/store_face/2021-12-19/vZug2Wh3P0cY4oB43Np0Hds1d7r5edo0tcx24Mfr.png', '18888888888', '该商户很懒，什么也没留下', '[\"\\/storage\\/store_slide\\/2021-12-19\\/gBdc8TcbznZlhi0fjAXz1KSAnByJAsLuwFSZXHwN.png\",\"\",\"\\/storage\\/store_slide\\/2021-12-19\\/E1F33oz2Mdk5R3NrrQkD0zh2eBtmink0uOZ3nxoI.png\"]', '', 'asd', 1, 2, 3, '39.853106', '116.344857', '北京市 市辖区 东城区', 'asd', '/storage/business_license/2021-12-08/D8Wwqf2oLsUONi1lrDTBhXhCEMHO7Sny3FzOu69G.png', 'ds', 'sd', 'sd', 'sd', '/storage/id_card_t/2021-12-08/V08LXAyh21eGE6xLp78q9qx6o4GTmtMQhL9wADZX.png', '/storage/id_card_b/2021-12-08/v5GeXw1wUJt7Q5id5T7kZOPatlYn0JSRRHkLWYfK.png', 'ad', 'asd', 42.90, 3.00, 1, 4, '暂无原因', '<p>打撒cc</p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"打撒cc\"}]}]', '2021-12-08 00:21:10', '2022-02-12 17:37:23', NULL);
 
 -- ----------------------------
 -- Table structure for user_checks
@@ -5489,7 +5620,7 @@ INSERT INTO `user_menus` VALUES (11, 9, '规格管理', '', '', '/Seller/goods_s
 INSERT INTO `user_menus` VALUES (12, 3, '商品管理', '', 'fa-shopping-bag', '/Seller/goods', 'Seller/goods/index', 0, '', 0, '2021-12-15 09:48:26', '2021-12-15 09:48:26', NULL);
 INSERT INTO `user_menus` VALUES (13, 4, '店铺配置', '', 'fa-cogs', '/Seller/stores', 'Seller/stores/index', 0, '', 0, '2021-12-19 15:49:48', '2021-12-19 15:54:01', NULL);
 INSERT INTO `user_menus` VALUES (14, 4, '店铺资金', '', 'fa-money', '/Seller/money_logs', 'Seller/money_logs/index', 0, '', 1, '2021-12-19 15:51:00', '2021-12-30 13:35:48', NULL);
-INSERT INTO `user_menus` VALUES (15, 4, '订单结算', '', 'fa-calculator', '/Seller/stores', 'Seller/stores/index', 0, '', 3, '2021-12-19 15:52:49', '2021-12-19 15:52:49', NULL);
+INSERT INTO `user_menus` VALUES (15, 4, '订单结算', '', 'fa-calculator', '/Seller/order_settlements', 'Seller/order_settlements/index', 0, '', 3, '2021-12-19 15:52:49', '2022-02-12 17:32:12', NULL);
 INSERT INTO `user_menus` VALUES (16, 4, '资金提现', '', 'fa-credit-card', '/Seller/cashes', 'Seller/cashes/index', 0, '', 4, '2021-12-19 15:53:34', '2022-01-01 18:53:28', NULL);
 INSERT INTO `user_menus` VALUES (17, 0, '数据统计', '', 'fa-bar-chart-o', '', '', 0, '', 98, '2021-12-29 18:04:26', '2021-12-29 18:15:02', NULL);
 INSERT INTO `user_menus` VALUES (18, 0, '营销中心', '', 'fa-share-alt-square', '', '', 0, '', 4, '2021-12-29 18:06:20', '2021-12-29 18:06:20', NULL);
@@ -5666,7 +5797,7 @@ CREATE TABLE `users`  (
 INSERT INTO `users` VALUES (1, 0, 'demo', '$2y$10$N3KlG7rZMWAbt4nDg6BSYeLwMitvVady1JtXbf8NNtXI1TOVGzbH2', '$2y$10$WLrwQG.Mbf.S3wEn0LcFZugy/L8WcukTT7JA/axsi.7yAXTrRkMeO', 'demo', 1, '', 'demo', '', 0.00, 0.00, 0.00, 0, 1, NULL, '0.0.0.0', NULL, NULL, '2021-10-01 11:00:48', '2021-10-01 11:00:48', NULL);
 INSERT INTO `users` VALUES (2, 0, 'demo', '$2y$10$1csxEmvyjEEiIHd10QHsd.8GbtuLuuE.vvJwPGHOdBkESxcqQ0eAu', '$2y$10$.xc4w.1r5KazlbmoDY3InuWka3org3J1zXzmHJzmXWob/Jhw3ewl.', 'demo', 1, '', 'demo', '', 0.00, 0.00, 0.00, 0, 1, NULL, '0.0.0.0', NULL, NULL, '2021-10-01 11:03:05', '2021-10-01 11:03:05', NULL);
 INSERT INTO `users` VALUES (3, 0, 'demo', '$2y$10$WqUCMWwrebrPaWyU26NWHO8Y0Qd1/015dwe4WRcM/aN2Pte7R/YOm', '$2y$10$cXc6Zo665gC1x0p.IOVBDeOWTfvFllrcZG2fZ7067tvp5/BjP4H4y', 'demo', 1, '', 'demo', '', 0.00, 0.00, 0.00, 0, 1, NULL, '0.0.0.0', NULL, NULL, '2021-10-01 11:04:02', '2021-10-01 11:04:02', NULL);
-INSERT INTO `users` VALUES (6, 0, '15073010917', '$2y$10$rDdE/1CSF5D0xNykTsQdXOapPIblkGWpNmsjcssymSW2MCXuKP0Cm', '$2y$10$NaBTixd8YOw1B2oHv2xwtevE9bDKsV.tzbfbNqgDCZvV2W2sM6agC', '商家234', 1, '/storage/avatar/2021-12-24/9JpHKKkdPPfWnwgFa2dSh9rV9TvHokOVA9eW5z6x.jpg', '15073010917', '', 77.02, 11.00, 99.00, 0, 1, NULL, '0.0.0.0', NULL, NULL, '2021-12-07 19:32:40', '2022-01-06 13:46:48', NULL);
+INSERT INTO `users` VALUES (6, 0, '18888888888', '$2y$10$rDdE/1CSF5D0xNykTsQdXOapPIblkGWpNmsjcssymSW2MCXuKP0Cm', '$2y$10$NaBTixd8YOw1B2oHv2xwtevE9bDKsV.tzbfbNqgDCZvV2W2sM6agC', '商家234', 1, '/storage/avatar/2021-12-24/9JpHKKkdPPfWnwgFa2dSh9rV9TvHokOVA9eW5z6x.jpg', '15073010917', '', 44.12, 11.00, 99.00, 0, 1, NULL, '0.0.0.0', NULL, NULL, '2021-12-07 19:32:40', '2022-01-13 20:23:09', NULL);
 INSERT INTO `users` VALUES (7, 6, 'seller', '$2y$10$uXNKD0KiINj6RXM8f7RXFu9OeEtTUGekWy9z9Q0RTt6.qLGdrcuyG', '', 'seller', 1, '', '', '', 0.00, 0.00, 0.00, 0, 1, NULL, '0.0.0.0', NULL, NULL, '2021-12-09 17:33:28', '2021-12-09 17:34:23', '2021-12-09 17:34:23');
 INSERT INTO `users` VALUES (8, 6, 'seller', '$2y$10$ccg/lk5R2mWecfaYxi2zlOEQFOZ4TgBtfS3o0ki8VekYFiB6/.Kfi', '', 'seller', 1, '', '', '', 100.00, 0.00, 0.00, 0, 1, NULL, '0.0.0.0', NULL, NULL, '2021-12-09 17:34:18', '2021-12-09 17:34:18', NULL);
 

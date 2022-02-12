@@ -37,7 +37,7 @@ class Order extends Model
     }
 
     // // 获取分销日志
-    // public function distribution(){
-    //     return $this->hasMany('App\Qingwuit\Models\DistributionLog','order_id','id');
-    // }
+    public function distribution(){
+        return $this->hasMany('App\Qingwuit\Models\DistributionLog','order_id','id');
+    }
 }

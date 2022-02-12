@@ -106,6 +106,7 @@ return [
     // 订单
     'order'=>[
         'error'     =>  '订单非法.',
+        'empty'     =>  '没有找到订单.',
         'handleErr' =>  '订单操作失败.',
         'stockErr'  =>  '库存不足.',
         'addrErr'   =>  '地址不能为空.',
@@ -115,7 +116,8 @@ return [
         'moneyNotEnough'    =>  '余额不足.',
         'moneyPay'  =>  '重复创建支付订单.',
         'deliveryEmpty'  =>  '物流信息不能为空.',
-        'orderSettlement'  =>  '系统订单结算.',
-        'orderSettlementHandle'  =>  '手动订单结算.',
+        'orderSettlement'  =>  '系统结算.',
+        'orderSettlementHandle'  =>  '手动结算.',
+        'goodsCommission'  =>  '商品分佣',
     ]
 ];

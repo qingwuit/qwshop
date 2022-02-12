@@ -114,6 +114,8 @@ Route::prefix('Admin')->middleware('auth:admins')->group(function () {
     Route::resource('orders', App\Http\Controllers\Admin\Exts\OrdersController::class);
     Route::resource('cashes', App\Http\Controllers\Admin\Exts\CashesController::class);
     Route::resource('order_comments', App\Http\Controllers\Admin\Exts\OrderCommentsController::class);
+    Route::resource('order_settlements', App\Http\Controllers\Admin\Exts\OrderSettlementsController::class)->only(['index','show']); // 结算订单
+    Route::get('order_settlement_handle', [App\Http\Controllers\Admin\Exts\OrderSettlementsController::class,'handle_sett'])->name('admin.order.settl.handle'); // 结算订单
     Route::resource('expresses', App\Http\Controllers\Admin\Exts\ExpressesController::class);
     Route::resource('integral_goods_classes', App\Http\Controllers\Admin\Exts\IntegralGoodsClassesController::class);
     Route::resource('integral_goods', App\Http\Controllers\Admin\Exts\IntegralGoodsController::class);
@@ -145,6 +147,7 @@ Route::prefix('Seller')->middleware('auth:users')->group(function () {
     Route::resource('stores', App\Http\Controllers\Seller\StoresController::class)->except(['store','destroy']);
     Route::resource('money_logs', App\Http\Controllers\Seller\MoneyLogsController::class)->only(['index','show']);
     Route::resource('orders', App\Http\Controllers\Seller\OrdersController::class)->only(['index','show','update']);
+    Route::resource('order_settlements', App\Http\Controllers\Seller\OrderSettlementsController::class)->only(['index','show']); // 结算订单
     Route::resource('cashes', App\Http\Controllers\Seller\CashesController::class)->except(['update']);
     Route::resource('freights', App\Http\Controllers\Seller\FreightsController::class)->only(['update','index','destroy']);
     Route::resource('distributions', App\Http\Controllers\Seller\DistributionsController::class);

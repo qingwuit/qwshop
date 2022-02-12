@@ -9,7 +9,7 @@ class OrderSettlementService extends BaseService
     /**
      * 订单结算
      *
-     * @param boolean $auto 系统处理 | 手动处理
+     * @param boolean $auto 系统处理 | 手动处理  结算数量大可以使用队列来跑
      * @return void
      * @Description
      * @author hg <www.qingwuit.com>
@@ -31,7 +31,7 @@ class OrderSettlementService extends BaseService
 
         // 结算订单为空
         if ($order_list->isEmpty()) {
-            return $this->formatError('not found order');
+            return $this->formatError(__('tip.order.empty'));
         }
 
         $distribution_order = []; // 分销订单ID
@@ -67,7 +67,7 @@ class OrderSettlementService extends BaseService
                     $commission += $vo['commission'];
                 }
                 $item['settlement_price'] -= $commission;
-                $item['info'] .= '|商品分佣-'.$commission;
+                $item['info'] .= '|'.__('tip.order.goodsCommission').'-'.$commission;
             }
 
             // 如果order_goods 不为空 统计每个商品成功售卖的数量
