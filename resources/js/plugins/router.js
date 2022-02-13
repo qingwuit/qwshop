@@ -111,7 +111,6 @@ router.beforeEach( async  (to, from, next) => {
                 const routeResp = createRouteTmp(menuData)
                 routeResp.map(item=>{
                     router.addRoute(item)
-                    
                 })
                 isNext = true
             }

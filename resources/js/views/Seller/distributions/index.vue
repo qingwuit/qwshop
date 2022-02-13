@@ -39,9 +39,9 @@ export default {
                 {label:'销量',value:'goods_sale'},
                 {label:'创建时间',value:'created_at'},
             ]},
-            {label:'一级佣金',value:'lev_1'},
-            {label:'二级佣金',value:'lev_2'},
-            {label:'三级佣金',value:'lev_3'},
+            {label:'一级佣金',value:'lev_1',type:'number'},
+            {label:'二级佣金',value:'lev_2',type:'number'},
+            {label:'三级佣金',value:'lev_3',type:'number'},
         ]
 
  

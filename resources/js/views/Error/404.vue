@@ -304,5 +304,27 @@
 export default {};
 </script>
 
-<style>
+<style lang="scss" scoped>
+.error404{
+    .ant-result{
+        text-align: center;
+        padding: 48px 32px;
+    }
+    .ant-result-title{
+        color: rgba(0,0,0,.85);
+        font-size: 24px;
+        line-height: 1.8;
+        text-align: center;
+    }
+    .ant-result-subtitle{
+        color: rgba(0,0,0,.45);
+        font-size: 14px;
+        line-height: 1.6;
+        text-align: center;
+    }
+    .ant-result-icon{
+        margin-bottom: 24px;
+        text-align: center;
+    }
+}
 </style>

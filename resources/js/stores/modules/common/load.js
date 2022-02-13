@@ -44,9 +44,12 @@ const actions = {
         const getRouteUrl = (data)=>{
             if(findUrl) return
             data.map(item=>{
-                if(item.view  != '' && item.apis != '' && item.is_open==0){
-                    routeUrl = item.apis
-                    findUrl = true
+                if(item.view  != '' && item.apis != ''){
+                    // 如果不是外链则返回
+                    if(item.apis.indexOf('http://') == -1 && item.apis.indexOf('https://') == -1){
+                        routeUrl = item.apis
+                        findUrl = true
+                    }
                 }else{
                     if(item.children && item.children.length>0) getRouteUrl(item.children)
                 }

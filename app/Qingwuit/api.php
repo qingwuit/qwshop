@@ -120,6 +120,7 @@ Route::prefix('Admin')->middleware('auth:admins')->group(function () {
     Route::resource('expresses', App\Http\Controllers\Admin\Exts\ExpressesController::class);
     Route::resource('integral_goods_classes', App\Http\Controllers\Admin\Exts\IntegralGoodsClassesController::class);
     Route::resource('integral_goods', App\Http\Controllers\Admin\Exts\IntegralGoodsController::class);
+    Route::resource('distribution_logs', App\Http\Controllers\Admin\Exts\DistributionLogsController::class)->only(['index']);
     Route::post('/orders/express/find', [App\Http\Controllers\Admin\Exts\OrdersController::class,'express'])->name('admin.order.express');
     Route::get('/orders/find/all', [App\Http\Controllers\Admin\Exts\OrdersController::class,'all'])->name('admin.order.findall');
     Route::get('/dashboard/all', [App\Http\Controllers\Admin\DashboardController::class,'all'])->name('admin.dashboard.all'); // 仪表盘
