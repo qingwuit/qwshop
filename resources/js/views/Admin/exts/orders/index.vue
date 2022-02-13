@@ -1,14 +1,20 @@
 <template>
     <table-view :params="params" :btnConfig="btnConfigs" :options="options" :dialogParam="dialogParam">
         <!-- 物流信息 -->
-        <template #table_show_bottom_hook="{dialogParams,formData}">
+        <template #table_show_bottom_hook="{formData}">
             <div class="delivery_list" v-if="!R.isEmpty(formData.view.delivery_no) && !R.isEmpty(formData.view.delivery_code)">
-                <el-collapse accordion>
+                <el-collapse accordion @change="(activeName)=>{collapseChange(formData,activeName)}">
                     <el-collapse-item name="1">
                         <template #title>
                             <el-icon><List /></el-icon>
                             <span style="margin-left:10px">物流信息</span>
                         </template>
+                        <el-timeline v-if="data.express.length && data.express.length>0">
+                            <el-timeline-item v-for="(v, k) in data.express" :key="k" :timestamp="v.time" :color="k==0?'#0bbd87':null">
+                                {{ v.context }}
+                            </el-timeline-item>
+                        </el-timeline>
+                        <el-empty v-else />
                     </el-collapse-item>
                 </el-collapse>
             </div>
@@ -24,6 +30,9 @@ export default {
     components:{tableView,List},
     setup(props) {
         const {ctx,proxy} = getCurrentInstance()
+        const data = reactive({
+            express:[]
+        })
         const options = reactive([
             {label:'订单图片',value:'order_image',type:'avatar'},
             {label:'订单名称',value:'order_name'},
@@ -76,7 +85,18 @@ export default {
             view:{column:viewColumn},
             edit:{column:addColumn},
         })
-        return {options,dialogParam,btnConfigs,params}
+
+        // 物流查询
+        const collapseChange = (formData,activeName)=>{
+            data.express = []
+            if(proxy.R.isEmpty(activeName)) return
+            const orderId = formData.view.id
+            proxy.R.post('/Admin/orders/express/find',{id:orderId}).then(res=>{
+                if(!res.code) data.express = res
+            })
+        }
+
+        return {options,dialogParam,btnConfigs,params,data,collapseChange}
     }
 }
 </script>

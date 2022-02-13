@@ -15,15 +15,18 @@
                     <el-col :span="12">
                         状态：
                         <span class="content">
-                            <el-tag type="danger" v-if="data.info.order_status==0">{{data.info.order_status_cn}}</el-tag>
-                            <el-tag type="warning" v-if="data.info.order_status==1">{{data.info.order_status_cn}}</el-tag>
-                            <el-tag v-if="data.info.order_status>1&&info.order_status<6">{{data.info.order_status_cn}}</el-tag>
-                            <el-tag type="info" v-if="data.info.order_status==6">{{data.info.order_status_cn}}</el-tag>
-                            <el-tag type="success" v-if="data.info.order_status>=7">{{data.info.order_status_cn}}</el-tag>
+                            <el-tag type="danger" v-show="data.info.order_status==0">{{data.info.order_status_cn}}</el-tag>
+                            <el-tag type="warning" v-show="data.info.order_status==1">{{data.info.order_status_cn}}</el-tag>
+                            <el-tag v-show="data.info.order_status>1 && data.info.order_status<6">{{data.info.order_status_cn}}</el-tag>
+                            <el-tag type="info" v-show="data.info.order_status==6">{{data.info.order_status_cn}}</el-tag>
+                            <el-tag type="success" v-show="data.info.order_status>=7">{{data.info.order_status_cn}}</el-tag>
                         </span>
                     </el-col>
                 </el-row>
             </div>
+
+            <div style="margin-top:40px"><span style="font-size: 14px;font-weight: bold;">订单支付</span></div>
+            <div class="x20"></div>
             
             <div class="order_info_list">
                 <el-row>
@@ -92,8 +95,8 @@
 
             <div class="order_info_kd">
                 <el-timeline v-if="data.info.delivery_list && data.info.delivery_list.length>0">
-                    <el-timeline-item  v-for="(v,k) in data.info.delivery_list" :key="k" :color="k==0?'red':'gray'">
-                    <p>{{v.context+' '+v.time}}</p>
+                    <el-timeline-item  v-for="(v,k) in data.info.delivery_list" :key="k" :timestamp="v.time" :color="k==0?'red':'gray'">
+                    {{v.context}}
                     </el-timeline-item>
                 </el-timeline>
                 <el-empty v-else />
@@ -115,7 +118,9 @@ export default {
         const route = useRoute()
         const data = reactive({
             id:0,
-            info:{},
+            info:{
+                order_status:0
+            },
             columns:[
                 //   {title:'#',dataIndex:'id',fixed:'left'},
                 {title:'商品名称',key:'id',fixed:'left',scopedSlots: { customRender: 'name' }},

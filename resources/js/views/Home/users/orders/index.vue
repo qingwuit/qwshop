@@ -53,7 +53,7 @@
                     <div class="order_item_btn" v-show="v.order_status!=6 || v.order_status !=0">
                         <div class="default_btn orderbtn" v-if="v.order_status==1" @click="edit_order_status(v.id)">取消订单</div>
                         <div class="success_btn orderbtn" v-if="v.order_status==1" @click="pay_order(v.id)">立即支付</div>
-                        <div class="default_btn orderbtn" v-if="v.order_status>2 && v.order_status != 5 && v.refund_status != 3 " @click="get_order_info(v.id)">查看物流</div>
+                        <div class="default_btn orderbtn" v-if="v.order_status>2 && v.order_status != 5 && v.refund_status != 3 " @click="$router.push('/user/order/'+v.id)">查看物流</div>
                         <div class="error_btn orderbtn" v-if="v.order_status==3" @click="edit_order_status(v.id,4)">确定收货</div>
                         <div class="gray_btn orderbtn" v-if="v.order_status==4" @click="$router.push('/user/comment/add/'+v.id)">前往评论</div>
                         <div class="warn_btn orderbtn" v-if="v.order_status>=2 && v.order_status !=5 && v.refund_status!=2" @click="$router.push('/user/order/refund/'+v.id)">申请售后</div>

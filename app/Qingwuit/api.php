@@ -49,6 +49,7 @@ Route::middleware('auth:users')->group(function () {
     Route::post('/user/order/after', [App\Http\Controllers\Home\OrdersController::class,'after'])->name('home.order.after');
     Route::post('/user/order/pay', [App\Http\Controllers\Home\OrdersController::class,'pay'])->name('home.order.pay');
     Route::post('/user/order/check', [App\Http\Controllers\Home\OrdersController::class,'check'])->name('home.order.check');
+    Route::post('/user/order/express', [App\Http\Controllers\Home\OrdersController::class,'express'])->name('home.order.express');
     Route::resource('/user/order/refund', App\Http\Controllers\Home\RefundsController::class)->only(['store','show','update']);
     Route::resource('/user/coupons', App\Http\Controllers\Home\CouponsController::class)->only(['index']);
     Route::post('/user/coupon/receive', [App\Http\Controllers\Home\CouponsController::class,'receive'])->name('home.coupon.receive'); // 领取优惠劵
@@ -119,6 +120,7 @@ Route::prefix('Admin')->middleware('auth:admins')->group(function () {
     Route::resource('expresses', App\Http\Controllers\Admin\Exts\ExpressesController::class);
     Route::resource('integral_goods_classes', App\Http\Controllers\Admin\Exts\IntegralGoodsClassesController::class);
     Route::resource('integral_goods', App\Http\Controllers\Admin\Exts\IntegralGoodsController::class);
+    Route::post('/orders/express/find', [App\Http\Controllers\Admin\Exts\OrdersController::class,'express'])->name('admin.order.express');
     Route::get('/orders/find/all', [App\Http\Controllers\Admin\Exts\OrdersController::class,'all'])->name('admin.order.findall');
     Route::get('/dashboard/all', [App\Http\Controllers\Admin\DashboardController::class,'all'])->name('admin.dashboard.all'); // 仪表盘
     Route::get('/dashboard/order', [App\Http\Controllers\Admin\DashboardController::class,'order'])->name('admin.dashboard.order'); // 数据统计
@@ -157,6 +159,7 @@ Route::prefix('Seller')->middleware('auth:users')->group(function () {
     Route::resource('full_reductions', App\Http\Controllers\Seller\FullReductionsController::class);
     Route::resource('collectives', App\Http\Controllers\Seller\CollectivesController::class);
     Route::resource('seckills', App\Http\Controllers\Seller\SeckillsController::class);
+    Route::post('/orders/express/find', [App\Http\Controllers\Seller\OrdersController::class,'express'])->name('seller.order.express');
     Route::get('/orders/find/all', [App\Http\Controllers\Seller\OrdersController::class,'all'])->name('seller.order.findall');
     Route::put('/orders/status/edit', [App\Http\Controllers\Seller\OrdersController::class,'edit'])->name('seller.status.edit');
     Route::put('/refunds/{id}', [App\Http\Controllers\Seller\RefundsController::class,'update'])->name('seller.refunds.update');
