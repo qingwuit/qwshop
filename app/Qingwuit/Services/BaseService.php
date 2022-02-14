@@ -234,7 +234,7 @@ class BaseService
             $tableModelName .=  request('isResource');
         }
         $hasResource = $this->hasResource($rs, $tableModelName, 1);
-        if ($hasResource || !empty(request('clearResource'))) {
+        if ($hasResource) {
             $data = $hasResource;
         }
         return $this->format($data);
