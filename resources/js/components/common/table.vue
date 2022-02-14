@@ -1,10 +1,11 @@
 <template>
     <div class="qw_table">
-        <layout-search :options="searchOption" @data="searchData" />
+        <transition name="el-zoom-in-top"><layout-search v-show="searchVis" :options="searchOption" :dictData="dialogParams.dictData" @data="searchData" /></transition>
         <div class="table_top">
             <div class="table_btn_left">
                 <el-button v-if="btnConfigs.store && btnConfigs.store.show" :disabled="btnConfigs.store && btnConfigs.store.disabled" type="primary" :icon="Plus" @click="openAddDialog">{{$t('btn.add')}}</el-button>
                 <slot name="table_topleft_hook" :dialogParams="dialogParams" :listCount="listCount.data" :multipleSelection="multipleSelection"></slot>
+                <el-button v-if="btnConfigs.search && btnConfigs.search.show"  @click="searchOpen"  type="primary" plain :icon="Search">{{$t('btn.search2')}}</el-button>
             </div>
             <div class="table_btn_right">
                 <el-button v-if="btnConfigs.import && btnConfigs.import.show" :icon="Upload">{{$t('btn.import')}}</el-button>
@@ -169,7 +170,7 @@ import {reactive,ref,watch,provide,onMounted,getCurrentInstance} from "vue"
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 import layoutSearch from "@/components/common/search"
-import { Plus,Edit,View,Delete,Download,Upload,Picture  } from '@element-plus/icons'
+import { Plus,Edit,View,Delete,Download,Upload,Picture,Search  } from '@element-plus/icons'
 import qTags from "@/components/common/tags"
 export default {
     components: {layoutSearch,qTags,Picture},
@@ -262,6 +263,7 @@ export default {
         const route = useRoute()
         const store = useStore()
         const multipleSelection = reactive([])
+        const searchVis = ref(false)
         const listCount = reactive({data:{}})
         const listData = reactive({listData:[]})
         const viewData = reactive({data:{}})
@@ -287,6 +289,7 @@ export default {
             update:{show:true,url:'',disabled:false}, // 编辑
             destroy:{show:true,url:'',disabled:false}, // 删除
             deletes:{show:false,url:'',disabled:false}, // 删除单行
+            search:{show:true,url:'',disabled:false}, // 删除单行
             export:{show:true,url:'',disabled:false},
             import:{show:false,url:'',disabled:false},
         }
@@ -510,7 +513,11 @@ export default {
             dialogParams.editOpenBefore()
             formData.edit = {}
             const newViewData = await proxy.R.get(pageUrl+'/'+row[props.columnId])
-            formData.edit = newViewData
+            // 找出相对应的数据存入，如不存在的不处理
+            dialogParams.edit.column.map(item=>{
+                formData.edit[item.value] = newViewData[item.value]||''
+            })
+            formData.edit[props.columnId] = row[props.columnId]
             editVis.value = true
             dialogParams.editOpenAfter()
         }
@@ -590,6 +597,10 @@ export default {
             Object.assign(listParams,e)
             loadData()
         }
+        const searchOpen = ()=>{
+            if(props.searchOption && props.searchOption.length <= 0) return proxy.$message.error('wait setting.')
+            searchVis.value = !searchVis.value
+        }
 
         // excel导出
         const excelExport = ()=>{
@@ -641,14 +652,14 @@ export default {
             handleSizeChange,
             handleCurrentChange,
             showData,viewData,
-            storeData,updateData,formData,
+            storeData,updateData,formData,searchOpen,
             deleteData,deleteRowData,
             multipleSelection,
-            addVis,editVis,viewVis,openEditDialog,openAddDialog,closeDialog,searchData ,loading,loadData,
+            searchVis,addVis,editVis,viewVis,openEditDialog,openAddDialog,closeDialog,searchData ,loading,loadData,
             listCount,listData,listParams,lazyLoad,dictFind,editorSplit,
             btnConfigs,dialogParams,
             excelExport,excelImport,
-            Plus,Edit,View,Delete,Download,Upload,Picture,
+            Plus,Edit,View,Delete,Download,Upload,Picture,Search,
             // routeMenuName:computed(()=>store.state.load.routeMenuName),
         }
     }

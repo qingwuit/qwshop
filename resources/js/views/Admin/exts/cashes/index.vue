@@ -1,6 +1,6 @@
 <template>
     <div class="qwit">
-        <table-view :options="options" :btnConfig="btnConfigs" :dialogParam="dialogParam" ></table-view>
+        <table-view :options="options" :searchOption="searchOptions" :btnConfig="btnConfigs" :dialogParam="dialogParam" ></table-view>
     </div>
 </template>
 
@@ -22,6 +22,16 @@ export default {
             {label:'拒绝原因',value:'refuse_info'},
             {label:'创建时间',value:'created_at'},
         ]);
+
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'真实姓名',value:'name',where:'likeRight'},
+            {label:'提现银行',value:'bank_name',where:'likeRight'},
+            {label:'银行卡号',value:'card_no',where:'likeRight'},
+            {label:'提现金额',value:'money'},
+            {label:'提现状态',value:'cash_status',type:'select'},
+        ])
+
         // 表单配置 
         const addColumn = [
             {label:'真实姓名',value:'name'},
@@ -48,7 +58,7 @@ export default {
             view:{column:addColumn},
             edit:{column:editColumn},
         })
-        return {options,btnConfigs,dialogParam}
+        return {options,searchOptions,btnConfigs,dialogParam}
     }
 }
 </script>

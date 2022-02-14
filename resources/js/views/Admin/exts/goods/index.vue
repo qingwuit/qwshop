@@ -1,5 +1,5 @@
 <template>
-    <table-view :options="options" :btnConfig="btnConfigs" :params="params" :dialogParam="dialogParam"></table-view>
+    <table-view :options="options" :searchOption="searchOptions" :btnConfig="btnConfigs" :params="params" :dialogParam="dialogParam"></table-view>
 </template>
 
 <script>
@@ -24,6 +24,10 @@ export default {
             {label:'创建时间',value:'created_at'},
         ]);
 
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'名称',value:'goods_name',where:'likeRight'},
+        ])
 
         const dialogParam = reactive({
             // dict:[{name:'pid',url:'/load_goods_classes?deep=2'}],
@@ -36,7 +40,7 @@ export default {
         const btnConfigs = reactive({
             store:{show:false},
         })
-        return {options,dialogParam,btnConfigs,params}
+        return {options,searchOptions,dialogParam,btnConfigs,params}
     }
 }
 </script>

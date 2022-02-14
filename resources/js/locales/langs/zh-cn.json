@@ -27,6 +27,7 @@
         "export":"导出",
         "import":"导入",
         "search":"查询",
+        "search2":"搜索",
         "reset":"重置",
         "open":"展开",
         "shrink":"收起",
@@ -218,7 +219,21 @@
     },
 
     "order":{
-        "sendDelivery":"正在处理订单..."
+        "sendDelivery":"正在处理订单...",
+        "orderCancel":"订单取消",
+        "waitPay":"等待支付",
+        "waitSend":"等待发货",
+        "waitRec" :"等待收货",
+        "orderConfirm":"等待收货", 
+        "waitComment":"等待评论",
+        "orderRefund":"售后退款",
+        "orderReturned":"售后退货",
+        "orderRefundOver":"售后完成",
+        "orderCompletion":"订单完成",
+
+        "paymentWechat"  :"微信支付",
+        "paymentAli"     :"支付宝支付",
+        "paymentMoney"   :"余额支付"
     },
 
     "freight":{

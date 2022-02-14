@@ -1,6 +1,6 @@
 <template>
     <div class="qwit">
-        <table-view :handleWidth="'80px'" :options="options" :btnConfig="btnConfigs" :dialogParam="dialogParam" ></table-view>
+        <table-view :handleWidth="'80px'" :options="options" :searchOption="searchOptions" :btnConfig="btnConfigs" :dialogParam="dialogParam" ></table-view>
     </div>
 </template>
 
@@ -18,6 +18,15 @@ export default {
             {label:'商家',value:'is_belong',type:'dict_tags'},
             {label:'创建时间',value:'created_at'},
         ]);
+
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'名称',value:'name',where:'likeRight'},
+            {label:'资金',value:'money'},
+            {label:'类型',value:'is_type',type:'select'},
+            {label:'是否商家',value:'is_belong',type:'select'},
+        ])
+
         // 表单配置 
         const addColumn = [
             {label:'名称',value:'name'},
@@ -39,7 +48,7 @@ export default {
             },
             view:{column:addColumn},
         })
-        return {options,btnConfigs,dialogParam}
+        return {options,searchOptions,btnConfigs,dialogParam}
     }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <table-view :params="params" :btnConfig="btnConfigs" :options="options" :dialogParam="dialogParam">
+    <table-view :params="params" :searchOption="searchOptions" :btnConfig="btnConfigs" :options="options" :dialogParam="dialogParam">
         <!-- 物流信息 -->
         <template #table_show_bottom_hook="{formData}">
             <div class="delivery_list" v-if="!R.isEmpty(formData.view.delivery_no) && !R.isEmpty(formData.view.delivery_code)">
@@ -42,6 +42,23 @@ export default {
             {label:'订单状态',value:'order_status_cn',type:'tags'},
             {label:'创建时间',value:'created_at'},
         ]);
+
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'订单号',value:'order_no',where:'likeRight'},
+            {label:'订单名称',value:'order_name',where:'likeRight'},
+            {label:'订单状态',value:'order_status',type:'select',data:{
+                order_status:[
+                    {label:proxy.$t('order.orderCancel'),value:0},
+                    {label:proxy.$t('order.waitPay'),value:1},
+                    {label:proxy.$t('order.waitSend'),value:2},
+                    {label:proxy.$t('order.orderConfirm'),value:3},
+                    {label:proxy.$t('order.waitComment'),value:4},
+                    {label:proxy.$t('order.orderRefund'),value:5},
+                    {label:proxy.$t('order.orderCompletion'),value:6},
+                ]
+            }},
+        ])
 
         const params = {
             isWith:'store,user,refund'
@@ -96,7 +113,7 @@ export default {
             })
         }
 
-        return {options,dialogParam,btnConfigs,params,data,collapseChange}
+        return {options,searchOptions,dialogParam,btnConfigs,params,data,collapseChange}
     }
 }
 </script>

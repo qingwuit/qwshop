@@ -30,7 +30,7 @@
                             <span class="checkbox_goods"><el-checkbox :indeterminate="false" :model-value='vo.checked' @change="onChange(k,key)" /></span>
                             <router-link :to="'/goods/'+vo.goods_id"><dl class="goods_item">
                                 <dt><img :src="vo.goods_image||require('@/assets/Home/default.png')" :alt="vo.goods_name"></dt>
-                                <dd>{{vo.goods_name}}</dd>
+                                <dd class="goods_title">{{vo.goods_name}}</dd>
                             </dl></router-link>
                             <span class="attr">{{vo.sku_name||'-'}}</span>
                             <span class="price">￥{{vo.goods_price}}</span>
@@ -261,6 +261,15 @@ export default {
         dd{
             width: 350px;
             float: left;
+            &.goods_title{
+                text-overflow: -o-ellipsis-lastline;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
         }
     }
     ul{

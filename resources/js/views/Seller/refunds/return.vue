@@ -1,6 +1,6 @@
 <template>
     <div class="qwit">
-        <table-view pageUrl='/Seller/orders'  :params="params" :btnConfig="btnConfigs" :options="options" :dialogParam="dialogParam">
+        <table-view pageUrl='/Seller/orders'  :params="params" :btnConfig="btnConfigs" :options="options" :searchOption="searchOptions" :dialogParam="dialogParam">
             <template #table_topleft_hook="{dialogParams}">
                 <el-button type="primary" :icon="Finished" @click="openAddDialog(dialogParams)">售后处理</el-button>
             </template>
@@ -83,6 +83,12 @@ export default {
             {label:'售后状态',value:'refund_status_cn',type:'tags'},
             {label:'创建时间',value:'created_at'},
         ]);
+
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'订单号',value:'order_no',where:'likeRight'},
+            {label:'订单名称',value:'order_name',where:'likeRight'},
+        ])
 
         const params = {
             isWith:'store,user,refund',
@@ -193,7 +199,7 @@ export default {
 
         return {
             Promotion,Printer,Picture,Finished,CircleClose,
-            options,dialogParam,btnConfigs,params,data,
+            options,searchOptions,dialogParam,btnConfigs,params,data,
             openAddDialog,postDelivery
         }
     }

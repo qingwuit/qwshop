@@ -1,6 +1,6 @@
 <template>
     <div class="qwit">
-        <table-view :options="options" :dialogParam="dialogParam" :params="{isWith:'permission_groups'}"></table-view>
+        <table-view :options="options" :searchOption="searchOptions" :dialogParam="dialogParam" :params="{isWith:'permission_groups'}"></table-view>
     </div>
 </template>
 
@@ -17,6 +17,14 @@ export default {
             {label:'接口描述',value:'content'},
             {label:'创建时间',value:'created_at'},
         ]);
+
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'权限名称',value:'name',where:'likeRight'},
+            {label:'接口分组',value:'pid',type:'select',labelName:'name',valueName:'id'},
+            {label:'接口路由',value:'apis',where:'likeRight'},
+        ])
+
         // 表单配置 
         const addColumn = [
             {label:'接口分组',value:'pid',type:'select',labelName:'name',valueName:'id'},
@@ -49,7 +57,7 @@ export default {
             add:{column:addColumn},
             edit:{column:addColumn},
         })
-        return {options,dialogParam}
+        return {options,searchOptions,dialogParam}
     }
 }
 </script>

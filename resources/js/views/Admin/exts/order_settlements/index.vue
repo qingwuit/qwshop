@@ -1,5 +1,5 @@
 <template>
-    <table-view :handleWidth="'80px'" :options="options" :dialogParam="dialogParam" :btnConfig="btnConfigs">
+    <table-view :handleWidth="'80px'" :options="options" :searchOption="searchOptions" :dialogParam="dialogParam" :btnConfig="btnConfigs">
         <template #table_topleft_hook="{dialogParams}">
             <el-button type="primary" :icon="Setting" @click="handleSett(dialogParams)">手动结算</el-button>
         </template>
@@ -22,6 +22,10 @@ export default {
             {label:'创建时间',value:'created_at'},
         ]);
 
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'结算状态',value:'status',type:'select'},
+        ])
 
         // 表单配置 
         const viewColumn = [
@@ -54,7 +58,7 @@ export default {
         }
 
         return {
-            options,dialogParam,btnConfigs,
+            options,searchOptions,dialogParam,btnConfigs,
             handleSett,
             Setting
         }

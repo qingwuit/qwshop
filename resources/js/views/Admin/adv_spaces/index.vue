@@ -1,6 +1,6 @@
 <template>
     <div class="qwit">
-        <table-view :options="options" ref="adv_table" :dialogParam="dialogParam" :handleWidth="180">
+        <table-view :options="options" ref="adv_table" :searchOption="searchOptions" :dialogParam="dialogParam" :handleWidth="210">
             <template #table_handleright_hook="{rows}">
                 <el-button type="success" @click="openAdv(rows.id)" :title="$t('btn.add')" :icon="Plus"  />
             </template>
@@ -52,6 +52,10 @@ export default {
             {label:'创建时间',value:'created_at'},
         ]);
 
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'广告位',value:'name',where:'likeRight'},
+        ])
 
         // 表单配置 
         const addColumn = [
@@ -117,6 +121,7 @@ export default {
             update:{show:false},
             destroy:{show:false},
             export:{show:false},
+            search:{show:false},
         })
         
         const openAdv = async (e)=>{
@@ -148,7 +153,7 @@ export default {
                 }
             })
         }
-        return {options,dialogParam,editVis,advParams,advOptions,advForm,advBtnConfigs,openAdv,updateData,loading,Plus}
+        return {options,searchOptions,dialogParam,editVis,advParams,advOptions,advForm,advBtnConfigs,openAdv,updateData,loading,Plus}
     }
 }
 </script>

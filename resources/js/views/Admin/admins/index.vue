@@ -1,6 +1,6 @@
 <template>
     <div class="qwit">
-        <table-view :options="options" :dialogParam="dialogParam" :cutomFormData="cutomFormData"></table-view>
+        <table-view :options="options" :searchOption="searchOptions" :dialogParam="dialogParam" :cutomFormData="cutomFormData"></table-view>
     </div>
 </template>
 
@@ -19,6 +19,13 @@ export default {
             {label:'角色',value:'role_name',type:'tags_array'},
             {label:'创建时间',value:'created_at'},
         ]);
+
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'昵称',value:'nickname',where:'likeRight'},
+            {label:'用户名',value:'username',where:'likeRight'}
+        ])
+
         // 表单配置 
         const addColumn = [
              {label:'昵称',value:'nickname'},
@@ -47,7 +54,7 @@ export default {
             add:{role_id:[]},
             edit:{role_id:[]},
         })
-        return {options,dialogParam,cutomFormData}
+        return {options,searchOptions,dialogParam,cutomFormData}
     }
 }
 </script>

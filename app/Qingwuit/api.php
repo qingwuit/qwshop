@@ -81,6 +81,7 @@ Route::prefix('Admin')->middleware('auth:admins')->group(function () {
     Route::any('/auth/info', [App\Http\Controllers\Auth\AuthController::class,'info'])->name('admin.auth.info');
     Route::any('/auth/edit', [App\Http\Controllers\Auth\AuthController::class,'edit'])->name('admin.auth.edit');
     Route::resource('admins', App\Http\Controllers\Admin\AdminsController::class);
+    Route::resource('users', App\Http\Controllers\Admin\UsersController::class);
     Route::resource('menus', App\Http\Controllers\Admin\MenusController::class);
     Route::resource('roles', App\Http\Controllers\Admin\RolesController::class);
     Route::resource('permission_groups', App\Http\Controllers\Admin\PermissionGroupsController::class);

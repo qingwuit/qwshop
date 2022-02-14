@@ -1,6 +1,6 @@
 <template>
     <div class="qwit">
-        <table-view :handleWidth="'80px'" :options="options" :params="params" :btnConfig="btnConfigs" :dialogParam="dialogParam" >
+        <table-view :handleWidth="'80px'" :options="options" :searchOption="searchOptions" :params="params" :btnConfig="btnConfigs" :dialogParam="dialogParam" >
             <template #table_top_hook>
                 <el-row class="money_log_row">
                     <el-col class="money_log_col" :span="3">店铺余额</el-col>
@@ -27,6 +27,15 @@ export default {
             {label:'商家',value:'is_belong',type:'dict_tags'},
             {label:'创建时间',value:'created_at'},
         ]);
+
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'名称',value:'name',where:'likeRight'},
+            {label:'资金',value:'money'},
+            {label:'类型',value:'is_type',type:'select'},
+            {label:'是否商家',value:'is_belong',type:'select'},
+        ])
+
         // 表单配置 
         const addColumn = [
             {label:'名称',value:'name'},
@@ -66,7 +75,7 @@ export default {
 
         loadData()
 
-        return {options,btnConfigs,dialogParam,params,data}
+        return {options,searchOptions,btnConfigs,dialogParam,params,data}
     }
 }
 </script>

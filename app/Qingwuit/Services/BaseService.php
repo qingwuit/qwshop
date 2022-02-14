@@ -54,10 +54,10 @@ class BaseService
                         if ($vArr[1] == 'like') {
                             $tableModel = $tableModel->where($k, 'like', '%'.$vArr[0].'%');
                         }
-                        if ($vArr[1] == 'likeRight') {
+                        if ($vArr[1] == 'likeLeft') {
                             $tableModel = $tableModel->where($k, 'like', $vArr[0].'%');
                         }
-                        if ($vArr[1] == 'likeLeft') {
+                        if ($vArr[1] == 'likeRight') {
                             $tableModel = $tableModel->where($k, 'like', '%'.$vArr[0]);
                         }
                         if ($vArr[1] == 'gt') {
@@ -74,6 +74,9 @@ class BaseService
                         }
                         if ($vArr[1] == 'in') {
                             $tableModel = $tableModel->whereIn($k, explode(',', $vArr[0]));
+                        }
+                        if ($vArr[1] == 'between') {
+                            $tableModel = $tableModel->whereBetween($k, explode(',', $vArr[0]));
                         }
                     } else {
                         $tableModel = $tableModel->where($k, $v);
@@ -231,7 +234,7 @@ class BaseService
             $tableModelName .=  request('isResource');
         }
         $hasResource = $this->hasResource($rs, $tableModelName, 1);
-        if ($hasResource) {
+        if ($hasResource || !empty(request('clearResource'))) {
             $data = $hasResource;
         }
         return $this->format($data);

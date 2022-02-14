@@ -1,7 +1,7 @@
 <template>
     <!-- 自定义权限管理页面- 暂时先不写控制按钮的权限 --> 
     <div class="qwit">
-        <table-view ref="tableView" :options="options" :dialogParam="customParams">
+        <table-view ref="tableView" :options="options" :searchOption="searchOptions" :dialogParam="customParams">
             <template #table_add_hook="{dialogParams}">
                 <div class="table_add_hook_block">
                     <el-form ref="addForm" label-position="top" :model="roleData.addForm" :rules="roleData.rules">
@@ -110,6 +110,11 @@ export default {
         const options = reactive([
             {label:'角色名称',value:'name'}
         ]);
+
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'角色名称',value:'name',where:'likeRight'},
+        ])
 
         // 视图配置 
         const addColumn = [
@@ -317,7 +322,7 @@ export default {
         },{deep:true})
 
         return {
-            options,menuProps,roleData,loading,customParams,
+            options,searchOptions,menuProps,roleData,loading,customParams,
             storeData,updateData,handleCheckChange,loadNode,permissionCheck,selectAllCheck,formDataChange,groupCheck
         }
     }

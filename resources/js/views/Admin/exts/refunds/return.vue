@@ -1,5 +1,5 @@
 <template>
-    <table-view pageUrl="/Admin/orders" :params="params" :btnConfig="btnConfigs" :options="options" :dialogParam="dialogParam"></table-view>
+    <table-view pageUrl="/Admin/orders" :params="params" :btnConfig="btnConfigs" :options="options" :searchOption="searchOptions" :dialogParam="dialogParam"></table-view>
 </template>
 
 <script>
@@ -18,6 +18,12 @@ export default {
             {label:'订单状态',value:'order_status_cn',type:'tags'},
             {label:'创建时间',value:'created_at'},
         ]);
+
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'订单号',value:'order_no',where:'likeRight'},
+            {label:'订单名称',value:'order_name',where:'likeRight'},
+        ])
 
         const params = {
             isWith:'store,user,refund',
@@ -64,7 +70,7 @@ export default {
             view:{column:viewColumn},
             edit:{column:addColumn},
         })
-        return {options,dialogParam,btnConfigs,params}
+        return {options,searchOptions,dialogParam,btnConfigs,params}
     }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <table-view :handleWidth="'80px'" :options="options" :dialogParam="dialogParam" :btnConfig="btnConfigs"></table-view>
+    <table-view :handleWidth="'80px'" :options="options" :searchOption="searchOptions" :dialogParam="dialogParam" :btnConfig="btnConfigs"></table-view>
 </template>
 
 <script>
@@ -17,6 +17,10 @@ export default {
             {label:'创建时间',value:'created_at'},
         ]);
 
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'结算状态',value:'status',type:'select'},
+        ])
 
         // 表单配置 
         const viewColumn = [
@@ -41,7 +45,7 @@ export default {
 
 
         return {
-            options,dialogParam,btnConfigs,
+            options,searchOptions,dialogParam,btnConfigs,
         }
     }
 }

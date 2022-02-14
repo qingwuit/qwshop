@@ -1,6 +1,6 @@
 <template>
     <div class="qwit">
-        <table-view :options="options" :dialogParam="dialogParam"></table-view>
+        <table-view :options="options" :searchOption="searchOptions" :dialogParam="dialogParam"></table-view>
     </div>
 </template>
 
@@ -17,10 +17,17 @@ export default {
             {label:'名称',value:'name'},
             {label:'开始时间',value:'adv_start'},
             {label:'结束时间',value:'adv_end'},
-            {label:'状态',value:'status',type:'dict'},
+            {label:'状态',value:'status',type:'dict_tags'},
             {label:'创建时间',value:'created_at'},
         ]);
 
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'广告位',value:'pid',type:'select',labelName:'name',valueName:'id'},
+            {label:'名称',value:'name',where:'likeRight'},
+            {label:'开始时间',value:'adv_start',where:'ngt',type:'datetime'},
+            {label:'结束时间',value:'adv_end',where:'nlt',type:'datetime'},
+        ])
 
         // 表单配置 
         const addColumn = [
@@ -56,7 +63,7 @@ export default {
             add:{column:addColumn},
             edit:{column:addColumn},
         })
-        return {options,dialogParam}
+        return {options,searchOptions,dialogParam}
     }
 }
 </script>

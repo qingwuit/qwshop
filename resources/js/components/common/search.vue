@@ -3,7 +3,8 @@
         <el-row :gutter="20" v-if="options.length>0"  class="search_layout2">
             <el-col :sm="24" :md="4" v-for="(v,k) in advanced?optionsRef.slice(0,5):optionsRef" :key="k">
                 <div class="search-content">
-                    <el-input v-if="v.type='text'" :type="v.type" v-model="searchParams[v.value]" :placeholder="v.label" />
+                    <q-input :params="v" :dictData="JSON.stringify(dictData) != '{}'?dictData:(v.data||{})" v-model:formData="searchParams[v.value]" />
+                    <!-- <el-input v-if="v.type='text'" :type="v.type" v-model="searchParams[v.value]" :placeholder="v.label" /> -->
                 </div>
             </el-col>
 
@@ -35,6 +36,12 @@ export default {
         searchUrl:{
             type:String,
             default:""
+        },
+        dictData:{
+            type:Object,
+            default:()=>{
+                return {}
+            }
         }
     },
     setup(props,content){
@@ -44,8 +51,10 @@ export default {
             label:'Field', // 搜索字段名称 | 标题 | 名称
             value:'name', // 搜索字段名称 | name | title
             elabel:'Field', // 自定义英文字段名称 | name |title
+            placeholder:'Field',
+            where:null, // 自定义英文字段名称 | name |title
             dict:null, // 字典地址Url
-            data:[], // 列表数据或其他数据
+            data:{}, // 列表数据或其他数据
         }
 
         // 接收的值
@@ -64,7 +73,9 @@ export default {
             if(!item.value) item.value = optionsDefault.value
             if(item.elabel) item.label = item.elabel
             if(!item.data) item.data = optionsDefault.data
-            if(item.dict) item.data = await proxy.R.get(item.dict)
+            if(item.dict) item.data[item.value] = await proxy.R.get(item.dict)
+            if(!item.placeholder) item.placeholder = item.label
+            if(!item.where) item.where = optionsDefault.where
         })
 
         const optionsRef = reactive(propOptions)
@@ -73,7 +84,15 @@ export default {
         // 搜索按钮
         const searchSubmit = async ()=>{
             // let data = await proxy.R.get(props.searchUrl,{...searchParams})
-            content.emit("data",searchParams)
+            let newParams = _.cloneDeep(searchParams)
+            
+            // 其他非等于的条件处理
+            propOptions.map(optionItem=>{
+                if(newParams[optionItem.value] && optionItem.where !== null && optionItem.where !== undefined){
+                    newParams[optionItem.value] += '|' + optionItem.where
+                }
+            })
+            content.emit("data",newParams)
         }
 
         // 清空

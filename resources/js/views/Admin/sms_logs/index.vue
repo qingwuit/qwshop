@@ -1,6 +1,6 @@
 <template>
     <div class="qwit">
-        <table-view :options="options" :btnConfig="btnConfigs" :dialogParam="dialogParam" ></table-view>
+        <table-view :options="options" :searchOption="searchOptions" :btnConfig="btnConfigs" :dialogParam="dialogParam" ></table-view>
     </div>
 </template>
 
@@ -20,6 +20,15 @@ export default {
             {label:'错误信息',value:'error_msg',overFlow:true},
             {label:'创建时间',value:'created_at'},
         ]);
+
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'调用名称',value:'name',where:'likeRight'},
+            {label:'手机号码',value:'phone',where:'likeRight'},
+            {label:'IP',value:'IP',where:'likeRight'},
+            {label:'状态',value:'status',type:'select'},
+        ])
+
         // 表单配置 
         const addColumn = [
             {label:'调用名称',value:'name'},
@@ -41,7 +50,7 @@ export default {
             },
             view:{column:addColumn},
         })
-        return {options,btnConfigs,dialogParam}
+        return {options,searchOptions,btnConfigs,dialogParam}
     }
 }
 </script>

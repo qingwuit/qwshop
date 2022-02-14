@@ -1,6 +1,6 @@
 <template>
     <div class="qwit">
-        <table-view :options="options" :dialogParam="dialogParam" ></table-view>
+        <table-view :options="options" :searchOption="searchOptions" :dialogParam="dialogParam" ></table-view>
     </div>
 </template>
 
@@ -16,6 +16,13 @@ export default {
             {label:'调用名称',value:'ename',type:'tags'},
             {label:'创建时间',value:'created_at'},
         ]);
+
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'协议名称',value:'name',where:'likeRight'},
+            {label:'调用名称',value:'ename',where:'likeRight'},
+        ])
+
         // 表单配置 
         const addColumn = [
             {label:'协议名称',value:'name'},
@@ -23,8 +30,6 @@ export default {
             {label:'发送内容',value:'content',type:'editor',viewType:'html',span:24},
         ]
 
-    
-        
         const dialogParam = reactive({
             rules:{
                 name:[{required:true,message:proxy.$t('msg.requiredMsg')}],
@@ -35,7 +40,7 @@ export default {
             add:{column:addColumn},
             edit:{column:addColumn},
         })
-        return {options,dialogParam}
+        return {options,searchOptions,dialogParam}
     }
 }
 </script>

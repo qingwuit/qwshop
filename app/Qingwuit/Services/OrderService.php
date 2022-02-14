@@ -190,7 +190,7 @@ class OrderService extends BaseService
     {
         if (!empty($this->cartId)) {
             try {
-                $this->getService('Cart'.true)->whereIn('id', $this->cartId)->delete();
+                $this->getService('Cart', true)->whereIn('id', $this->cartId)->delete();
             } catch (\Exception $e) {
                 throw new \Exception('order cart del error.');
             }
