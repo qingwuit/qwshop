@@ -26,8 +26,8 @@ class MenusController extends Controller
             $data = $this->getService('AdminMenu', true)->select('id', 'name', 'ename', 'apis', 'view', 'pid', 'is_open', 'icon')->orderBy('is_sort', 'asc')->get();
         } else {
             $roles = $this->getRoles($this->auth, ['menus']);
-            if (isset($data['menus']) && !empty($data['menus'])) {
-                $data = $roles['menus'];
+            if (isset($roles['roles']['menus']) && !empty($roles['roles']['menus'])) {
+                $data = $roles['roles']['menus'];
             }
         }
         

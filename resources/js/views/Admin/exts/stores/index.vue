@@ -1,29 +1,68 @@
 <template>
-    <table-view :options="options" :btnConfig="btnConfigs" :params="params" :dialogParam="dialogParam">
-        <template #table_topleft_hook="{dialogParams,listCount}">
-            <el-badge class="badge_item">
-                <el-button :type="tabs.active == 4?'primary':null " @click="tabsClick(4,dialogParams)" >{{$t('store.verifyStatus.passVerify')}}</el-button>
-            </el-badge>
-            <el-badge :value="listCount.wait||0" :hidden="listCount.wait && listCount.wait>0 ?false:true" class="badge_item" :max="99">
-                <el-button :type="tabs.active == 2?'primary':null " @click="tabsClick(2,dialogParams)">{{$t('store.verifyStatus.verifying')}}</el-button>
-            </el-badge>
-            <el-badge :value="listCount.error||0" :hidden="listCount.error && listCount.error>0 ?false:true" class="badge_item" :max="99">
-                <el-button :type="tabs.active == 3?'primary':null " @click="tabsClick(3,dialogParams)">{{$t('store.verifyStatus.verifyError')}}</el-button>
-            </el-badge>
-            <el-badge :value="listCount.create||0" :hidden="listCount.create && listCount.create>0 ?false:true" class="badge_item" :max="99">
-                <el-button :type="tabs.active == 1?'primary':null " @click="tabsClick(1,dialogParams)">{{$t('store.verifyStatus.createStore')}}</el-button>
-            </el-badge>
-        </template>
-    </table-view>
+    <div class="qwit">
+        <table-view :options="options" :btnConfig="btnConfigs" :params="params" :dialogParam="dialogParam"  :handleWidth="210">
+            <template #table_topleft_hook="{dialogParams,listCount}">
+                <el-badge class="badge_item">
+                    <el-button :type="tabs.active == 4?'primary':null " @click="tabsClick(4,dialogParams)" >{{$t('store.verifyStatus.passVerify')}}</el-button>
+                </el-badge>
+                <el-badge :value="listCount.wait||0" :hidden="listCount.wait && listCount.wait>0 ?false:true" class="badge_item" :max="99">
+                    <el-button :type="tabs.active == 2?'primary':null " @click="tabsClick(2,dialogParams)">{{$t('store.verifyStatus.verifying')}}</el-button>
+                </el-badge>
+                <el-badge :value="listCount.error||0" :hidden="listCount.error && listCount.error>0 ?false:true" class="badge_item" :max="99">
+                    <el-button :type="tabs.active == 3?'primary':null " @click="tabsClick(3,dialogParams)">{{$t('store.verifyStatus.verifyError')}}</el-button>
+                </el-badge>
+                <el-badge :value="listCount.create||0" :hidden="listCount.create && listCount.create>0 ?false:true" class="badge_item" :max="99">
+                    <el-button :type="tabs.active == 1?'primary':null " @click="tabsClick(1,dialogParams)">{{$t('store.verifyStatus.createStore')}}</el-button>
+                </el-badge>
+            </template>
+            <template #table_handleright_hook="{rows}">
+                <el-button type="success" @click="moneyOpen(rows.id)" :title="$t('btn.add')" :icon="Coin"  />
+            </template>
+        </table-view>
+        <!-- 资金处理 -->
+        <el-dialog destroy-on-close  custom-class="table_dialog_class" v-model="editVis" :title="$t('btn.edit')" :width="'30%'">
+                <el-row :gutter="20">
+                    <el-col :span="24"><div class="table-form-content_money">
+                            <el-input v-model="money" type="number">
+                                <template #prepend>
+                                    <el-select v-model="selectType" placeholder="Select" style="width: 110px">
+                                    <el-option :label="$t('user.money')" :value="0"></el-option>
+                                    <el-option :label="$t('user.frozen_money')" :value="1"></el-option>
+                                    <el-option :label="$t('user.integral')" :value="2"></el-option>
+                                    </el-select>
+                                </template>
+                                <template #append>
+                                    {{$t('btn.money')}}
+                                </template>
+                            </el-input>
+                    </div></el-col>
+                </el-row>
+                <!-- 按钮处理 -->
+                <el-row :gutter="20">
+                    <el-col :span="24"  style="margin-top:20px;">
+                        <div style="text-align:center">
+                            <el-button :loading="loading" type="primary" @click="updateData">{{$t('btn.determine')}}</el-button>
+                            <el-button @click="editVis = false">{{$t('btn.cancel')}}</el-button>
+                        </div>
+                    </el-col>
+                </el-row>
+        </el-dialog>
+    </div>
 </template>
 
 <script>
-import {reactive,onMounted,getCurrentInstance} from "vue"
+import {reactive,ref,onMounted,getCurrentInstance} from "vue"
+import { Coin } from '@element-plus/icons'
 import tableView from "@/components/common/table"
 export default {
     components:{tableView},
     setup(props) {
         const {ctx,proxy} = getCurrentInstance()
+        const editVis = ref(false)
+        const loading = ref(false)
+        const selectType = ref(0)
+        const money = ref(1)
+        const id = ref(0)
         const options = reactive([
             {label:'店铺图标',value:'store_logo',type:'avatar'},
             {label:'店铺名称',value:'store_name'},
@@ -62,6 +101,8 @@ export default {
 
         let viewColumn = _.cloneDeep(addColumn)
         viewColumn[4] = {label:'公司地址',value:'area_info'}
+        viewColumn.push({label:'资金余额',value:'store_money'})
+        viewColumn.push({label:'冻结资金',value:'store_frozen_money'})
         const dialogParam = reactive({
             labelWidth:130,
             dict:[
@@ -102,7 +143,23 @@ export default {
             params.store_verify = e
             dialogParams.reloadData()
         }
-        return {options,dialogParam,params,btnConfigs,tabs,tabsClick}
+
+        // 金额处理
+        const moneyOpen = (e)=>{
+            id.value = e
+            editVis.value = !editVis.value
+        }
+        const updateData = ()=>{
+            loading.value = true
+            proxy.R.post('/Admin/users/money/handle',{id:id.value,is_type:selectType.value,money:money.value,is_belong:1}).then(res=>{
+                if(!res.code) location.reload()
+            }).finally(()=>{
+                loading.value = false
+                editVis.value = false
+            })
+        }
+
+        return {options,dialogParam,params,btnConfigs,tabs,Coin,editVis,loading,selectType,money,tabsClick,updateData,moneyOpen}
     }
 }
 </script>

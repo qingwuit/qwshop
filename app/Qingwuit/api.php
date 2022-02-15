@@ -75,13 +75,15 @@ Route::get('/load_article_menu', [App\Http\Controllers\Admin\ArticleMenusControl
 Route::post('/uploads', [App\Http\Controllers\Home\UploadsController::class,'upload'])->name('home.uploads');
 Route::post('/sms', [App\Http\Controllers\Home\SmsController::class,'send'])->name('home.sms'); // 短信发送
 Route::get('/article/{name}', [App\Http\Controllers\Home\ArticlesController::class,'article'])->name('home.Article'); // 文章
+Route::get('/Admin/load_menu', [App\Http\Controllers\Admin\MenusController::class,'loadMenu']);
 Route::prefix('Admin')->middleware('auth:admins')->group(function () {
-    Route::get('/load_menu', [App\Http\Controllers\Admin\MenusController::class,'loadMenu']);
+    // Route::get('/load_menu', [App\Http\Controllers\Admin\MenusController::class,'loadMenu']);
     Route::get('load_permission', [App\Http\Controllers\Admin\PermissionsController::class,'loadPermission']);
     Route::any('/auth/info', [App\Http\Controllers\Auth\AuthController::class,'info'])->name('admin.auth.info');
     Route::any('/auth/edit', [App\Http\Controllers\Auth\AuthController::class,'edit'])->name('admin.auth.edit');
     Route::resource('admins', App\Http\Controllers\Admin\AdminsController::class);
     Route::resource('users', App\Http\Controllers\Admin\UsersController::class);
+    Route::post('users/money/handle', [App\Http\Controllers\Admin\UsersController::class,'money']);
     Route::resource('menus', App\Http\Controllers\Admin\MenusController::class);
     Route::resource('roles', App\Http\Controllers\Admin\RolesController::class);
     Route::resource('permission_groups', App\Http\Controllers\Admin\PermissionGroupsController::class);

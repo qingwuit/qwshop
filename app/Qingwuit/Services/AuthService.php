@@ -56,6 +56,15 @@ class AuthService extends BaseService
         $resp = Http::asForm()->post(url('/oauth/token'), $respData);
         
         if ($resp->getStatusCode() == 200) {
+
+            // 登录成功修改登录时间
+            $authModel = $this->getService(rtrim(ucfirst($provider),'s'),true);
+            if($provider !== 'admins') $authModel = $authModel->orWhere('phone',$username);
+            $authModel = $authModel->orWhere('username',$username)->first();
+            $authModel->last_login_time = !empty($authModel->login_time)?$authModel->login_time:now();
+            $authModel->login_time = now();
+            $authModel->save();
+
             return $this->format($resp->json());
         }
         return $this->formatError($resp->json()['message'], $respData);

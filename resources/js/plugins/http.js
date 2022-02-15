@@ -104,7 +104,9 @@ axios.interceptors.response.use(function (res) {
 
     // 如果地址无法请求
     if(R.isEmpty(err.response)){
-        ElMessage.error("网络异常，请检查！");
+        // console.log(err)
+        console.error("网络异常，请检查！")
+        // ElMessage.error("网络异常，请检查！");
     }
 
     // 存在状态码

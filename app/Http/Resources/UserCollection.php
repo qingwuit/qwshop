@@ -24,6 +24,9 @@ class UserCollection extends ResourceCollection
                         return $roleItem->name;
                     }),
                     'phone'                 =>  $item->phone,
+                    'money'                 =>  $item->money,
+                    'frozen_money'          =>  $item->frozen_money,
+                    'integral'              =>  $item->integral,
                     'avatar'                =>  $item->avatar,
                     'ip'                    =>  $item->ip,
                     'login_time'            =>  $item->login_time,

@@ -264,6 +264,7 @@ export default {
 
         // solt父组件传过来的数据做接收
         const formDataChange = (e)=>{
+            console.log(e)
             let permissions = []
             let menus = []
             roleData.editForm = e.edit || {}

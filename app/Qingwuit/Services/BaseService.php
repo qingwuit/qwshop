@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Qingwuit\Services;
 
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class BaseService
     public $setUser = false; // 是否加上所属条件
     public $auth = 'admins';
     public $belongName = 'belong_id';
-    public $whereExcept = ['per_page','total','page','last_page','current_page','count','isAll','isResource','isChildren','isWith']; // 非条件查询字段
+    public $whereExcept = ['per_page', 'total', 'page', 'last_page', 'current_page', 'count', 'isAll', 'isResource', 'isChildren', 'isWith']; // 非条件查询字段
 
     /**
      * 获取分页数据
@@ -27,8 +28,8 @@ class BaseService
      */
     public function getPageData($tableModelName = null, $where = [], $orderBy = 'id desc')
     {
-        $pageSize = intval(request('per_page')??30); // 默认页码数量
-        $isAll = boolval(request('isAll')??false); // 是否获取所有数据
+        $pageSize = intval(request('per_page') ?? 30); // 默认页码数量
+        $isAll = boolval(request('isAll') ?? false); // 是否获取所有数据
         if (!$tableModelName) {
             return $this->formatError('select Model.');
         }
@@ -47,18 +48,18 @@ class BaseService
         // 条件查询
         $requestAll = request()->all();
         if (!empty($requestAll)) {
-            foreach ($requestAll as $k=>$v) {
+            foreach ($requestAll as $k => $v) {
                 if (!in_array($k, $this->whereExcept)) {
                     $vArr = explode('|', $v); // 判断是否其他查询
                     if (count($vArr) >= 2) {
                         if ($vArr[1] == 'like') {
-                            $tableModel = $tableModel->where($k, 'like', '%'.$vArr[0].'%');
+                            $tableModel = $tableModel->where($k, 'like', '%' . $vArr[0] . '%');
                         }
                         if ($vArr[1] == 'likeLeft') {
-                            $tableModel = $tableModel->where($k, 'like', $vArr[0].'%');
+                            $tableModel = $tableModel->where($k, 'like', $vArr[0] . '%');
                         }
                         if ($vArr[1] == 'likeRight') {
-                            $tableModel = $tableModel->where($k, 'like', '%'.$vArr[0]);
+                            $tableModel = $tableModel->where($k, 'like', '%' . $vArr[0]);
                         }
                         if ($vArr[1] == 'gt') {
                             $tableModel = $tableModel->where($k, '>', $vArr[0]);
@@ -86,15 +87,15 @@ class BaseService
         }
 
         // 判断是否是获取子数据
-        $isChildren = boolval(request('isChildren')??false);
+        $isChildren = boolval(request('isChildren') ?? false);
         if ($isChildren) {
             $isAll = true;
-            $belong_id = request('pid')??0;
+            $belong_id = request('pid') ?? 0;
             $tableModel = $tableModel->where('pid', $belong_id)->with('hasChildren');
         }
 
         // 是否携带关联
-        $isWith = request('isWith')??false;
+        $isWith = request('isWith') ?? false;
         if (!empty($isWith)) {
             $withArr = explode(',', $isWith);
             $tableModel = $tableModel->with($withArr);
@@ -135,7 +136,7 @@ class BaseService
      */
     public function addDat($tableModelName = null, $column = [])
     {
-        $data = empty($column)?request()->all():request()->only($column);
+        $data = empty($column) ? request()->all() : request()->only($column);
         if (!$tableModelName) {
             return $this->formatError('select Model.');
         }
@@ -172,7 +173,7 @@ class BaseService
      */
     public function editDat($tableModelName = null, $id = 0, $column = [], $where = [], $keyName = 'id')
     {
-        $data = empty($column)?request()->all():request()->only($column);
+        $data = empty($column) ? request()->all() : request()->only($column);
         if (!$tableModelName) {
             return $this->formatError('select Model.');
         }
@@ -192,7 +193,7 @@ class BaseService
         if (isset($data['pay_password']) && !empty($data['pay_password'])) {
             $data['pay_password'] = Hash::make($data['pay_password']);
         }
-        unset($data['created_at'],$data['updated_at'],$data['deleted_at']);
+        unset($data['created_at'], $data['updated_at'], $data['deleted_at']);
 
         $rs = $tableModel->where($keyName, intval($id))->update($data);
         if (!$rs) {
@@ -265,7 +266,7 @@ class BaseService
     }
 
     // 配置属性
-    public function setUserConfig($data = ['setUser'=>false,'auth'=>'admins','belongName'=>'belong_id'])
+    public function setUserConfig($data = ['setUser' => false, 'auth' => 'admins', 'belongName' => 'belong_id'])
     {
         if (isset($data['setUser'])) {
             $this->setUser = $data['setUser'];
@@ -280,11 +281,11 @@ class BaseService
     }
 
     // 获取路由信息
-    public function getRoutes($auth="")
+    public function getRoutes($auth = "")
     {
         if (empty($auth)) {
             $uris = explode('/', request()->route()->uri);
-            $auth = $uris[0].'/'.$uris[1];
+            $auth = $uris[0] . '/' . $uris[1];
         }
         $routeList = Route::getRoutes();
         $routeListFormat = [];
@@ -298,22 +299,22 @@ class BaseService
             $items['controller'] = $v->action['controller'];
             $items['uri'] = $v->uri;
             $asArr = explode('.', $items['as']);
-            $InterfaceName = $asArr[0].'-';
+            $InterfaceName = $asArr[0] . '-';
             switch ($asArr[1]) {
                 case 'index':
-                    $InterfaceName = $asArr[0].'-'.__('tip.permission.index');
+                    $InterfaceName = $asArr[0] . '-' . __('tip.permission.index');
                     break;
                 case 'store':
-                    $InterfaceName = $asArr[0].'-'.__('tip.permission.store');
+                    $InterfaceName = $asArr[0] . '-' . __('tip.permission.store');
                     break;
                 case 'show':
-                    $InterfaceName = $asArr[0].'-'.__('tip.permission.view');
+                    $InterfaceName = $asArr[0] . '-' . __('tip.permission.view');
                     break;
                 case 'update':
-                    $InterfaceName = $asArr[0].'-'.__('tip.permission.update');
+                    $InterfaceName = $asArr[0] . '-' . __('tip.permission.update');
                     break;
                 case 'destroy':
-                    $InterfaceName = $asArr[0].'-'.__('tip.permission.destroy');
+                    $InterfaceName = $asArr[0] . '-' . __('tip.permission.destroy');
                     break;
             }
             $items['Interface_name'] = $InterfaceName;
@@ -360,7 +361,7 @@ class BaseService
     {
         try {
             $info = auth($auth)->user();
-            return empty($info['belong_id'])?$info['id']:$info['belong_id'];
+            return empty($info['belong_id']) ? $info['id'] : $info['belong_id'];
         } catch (\Exception $th) {
             throw new \Exception(__('tip.userThr'));
         }
@@ -372,9 +373,9 @@ class BaseService
         try {
             $info = auth($auth)->user();
             if ($auth != 'admins') {
-                return !empty($info['belong_id'])?false:true;
+                return !empty($info['belong_id']) ? false : true;
             }
-            return empty($info['is_super'])?false:true;
+            return empty($info['is_super']) ? false : true;
         } catch (\Exception $th) {
             throw new \Exception(__('tip.userThr'));
         }
@@ -399,9 +400,9 @@ class BaseService
                     $roleId[] = $v['id'];
                 }
             }
-            $roles = $this->getService($modelName.'Role', true)->with($with)->whereIn('id', empty($roleId)?[0]:$roleId)->get();
+            $roles = $this->getService($modelName . 'Role', true)->with($with)->whereIn('id', empty($roleId) ? [0] : $roleId)->get()->toArray();
             // 去重
-            $rolesData = [];
+            $rolesData = ['menus' => [], 'permissions' => []];
             if ($roles) {
                 foreach ($roles as $v) {
                     if (isset($v['menus']) && !empty($v['menus'])) {
@@ -412,16 +413,29 @@ class BaseService
                     }
                     $rolesData['roleName'][] = $v['name'];
                 }
+
                 if (isset($rolesData['menus']) && !empty($rolesData['menus'])) {
+                    foreach ($rolesData['menus'] as $k => $v) {
+                        $rolesData['menus'][$k] = json_encode($v);
+                    }
                     $rolesData['menus'] = array_unique($rolesData['menus']);
+                    foreach ($rolesData['menus'] as $k => $v) {
+                        $rolesData['menus'][$k] = json_decode($v, true);
+                    }
                 }
                 if (isset($rolesData['permissions']) && !empty($rolesData['permissions'])) {
+                    foreach ($rolesData['permissions'] as $k => $v) {
+                        $rolesData['permissions'][$k] = json_encode($v);
+                    }
                     $rolesData['permissions'] = array_unique($rolesData['permissions']);
+                    foreach ($rolesData['permissions'] as $k => $v) {
+                        $rolesData['permissions'][$k] = json_decode($v, true);
+                    }
                 }
             }
-            return ['roleId'=>$roleId,'roles'=>$rolesData];
+            return ['roleId' => $roleId, 'roles' => $rolesData];
         } catch (\Exception $th) {
-            throw new \Exception(__('tip.userThr'));
+            throw new \Exception(__('tip.userThr') . $th->getMessage());
         }
     }
 }

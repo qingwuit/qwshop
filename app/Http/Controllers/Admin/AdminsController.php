@@ -62,7 +62,7 @@ class AdminsController extends Controller
             $model = $this->getService($this->modelName, true)->find($id);
             $model->username = $request->username;
             if (!empty($request->password)) {
-                Hash::make($request->password);
+                $model->password = Hash::make($request->password);
             }
             $model->nickname = $request->nickname??'';
             $model->avatar = $request->avatar??'';

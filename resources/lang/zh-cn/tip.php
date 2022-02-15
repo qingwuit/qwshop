@@ -32,6 +32,8 @@ return [
     'orderRefundOver'                              =>   '售后完成',
     'orderCompletion'                              =>   '订单完成',
 
+    'systemHandleMoney'                            =>   '系统处理',
+
     // 支付类型
     'paymentWechat'                                =>   '微信支付',
     'paymentAli'                                   =>   '支付宝支付',
@@ -39,7 +41,7 @@ return [
 
 
     // 权限的一些中文
-    'permission'=>[
+    'permission' => [
         'view'      =>  '查看',
         'store'     =>  '添加',
         'update'    =>  '编辑',
@@ -48,7 +50,7 @@ return [
     ],
 
     // 上传的错误信息
-    'upload'=>[
+    'upload' => [
         'fileNotFound'  =>  '没有找到上传文件.',
         'invalidFile'   =>  '无效文件上传.',
         'notAllow'      =>  '文件类型不允许上传.',
@@ -56,7 +58,7 @@ return [
     ],
 
     // 短信相关sms
-    'sms'=>[
+    'sms' => [
         'phoneError'    =>  '手机号码不正确.',
         'signEmpty'     =>  '签名不存在.',
         'sendErr'       =>  '发送短信失败.',
@@ -68,7 +70,7 @@ return [
     ],
 
     // 支付相关payment
-    'payment'=>[
+    'payment' => [
         'orderErr'          =>  '订单信息错误.',
         'onlineRecharge'    =>  '在线充值',
         'orderPay'          =>  '订单支付',
@@ -76,26 +78,26 @@ return [
     ],
 
     // 店铺相关
-    'store'=>[
+    'store' => [
         'defined'       =>  '店铺已经存在.',
         'notMall'       =>  '您不是店铺拥有者.',
         'subLimit'      =>  '子账户不允许开设店铺.',
     ],
 
     // 提现
-    'cash'=>[
+    'cash' => [
         'notCheck'          =>  '请先用户认证填写银行信息.',
         'moneyZero'         =>  '金额不能为0.',
         'moneyNotEnough'    =>  '提现余额不足.',
     ],
 
     // 商品
-    'goods'=>[
+    'goods' => [
         'checkSku'          =>  '请选择商品规格.',
     ],
 
     // 营销
-    'discount'=>[
+    'discount' => [
         'over100'           =>  '折扣不能超过100.',
         'need'              =>  '成团人数不能低于2.',
         'couponStockErr'    =>  '优惠劵已经领完.',
@@ -104,13 +106,13 @@ return [
     ],
 
     // 订单
-    'order'=>[
+    'order' => [
         'error'     =>  '订单非法.',
         'empty'     =>  '没有找到订单.',
         'handleErr' =>  '订单操作失败.',
         'stockErr'  =>  '库存不足.',
         'addrErr'   =>  '地址不能为空.',
-        'paymentErr'=>  '支付方式非法.',
+        'paymentErr' =>  '支付方式非法.',
         'payed'     =>  '该订单已支付.',
         'payErr'    =>  '支付失败.',
         'moneyNotEnough'    =>  '余额不足.',

@@ -512,12 +512,7 @@ export default {
         const openEditDialog = async (row)=>{
             dialogParams.editOpenBefore()
             formData.edit = {}
-            const newViewData = await proxy.R.get(pageUrl+'/'+row[props.columnId])
-            // 找出相对应的数据存入，如不存在的不处理
-            dialogParams.edit.column.map(item=>{
-                formData.edit[item.value] = newViewData[item.value]||''
-            })
-            formData.edit[props.columnId] = row[props.columnId]
+            formData.edit = await proxy.R.get(pageUrl+'/'+row[props.columnId])
             editVis.value = true
             dialogParams.editOpenAfter()
         }
@@ -527,6 +522,14 @@ export default {
                 // 验证失败直接断点
                 if (!valid) return false
                 loading.value = true
+
+                // 找出相对应的数据存入，如不存在的不处理
+                let newViewData = {}
+                dialogParams.edit.column.map(item=>{
+                    newViewData[item.value] = formData.edit[item.value]||''
+                })
+                formData.edit[props.columnId] = formData.edit[props.columnId]
+
                 try {
                     proxy.R.put(pageUrl+'/'+formData.edit[props.columnId],formData.edit).then(res=>{
                         loading.value = false
