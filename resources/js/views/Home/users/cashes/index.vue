@@ -80,6 +80,7 @@ export default {
             store:{show:false},
             update:{show:false},
             show:{show:false},
+            search:{show:false},
             export:{show:false},
             destroy:{show:false},
         })

@@ -47,6 +47,7 @@ export default {
         const btnConfigs = reactive({
             store:{show:false},
             show:{show:false},
+            search:{show:false},
             update:{show:false},
             export:{show:false},
             destroy:{show:false},

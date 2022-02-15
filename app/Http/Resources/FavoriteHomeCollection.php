@@ -24,7 +24,7 @@ class FavoriteHomeCollection extends ResourceCollection
                     'is_type'               =>  $item->is_type,
                     'goods_name'            =>  $item->goods->goods_name??'-',
                     'goods_master_image'    =>  empty($item->goods)?'':$tool->thumb($item->goods->goods_master_image, 150),
-                    'goods_price'           =>  empty($item->goods)?'0.00':(empty($item->goods->goods_skus)?$item->goods->goods_price:((empty($item->goods->goods_skus))?'0.00':$item->goods->goods_skus[0]->goods_price)),
+                    'goods_price'           =>  empty($item->goods)?'0.00':($item->goods->goods_skus->isEmpty()?$item->goods->goods_price:($item->goods->goods_skus->toArray()[0]['goods_price']??'0.00')),
                     'created_at'            =>  empty($this->created_at)?now()->format('Y-m-d H:i:s'):$this->created_at->format('Y-m-d H:i:s'),
                 ];
             }),

@@ -5,12 +5,12 @@
             <span><div class="btn" @click="openAdd">{{data.isGoods?'店铺关注':'商品收藏'}}</div></span>
         </div>
         <div class="x20 clear_line"></div>
-        <table-view v-if="data.isGoods" :params="{is_type:0}" :handleWidth="120" :options="options" :btnConfig="btnConfigs" >
+        <table-view v-if="data.isGoods" :params="{is_type:0}" :handleWidth="150" :options="options" :btnConfig="btnConfigs" >
             <template #table_handleright_hook="{rows}">
                 <el-button :title="$t('btn.view')"  :icon="View" @click="$router.push((rows.is_type==0?'/goods/':'/store/')+rows.id)" />
             </template>
         </table-view>
-        <table-view v-if="!data.isGoods" :params="{is_type:1}" :handleWidth="120" :options="options2" :btnConfig="btnConfigs" >
+        <table-view v-if="!data.isGoods" :params="{is_type:1}" :handleWidth="150" :options="options2" :btnConfig="btnConfigs" >
             <template #table_handleright_hook="{rows}">
                 <el-button :title="$t('btn.view')"  :icon="View" @click="$router.push((rows.is_type==0?'/goods/':'/store/')+rows.id)" />
             </template>
@@ -48,6 +48,7 @@ export default {
             store:{show:false},
             update:{show:false},
             show:{show:false},
+            search:{show:false},
             export:{show:false},
             destroy:{show:false},
             destroy:{show:false},
