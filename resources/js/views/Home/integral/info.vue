@@ -576,10 +576,10 @@ export default {
 }
 .rate_class{
     font-size: 14px;
-    float: left;
-    margin-top: 10px;
+    // float: left;
+    // margin-top: 15px;
     &.other{
-        margin-top: 6px;
+        // margin-top: 6px;
     }
 }
 .comment_list_block{

@@ -58,12 +58,13 @@ axios.interceptors.response.use(function (res) {
 	// 如果出现401 代表token 失效
 	if(res.data.code == 401){
         ElMessage.error(res.data.msg);
+        console.log(tokenName)
         if(tokenName != 'token'){
             localStorage.removeItem(tokenName);
             return router.push(loginName+'login');
         }else{
             localStorage.removeItem(tokenName);
-            return router.push('login');
+            return router.push('/login');
         }
         
         

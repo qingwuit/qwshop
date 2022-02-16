@@ -3875,7 +3875,7 @@ INSERT INTO `integral_goods_classes` VALUES (1, '二次元', '2022-01-04 16:43:4
 -- ----------------------------
 -- Records of integral_order_goods
 -- ----------------------------
-INSERT INTO `integral_order_goods` VALUES (1, 1, 1, 6, 'dsddds111', '/storage/goods/2022-01-04/2O0pDzJEjxe2pJ18Rn11f5dvakq5W3rAgNRMCvuh_150.png', 1, 1.00, 1.00, '2022-01-05 17:05:57', '2022-01-05 17:05:57');
+INSERT INTO `integral_order_goods` VALUES (1, 1, 1, 6, 'dsddds111', '/storage/goods/2022-01-04/2O0pDzJEjxe2pJ18Rn11f5dvakq5W3rAgNRMCvuh_150.png', 1, 1.00, 1.00, '2022-01-05 17:05:57', '2022-01-05 17:05:57', null);
 
 -- ----------------------------
 -- Records of integral_orders

@@ -17,17 +17,17 @@
                     <div class="store_rate">
                         <div class="title">店铺评分：</div>
                         <div class="item">
-                            <span style="float:left;padding-top:2px;margin-right:10px">描述相符</span>
+                            <span style="float:left;padding-top:2px;margin-right:10px;line-height:32px">描述相符</span>
                             <el-rate class="rate_class other" v-model="data.rate_info.agreeAll"  :score-template="'{value} 分'" text-color="#F7BA2A" show-score disabled />
                             <div class="clear"></div>
                         </div>
                         <div class="item">
-                            <span style="float:left;padding-top:2px;margin-right:10px">服务态度</span>
+                            <span style="float:left;padding-top:2px;margin-right:10px;line-height:32px">服务态度</span>
                             <el-rate class="rate_class other" v-model="data.rate_info.serviceAll"  :score-template="'{value} 分'" text-color="#F7BA2A" show-score disabled />
                             <div class="clear"></div>
                         </div>
                         <div class="item">
-                            <span style="float:left;padding-top:2px;margin-right:10px">发货速度</span>
+                            <span style="float:left;padding-top:2px;margin-right:10px;line-height:32px">发货速度</span>
                             <el-rate class="rate_class other" v-model="data.rate_info.speedAll" :score-template="'{value} 分'" text-color="#F7BA2A" show-score  disabled />
                             <div class="clear"></div>
                         </div>
@@ -439,7 +439,7 @@ export default {
                         position: relative;
                         .title{
                             width: 120px;
-                            height: 45px;
+                            height: 40px;
                             overflow: hidden;
                         }
                         .price{
@@ -506,7 +506,7 @@ export default {
                 padding-bottom: 10px;
                 border-bottom: 1px solid #efefef;
                 .item{
-                    line-height: 30px;
+                    // line-height: 20px;
                 }
                 .title{
                     color:#000;
@@ -514,8 +514,9 @@ export default {
                 }
             }
             .rate{
-                line-height: 35px;
                 font-size: 14px;
+                display: flex;
+                align-items: center;
                 padding-left:10px;
                 border-bottom: 1px solid #efefef;
             }
@@ -549,10 +550,10 @@ export default {
 }
 .rate_class{
     font-size: 14px;
-    float: left;
-    margin-top: 10px;
+    // float: left;
+    // margin-top: 15px;
     &.other{
-        margin-top: 6px;
+        // margin-top: 6px;
     }
 }
 </style>
