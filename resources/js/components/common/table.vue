@@ -130,7 +130,7 @@
 
         <!-- 显示dialog -->
         <el-dialog destroy-on-close ref="viewDialog" custom-class="table_dialog_class" v-model="viewVis" :title="$t('btn.view')" :width="dialogParams.width">
-            <slot name="table_show_hook" :dialogParams="dialogParams">
+            <slot name="table_show_hook" :dialogParams="dialogParams" :formData="formData">
                 <el-form v-if="dialogParams.view && dialogParams.view.column.length>0"  label-position="right"  :label-width="dialogParams.labelWidth" :fullscreen="dialogParams.fullscreen">
                     <el-row :gutter="20">
                         <el-col v-for="(v,k) in dialogParams.view.column" :key="k" :span="v.span || dialogParams.span"><div class="table-form-content">

@@ -75,7 +75,7 @@
                     </el-col>
                     <el-col :span="12">
                         <el-form-item :label="'推荐位'" prop="is_recommend">
-                            <q-input :params="{value:'goods_status',type:'switch'}" v-model:formData="data.form.is_recommend" />
+                            <q-input :params="{value:'is_recommend',type:'switch'}" v-model:formData="data.form.is_recommend" />
                         </el-form-item>
                     </el-col>
                     <el-col :span="24">

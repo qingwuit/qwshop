@@ -1,39 +1,9 @@
 <template>
     <div class="default_main">
-        <banner-view :banner="[{image:'https://pc.qingwuit.com/storage/adv/2020-08-06/hc30PI0zqFDEFHgCQhJl9K8BpY1LowqsrGAgw2dS.jpg'}]" />
-        <banner-adv :index_adv="[{image:'https://pc.qingwuit.com/storage/adv/2020-08-06/Du1PuYRHlzY76e9yEh7X3e2TyvKIPlwuWBG93nCo.jpg'}]" />
+        <banner-view :banner="[{image:require('@/assets/Home/default_banner.jpg').default}]" />
+        <banner-adv :index_adv="[{image:require('@/assets/Home/banner_b1.jpg').default},{image:require('@/assets/Home/banner_b2.jpg').default},{image:require('@/assets/Home/banner_b3.jpg').default}]" />
 
         <div class="index_bg">
-            <!-- 秒杀 -->
-            <!-- <div class="seckill center1200" v-if="seckill_list.length>0">
-                <div class="seckill_title">商城秒杀<span><router-link to="/seckill">查看更多</router-link></span> </div>
-                <div class="seckill_left">
-                    <div class="seckill_end_time">
-                        {{seckills}} 场
-                        <p class="seckill_icon"><a-font type="iconziyuan"></a-font></p>
-                        <p class="font_skill">距离结束还有</p>
-                        <ul>
-                            <li>{{timeFormat[0]||'00'}}</li>
-                            <li>{{timeFormat[1]||'00'}}</li>
-                            <li>{{timeFormat[2]||'00'}}</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="seckill_right">
-                        <ul>
-                            <li v-for="(v,k) in seckill_list" :key="k" @click="toGoods(v.id)">
-                                <dl>
-                                    <dt><img style="width: 180px; height: 180px" v-lazy="v.goods_master_image" :alt="v.goods_name" /></dt>
-                                    <dd class="product_title" :title="v.goods_name">{{v.goods_name}}</dd>
-                                    <dd class="product_subtitle">{{v.goods_subname}}</dd>
-                                    <dd class="product_price">￥{{v.goods_price}}<span>{{v.goods_market_price}}</span></dd>
-                                </dl>
-                            </li>
-                            
-                        </ul>
-                </div>
-            </div> -->
-
             <div class="goods_class_list w1200" v-for="(v,k) in data.goods" :key="k">
                 <adv-view v-if="v.goods && v.goods.length>0" :adv="{image:require('@/assets/Home/adv.jpg').default}" />
                 <div v-if="v.goods && v.goods.length>0">

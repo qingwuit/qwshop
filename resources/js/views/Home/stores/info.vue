@@ -1,6 +1,6 @@
 <template>
     <div class="home_store_info">
-        <banner :banner="data.store_info.store_slide||[]" :height="350" />
+        <banner :banner="data.store_info.store_slide||[{image:require('@/assets/Home/store_banner.png').default}]" :height="350" />
         
         <div class="store_info_block w1200">
             <div class="left_item">

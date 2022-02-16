@@ -11,32 +11,11 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 14/02/2022 23:03:59
+ Date: 16/02/2022 20:03:50
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
--- Table structure for addresses
--- ----------------------------
-DROP TABLE IF EXISTS `addresses`;
-CREATE TABLE `addresses`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `receive_name` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '收件人名',
-  `receive_tel` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '收件人手机',
-  `area_info` varchar(140) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '地址信息',
-  `address` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '详细地址信息',
-  `province_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '省份',
-  `city_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '城市',
-  `region_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '区县',
-  `is_default` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否默认',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of addresses
@@ -45,26 +24,6 @@ INSERT INTO `addresses` VALUES (1, 6, '22', '333', '河北省 淄博市', '32', 
 INSERT INTO `addresses` VALUES (2, 6, '22134', '12313', '河北省 青岛市', '123', 37, 1430, 0, 0, '2021-12-23 19:34:28', '2021-12-27 14:18:09', NULL);
 INSERT INTO `addresses` VALUES (3, 6, '张三', '18888888888', '河北省 淄博市', '面馆', 37, 1442, 0, 1, '2021-12-23 20:24:35', '2021-12-27 14:18:09', NULL);
 
--- ----------------------------
--- Table structure for admin_menus
--- ----------------------------
-DROP TABLE IF EXISTS `admin_menus`;
-CREATE TABLE `admin_menus`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `pid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上级ID',
-  `name` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '菜单名称',
-  `ename` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '英文名称',
-  `icon` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '图标',
-  `apis` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '菜单路由',
-  `view` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '前端视图',
-  `is_open` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '外链跳转',
-  `content` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '菜单描述',
-  `is_sort` int(10) UNSIGNED NULL DEFAULT 0 COMMENT '排序',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 62 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of admin_menus
@@ -131,19 +90,6 @@ INSERT INTO `admin_menus` VALUES (59, 1, '仪表盘', '', 'fa-dashboard', '/Admi
 INSERT INTO `admin_menus` VALUES (60, 31, '店铺配置', '', '', '/Admin/configs/store', 'Admin/configs/store', 0, '', 0, '2022-01-11 12:42:44', '2022-01-11 12:42:44', NULL);
 INSERT INTO `admin_menus` VALUES (61, 4, '平台用户', '', '', '/Admin/users', 'Admin/users/index', 0, '', 0, '2022-02-14 22:15:45', '2022-02-14 22:15:45', NULL);
 
--- ----------------------------
--- Table structure for admin_permission_groups
--- ----------------------------
-DROP TABLE IF EXISTS `admin_permission_groups`;
-CREATE TABLE `admin_permission_groups`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '权限分组名称',
-  `content` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '接口分组描述',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of admin_permission_groups
@@ -159,41 +105,11 @@ INSERT INTO `admin_permission_groups` VALUES (8, '12344', '44顶顶顶', '2021-1
 INSERT INTO `admin_permission_groups` VALUES (9, '小行星', '', '2021-11-27 18:22:19', '2021-11-27 18:58:36', NULL);
 
 -- ----------------------------
--- Table structure for admin_permissions
--- ----------------------------
-DROP TABLE IF EXISTS `admin_permissions`;
-CREATE TABLE `admin_permissions`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `pid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '权限分组ID',
-  `name` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '权限名称',
-  `apis` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '接口名称',
-  `content` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '接口描述',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of admin_permissions
 -- ----------------------------
 INSERT INTO `admin_permissions` VALUES (1, 5, '测试', 'admins.index', 'ds', '2021-11-19 16:55:26', '2021-11-21 17:14:04', '2021-11-21 17:14:04');
 INSERT INTO `admin_permissions` VALUES (2, 5, '222', 'admins.index', 'xxx', '2021-11-20 16:15:23', '2021-11-21 17:14:04', '2021-11-21 17:14:04');
 INSERT INTO `admin_permissions` VALUES (3, 5, 'ddd', 'admins.index', '', '2021-11-24 13:44:57', '2021-11-24 13:44:57', NULL);
-
--- ----------------------------
--- Table structure for admin_roles
--- ----------------------------
-DROP TABLE IF EXISTS `admin_roles`;
-CREATE TABLE `admin_roles`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `belong_id` int(10) UNSIGNED NULL DEFAULT 0 COMMENT '所属',
-  `name` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '角色名称',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of admin_roles
@@ -202,20 +118,6 @@ INSERT INTO `admin_roles` VALUES (1, 1, '超级管理员', '2021-11-05 07:15:51'
 INSERT INTO `admin_roles` VALUES (2, 1, '测试3', '2021-11-20 23:27:31', '2021-11-21 02:14:38', NULL);
 INSERT INTO `admin_roles` VALUES (3, 1, '测试2', '2021-11-20 23:28:13', '2021-11-20 23:28:24', '2021-11-20 23:28:24');
 INSERT INTO `admin_roles` VALUES (4, 1, '测试4', '2021-11-27 18:22:10', '2021-11-27 18:22:10', NULL);
-
--- ----------------------------
--- Table structure for admin_to_menus
--- ----------------------------
-DROP TABLE IF EXISTS `admin_to_menus`;
-CREATE TABLE `admin_to_menus`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `role_id` int(10) UNSIGNED NOT NULL,
-  `menu_id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 41 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of admin_to_menus
@@ -229,37 +131,6 @@ INSERT INTO `admin_to_menus` VALUES (35, 2, 4, NULL, NULL, NULL);
 INSERT INTO `admin_to_menus` VALUES (34, 2, 3, NULL, NULL, NULL);
 INSERT INTO `admin_to_menus` VALUES (33, 2, 2, NULL, NULL, NULL);
 
--- ----------------------------
--- Table structure for admin_to_permissions
--- ----------------------------
-DROP TABLE IF EXISTS `admin_to_permissions`;
-CREATE TABLE `admin_to_permissions`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `role_id` int(10) UNSIGNED NOT NULL,
-  `permission_id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
-
--- ----------------------------
--- Records of admin_to_permissions
--- ----------------------------
-
--- ----------------------------
--- Table structure for admin_to_roles
--- ----------------------------
-DROP TABLE IF EXISTS `admin_to_roles`;
-CREATE TABLE `admin_to_roles`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `role_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of admin_to_roles
@@ -269,49 +140,12 @@ INSERT INTO `admin_to_roles` VALUES (2, 5, 1, NULL, NULL, NULL);
 INSERT INTO `admin_to_roles` VALUES (4, 6, 1, NULL, NULL, NULL);
 
 -- ----------------------------
--- Table structure for admins
--- ----------------------------
-DROP TABLE IF EXISTS `admins`;
-CREATE TABLE `admins`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `belong_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '所属',
-  `username` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '用户名',
-  `password` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '密码',
-  `nickname` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '昵称',
-  `avatar` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '头像',
-  `is_super` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '超级管理员',
-  `ip` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.0.0' COMMENT '登陆IP',
-  `login_time` timestamp NULL DEFAULT NULL COMMENT '登陆时间',
-  `last_login_time` timestamp NULL DEFAULT NULL COMMENT '最后一次登陆',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of admins
 -- ----------------------------
 INSERT INTO `admins` VALUES (1, 0, 'admin', '$2y$10$hK33S6rakhABix382ecAie9tP/LFgEz1xfYIITfTGeDE5H4ObMHZC', '超级管理员', '/storage/avatar/2021-11-29/3iRdmBH4otVN8AEX33CrDcxTpmKcf6cfNjMKIyAr.png', 1, '0.0.0.0', NULL, NULL, '2021-11-05 03:12:56', '2021-11-29 00:37:04', NULL);
-INSERT INTO `admins` VALUES (5, 1, 'dddd', '$2y$10$u9FFzLIVTk0HErz/9KkOIORJNLd1j/Nut.4Yn/mQMn7GHFve.yECu', 'dddd', '/storage/myfiles/2021-11-27/4f011vf81vyWHEbURCavDmiRBD1B3zIFyITkbgCI.png', 0, '0.0.0.0', NULL, NULL, '2021-11-21 23:26:18', '2021-11-27 13:31:12', NULL);
+INSERT INTO `admins` VALUES (5, 1, 'dddd', '$2y$10$tFdYq91XLGwj4vo3eZg8DOXsEULW9JfHBYnwyaoLsPn1E/wNnwvAa', 'dddd', '/storage/myfiles/2021-11-27/4f011vf81vyWHEbURCavDmiRBD1B3zIFyITkbgCI.png', 0, '0.0.0.0', NULL, NULL, '2021-11-21 23:26:18', '2022-02-15 20:13:23', NULL);
 INSERT INTO `admins` VALUES (4, 1, 'aa', '$2y$10$fqDVKc8dJAWwMcmB351TxemVqZ/31nkpIzjgsBIPikqtMmfIxo3RW', 'aa2', '/storage/avatar/2021-11-27/NsQF3oGvYgkJ7r7N6rz0mZR24fcMQZHC1UkfoSid.png', 0, '0.0.0.0', NULL, NULL, '2021-11-21 17:20:13', '2021-11-27 16:49:50', NULL);
-INSERT INTO `admins` VALUES (6, 1, 'dddd', '$2y$10$BgcHQzYcr9.DxapFUWQrRebUpSD2QPMCn/L9mA7lNA9zDIB0C6tl2', '', '', 0, '0.0.0.0', NULL, NULL, '2021-11-27 18:21:45', '2021-11-27 18:21:56', NULL);
-
--- ----------------------------
--- Table structure for adv_spaces
--- ----------------------------
-DROP TABLE IF EXISTS `adv_spaces`;
-CREATE TABLE `adv_spaces`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `belong_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '所属用户',
-  `name` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '广告位名称',
-  `width` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '建议宽度',
-  `height` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '建议高度',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+INSERT INTO `admins` VALUES (7, 0, '', '', '', '', 0, '0.0.0.0', '2022-02-15 23:39:18', NULL, '2022-02-15 23:39:18', '2022-02-15 23:39:18', NULL);
 
 -- ----------------------------
 -- Records of adv_spaces
@@ -321,68 +155,15 @@ INSERT INTO `adv_spaces` VALUES (2, 0, '测试广告位', 213, 33, '2021-12-01 2
 INSERT INTO `adv_spaces` VALUES (3, 1, 'ddd', 45, 5, '2021-12-02 13:07:07', '2021-12-02 13:07:07', NULL);
 
 -- ----------------------------
--- Table structure for advs
--- ----------------------------
-DROP TABLE IF EXISTS `advs`;
-CREATE TABLE `advs`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `belong_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '所属用户',
-  `pid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '广告位',
-  `name` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '广告名称',
-  `url` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '链接',
-  `image` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '图片地址',
-  `adv_start` timestamp NOT NULL DEFAULT '2021-12-01 19:46:09' COMMENT '开始时间',
-  `adv_end` timestamp NOT NULL DEFAULT '2021-12-02 19:46:09' COMMENT '结束时间',
-  `is_sort` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
-  `is_type` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '类型',
-  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of advs
 -- ----------------------------
 INSERT INTO `advs` VALUES (1, 0, 2, 'sda23', '', '/storage/image/2021-12-01/7OuaqEkdbZ5ebZx9SllBQ4Ccd6E30b27OSTRssOl.png', '2021-12-01 23:01:11', '2021-12-30 00:00:00', 0, 0, 1, '2021-12-01 23:01:16', '2021-12-01 23:06:05', NULL);
 INSERT INTO `advs` VALUES (2, 1, 3, '范德萨', '', '/storage/image/2021-12-02/3L8wEFtlyrUfY2mwiNn8qxkPIhGhUe6yGURzE5yr.png', '2021-12-01 00:00:00', '2021-12-02 14:45:33', 0, 0, 1, '2021-12-02 14:45:37', '2021-12-02 15:19:08', NULL);
 
 -- ----------------------------
--- Table structure for agreements
--- ----------------------------
-DROP TABLE IF EXISTS `agreements`;
-CREATE TABLE `agreements`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '协议名称',
-  `ename` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '调取名称',
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '协议内容',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of agreements
 -- ----------------------------
 INSERT INTO `agreements` VALUES (1, '协议文件', 'agreement', '<p>我是uohe测试的33322ddddcssccc</p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"我是uohe测试的33322ddddcssccc\"}]}]', '2021-11-30 20:13:18', '2021-12-23 12:32:47', NULL);
-
--- ----------------------------
--- Table structure for areas
--- ----------------------------
-DROP TABLE IF EXISTS `areas`;
-CREATE TABLE `areas`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `pid` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '父ID',
-  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '地址',
-  `code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '编码',
-  `deep` tinyint(3) UNSIGNED NOT NULL COMMENT '深度',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3446 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of areas
@@ -3834,67 +3615,17 @@ INSERT INTO `areas` VALUES (3444, '6590', '昆玉市', '659009', 2, NULL, NULL, 
 INSERT INTO `areas` VALUES (3445, '6590', '胡杨河市', '659010', 2, NULL, NULL, NULL);
 
 -- ----------------------------
--- Table structure for article_menus
--- ----------------------------
-DROP TABLE IF EXISTS `article_menus`;
-CREATE TABLE `article_menus`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `belong_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '所属用户',
-  `pid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上级ID',
-  `name` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '栏目名称',
-  `is_sort` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of article_menus
 -- ----------------------------
 INSERT INTO `article_menus` VALUES (3, 1, 0, '帮助中心', 99, '2022-01-11 13:27:25', '2022-01-11 13:27:25', NULL);
 
 -- ----------------------------
--- Table structure for articles
--- ----------------------------
-DROP TABLE IF EXISTS `articles`;
-CREATE TABLE `articles`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `belong_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '所属用户',
-  `pid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上级ID',
-  `name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容',
-  `click` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '点击次数',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of articles
 -- ----------------------------
-INSERT INTO `articles` VALUES (5, 1, 3, '帮助中心', '<p><span>sad</span></p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"sad\"}]}]', 14, '2022-01-11 13:32:27', '2022-02-11 17:01:22', NULL);
+INSERT INTO `articles` VALUES (5, 1, 3, '帮助中心', '<p><span>sad</span></p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"sad\"}]}]', 22, '2022-01-11 13:32:27', '2022-02-16 17:04:00', NULL);
 INSERT INTO `articles` VALUES (4, 1, 3, '其他合作', '<p><span>sad</span></p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"sad\"}]}]', 0, '2022-01-11 13:32:18', '2022-01-11 13:32:18', NULL);
 INSERT INTO `articles` VALUES (3, 1, 3, '网站公告', '<p><span>dsad</span></p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"dsad\"}]}]', 0, '2022-01-11 13:30:16', '2022-01-11 13:30:16', NULL);
-INSERT INTO `articles` VALUES (6, 1, 3, '关于我们', '<p><span>sad</span></p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"sad\"}]}]', 1, '2022-01-11 13:32:35', '2022-01-11 13:56:45', NULL);
-
--- ----------------------------
--- Table structure for carts
--- ----------------------------
-DROP TABLE IF EXISTS `carts`;
-CREATE TABLE `carts`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `goods_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '商品ID',
-  `sku_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Sku_ID',
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `buy_num` int(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '购买数量',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
+INSERT INTO `articles` VALUES (6, 1, 3, '关于我们', '<p><span>sad</span></p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"sad\"}]}]', 2, '2022-01-11 13:32:35', '2022-02-15 15:43:52', NULL);
 
 -- ----------------------------
 -- Records of carts
@@ -3904,28 +3635,6 @@ INSERT INTO `carts` VALUES (3, 6, 1, 1, 1, 1, '2021-12-28 00:01:44', '2021-12-28
 INSERT INTO `carts` VALUES (4, 6, 1, 1, 1, 1, '2021-12-28 00:04:09', '2021-12-28 00:04:23', '2021-12-28 00:04:23');
 INSERT INTO `carts` VALUES (5, 6, 1, 1, 1, 1, '2021-12-28 00:04:37', '2022-02-14 17:33:47', '2022-02-14 17:33:47');
 INSERT INTO `carts` VALUES (6, 6, 10, 0, 1, 1, '2022-02-14 17:27:14', '2022-02-14 17:33:47', '2022-02-14 17:33:47');
-
--- ----------------------------
--- Table structure for cashes
--- ----------------------------
-DROP TABLE IF EXISTS `cashes`;
-CREATE TABLE `cashes`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `money` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '金额',
-  `commission` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '手续费',
-  `cash_status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态0 提现申请 1提现成功 2拒绝提现',
-  `refuse_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '拒绝原因',
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '提现人名',
-  `card_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '银行卡号',
-  `bank_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '银行名',
-  `remark` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 44 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cashes
@@ -3975,25 +3684,6 @@ INSERT INTO `cashes` VALUES (42, 0, 1, 1.00, 0.00, 0, '', 'dasd', 'asd', 'asd', 
 INSERT INTO `cashes` VALUES (43, 0, 1, 1.00, 0.00, 0, '', 'dasd', 'asd', 'asd', '', '2022-02-12 23:51:48', '2022-02-12 23:51:48', NULL);
 
 -- ----------------------------
--- Table structure for collective_logs
--- ----------------------------
-DROP TABLE IF EXISTS `collective_logs`;
-CREATE TABLE `collective_logs`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `collective_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '团ID',
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `goods_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '商品ID',
-  `discount` decimal(6, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '折扣',
-  `need` tinyint(3) UNSIGNED NOT NULL DEFAULT 5 COMMENT '需要人数',
-  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 2 COMMENT '状态 0取消 1完成  2 拼团中',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
-
--- ----------------------------
 -- Records of collective_logs
 -- ----------------------------
 INSERT INTO `collective_logs` VALUES (1, 1, 6, 1, 1, 1.00, 213, 2, '2022-01-06 00:41:57', '2022-01-06 00:41:57', NULL);
@@ -4001,41 +3691,9 @@ INSERT INTO `collective_logs` VALUES (2, 1, 6, 1, 1, 1.00, 213, 2, '2022-01-06 0
 INSERT INTO `collective_logs` VALUES (3, 1, 6, 1, 1, 1.00, 213, 2, '2022-01-06 01:25:32', '2022-01-06 01:25:32', NULL);
 
 -- ----------------------------
--- Table structure for collectives
--- ----------------------------
-DROP TABLE IF EXISTS `collectives`;
-CREATE TABLE `collectives`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `goods_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '商品ID',
-  `discount` decimal(6, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '折扣',
-  `need` tinyint(3) UNSIGNED NOT NULL DEFAULT 5 COMMENT '需要人数',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
-
--- ----------------------------
 -- Records of collectives
 -- ----------------------------
 INSERT INTO `collectives` VALUES (1, 1, 1, 1.00, 213, '2022-01-03 20:49:08', '2022-01-03 20:53:01', NULL);
-
--- ----------------------------
--- Table structure for configs
--- ----------------------------
-DROP TABLE IF EXISTS `configs`;
-CREATE TABLE `configs`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名称',
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '值',
-  `description` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '描述',
-  `is_type` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '序列化值',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of configs
@@ -4044,7 +3702,7 @@ INSERT INTO `configs` VALUES (1, 'web_name', '青梧商城2', '网站名称', 0,
 INSERT INTO `configs` VALUES (2, 'index_name', '青梧系统', '首页标题', 0, NULL, '2022-01-06 23:14:46', NULL);
 INSERT INTO `configs` VALUES (3, 'keyword', '关键词', '关键词', 0, NULL, '2022-01-06 23:14:46', NULL);
 INSERT INTO `configs` VALUES (4, 'description', '网站描述', '网站描述', 0, NULL, '2022-01-06 23:14:46', NULL);
-INSERT INTO `configs` VALUES (5, 'logo', '/storage/logo/2021-11-27/JjpNstvYcfS9SoKZ8L3v2BfhLpLfZIZiGVIOSsmI.png', '网站Logo', 0, NULL, '2022-01-06 23:14:46', NULL);
+INSERT INTO `configs` VALUES (5, 'logo', '', '网站Logo', 0, NULL, '2022-01-06 23:14:46', NULL);
 INSERT INTO `configs` VALUES (6, 'tel', '电话', '电话', 0, NULL, '2022-01-06 23:14:46', NULL);
 INSERT INTO `configs` VALUES (7, 'mobile', '座机', '座机', 0, NULL, '2022-01-06 23:14:46', NULL);
 INSERT INTO `configs` VALUES (8, 'email', '邮箱', '邮箱', 0, NULL, '2022-01-06 23:14:46', NULL);
@@ -4061,117 +3719,14 @@ INSERT INTO `configs` VALUES (16, 'amap', '{\"key\":\"79f3a628c906e\",\"jsapi\":
 INSERT INTO `configs` VALUES (17, 'store', '{\"goods_verify\":false,\"cash\":\"0\"}', '店铺配置', 1, NULL, '2022-02-11 19:41:49', NULL);
 
 -- ----------------------------
--- Table structure for coupon_logs
--- ----------------------------
-DROP TABLE IF EXISTS `coupon_logs`;
-CREATE TABLE `coupon_logs`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '优惠券' COMMENT '标题',
-  `coupon_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '优惠券ID',
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `order_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '订单ID',
-  `money` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '分销金额',
-  `use_money` decimal(6, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '分佣率',
-  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态 0未使用 1使用',
-  `start_time` timestamp NOT NULL DEFAULT '2021-12-30 14:08:36' COMMENT '开始时间',
-  `end_time` timestamp NOT NULL DEFAULT '2022-01-04 14:08:36' COMMENT '结束',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of coupon_logs
 -- ----------------------------
 INSERT INTO `coupon_logs` VALUES (2, '测试', 1, 6, 1, 24, 1.00, 10.00, 1, '2022-01-03 00:00:00', '2022-01-12 00:00:00', '2022-01-06 13:44:18', '2022-01-06 14:08:38', NULL);
 
 -- ----------------------------
--- Table structure for coupons
--- ----------------------------
-DROP TABLE IF EXISTS `coupons`;
-CREATE TABLE `coupons`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名称',
-  `money` decimal(6, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '优惠券金额',
-  `use_money` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '允许使用金额',
-  `stock` int(10) UNSIGNED NOT NULL DEFAULT 10 COMMENT '优惠券数量',
-  `content` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '优惠券描述',
-  `start_time` timestamp NOT NULL DEFAULT '2021-12-30 14:08:36' COMMENT '开始时间',
-  `end_time` timestamp NOT NULL DEFAULT '2022-01-04 14:08:36' COMMENT '结束',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of coupons
 -- ----------------------------
 INSERT INTO `coupons` VALUES (1, 1, '测试', 1.00, 10.00, 998, '', '2022-01-03 00:00:00', '2022-01-12 00:00:00', '2022-01-03 19:40:53', '2022-01-06 13:44:18', NULL);
-
--- ----------------------------
--- Table structure for distribution_logs
--- ----------------------------
-DROP TABLE IF EXISTS `distribution_logs`;
-CREATE TABLE `distribution_logs`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '分销' COMMENT '标题',
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `order_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '订单ID',
-  `distribution_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '分销活动ID',
-  `order_goods_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '订单商品ID',
-  `money` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '分销金额',
-  `lev` decimal(6, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '分佣率',
-  `commission` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '分佣金额',
-  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '处理结果 0 等待分佣 1 分佣',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of distribution_logs
--- ----------------------------
-
--- ----------------------------
--- Table structure for distributions
--- ----------------------------
-DROP TABLE IF EXISTS `distributions`;
-CREATE TABLE `distributions`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `goods_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '商品ID',
-  `lev_1` decimal(6, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '一级分销',
-  `lev_2` decimal(6, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '二级分销',
-  `lev_3` decimal(6, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '三级分销',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
-
--- ----------------------------
--- Records of distributions
--- ----------------------------
-
--- ----------------------------
--- Table structure for expresses
--- ----------------------------
-DROP TABLE IF EXISTS `expresses`;
-CREATE TABLE `expresses`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '快递公司名',
-  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '快递编码',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of expresses
@@ -4196,47 +3751,12 @@ INSERT INTO `expresses` VALUES (17, '顺丰速运', 'sf', NULL, NULL, NULL);
 INSERT INTO `expresses` VALUES (18, '国通快递', 'gt', NULL, NULL, NULL);
 
 -- ----------------------------
--- Table structure for favorites
--- ----------------------------
-DROP TABLE IF EXISTS `favorites`;
-CREATE TABLE `favorites`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `out_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '外部ID',
-  `is_type` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '类型 0 收藏商品 1关注店铺',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
-
--- ----------------------------
 -- Records of favorites
 -- ----------------------------
 INSERT INTO `favorites` VALUES (5, 6, 1, 0, '2022-01-13 16:10:57', '2022-01-13 16:10:57', NULL);
 INSERT INTO `favorites` VALUES (4, 6, 1, 0, '2021-12-25 17:18:44', '2021-12-26 19:50:45', '2021-12-26 19:50:45');
 INSERT INTO `favorites` VALUES (3, 6, 1, 0, '2021-12-25 17:14:54', '2021-12-25 17:18:21', '2021-12-25 17:18:21');
-
--- ----------------------------
--- Table structure for freights
--- ----------------------------
-DROP TABLE IF EXISTS `freights`;
-CREATE TABLE `freights`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '默认运费' COMMENT '标题',
-  `f_weight` decimal(6, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '首重',
-  `f_price` decimal(6, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '首重运费',
-  `o_weight` decimal(6, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '超出重量每多少',
-  `o_price` decimal(6, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '超出重量每次多少钱',
-  `area_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容ID',
-  `area_name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容中文',
-  `is_type` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0默认运费 1 配置运费',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+INSERT INTO `favorites` VALUES (6, 6, 10, 0, '2022-02-15 15:07:18', '2022-02-15 15:07:18', NULL);
 
 -- ----------------------------
 -- Records of freights
@@ -4247,74 +3767,22 @@ INSERT INTO `freights` VALUES (5, 1, '自定义运费模版', 123.00, 1.00, 1.00
 INSERT INTO `freights` VALUES (4, 1, '默认运费', 2.00, 3.00, 4.00, 5.00, '', '', 0, '2022-01-01 21:13:41', '2022-01-01 21:15:16', NULL);
 
 -- ----------------------------
--- Table structure for full_reductions
--- ----------------------------
-DROP TABLE IF EXISTS `full_reductions`;
-CREATE TABLE `full_reductions`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名称',
-  `money` decimal(6, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '满减金额',
-  `use_money` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '满足金额',
-  `start_time` timestamp NOT NULL DEFAULT '2021-12-30 14:19:17' COMMENT '开始时间',
-  `end_time` timestamp NOT NULL DEFAULT '2022-01-04 14:19:17' COMMENT '结束',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of full_reductions
 -- ----------------------------
 INSERT INTO `full_reductions` VALUES (1, 1, 'ad', 12.00, 100.00, '2022-01-19 00:00:00', '2022-01-21 00:00:00', '2022-01-03 20:32:21', '2022-01-03 20:32:21', NULL);
 
 -- ----------------------------
--- Table structure for goods
--- ----------------------------
-DROP TABLE IF EXISTS `goods`;
-CREATE TABLE `goods`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `brand_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '品牌ID',
-  `class_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '栏目ID',
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '商家ID',
-  `goods_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '商品名称',
-  `goods_subname` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '商品副标题',
-  `goods_no` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '商品编号',
-  `goods_images` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '商品图片',
-  `goods_master_image` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '主图',
-  `goods_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '商品价格',
-  `goods_market_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '市场价格',
-  `goods_stock` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '库存',
-  `goods_weight` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '商品重量',
-  `goods_sale` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '销售量',
-  `goods_collect` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '收藏量',
-  `goods_status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上架状态',
-  `goods_verify` tinyint(3) UNSIGNED NOT NULL DEFAULT 1 COMMENT '审核状态',
-  `refuse_info` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '暂无缘由' COMMENT '拒绝原因',
-  `freight_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '运费模版 0默认',
-  `goods_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '详情',
-  `goods_content_mobile` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '手机端详情',
-  `is_recommend` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否推荐商家首页',
-  `is_master` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否推荐主站首页',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES (1, 0, 27, 1, 'as2', '111', '', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1.png', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1.png', 1.00, 2.00, 1, 3.00, 12, 0, 1, 1, '暂无缘由', 0, '<p><span>ss</span></p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"ss\"}]}]', '', 0, 0, '2021-12-18 08:04:42', '2022-01-13 20:23:09', NULL);
-INSERT INTO `goods` VALUES (2, 2, 1, 1, 'Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体', '智能操控 快速冷暖', '', '/storage/goods/3/2021-02-21/K2f0AKQqJgKu4trdQF2zytOMEdRQ0PM9yYRB2srj.jpg', '/storage/goods/3/2021-02-21/K2f0AKQqJgKu4trdQF2zytOMEdRQ0PM9yYRB2srj.jpg', 6819.00, 8999.00, 1000, 10.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 13:59:29', '2021-02-21 13:59:29', NULL);
-INSERT INTO `goods` VALUES (3, 2, 1, 1, 'Xiaomi/小米 小米电视4A 55英寸 4k超高清智能网络电视机 50 60', '小米电视4A 55英寸', '', '/storage/goods/3/2021-02-21/P9H13dxYDx8oDm5QsiYlYlNoBcN1ROEnn8R8mlqE.jpg', '/storage/goods/3/2021-02-21/P9H13dxYDx8oDm5QsiYlYlNoBcN1ROEnn8R8mlqE.jpg', 2300.00, 4500.00, 1000, 5.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:01:35', '2021-02-21 14:01:35', NULL);
-INSERT INTO `goods` VALUES (4, 2, 1, 1, 'Hisense/海信 LED49EC270W 49吋液晶平板电视机网络wifi彩电50', 'Hisense/海信 wifi彩电', '', '/storage/goods/3/2021-02-21/HUEYKEuHCAKTilIWWse4e9J6jNHy4CUSwbCOO63H.jpg', '/storage/goods/3/2021-02-21/HUEYKEuHCAKTilIWWse4e9J6jNHy4CUSwbCOO63H.jpg', 1800.00, 2999.00, 1000, 2.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:05:28', '2021-02-21 14:05:28', NULL);
-INSERT INTO `goods` VALUES (5, 2, 1, 1, 'Konka/康佳 A48F 48英寸高清智能网络平板 LED液晶电视机 50 49 已累计爆售 1万台 大屏购物 镇店爆款', '大屏购物 镇店爆款', '', '/storage/goods/3/2021-02-21/ZtCEjPfDPzSF2OvdCY2mAKsTmFhhVcdIRo3VEX9g.jpg', '/storage/goods/3/2021-02-21/ZtCEjPfDPzSF2OvdCY2mAKsTmFhhVcdIRo3VEX9g.jpg', 4500.00, 6999.00, 1000, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:19:36', '2021-02-21 14:19:36', NULL);
-INSERT INTO `goods` VALUES (6, 2, 1, 1, 'Haier/海尔 EG10014B39GU1 10公斤kg蓝晶变频滚筒全自动洗衣机', '自动洗衣机', '', '/storage/goods/3/2021-02-21/comnkzGxDkMgN1kD8VrZEWT9nUAjJyhSQ3O4FGlo.jpg', '/storage/goods/3/2021-02-21/comnkzGxDkMgN1kD8VrZEWT9nUAjJyhSQ3O4FGlo.jpg', 1200.00, 1399.00, 1000, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:20:39', '2021-02-21 14:20:39', NULL);
-INSERT INTO `goods` VALUES (7, 2, 1, 1, 'Haier/海尔 EG7012B29W 7公斤 变频全自动 滚筒洗衣机 消毒洗', '变频全自动', '', '/storage/goods/3/2021-02-21/stEVhOj4E3nIggkoWMkA2VhV6lsNJ0gikrTGNgCF.jpg', '/storage/goods/3/2021-02-21/stEVhOj4E3nIggkoWMkA2VhV6lsNJ0gikrTGNgCF.jpg', 3999.00, 4500.00, 1000, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:21:50', '2021-02-21 14:21:50', NULL);
-INSERT INTO `goods` VALUES (8, 2, 1, 1, 'Skyworth/创维 55V9E 55吋4K超高清智能网络平板LED液晶电视机 50 25核智能 4K超高清 人气爆款', '4K超高清 人气爆款', '', '/storage/goods/3/2021-02-21/v77vwbiZMOYCEPWRueUQ3B2tEIg5TBsgH886sxXH.jpg', '/storage/goods/3/2021-02-21/v77vwbiZMOYCEPWRueUQ3B2tEIg5TBsgH886sxXH.jpg', 2199.00, 3099.00, 1000, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:23:05', '2021-02-21 14:23:05', NULL);
-INSERT INTO `goods` VALUES (9, 2, 1, 1, 'Changhong/长虹 55G6 55吋液晶电视机4k曲面平板电视智能网络wifi 曲面 4K超清 双64位 U-MAX', '曲面 4K超清', '', '/storage/goods/3/2021-02-21/SGTSO7aydUm1QQjvxSokwX8AeSbz4iu2WvQKENFg.jpg', '/storage/goods/3/2021-02-21/SGTSO7aydUm1QQjvxSokwX8AeSbz4iu2WvQKENFg.jpg', 2599.00, 3599.00, 1000, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:24:09', '2021-02-21 14:24:09', NULL);
+INSERT INTO `goods` VALUES (1, 0, 27, 1, 'as2', '111', '', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1.png', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1.png', 1.00, 2.00, 1, 3.00, 12, 0, 0, 1, '暂无缘由', 0, '<p><span>ss</span></p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"ss\"}]}]', '', 0, 0, '2021-12-18 08:04:42', '2022-02-16 19:53:53', NULL);
+INSERT INTO `goods` VALUES (2, 2, 26, 1, 'Haier/海尔 KFR-33GW/10EBBAL13U1 1.5匹智能壁挂式家用空调挂机 智能操控 快速冷暖 送装一体', '智能操控 快速冷暖', '', '/storage/goods/3/2021-02-21/K2f0AKQqJgKu4trdQF2zytOMEdRQ0PM9yYRB2srj.jpg', '/storage/goods/3/2021-02-21/K2f0AKQqJgKu4trdQF2zytOMEdRQ0PM9yYRB2srj.jpg', 6819.00, 8999.00, 1000, 10.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 13:59:29', '2021-02-21 13:59:29', NULL);
+INSERT INTO `goods` VALUES (3, 2, 26, 1, 'Xiaomi/小米 小米电视4A 55英寸 4k超高清智能网络电视机 50 60', '小米电视4A 55英寸', '', '/storage/goods/3/2021-02-21/P9H13dxYDx8oDm5QsiYlYlNoBcN1ROEnn8R8mlqE.jpg', '/storage/goods/3/2021-02-21/P9H13dxYDx8oDm5QsiYlYlNoBcN1ROEnn8R8mlqE.jpg', 2300.00, 4500.00, 1000, 5.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:01:35', '2021-02-21 14:01:35', NULL);
+INSERT INTO `goods` VALUES (4, 2, 26, 1, 'Hisense/海信 LED49EC270W 49吋液晶平板电视机网络wifi彩电50', 'Hisense/海信 wifi彩电', '', '/storage/goods/3/2021-02-21/HUEYKEuHCAKTilIWWse4e9J6jNHy4CUSwbCOO63H.jpg', '/storage/goods/3/2021-02-21/HUEYKEuHCAKTilIWWse4e9J6jNHy4CUSwbCOO63H.jpg', 1800.00, 2999.00, 1000, 2.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:05:28', '2021-02-21 14:05:28', NULL);
+INSERT INTO `goods` VALUES (5, 2, 26, 1, 'Konka/康佳 A48F 48英寸高清智能网络平板 LED液晶电视机 50 49 已累计爆售 1万台 大屏购物 镇店爆款', '大屏购物 镇店爆款', '', '/storage/goods/3/2021-02-21/ZtCEjPfDPzSF2OvdCY2mAKsTmFhhVcdIRo3VEX9g.jpg', '/storage/goods/3/2021-02-21/ZtCEjPfDPzSF2OvdCY2mAKsTmFhhVcdIRo3VEX9g.jpg', 4500.00, 6999.00, 1000, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:19:36', '2021-02-21 14:19:36', NULL);
+INSERT INTO `goods` VALUES (6, 2, 26, 1, 'Haier/海尔 EG10014B39GU1 10公斤kg蓝晶变频滚筒全自动洗衣机', '自动洗衣机', '', '/storage/goods/3/2021-02-21/comnkzGxDkMgN1kD8VrZEWT9nUAjJyhSQ3O4FGlo.jpg', '/storage/goods/3/2021-02-21/comnkzGxDkMgN1kD8VrZEWT9nUAjJyhSQ3O4FGlo.jpg', 1200.00, 1399.00, 1000, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:20:39', '2021-02-21 14:20:39', NULL);
+INSERT INTO `goods` VALUES (7, 2, 26, 1, 'Haier/海尔 EG7012B29W 7公斤 变频全自动 滚筒洗衣机 消毒洗', '变频全自动', '', '/storage/goods/3/2021-02-21/stEVhOj4E3nIggkoWMkA2VhV6lsNJ0gikrTGNgCF.jpg', '/storage/goods/3/2021-02-21/stEVhOj4E3nIggkoWMkA2VhV6lsNJ0gikrTGNgCF.jpg', 3999.00, 4500.00, 1000, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:21:50', '2021-02-21 14:21:50', NULL);
+INSERT INTO `goods` VALUES (8, 2, 26, 1, 'Skyworth/创维 55V9E 55吋4K超高清智能网络平板LED液晶电视机 50 25核智能 4K超高清 人气爆款', '4K超高清 人气爆款', '', '/storage/goods/3/2021-02-21/v77vwbiZMOYCEPWRueUQ3B2tEIg5TBsgH886sxXH.jpg', '/storage/goods/3/2021-02-21/v77vwbiZMOYCEPWRueUQ3B2tEIg5TBsgH886sxXH.jpg', 2199.00, 3099.00, 1000, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:23:05', '2021-02-21 14:23:05', NULL);
+INSERT INTO `goods` VALUES (9, 2, 26, 1, 'Changhong/长虹 55G6 55吋液晶电视机4k曲面平板电视智能网络wifi 曲面 4K超清 双64位 U-MAX', '曲面 4K超清', '', '/storage/goods/3/2021-02-21/SGTSO7aydUm1QQjvxSokwX8AeSbz4iu2WvQKENFg.jpg', '/storage/goods/3/2021-02-21/SGTSO7aydUm1QQjvxSokwX8AeSbz4iu2WvQKENFg.jpg', 2599.00, 3599.00, 1000, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:24:09', '2021-02-21 14:24:09', NULL);
 INSERT INTO `goods` VALUES (10, 2, 29, 1, '你当像鸟飞往你的山（比尔·盖茨年度特别推荐，登顶《纽约时报》畅销榜80 周！多一个人读到这个真实故事，就多一个人勇敢做自己！）', '你当像鸟飞往你的山', '', '/storage/goods/3/2021-02-21/BZXdVMnA0hMMZQ0CcqMDROJViBjbC59S2Jjgj4xc.jpg', '/storage/goods/3/2021-02-21/BZXdVMnA0hMMZQ0CcqMDROJViBjbC59S2Jjgj4xc.jpg', 45.00, 65.00, 997, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:01:43', '2022-02-14 17:33:47', NULL);
 INSERT INTO `goods` VALUES (11, 2, 29, 1, '悲喜自渡：季羡林的孤独智慧', '生活态度 悲喜自渡', '', '/storage/goods/3/2021-02-21/w1C35C7d0nP8RHokoEHg1lgOCQnS9OTrHNSNTlrb.jpg', '/storage/goods/3/2021-02-21/w1C35C7d0nP8RHokoEHg1lgOCQnS9OTrHNSNTlrb.jpg', 25.00, 65.00, 1000, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:27:47', '2021-02-21 14:27:47', NULL);
 INSERT INTO `goods` VALUES (12, 2, 29, 1, '凡心所向，素履所往：季羡林的生命智慧', '季羡林98载了悟生命', '', '/storage/goods/3/2021-02-21/22hwnlsgPzPrP2ffiI8KxzKv2GCU2gdBnc2cERkI.jpg', '/storage/goods/3/2021-02-21/22hwnlsgPzPrP2ffiI8KxzKv2GCU2gdBnc2cERkI.jpg', 55.00, 80.00, 100, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:28:56', '2021-02-21 14:29:03', NULL);
@@ -4322,21 +3790,7 @@ INSERT INTO `goods` VALUES (13, 2, 29, 1, '生活明朗 万物可爱：季羡林
 INSERT INTO `goods` VALUES (14, 2, 29, 1, '季羡林散文精选集：糊涂一点，潇洒一点', '糊涂潇洒', '', '/storage/goods/3/2021-02-21/ZwxKKcx6kiYh6JVEkM2jX28XncG6C3SGBvOqBv79.jpg', '/storage/goods/3/2021-02-21/ZwxKKcx6kiYh6JVEkM2jX28XncG6C3SGBvOqBv79.jpg', 55.00, 95.00, 1000, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:31:19', '2021-02-21 14:31:19', NULL);
 INSERT INTO `goods` VALUES (15, 2, 29, 1, '一个人的世界史 解读20世纪', '郗士作序推荐', '', '/storage/goods/3/2021-02-21/86ho7T6wqOEOWR4dAo3i3qU39BZI3featTBH2AkL.jpg', '/storage/goods/3/2021-02-21/86ho7T6wqOEOWR4dAo3i3qU39BZI3featTBH2AkL.jpg', 1.00, 36.00, 1000, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:32:14', '2021-02-21 14:32:14', NULL);
 INSERT INTO `goods` VALUES (16, 2, 29, 1, '人生海海 解密人性的荒唐与高尚', '图书榜虚构类连续六周TOP1', '', '/storage/goods/3/2021-02-21/RLCpxsuDuZrEK1R4VtpvS2p7pKdFFTnCeEWWIkAb.jpg', '/storage/goods/3/2021-02-21/RLCpxsuDuZrEK1R4VtpvS2p7pKdFFTnCeEWWIkAb.jpg', 89.00, 289.00, 1000, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:33:02', '2021-02-21 14:33:02', NULL);
-INSERT INTO `goods` VALUES (17, 2, 29, 1, '直面人生的终极问题，刻在骨头里的故事', '皮囊人生', '', '/storage/goods/3/2021-02-21/zAMCR8ior1TYmBaFAm5F2fkNshiyUnn1oNIqBAuE.jpg', '/storage/goods/3/2021-02-21/zAMCR8ior1TYmBaFAm5F2fkNshiyUnn1oNIqBAuE.jpg', 18.00, 28.00, 1000, 1.00, 0, 0, 1, 1, '', 0, '', '', 0, 0, '2021-02-21 14:34:05', '2021-02-21 14:34:05', NULL);
-
--- ----------------------------
--- Table structure for goods_attrs
--- ----------------------------
-DROP TABLE IF EXISTS `goods_attrs`;
-CREATE TABLE `goods_attrs`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '所属店铺',
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '属性名称',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+INSERT INTO `goods` VALUES (17, 2, 29, 1, '直面人生的终极问题，刻在骨头里的故事', '皮囊人生', '', '/storage/goods/3/2021-02-21/zAMCR8ior1TYmBaFAm5F2fkNshiyUnn1oNIqBAuE.jpg', '/storage/goods/3/2021-02-21/zAMCR8ior1TYmBaFAm5F2fkNshiyUnn1oNIqBAuE.jpg', 18.00, 38.00, 1000, 1.00, 0, 0, 1, 1, '', 0, '<p><span><br></span></p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]', '', 0, 0, '2021-02-21 14:34:05', '2022-02-15 20:52:21', NULL);
 
 -- ----------------------------
 -- Records of goods_attrs
@@ -4353,40 +3807,9 @@ INSERT INTO `goods_attrs` VALUES (9, 1, '颜色', NULL, '2021-12-19 02:09:03', '
 INSERT INTO `goods_attrs` VALUES (10, 1, '打算', '2021-12-14 21:35:56', '2021-12-14 22:08:01', NULL);
 
 -- ----------------------------
--- Table structure for goods_brands
--- ----------------------------
-DROP TABLE IF EXISTS `goods_brands`;
-CREATE TABLE `goods_brands`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `thumb` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '缩略图',
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '品牌名称',
-  `is_sort` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of goods_brands
 -- ----------------------------
 INSERT INTO `goods_brands` VALUES (1, '', '234', 0, NULL, NULL, NULL);
-
--- ----------------------------
--- Table structure for goods_classes
--- ----------------------------
-DROP TABLE IF EXISTS `goods_classes`;
-CREATE TABLE `goods_classes`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `pid` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `thumb` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '栏目名称',
-  `is_sort` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of goods_classes
@@ -4426,43 +3849,9 @@ INSERT INTO `goods_classes` VALUES (33, 24, '', '美系', 0, '2020-08-02 18:28:1
 INSERT INTO `goods_classes` VALUES (34, 15, '', '智能手机', 0, '2021-02-21 13:53:32', '2021-02-21 13:53:32', NULL);
 
 -- ----------------------------
--- Table structure for goods_skus
--- ----------------------------
-DROP TABLE IF EXISTS `goods_skus`;
-CREATE TABLE `goods_skus`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `goods_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '商品ID',
-  `spec_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '规格ID',
-  `sku_name` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'SKU名称',
-  `goods_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '主图',
-  `goods_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '商品价格',
-  `goods_market_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '市场价格',
-  `goods_stock` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '库存',
-  `goods_weight` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '商品重量',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of goods_skus
 -- ----------------------------
-INSERT INTO `goods_skus` VALUES (1, 1, '4', '打算', '', 2.00, 1.00, 973, 3.00, '2021-12-18 23:26:10', '2022-02-14 17:33:47', NULL);
-
--- ----------------------------
--- Table structure for goods_specs
--- ----------------------------
-DROP TABLE IF EXISTS `goods_specs`;
-CREATE TABLE `goods_specs`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `attr_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '所属属性',
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '规格名称',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+INSERT INTO `goods_skus` VALUES (1, 1, '4', '打算', '', 3.00, 1.00, 973, 3.00, '2021-12-18 23:26:10', '2022-02-16 19:53:53', NULL);
 
 -- ----------------------------
 -- Records of goods_specs
@@ -4474,47 +3863,9 @@ INSERT INTO `goods_specs` VALUES (4, 10, '打算', NULL, NULL, NULL);
 INSERT INTO `goods_specs` VALUES (5, 10, '1', NULL, NULL, NULL);
 
 -- ----------------------------
--- Table structure for integral_goods
--- ----------------------------
-DROP TABLE IF EXISTS `integral_goods`;
-CREATE TABLE `integral_goods`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `cid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '栏目ID',
-  `goods_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '商品名',
-  `goods_subname` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '副标题',
-  `goods_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '积分',
-  `goods_market_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '市场金额',
-  `goods_stock` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '库存',
-  `goods_images` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '商品图片',
-  `goods_master_image` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '主图',
-  `goods_sale` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '销售量',
-  `goods_status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上下架',
-  `is_recommend` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '推荐',
-  `goods_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '详情',
-  `goods_content_mobile` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '手机端详情',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of integral_goods
 -- ----------------------------
 INSERT INTO `integral_goods` VALUES (1, 1, 'dsddds111', 'asd', 1.00, 22.00, 110, '/storage/goods/2022-01-04/2O0pDzJEjxe2pJ18Rn11f5dvakq5W3rAgNRMCvuh.png', '/storage/goods/2022-01-04/2O0pDzJEjxe2pJ18Rn11f5dvakq5W3rAgNRMCvuh.png', 0, 1, 1, '<p>2323</p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"2323\"}]}]', '', '2022-01-04 17:25:46', '2022-01-05 17:05:57', NULL);
-
--- ----------------------------
--- Table structure for integral_goods_classes
--- ----------------------------
-DROP TABLE IF EXISTS `integral_goods_classes`;
-CREATE TABLE `integral_goods_classes`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '积分栏目',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of integral_goods_classes
@@ -4522,162 +3873,16 @@ CREATE TABLE `integral_goods_classes`  (
 INSERT INTO `integral_goods_classes` VALUES (1, '二次元', '2022-01-04 16:43:44', '2022-01-04 16:43:54', NULL);
 
 -- ----------------------------
--- Table structure for integral_order_goods
--- ----------------------------
-DROP TABLE IF EXISTS `integral_order_goods`;
-CREATE TABLE `integral_order_goods`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `order_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '订单ID',
-  `goods_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '商品ID',
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `goods_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '商品名称',
-  `goods_image` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '商品图片',
-  `buy_num` int(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '购买数量',
-  `total_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '总价格',
-  `goods_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '商品单价',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of integral_order_goods
 -- ----------------------------
 INSERT INTO `integral_order_goods` VALUES (1, 1, 1, 6, 'dsddds111', '/storage/goods/2022-01-04/2O0pDzJEjxe2pJ18Rn11f5dvakq5W3rAgNRMCvuh_150.png', 1, 1.00, 1.00, '2022-01-05 17:05:57', '2022-01-05 17:05:57');
-
--- ----------------------------
--- Table structure for integral_orders
--- ----------------------------
-DROP TABLE IF EXISTS `integral_orders`;
-CREATE TABLE `integral_orders`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `order_no` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订单号',
-  `order_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订单标题',
-  `order_image` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订单图片',
-  `total_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '总支付金额',
-  `order_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '订单计算金额',
-  `order_status` tinyint(3) UNSIGNED NOT NULL DEFAULT 1 COMMENT '订单支付 0 取消 1 等待支付 2订单完成',
-  `delivery_no` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '快递订单号',
-  `delivery_code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '快递公司编码',
-  `receive_name` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '收件人名',
-  `receive_tel` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '收件人手机',
-  `receive_area` varchar(140) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '地址信息',
-  `receive_address` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '详细地址信息',
-  `pay_time` timestamp NOT NULL DEFAULT '2022-01-04 16:24:26' COMMENT '支付时间',
-  `delivery_time` timestamp NOT NULL DEFAULT '2022-01-04 16:24:26' COMMENT '发货时间',
-  `remark` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of integral_orders
 -- ----------------------------
 INSERT INTO `integral_orders` VALUES (1, 6, '2022010517055763843', 'dsddds111', '/storage/goods/2022-01-04/2O0pDzJEjxe2pJ18Rn11f5dvakq5W3rAgNRMCvuh_150.png', 1.00, 1.00, 2, '111111', 'yd', '张三', '18888888888', '河北省 淄博市', '面馆', '2022-01-04 16:24:26', '2022-01-04 16:24:26', '', '2022-01-05 17:05:57', '2022-02-11 17:11:12', NULL);
 
--- ----------------------------
--- Table structure for migrations
--- ----------------------------
-DROP TABLE IF EXISTS `migrations`;
-CREATE TABLE `migrations`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 123 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of migrations
--- ----------------------------
-INSERT INTO `migrations` VALUES (23, '2016_06_01_000001_create_oauth_auth_codes_table', 1);
-INSERT INTO `migrations` VALUES (24, '2016_06_01_000002_create_oauth_access_tokens_table', 1);
-INSERT INTO `migrations` VALUES (25, '2016_06_01_000003_create_oauth_refresh_tokens_table', 1);
-INSERT INTO `migrations` VALUES (26, '2016_06_01_000004_create_oauth_clients_table', 1);
-INSERT INTO `migrations` VALUES (27, '2016_06_01_000005_create_oauth_personal_access_clients_table', 1);
-INSERT INTO `migrations` VALUES (28, '2019_12_14_000001_create_personal_access_tokens_table', 1);
-INSERT INTO `migrations` VALUES (60, '2021_09_20_162946_create_user_menus_table', 2);
-INSERT INTO `migrations` VALUES (59, '2021_09_20_162938_create_user_to_menus_table', 2);
-INSERT INTO `migrations` VALUES (58, '2021_09_20_162918_create_admin_menus_table', 2);
-INSERT INTO `migrations` VALUES (57, '2021_09_20_162908_create_admin_to_menus_table', 2);
-INSERT INTO `migrations` VALUES (56, '2021_09_20_084859_create_user_permission_groups_table', 2);
-INSERT INTO `migrations` VALUES (55, '2021_09_20_084830_create_user_permissions_table', 2);
-INSERT INTO `migrations` VALUES (54, '2021_09_20_084820_create_user_to_permissions_table', 2);
-INSERT INTO `migrations` VALUES (53, '2021_09_20_084638_create_user_roles_table', 2);
-INSERT INTO `migrations` VALUES (52, '2021_09_20_084624_create_user_to_roles_table', 2);
-INSERT INTO `migrations` VALUES (51, '2021_09_20_084034_create_users_table', 2);
-INSERT INTO `migrations` VALUES (50, '2021_09_20_083107_create_admin_permission_groups_table', 2);
-INSERT INTO `migrations` VALUES (49, '2021_09_20_083055_create_admin_permissions_table', 2);
-INSERT INTO `migrations` VALUES (48, '2021_09_20_083042_create_admin_to_permissions_table', 2);
-INSERT INTO `migrations` VALUES (47, '2021_09_20_082233_create_admin_roles_table', 2);
-INSERT INTO `migrations` VALUES (46, '2021_09_20_082115_create_admin_to_roles_table', 2);
-INSERT INTO `migrations` VALUES (45, '2021_09_20_074956_create_admins_table', 2);
-INSERT INTO `migrations` VALUES (62, '2021_11_25_211658_create_configs_table', 3);
-INSERT INTO `migrations` VALUES (65, '2021_11_27_165759_create_sms_table', 4);
-INSERT INTO `migrations` VALUES (66, '2021_11_27_165918_create_sms_logs_table', 4);
-INSERT INTO `migrations` VALUES (69, '2021_11_30_161646_create_agreements_table', 5);
-INSERT INTO `migrations` VALUES (70, '2021_11_30_210723_create_article_menus_table', 6);
-INSERT INTO `migrations` VALUES (71, '2021_11_30_210731_create_articles_table', 6);
-INSERT INTO `migrations` VALUES (72, '2021_11_30_210849_create_notices_table', 6);
-INSERT INTO `migrations` VALUES (76, '2021_12_01_180556_create_adv_spaces_table', 7);
-INSERT INTO `migrations` VALUES (77, '2021_12_01_180609_create_advs_table', 7);
-INSERT INTO `migrations` VALUES (78, '2021_12_02_192750_create_order_pays_table', 8);
-INSERT INTO `migrations` VALUES (81, '2021_12_04_170133_create_goods_classes_table', 9);
-INSERT INTO `migrations` VALUES (82, '2021_12_04_170340_create_goods_brands_table', 9);
-INSERT INTO `migrations` VALUES (83, '2021_12_04_170727_create_goods_table', 9);
-INSERT INTO `migrations` VALUES (84, '2021_12_04_170929_create_goods_skus_table', 9);
-INSERT INTO `migrations` VALUES (85, '2021_12_04_170942_create_goods_attrs_table', 9);
-INSERT INTO `migrations` VALUES (86, '2021_12_04_171016_create_goods_specs_table', 9);
-INSERT INTO `migrations` VALUES (87, '2021_12_04_172113_create_stores_table', 9);
-INSERT INTO `migrations` VALUES (88, '2021_12_04_172237_create_store_classes_table', 9);
-INSERT INTO `migrations` VALUES (89, '2021_12_06_175753_create_areas_table', 9);
-INSERT INTO `migrations` VALUES (90, '2021_12_22_234135_create_order_comments_table', 10);
-INSERT INTO `migrations` VALUES (91, '2021_12_23_173015_create_addresses_table', 11);
-INSERT INTO `migrations` VALUES (92, '2021_12_24_155954_create_user_checks_table', 12);
-INSERT INTO `migrations` VALUES (93, '2021_12_25_113940_create_cashes_table', 13);
-INSERT INTO `migrations` VALUES (94, '2021_12_25_155127_create_favorites_table', 14);
-INSERT INTO `migrations` VALUES (96, '2021_12_25_203720_create_money_logs_table', 15);
-INSERT INTO `migrations` VALUES (97, '2021_12_26_171848_create_carts_table', 16);
-INSERT INTO `migrations` VALUES (100, '2021_12_26_210445_create_orders_table', 17);
-INSERT INTO `migrations` VALUES (101, '2021_12_26_210453_create_order_goods_table', 17);
-INSERT INTO `migrations` VALUES (102, '2021_12_30_140506_create_coupons_table', 18);
-INSERT INTO `migrations` VALUES (103, '2021_12_30_140556_create_coupon_logs_table', 18);
-INSERT INTO `migrations` VALUES (104, '2021_12_30_141319_create_seckills_table', 19);
-INSERT INTO `migrations` VALUES (105, '2021_12_30_141351_create_collectives_table', 19);
-INSERT INTO `migrations` VALUES (106, '2021_12_30_141419_create_collective_logs_table', 19);
-INSERT INTO `migrations` VALUES (107, '2021_12_30_141748_create_full_reductions_table', 20);
-INSERT INTO `migrations` VALUES (108, '2021_12_30_150650_create_refunds_table', 21);
-INSERT INTO `migrations` VALUES (109, '2021_12_30_181923_create_expresses_table', 22);
-INSERT INTO `migrations` VALUES (110, '2022_01_01_200458_create_freights_table', 23);
-INSERT INTO `migrations` VALUES (113, '2022_01_03_135219_create_distributions_table', 24);
-INSERT INTO `migrations` VALUES (114, '2022_01_03_135228_create_distribution_logs_table', 24);
-INSERT INTO `migrations` VALUES (115, '2022_01_04_160706_create_integral_goods_classes_table', 25);
-INSERT INTO `migrations` VALUES (116, '2022_01_04_160722_create_integral_goods_table', 25);
-INSERT INTO `migrations` VALUES (117, '2022_01_04_160743_create_integral_orders_table', 25);
-INSERT INTO `migrations` VALUES (118, '2022_01_04_160753_create_integral_order_goods_table', 25);
-INSERT INTO `migrations` VALUES (121, '2022_01_12_155950_create_oauths_table', 26);
-INSERT INTO `migrations` VALUES (122, '2022_01_28_124455_create_order_settlements_table', 27);
-
--- ----------------------------
--- Table structure for money_logs
--- ----------------------------
-DROP TABLE IF EXISTS `money_logs`;
-CREATE TABLE `money_logs`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户',
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '未知变动' COMMENT '名称',
-  `ename` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'money' COMMENT '英文名称',
-  `money` decimal(9, 2) NOT NULL DEFAULT 0.00 COMMENT '变动金额',
-  `is_type` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '变动类型 0 余额 1冻结 2积分',
-  `is_belong` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '所属用户日志 0 用户 1 商家',
-  `info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '原因',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 57 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of money_logs
@@ -4738,225 +3943,10 @@ INSERT INTO `money_logs` VALUES (53, 6, '商家提现', 'money', 1.00, 1, 1, '',
 INSERT INTO `money_logs` VALUES (54, 6, '商家提现', 'money', -1.00, 0, 1, '', '2022-02-12 23:43:52', '2022-02-12 23:43:52', NULL);
 INSERT INTO `money_logs` VALUES (55, 1, '商家提现', 'money', -1.00, 0, 1, '', '2022-02-12 23:51:48', '2022-02-12 23:51:48', NULL);
 INSERT INTO `money_logs` VALUES (56, 1, '商家提现', 'money', 1.00, 1, 1, '', '2022-02-12 23:51:48', '2022-02-12 23:51:48', NULL);
+INSERT INTO `money_logs` VALUES (57, 8, '系统处理', 'money', 1.00, 0, 0, '', '2022-02-15 23:18:03', '2022-02-15 23:18:03', NULL);
+INSERT INTO `money_logs` VALUES (58, 1, '系统处理', 'money', 1.00, 0, 1, '', '2022-02-15 23:25:01', '2022-02-15 23:25:01', NULL);
 
--- ----------------------------
--- Table structure for notices
--- ----------------------------
-DROP TABLE IF EXISTS `notices`;
-CREATE TABLE `notices`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `belong_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '所属用户',
-  `tag` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标签',
-  `name` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容',
-  `is_type` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '类型',
-  `is_send` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '发送状态',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of notices
--- ----------------------------
-
--- ----------------------------
--- Table structure for oauth_access_tokens
--- ----------------------------
-DROP TABLE IF EXISTS `oauth_access_tokens`;
-CREATE TABLE `oauth_access_tokens`  (
-  `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint(20) UNSIGNED NULL DEFAULT NULL,
-  `client_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `scopes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `revoked` tinyint(1) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `expires_at` datetime NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `oauth_access_tokens_user_id_index`(`user_id`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of oauth_access_tokens
--- ----------------------------
-INSERT INTO `oauth_access_tokens` VALUES ('879a05d6b9be77b7854f7f534c083c2748dc5c7e6b515e074767bba5639ce83c74477e58bdc4a982', 1, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-10-01 11:03:06', '2021-10-01 11:03:06', '2021-10-08 11:03:06');
-INSERT INTO `oauth_access_tokens` VALUES ('9f5ef2747a9bb07f8b930e05ea329a6ee58c215ba63b478f21520b18109455f01c28b8de47d82843', 1, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-10-01 11:04:02', '2021-10-01 11:04:02', '2021-10-08 11:04:02');
-INSERT INTO `oauth_access_tokens` VALUES ('25297e44e8470b9375016df44303e55293dff02b8de96c418d6feca3fa6e492d2c2470573102bc7a', 1, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-10-01 11:06:39', '2021-10-01 11:06:39', '2021-10-08 11:06:39');
-INSERT INTO `oauth_access_tokens` VALUES ('649ce4c2082402dca9d12043b0d08c36df15c88ad1681d833fdbef62c5060ebd3e73a38c63891eec', 1, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-10-01 11:31:41', '2021-10-01 11:31:41', '2021-10-08 11:31:41');
-INSERT INTO `oauth_access_tokens` VALUES ('6646541143e4c8a400e4dde052ffb9d1023a7db2a73250e7e3cf6f8d6c7116998e075a283d69e0ff', 1, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-10-01 11:45:37', '2021-10-01 11:45:37', '2021-10-08 11:45:37');
-INSERT INTO `oauth_access_tokens` VALUES ('70d17957633eb9464ba575e6080fb7e7574153fc82cfbb02992c960914fc1d9087e9bba495d4d29a', 1, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-11-03 10:56:12', '2021-11-03 10:56:12', '2021-11-10 10:56:12');
-INSERT INTO `oauth_access_tokens` VALUES ('8fba2b62222c73858428d7ca5591c23327742be0be0dbb089a6dbe89912307117b361dd938828099', 1, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-11-03 11:03:19', '2021-11-03 11:03:19', '2021-11-10 11:03:19');
-INSERT INTO `oauth_access_tokens` VALUES ('e7d679a2f0da6699451e2fb57e490152c4520c4314c1e3ee3ac1ba9a1f3b523c09881af4ba8cc8a9', 1, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-11-03 11:12:43', '2021-11-03 11:12:43', '2021-11-10 11:12:43');
-INSERT INTO `oauth_access_tokens` VALUES ('ecca06157daff6721b20a03bcf2b3ecc5ff3d70cfe5da5ec747c18967704e402d81080847f7d10dc', 1, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-11-03 16:38:00', '2021-11-03 16:38:00', '2021-11-10 16:38:00');
-INSERT INTO `oauth_access_tokens` VALUES ('97362703de7940b39a08c9bbd27b6447aef20029fcfe7b6e871834ab0db152a6b51798685505d0c6', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-07 17:37:14', '2021-11-07 17:37:14', '2021-11-14 17:37:14');
-INSERT INTO `oauth_access_tokens` VALUES ('ce775457228584c2b811803e522d92a1c5f519cebc2090e5b8d494843b23a99e102cb6c4dc29c2c7', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 14:41:35', '2021-11-17 14:41:35', '2021-11-24 14:41:35');
-INSERT INTO `oauth_access_tokens` VALUES ('ff1af726aeebca446652d51b1b007885cf3775ccc0bdcbf04f4c7d3dccf3f1b288436edd8869d1e6', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 14:42:36', '2021-11-17 14:42:36', '2021-11-24 14:42:36');
-INSERT INTO `oauth_access_tokens` VALUES ('bdba6a9d243dd4dc3a89a337189d713dd7954589524fd4fe8b6fcbe05651be6fa5404239bdb8fada', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 14:43:05', '2021-11-17 14:43:05', '2021-11-24 14:43:05');
-INSERT INTO `oauth_access_tokens` VALUES ('72012a71dd37eafae5f1f0fd2022f06539657a7f0c7a091edd1f55e170601d26ff667fd53d5102e2', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 14:50:49', '2021-11-17 14:50:49', '2021-11-24 14:50:49');
-INSERT INTO `oauth_access_tokens` VALUES ('3f018cde7f69678c2eed61ba8d0ab8d052a40461eafae01891291ca72ddfcd6b4d837e2e5c70a9fe', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 14:52:07', '2021-11-17 14:52:07', '2021-11-24 14:52:07');
-INSERT INTO `oauth_access_tokens` VALUES ('7e1736845cc6ebcd3e937e673e43ee44c15711443f2e2567f5cc584365044752c6bac842d21cef8e', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 14:54:39', '2021-11-17 14:54:39', '2021-11-24 14:54:39');
-INSERT INTO `oauth_access_tokens` VALUES ('da7bab4b096e5eb642701d73336ffea19027d49ea0bcf42fa676b97936e9672b4255790ac9d7decf', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 14:55:15', '2021-11-17 14:55:15', '2021-11-24 14:55:15');
-INSERT INTO `oauth_access_tokens` VALUES ('b376c7a9ce8c7b0b8c0f74570abd9a2857cf604de21770d1b643b8d377b918157df4ca7e6d424d48', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 14:56:13', '2021-11-17 14:56:13', '2021-11-24 14:56:13');
-INSERT INTO `oauth_access_tokens` VALUES ('92254db71e253e889fe13fc2621dfc20ec0bf149e72dba1f677803f453cc5dbe38f66f526246a0ff', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 14:58:00', '2021-11-17 14:58:00', '2021-11-24 14:58:00');
-INSERT INTO `oauth_access_tokens` VALUES ('7a4bd0674beddadb1731f1d4e73c37b7027f5bc88214e8582b76543d0fe8c5c0a0ea6608d19d7fbf', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 14:58:52', '2021-11-17 14:58:52', '2021-11-24 14:58:52');
-INSERT INTO `oauth_access_tokens` VALUES ('e650d375bd1c1f64417d6df00b4ab5af0dad9440e7630703b31a6595d4d63070a2726142d6eaf8ba', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 14:59:29', '2021-11-17 14:59:29', '2021-11-24 14:59:29');
-INSERT INTO `oauth_access_tokens` VALUES ('c5ac4d34bbc3418e96d9da2ee0becd66245eff9d6b20d1edfa1a0e4aedc16e9b2453a7aac6963e68', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 14:59:45', '2021-11-17 14:59:45', '2021-11-24 14:59:45');
-INSERT INTO `oauth_access_tokens` VALUES ('d4534813b0a8c86e406953967a63c6d83eb73b9314ebc6a44bb229753104328cc26e5a08aee01de2', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:01:40', '2021-11-17 15:01:40', '2021-11-24 15:01:40');
-INSERT INTO `oauth_access_tokens` VALUES ('4ecc9793950b8e204461ad1db9559e3dca8ac191090cf4437bb94258f5f863fbff852048b2147c3e', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:07:11', '2021-11-17 15:07:11', '2021-11-24 15:07:11');
-INSERT INTO `oauth_access_tokens` VALUES ('4b51d755e6d9d889998d7de850302164987a0ef317d014021267cc8fcfbbf639c96c54843b56a8b1', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:11:23', '2021-11-17 15:11:23', '2021-11-24 15:11:23');
-INSERT INTO `oauth_access_tokens` VALUES ('f44d7d3d60a1f5bc97f6a01fa19770ed666a5a84b532f9d7ee447adb2efd3fed89b0a7a984121835', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:11:38', '2021-11-17 15:11:38', '2021-11-24 15:11:38');
-INSERT INTO `oauth_access_tokens` VALUES ('816460d4def0934104f9a45abb90c865ec55721a19811e5ae70b834d02806c5d43544e7fc69e14d3', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:12:39', '2021-11-17 15:12:39', '2021-11-24 15:12:39');
-INSERT INTO `oauth_access_tokens` VALUES ('978a0818e446d69c3b57581dee6d64e43af2ffbe7375652df953f4267560c8bfde280b255896281c', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:13:05', '2021-11-17 15:13:05', '2021-11-24 15:13:05');
-INSERT INTO `oauth_access_tokens` VALUES ('ed609631ea51e47a3879a98ad6ecd2d73296f3d5a4f67005de4fbdf868a92f824f02e64f3ac3cea6', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:14:43', '2021-11-17 15:14:43', '2021-11-24 15:14:43');
-INSERT INTO `oauth_access_tokens` VALUES ('2a470f15080072e1e3e5fd3daf73b5cdb1da0626f22c8c9a5418c77f181d2f14b65169fa1aa268f0', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:15:53', '2021-11-17 15:15:53', '2021-11-24 15:15:53');
-INSERT INTO `oauth_access_tokens` VALUES ('0c66358c872118853f125926b2ab7d096afdb0f0e85be22772527ff214bf4b862eefa35c8398ea19', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:17:56', '2021-11-17 15:17:56', '2021-11-24 15:17:56');
-INSERT INTO `oauth_access_tokens` VALUES ('04edc9614c3c7c7fdb3e1d55cee7d7aa61e252df2073f2e04d21a290e84b14023cdcea3572120451', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:20:35', '2021-11-17 15:20:35', '2021-11-24 15:20:35');
-INSERT INTO `oauth_access_tokens` VALUES ('4839937519174fb1390c690da29e4b22bf8eabc0a14a9bd2ab169e7322e26d40bf02cdf1a38870d0', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:21:40', '2021-11-17 15:21:40', '2021-11-24 15:21:40');
-INSERT INTO `oauth_access_tokens` VALUES ('6b61f47d4de368df94c16131cdbcffa984604413cb3d706980e4ae3a5dcb7d9f3881afe87378a304', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:27:21', '2021-11-17 15:27:21', '2021-11-24 15:27:21');
-INSERT INTO `oauth_access_tokens` VALUES ('a10393ca9b76e23e34c0207031391bf53a70633e9a7f777b1b409489c6c4d84e3210ae694cedd016', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:28:17', '2021-11-17 15:28:17', '2021-11-24 15:28:17');
-INSERT INTO `oauth_access_tokens` VALUES ('3c7bb8a2c176e5097ab5c30bfcb719e6ef203aa63f1bf859c278b747a6e82ec4c49515402abf1e99', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:29:04', '2021-11-17 15:29:04', '2021-11-24 15:29:04');
-INSERT INTO `oauth_access_tokens` VALUES ('84417f87efad5de356935bd15efb36eb018d81519602b7c783d3e7cab7c1cb18194e8a493c733904', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:30:08', '2021-11-17 15:30:08', '2021-11-24 15:30:08');
-INSERT INTO `oauth_access_tokens` VALUES ('02738a804e5021edf52a09e58009ee0e998fc657d38bafbf395c63f15bda803f1965de155ad1e14a', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:30:25', '2021-11-17 15:30:25', '2021-11-24 15:30:25');
-INSERT INTO `oauth_access_tokens` VALUES ('09065ada8975380164d8a5ac1ed687395d4eab0689edc37c5410d55a0ad06d2cad39904260b53880', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:30:36', '2021-11-17 15:30:36', '2021-11-24 15:30:36');
-INSERT INTO `oauth_access_tokens` VALUES ('c1e9351748182036763ac393e15d073be2c7253c38fe801edf40ae186b71bef66cf9a6c82090120a', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:32:40', '2021-11-17 15:32:40', '2021-11-24 15:32:40');
-INSERT INTO `oauth_access_tokens` VALUES ('15c14b6e79ea50366350d339cad779038562dca09f47c207c30fc2d5749d2d7a650e04f01f2d5a47', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:34:06', '2021-11-17 15:34:06', '2021-11-24 15:34:06');
-INSERT INTO `oauth_access_tokens` VALUES ('b1d1c12c7493f1734aa82140366e92539e11643dd2acf0ff8af7d7ebd5c36b4ea67276e92438a822', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:34:26', '2021-11-17 15:34:26', '2021-11-24 15:34:26');
-INSERT INTO `oauth_access_tokens` VALUES ('966dc913cfd4195da5cab68f64b113da3d750b00fec5c38a0e99752b541d71a1e4e23391b31bc574', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:35:40', '2021-11-17 15:35:40', '2021-11-24 15:35:40');
-INSERT INTO `oauth_access_tokens` VALUES ('8fc253338d6d5d086d245090c9bfb701a6f8b4e7dcc59fed8b6d8a07e888f67b30fb9dd3f94b942a', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:36:07', '2021-11-17 15:36:07', '2021-11-24 15:36:07');
-INSERT INTO `oauth_access_tokens` VALUES ('858d9781b11bec17467db45ffa74e24be68af1c33c577b7d0390db65afd7b1b4c7c13cfe93176d55', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:36:24', '2021-11-17 15:36:24', '2021-11-24 15:36:24');
-INSERT INTO `oauth_access_tokens` VALUES ('c85a966dd2fa6761062479391b8890a845679bd55ca013b68ddb394d7ce13d50beaa367890e0ce2d', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:36:51', '2021-11-17 15:36:51', '2021-11-24 15:36:51');
-INSERT INTO `oauth_access_tokens` VALUES ('7853a2e7230ed678c644a197c599c7920b1184e90bbb7498b96cb9ecbd0f741982ae7438d25412ca', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:38:04', '2021-11-17 15:38:04', '2021-11-24 15:38:04');
-INSERT INTO `oauth_access_tokens` VALUES ('de18282d6eaf100955643ab6cc627dc29df1aa09f2512708248c7c2a71c116d986eae30115512876', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:38:15', '2021-11-17 15:38:15', '2021-11-24 15:38:15');
-INSERT INTO `oauth_access_tokens` VALUES ('5b6d45e5f72a3c344f4386f735433b33540aca52b5c04e73d2f2744199ca7df8369ca7e4a82595e4', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-17 15:38:48', '2021-11-17 15:38:48', '2021-11-24 15:38:48');
-INSERT INTO `oauth_access_tokens` VALUES ('c32c87c802b5c4af978803fcda2cfb53c02539649372b4565f7cf88eb34cefcc84b501ea7ec22c04', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-18 11:02:48', '2021-11-18 11:02:48', '2021-11-25 11:02:48');
-INSERT INTO `oauth_access_tokens` VALUES ('f2d22b1cd67913524f63e72b56b5eac8fd17142f8707366fbd38fdf7572f20b192a07e028f805794', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-25 15:46:31', '2021-11-25 15:46:31', '2021-12-02 15:46:31');
-INSERT INTO `oauth_access_tokens` VALUES ('b1825a231c7bc8413e3a3f87fc493dbfe29a84a8a8a3ef853872e744d8155c8ea6d0311b4dbb1b86', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-28 17:34:32', '2021-11-28 17:34:32', '2021-12-05 17:34:32');
-INSERT INTO `oauth_access_tokens` VALUES ('0a62221c0bb7d0726c24d422b6529034b87d25f7de1e28e21e6e8f46f486a14837bd146dd502c8aa', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-28 17:35:09', '2021-11-28 17:35:09', '2021-12-05 17:35:09');
-INSERT INTO `oauth_access_tokens` VALUES ('4a7b6868495b663de1fabaa08e0d0dcf836d29cce63639536a96fdb1dac8092a0b65665ce71d10ee', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-28 17:35:47', '2021-11-28 17:35:47', '2021-12-05 17:35:47');
-INSERT INTO `oauth_access_tokens` VALUES ('9aca570c03290064d19449ebf25520bf95cec2867d5191d7d145857b5662f53d5bd7080161ac2781', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-28 17:38:52', '2021-11-28 17:38:52', '2021-12-05 17:38:52');
-INSERT INTO `oauth_access_tokens` VALUES ('e600a21361e01ee75be5c977ef311a54d6ff56947bec6609b8a45ac16a493db7485c638108408c7a', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-28 17:39:13', '2021-11-28 17:39:13', '2021-12-05 17:39:13');
-INSERT INTO `oauth_access_tokens` VALUES ('653832436f2f2e218444579c23f703367fcc3c9b3c89786505099b9a7c87c954e7ba2c4c5c9a6275', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-28 18:03:34', '2021-11-28 18:03:34', '2021-12-05 18:03:34');
-INSERT INTO `oauth_access_tokens` VALUES ('1422e47990407d4a0ec83009b266fa04dd51f49971cf32bf1df1bc938c2a9dd89bb5d4ea71069148', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-28 18:57:03', '2021-11-28 18:57:03', '2021-12-05 18:57:03');
-INSERT INTO `oauth_access_tokens` VALUES ('05677ff4178aadece3ea2f1fb79469d7fd19b8243a61c14b018bb1c7b864c913ff90c075f516c743', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-28 18:57:30', '2021-11-28 18:57:30', '2021-12-05 18:57:30');
-INSERT INTO `oauth_access_tokens` VALUES ('1bf8ca4f9228ea9c20aba11c04416d5f9473bf21d7d5bebca7c54829bf7232bb422e44c6c7d67a51', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-28 18:58:41', '2021-11-28 18:58:41', '2021-12-05 18:58:41');
-INSERT INTO `oauth_access_tokens` VALUES ('83dfe2590a04779b3ecb04f900c078e84b393cae9540717021096e6b0cb0ea3f85f9339e430cf4ee', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-28 18:59:06', '2021-11-28 18:59:06', '2021-12-05 18:59:06');
-INSERT INTO `oauth_access_tokens` VALUES ('17cb89f0849f33f2ac36999e644075b28bdcbbdc1820b7a7d0fe930f08b7241678678ae3cd5d66a7', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-28 19:00:27', '2021-11-28 19:00:27', '2021-12-05 19:00:27');
-INSERT INTO `oauth_access_tokens` VALUES ('34a416f95d0121e43c2131008dea5655addbbcf9cec6da26a42c30d6d065556697cb5d8852204eed', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-28 19:13:20', '2021-11-28 19:13:20', '2021-12-05 19:13:20');
-INSERT INTO `oauth_access_tokens` VALUES ('0bf16fc9f03996307241c2c379cfed42cf37ad949eb9d5ae086720e1a0491a485371c87256c086b6', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-28 19:13:41', '2021-11-28 19:13:41', '2021-12-05 19:13:41');
-INSERT INTO `oauth_access_tokens` VALUES ('e567ab948bbe151ad73a83601b83fc83d1468d83b942b4a4154f7e458bf0d1fddc3527fd285dc76a', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-28 19:14:38', '2021-11-28 19:14:38', '2021-12-05 19:14:38');
-INSERT INTO `oauth_access_tokens` VALUES ('5dd9e4abce8c9b7a62f24564ef94b633470596a89377a245764a322b748cd59a3f2f0af855699113', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-11-28 19:15:32', '2021-11-28 19:15:32', '2021-12-05 19:15:32');
-INSERT INTO `oauth_access_tokens` VALUES ('05e4b376f02b3001a0671207a0322a37a72cc6f533d116c0ffb8b341bc01f0b1d1218673711a426e', 4, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-03 13:55:11', '2021-12-03 13:55:11', '2021-12-10 13:55:11');
-INSERT INTO `oauth_access_tokens` VALUES ('46afb6d200168da9455d2ccea05bc7d2bad338a935e2acb0de86c04cf1479f7421c9693132852d71', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-03 13:55:26', '2021-12-03 13:55:26', '2021-12-10 13:55:26');
-INSERT INTO `oauth_access_tokens` VALUES ('3693292d46e91aaf308600dcd7e8f02f6eed2d1766c0df3c4227687e4e8adef14b67cfa4dfa4c83e', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-03 14:42:10', '2021-12-03 14:42:10', '2021-12-10 14:42:10');
-INSERT INTO `oauth_access_tokens` VALUES ('17666b4d21b7f207f3585dba454707b27341ace5c3631781b2e0c732ebb5f0836826bd4d282abaeb', 4, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 19:18:22', '2021-12-07 19:18:22', '2021-12-14 19:18:22');
-INSERT INTO `oauth_access_tokens` VALUES ('4e966c869ceab624cea1f908ee4a6c1832ca849e2611580b98151c1759f2db1f1d8c8dff5feff127', 5, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 19:30:05', '2021-12-07 19:30:05', '2021-12-14 19:30:05');
-INSERT INTO `oauth_access_tokens` VALUES ('1ff3538df2f3937db43024cbc55e74ca015eed0ad0c2bc9938a64d7c567352048b25dee0a037b99d', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 19:32:40', '2021-12-07 19:32:40', '2021-12-14 19:32:40');
-INSERT INTO `oauth_access_tokens` VALUES ('e00ba74f959d3a588070b2471be5bb756d7c92e302050844fe1a3feefe19fb4a6f5594ab87dea2ed', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 21:34:39', '2021-12-07 21:34:39', '2021-12-14 21:34:39');
-INSERT INTO `oauth_access_tokens` VALUES ('29a67de7ddd805718d92c833fbfc5b590136164179d440f3cf7c18b1fbdc6225dc17029302ed5739', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-07 21:36:42', '2021-12-07 21:36:42', '2021-12-14 21:36:42');
-INSERT INTO `oauth_access_tokens` VALUES ('af133b1277f73c670d17668316c0ed84c3b04c5de996f8018f6028d4ec9bc3cea7efd1a10b5557ea', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 21:39:02', '2021-12-07 21:39:02', '2021-12-14 21:39:02');
-INSERT INTO `oauth_access_tokens` VALUES ('0a71a2ddc33b9faa72d76762450839c5513eb4c61a3b994acb3b4194d1fe521d9d88a0cd7aa75d88', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 21:39:40', '2021-12-07 21:39:40', '2021-12-14 21:39:40');
-INSERT INTO `oauth_access_tokens` VALUES ('03e68a9e5bf4ce374a9a32a11a870a8ea2b02cd0b04e0454accdd09abe86f0a3ddf166d41a10409f', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 21:41:10', '2021-12-07 21:41:10', '2021-12-14 21:41:10');
-INSERT INTO `oauth_access_tokens` VALUES ('9c581c6d43e59c7dd549403ad5e07899cb108bc0db0f7ba68508f572b8c2ffdc8eb1b2047370ee70', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 21:43:15', '2021-12-07 21:43:15', '2021-12-14 21:43:15');
-INSERT INTO `oauth_access_tokens` VALUES ('73758853199a01aaba8c5b036f1d30ba17f4d0da2fc9542042b8f79c422152ca2da197d9433db0d8', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 21:47:26', '2021-12-07 21:47:26', '2021-12-14 21:47:25');
-INSERT INTO `oauth_access_tokens` VALUES ('a3659c224e95cfb9b3a0f0ff9dbd2a5a6195452721009e63fd1e1802dbb20bcd27db58e7997144ff', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 21:48:41', '2021-12-07 21:48:41', '2021-12-14 21:48:41');
-INSERT INTO `oauth_access_tokens` VALUES ('5a7d584f2c96998f8a5afd14b8aa972d89bb63c8be853fd112362813c987a860beae099d3a96c0d2', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 21:50:03', '2021-12-07 21:50:03', '2021-12-14 21:50:03');
-INSERT INTO `oauth_access_tokens` VALUES ('3fd438e519dabc89df16abe2e2ed4ddc76328404b777821f70e06188951e79f626a08bdec1c51253', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 21:52:36', '2021-12-07 21:52:36', '2021-12-14 21:52:36');
-INSERT INTO `oauth_access_tokens` VALUES ('70ba7f770a5a6b80a2c28ccd3a32fce23c1f4fe027280237f03921c7cb30dae3f0c2bf801797bf5b', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 21:59:07', '2021-12-07 21:59:07', '2021-12-14 21:59:07');
-INSERT INTO `oauth_access_tokens` VALUES ('c2349b7f1e3fb757708f5d501ff7d492052344449b9499b76f323cdcf3be808362bffd40b3e8c37b', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-07 22:20:38', '2021-12-07 22:20:38', '2021-12-14 22:20:38');
-INSERT INTO `oauth_access_tokens` VALUES ('27a5bd552dfff9ddb4dae2531729171c2352238eb269515632c81f6c8b5ccea5bb0325b9a3bf16dc', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 22:03:48', '2021-12-07 22:03:48', '2021-12-14 22:03:48');
-INSERT INTO `oauth_access_tokens` VALUES ('4d21855105cb64301eb0e029629d9c4c16132f0364384f32fa734a03f6760407be140cb2f77254bc', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 22:05:28', '2021-12-07 22:05:28', '2021-12-14 22:05:28');
-INSERT INTO `oauth_access_tokens` VALUES ('891176bf32f1e308d7e09bb2a7e4189c7ea74987e9f091d3352f42092fd05b8ff1961ee7d2500199', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 22:07:52', '2021-12-07 22:07:52', '2021-12-14 22:07:52');
-INSERT INTO `oauth_access_tokens` VALUES ('8df165291966d3b98bb567619d4ee11c6c7358cca074f656137ba2cd35ece3ee72c64492d5ece0ec', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 22:10:54', '2021-12-07 22:10:54', '2021-12-14 22:10:54');
-INSERT INTO `oauth_access_tokens` VALUES ('593421debe240e0bc5876eabc314b5321f57a60347749f78f4b78f5fb953671f59c789e8e709830c', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 22:15:56', '2021-12-07 22:15:56', '2021-12-14 22:15:56');
-INSERT INTO `oauth_access_tokens` VALUES ('20fa4e1f842ad2ffefab7832722ccb544a497813992a038ba1e971a5d4e3f3f5e357dc24ac248227', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 22:17:10', '2021-12-07 22:17:10', '2021-12-14 22:17:10');
-INSERT INTO `oauth_access_tokens` VALUES ('b0eeaeacfe316f40b48b036619bca2d48a2ad22c4bcaba5d9ae99a7a9b2dfa57f31475646da67ed0', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 22:17:25', '2021-12-07 22:17:25', '2021-12-14 22:17:25');
-INSERT INTO `oauth_access_tokens` VALUES ('863bf36f6e33a82b19a80a6a36b53edc6a34f1dbd46553eab44d2be846392d17932e79ad088b60b5', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 22:19:23', '2021-12-07 22:19:23', '2021-12-14 22:19:23');
-INSERT INTO `oauth_access_tokens` VALUES ('067b1b627bd330d6203b113c2ba9973061d86822ad49ea7cac89d98243b9b7709a96a40d33c5d843', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 22:19:36', '2021-12-07 22:19:36', '2021-12-14 22:19:36');
-INSERT INTO `oauth_access_tokens` VALUES ('79276357f48723e2c3e5a2d3db7dacb939f4856e146889aeeec9bee9ed84430e92c0c7af24d827b3', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-07 22:20:08', '2021-12-07 22:20:08', '2021-12-14 22:20:08');
-INSERT INTO `oauth_access_tokens` VALUES ('c812ae29c980f5b12905cb7c95e864da8f42ca1e8f04210a81f19b8fb6438b7697c075f32ea8d6ff', 8, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-09 17:53:40', '2021-12-09 17:53:40', '2021-12-16 17:53:40');
-INSERT INTO `oauth_access_tokens` VALUES ('6a4fe754167981e5c5542bc3a56838727112d68f7b39fd1df765ec3abd994f9372e6b2bc46b2430b', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-08 19:38:58', '2021-12-08 19:38:58', '2021-12-15 19:38:58');
-INSERT INTO `oauth_access_tokens` VALUES ('2194186fe79d532ce66cef8b35738cdc8c7cf0d9ea54971cb36479fbd5c2d5a48dd21bd9ed8eb97a', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-09 13:53:45', '2021-12-09 13:53:45', '2021-12-16 13:53:45');
-INSERT INTO `oauth_access_tokens` VALUES ('ed149e800e0995a5392949ceed68207dde40840fdc874039dbbc1196ca2c9af0c0b332cb6136aedd', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-09 13:55:52', '2021-12-09 13:55:52', '2021-12-16 13:55:52');
-INSERT INTO `oauth_access_tokens` VALUES ('cd14977b33d6f82adaf10ec69671d8b4932c3ccd9937abe3c6c6cd27da5842652591a2c43ff3417d', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-09 13:57:53', '2021-12-09 13:57:53', '2021-12-16 13:57:53');
-INSERT INTO `oauth_access_tokens` VALUES ('2e6079fcb172a3afbbf3e82cfec7f3d873e26a5f8488c9faaaf23389b4160e3dacdb4fb7b2ff2354', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-09 14:05:14', '2021-12-09 14:05:14', '2021-12-16 14:05:14');
-INSERT INTO `oauth_access_tokens` VALUES ('10e461015ca5d6c7314ba10cdd29c4511cf9b90c1bdd85e3fae3aac1c9413f7d534d426d17333248', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-09 17:53:56', '2021-12-09 17:53:56', '2021-12-16 17:53:56');
-INSERT INTO `oauth_access_tokens` VALUES ('dafcd8cbe956ed3a3a1a70cdf7fc5b4ff291f885b736120790d104478bacae8a4f30d063975717f7', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-10 15:51:27', '2021-12-10 15:51:27', '2021-12-17 15:51:27');
-INSERT INTO `oauth_access_tokens` VALUES ('5b3c77a2fa608e139ba2cb45e95d0a8eca70e655f65c1d1c4baf1393b1883d7d0e8f7d4315b64d13', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-17 19:47:31', '2021-12-17 19:47:31', '2021-12-24 19:47:31');
-INSERT INTO `oauth_access_tokens` VALUES ('164bc199f9bb12905f9d744540a3f40b941be411ca451f1c139eb4444b6d41a9f9e8970fa9976b2f', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-19 15:47:08', '2021-12-19 15:47:08', '2021-12-26 15:47:08');
-INSERT INTO `oauth_access_tokens` VALUES ('a1cee3a3172656863d7d36cd431e138d916fa04a53cdd6d383db0caf7607b2f44edc68c67dcd22f4', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-20 10:13:45', '2021-12-20 10:13:45', '2021-12-27 10:13:45');
-INSERT INTO `oauth_access_tokens` VALUES ('de396cbb32b307c3c6d8b47c91d9e340bd4900431dfc8d2d6278123c1c74bfc49911eb2874d3b12b', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-20 20:16:40', '2021-12-20 20:16:40', '2021-12-27 20:16:39');
-INSERT INTO `oauth_access_tokens` VALUES ('5d3226b700bd37bcf711c3fbec49d220a6f30b802d088ce0808dac678a5d249230f7d9f54d93b3d3', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-28 13:02:28', '2021-12-28 13:02:28', '2022-01-04 13:02:28');
-INSERT INTO `oauth_access_tokens` VALUES ('992da1603a5b2923d8d5a33528a406fdb151f3a30a1537e0eb0b3438399b1d6d98506e1822a29b82', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-28 13:04:31', '2021-12-28 13:04:31', '2022-01-04 13:04:31');
-INSERT INTO `oauth_access_tokens` VALUES ('9b3bc943fe579a351466026e3b043acad7ecf1d2fcc30e342c4fbced51797e69559aa2cbc0cbe320', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-28 21:59:05', '2021-12-28 21:59:05', '2022-01-04 21:59:05');
-INSERT INTO `oauth_access_tokens` VALUES ('c605c7d06a20ca76aee7f9b4732c8322e01b9e9466521e9fc8c868914d4374c6973b071726f418d0', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-29 14:02:19', '2021-12-29 14:02:19', '2022-01-05 14:02:18');
-INSERT INTO `oauth_access_tokens` VALUES ('827f68d2f05a39c203ee38b554440fdf4bcd90ebbb89459b2913bb1dc6456f46e9a07d25ae7a4396', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-29 14:02:53', '2021-12-29 14:02:53', '2022-01-05 14:02:53');
-INSERT INTO `oauth_access_tokens` VALUES ('10398fba867523670fdae40697f64e2649d87c0f8b7e61e8db898f0b7453bc6878e269121266191a', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-29 14:10:45', '2021-12-29 14:10:45', '2022-01-05 14:10:45');
-INSERT INTO `oauth_access_tokens` VALUES ('5d1cbc6aa11153beae8b7979c6789ae68bc89f63ed997b16d36e37aa7572a9d202c8ab25b60d643c', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-29 14:11:30', '2021-12-29 14:11:30', '2022-01-05 14:11:29');
-INSERT INTO `oauth_access_tokens` VALUES ('e25febc3594f63310d12990de07c8fa6e0095a5b390f93a20a461d925bdb2e8d4ff3dd0111b84a3c', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-29 14:12:11', '2021-12-29 14:12:11', '2022-01-05 14:12:11');
-INSERT INTO `oauth_access_tokens` VALUES ('269c626028bb6b8c03c429ff55a16610df83c0ce65bd48ea7dae98f2e0c137a163bc53d723baa904', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-29 14:12:35', '2021-12-29 14:12:35', '2022-01-05 14:12:35');
-INSERT INTO `oauth_access_tokens` VALUES ('024cfa21b37aca9a242cbea303d7bba141268c82fc4fb5c42b4921c10785a3c7dd09fedbc4552a91', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-29 14:13:01', '2021-12-29 14:13:01', '2022-01-05 14:13:01');
-INSERT INTO `oauth_access_tokens` VALUES ('745b0f7a6c70351125b5b67128d99a66ef2f06f987ad099175a6a93a339ab461fc700607c5caceb1', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-29 14:14:16', '2021-12-29 14:14:16', '2022-01-05 14:14:16');
-INSERT INTO `oauth_access_tokens` VALUES ('dc190422dc063e04d4e4f8c9765ee3fe4223528c554402c4470930c5f221747be80f8e3ee4f9f345', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-29 14:14:39', '2021-12-29 14:14:39', '2022-01-05 14:14:39');
-INSERT INTO `oauth_access_tokens` VALUES ('9b31493274b6452ef00fee131d0c1b49edfc4c49f2c0d5df1a2e980a3224a5203720767e507f8083', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-29 14:17:21', '2021-12-29 14:17:21', '2022-01-05 14:17:21');
-INSERT INTO `oauth_access_tokens` VALUES ('48dff95ce74b88efd778b722b4cbf5a99ac5a33411d5ee0503e01f2d1bf1c39635d24db1edff30aa', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2021-12-29 14:39:24', '2021-12-29 14:39:24', '2022-01-05 14:39:24');
-INSERT INTO `oauth_access_tokens` VALUES ('68493843fd741bdc98460b0825e19a0b33676ffd5c41537a874575279f53aca1185c5bc944f4219c', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2022-01-04 23:11:58', '2022-01-04 23:11:58', '2022-01-11 23:11:58');
-INSERT INTO `oauth_access_tokens` VALUES ('c0a5da28d73092c9bb3cedda7bb02210ad8e43e7a94a68104e73cdd18bf977edc43f73ec7ce4ea3b', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2021-12-29 18:02:46', '2021-12-29 18:02:46', '2022-01-05 18:02:46');
-INSERT INTO `oauth_access_tokens` VALUES ('ee2971641ce3aa59789df40c403b1a006dd40a2d96fffa215b0a405a7aadc2119f898bad005c5865', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2022-01-03 13:46:57', '2022-01-03 13:46:57', '2022-01-10 13:46:56');
-INSERT INTO `oauth_access_tokens` VALUES ('2ab22a3ae3c26d551a3334e425a72325a8d4eb346577a759ec0b5547ed62b7ab7d80764f5653f62f', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2022-01-05 20:33:52', '2022-01-05 20:33:52', '2022-01-12 20:33:52');
-INSERT INTO `oauth_access_tokens` VALUES ('c8a466d215f25162280e2dff13afe828629438cb5a142d3d6da2e8fbc48016aad6bf08a9f5acd738', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2022-01-10 23:06:55', '2022-01-10 23:06:55', '2022-01-17 23:06:55');
-INSERT INTO `oauth_access_tokens` VALUES ('2d001d86223fe4876789e64f86df67ef4dd2671cae3c99cbe4da32fe1ddf2933a4c77f59dfa4ef5b', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2022-01-12 13:58:57', '2022-01-12 13:58:57', '2022-01-19 13:58:56');
-INSERT INTO `oauth_access_tokens` VALUES ('64369acd371798a898f938e916b0b61f41e0bd3c2d4d30dbebc88695e7fa7c90b7bf9ae83fb967bb', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2022-01-12 17:32:22', '2022-01-12 17:32:22', '2022-01-19 17:32:22');
-INSERT INTO `oauth_access_tokens` VALUES ('5ced3cf34ed13258e109ae696bcc0564bd8fd7c0e4e7c32a8127b003e2f15206fa227e1bef07b06f', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2022-01-13 20:23:52', '2022-01-13 20:23:52', '2022-01-20 20:23:52');
-INSERT INTO `oauth_access_tokens` VALUES ('2387c3eb01e12ac31c66812c78fda50bf82b4450513128dfb2cdd289435f1567fca95c80376d9d1f', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2022-02-11 17:01:52', '2022-02-11 17:01:52', '2022-02-18 17:01:52');
-INSERT INTO `oauth_access_tokens` VALUES ('1de92e1f80f4af31bdfea3e574c341fad8516a284668726147ee71a0d007a80fbcf771b3be5f00b3', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2022-02-11 17:29:05', '2022-02-11 17:29:05', '2022-02-18 17:29:05');
-INSERT INTO `oauth_access_tokens` VALUES ('5328b9e2077b14529151509ad02ba862ddb69e1c6489a68ebbcb85e014e55d1d920a29c5a7d7bea8', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2022-02-12 16:52:20', '2022-02-12 16:52:20', '2022-02-19 16:52:20');
-INSERT INTO `oauth_access_tokens` VALUES ('6d208168ca7cffaa36146616f3b05fabe7609df36bd47070a8c45417c40c328c56aaa6f4fca42827', 6, '94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, '[]', 0, '2022-02-13 17:03:05', '2022-02-13 17:03:05', '2022-02-20 17:03:05');
-INSERT INTO `oauth_access_tokens` VALUES ('1d456d866ab4c50163c1bded8f1088c8cf5df4f5d1de0bfd539f89c5f9399c4d0dfa1d11285222f3', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2022-02-13 19:31:14', '2022-02-13 19:31:14', '2022-02-20 19:31:14');
-INSERT INTO `oauth_access_tokens` VALUES ('4fc2ed1ef758e8f33cb7ab65b055192bd07d5ae039ae13a0863919088edd6d4dbad3a297ee3a4677', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2022-02-13 20:08:46', '2022-02-13 20:08:46', '2022-02-20 20:08:46');
-INSERT INTO `oauth_access_tokens` VALUES ('af9e8d738f05fdd5b7264ab2f4a4927135a77d8170fe6d8468e3118f479cb64141be35fe81840b93', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2022-02-13 20:09:59', '2022-02-13 20:09:59', '2022-02-20 20:09:59');
-INSERT INTO `oauth_access_tokens` VALUES ('44c00fa1c47ecb5cfde8d039ff43b35a93a0a81d81c97c80f22489771aa26deb4839d9ffa395dcbe', 1, '94730bab-af28-4fad-9a04-c840694cafe4', NULL, '[]', 0, '2022-02-13 20:19:08', '2022-02-13 20:19:08', '2022-02-20 20:19:07');
-
--- ----------------------------
--- Table structure for oauth_auth_codes
--- ----------------------------
-DROP TABLE IF EXISTS `oauth_auth_codes`;
-CREATE TABLE `oauth_auth_codes`  (
-  `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `client_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `scopes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `revoked` tinyint(1) NOT NULL,
-  `expires_at` datetime NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `oauth_auth_codes_user_id_index`(`user_id`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of oauth_auth_codes
--- ----------------------------
-
--- ----------------------------
--- Table structure for oauth_clients
--- ----------------------------
-DROP TABLE IF EXISTS `oauth_clients`;
-CREATE TABLE `oauth_clients`  (
-  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint(20) UNSIGNED NULL DEFAULT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `secret` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `provider` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `redirect` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `personal_access_client` tinyint(1) NOT NULL,
-  `password_client` tinyint(1) NOT NULL,
-  `revoked` tinyint(1) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `oauth_clients_user_id_index`(`user_id`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of oauth_clients
@@ -4965,17 +3955,6 @@ INSERT INTO `oauth_clients` VALUES ('94730b8b-eafa-4edb-aa17-cc5c49f82834', NULL
 INSERT INTO `oauth_clients` VALUES ('94730b8b-ecf3-4de6-b883-827bf0c1dccd', NULL, 'Laravel Password Grant Client', 's7eti8tzg2pE39yC9Wb5svejgj6CZ1BGr1DWwwLx', 'users', 'http://localhost', 0, 1, 0, '2021-09-21 09:59:18', '2021-09-21 09:59:18');
 INSERT INTO `oauth_clients` VALUES ('94730bab-af28-4fad-9a04-c840694cafe4', NULL, 'admin cliennt', 'QX9vIM2cOZd5HpFcTAcQLWp4d8w44rBo4kNtswA2', 'admins', 'http://localhost', 0, 1, 0, '2021-09-21 09:59:39', '2021-09-21 09:59:39');
 
--- ----------------------------
--- Table structure for oauth_personal_access_clients
--- ----------------------------
-DROP TABLE IF EXISTS `oauth_personal_access_clients`;
-CREATE TABLE `oauth_personal_access_clients`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `client_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of oauth_personal_access_clients
@@ -4983,227 +3962,8 @@ CREATE TABLE `oauth_personal_access_clients`  (
 INSERT INTO `oauth_personal_access_clients` VALUES (1, '94730b8b-eafa-4edb-aa17-cc5c49f82834', '2021-09-21 09:59:18', '2021-09-21 09:59:18');
 
 -- ----------------------------
--- Table structure for oauth_refresh_tokens
--- ----------------------------
-DROP TABLE IF EXISTS `oauth_refresh_tokens`;
-CREATE TABLE `oauth_refresh_tokens`  (
-  `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `access_token_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `revoked` tinyint(1) NOT NULL,
-  `expires_at` datetime NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `oauth_refresh_tokens_access_token_id_index`(`access_token_id`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of oauth_refresh_tokens
--- ----------------------------
-INSERT INTO `oauth_refresh_tokens` VALUES ('91e74a5719e7786f3778595375b5aa65c5146fa475c49a907a9199163d8474ad2a499195d58acfe6', '879a05d6b9be77b7854f7f534c083c2748dc5c7e6b515e074767bba5639ce83c74477e58bdc4a982', 0, '2021-10-15 11:03:06');
-INSERT INTO `oauth_refresh_tokens` VALUES ('9287e02c1ee495ca6044bc4bcf52474b573b07788fdc61aa154ebd6aaa8e096cb30cc2da03582c57', '9f5ef2747a9bb07f8b930e05ea329a6ee58c215ba63b478f21520b18109455f01c28b8de47d82843', 0, '2021-10-15 11:04:02');
-INSERT INTO `oauth_refresh_tokens` VALUES ('44b807edc2b3f62bc362760fdb75fc50e54a6790b3b0a16e21a7126b855230ba83d3757ea5991609', '25297e44e8470b9375016df44303e55293dff02b8de96c418d6feca3fa6e492d2c2470573102bc7a', 0, '2021-10-15 11:06:39');
-INSERT INTO `oauth_refresh_tokens` VALUES ('eccfa0f74388442bfd74ab42736be6d8ef76bed4a64fe505c22bcfbfa44ecd9c1cae830ed0c922c2', '649ce4c2082402dca9d12043b0d08c36df15c88ad1681d833fdbef62c5060ebd3e73a38c63891eec', 0, '2021-10-15 11:31:41');
-INSERT INTO `oauth_refresh_tokens` VALUES ('5a28e2f9e83895100180bdae949855054e980abee8df7ee68edf73e6e0d04e66db0042138a004699', '6646541143e4c8a400e4dde052ffb9d1023a7db2a73250e7e3cf6f8d6c7116998e075a283d69e0ff', 0, '2021-10-15 11:45:37');
-INSERT INTO `oauth_refresh_tokens` VALUES ('cd925b8f13c0c12d713019796da6b94d91eacd9f00a36ac83a609c82135c01a7423b2180728f4508', '70d17957633eb9464ba575e6080fb7e7574153fc82cfbb02992c960914fc1d9087e9bba495d4d29a', 0, '2021-11-17 10:56:12');
-INSERT INTO `oauth_refresh_tokens` VALUES ('d4ebea62263c671377e97fcc913242be17b433e098e1ee780f9d4eb2893804be3efdd883812303fb', '8fba2b62222c73858428d7ca5591c23327742be0be0dbb089a6dbe89912307117b361dd938828099', 0, '2021-11-17 11:03:19');
-INSERT INTO `oauth_refresh_tokens` VALUES ('eb525b62557d03968ba3d334af48179dfa3795fb53746e2f4d6e451342e36a88d0df433c943bb943', 'e7d679a2f0da6699451e2fb57e490152c4520c4314c1e3ee3ac1ba9a1f3b523c09881af4ba8cc8a9', 0, '2021-11-17 11:12:43');
-INSERT INTO `oauth_refresh_tokens` VALUES ('7e77549e884635fd11d3e56ac07b1a47a0542b5f2aa102c0200bb18345fdbc7e81e729051cffd4f3', 'ecca06157daff6721b20a03bcf2b3ecc5ff3d70cfe5da5ec747c18967704e402d81080847f7d10dc', 0, '2021-11-17 16:38:00');
-INSERT INTO `oauth_refresh_tokens` VALUES ('d01bf68ff1dc134c5a134f443638c126f3c31bae1570ae21292ddcadacb1a97fa747dc681b037053', '97362703de7940b39a08c9bbd27b6447aef20029fcfe7b6e871834ab0db152a6b51798685505d0c6', 0, '2021-11-21 17:37:14');
-INSERT INTO `oauth_refresh_tokens` VALUES ('2977ee6ed09f05497cb5d71445b3aee7f73b5ac5970ce693e17adaccf7a612d3cb3cd97a24b791d8', 'ce775457228584c2b811803e522d92a1c5f519cebc2090e5b8d494843b23a99e102cb6c4dc29c2c7', 0, '2021-12-01 14:41:35');
-INSERT INTO `oauth_refresh_tokens` VALUES ('0a2df79156e668b42bbbfaa79b89cbd4c20d0beb10ccd8fa98fc250715b3a1b19b2ba24ea18415e1', 'ff1af726aeebca446652d51b1b007885cf3775ccc0bdcbf04f4c7d3dccf3f1b288436edd8869d1e6', 0, '2021-12-01 14:42:36');
-INSERT INTO `oauth_refresh_tokens` VALUES ('e2f5662c63c35f54687b6330fbce4040825803368598a8e02be52035c8e7d6ecebb9c2e17bbc2af0', 'bdba6a9d243dd4dc3a89a337189d713dd7954589524fd4fe8b6fcbe05651be6fa5404239bdb8fada', 0, '2021-12-01 14:43:05');
-INSERT INTO `oauth_refresh_tokens` VALUES ('37208a98997826a9e53076ca665efa71784624512ea2c013580a0e311db7ee1fc7451085d869dd7a', '72012a71dd37eafae5f1f0fd2022f06539657a7f0c7a091edd1f55e170601d26ff667fd53d5102e2', 0, '2021-12-01 14:50:49');
-INSERT INTO `oauth_refresh_tokens` VALUES ('aa80743e2c313b45939593b4cdd4159307053e901a0d3f007595c52ed6eeeaab4c26f1fc218c98a1', '3f018cde7f69678c2eed61ba8d0ab8d052a40461eafae01891291ca72ddfcd6b4d837e2e5c70a9fe', 0, '2021-12-01 14:52:07');
-INSERT INTO `oauth_refresh_tokens` VALUES ('d3835e431cd37d3710009cec9f3970d3f44722257a1ad9bdd029639a9da896b8df3dbcc8f643c62a', '7e1736845cc6ebcd3e937e673e43ee44c15711443f2e2567f5cc584365044752c6bac842d21cef8e', 0, '2021-12-01 14:54:39');
-INSERT INTO `oauth_refresh_tokens` VALUES ('e2892b7cccb7b17f160f6f617be5e05003dfc568e48cfd98deaba9a3f07322446a20a205cb360482', 'da7bab4b096e5eb642701d73336ffea19027d49ea0bcf42fa676b97936e9672b4255790ac9d7decf', 0, '2021-12-01 14:55:15');
-INSERT INTO `oauth_refresh_tokens` VALUES ('41aa10f564e3a796819c7d2db1f669e0abd4c01c433d52154d94949c18db2c59488af1af9cce7b1a', 'b376c7a9ce8c7b0b8c0f74570abd9a2857cf604de21770d1b643b8d377b918157df4ca7e6d424d48', 0, '2021-12-01 14:56:13');
-INSERT INTO `oauth_refresh_tokens` VALUES ('3863ffe9280c7076d6ffe53e43287e28d6ce1b7341e5e979e766f0a43e4fc284bdaa09d9d03c5d80', '92254db71e253e889fe13fc2621dfc20ec0bf149e72dba1f677803f453cc5dbe38f66f526246a0ff', 0, '2021-12-01 14:58:00');
-INSERT INTO `oauth_refresh_tokens` VALUES ('1ae07a08bcf4886804ba5ea662e7c82e0e2281d715321bfd178685f94533a0ff9fba01a803c7fa1c', '7a4bd0674beddadb1731f1d4e73c37b7027f5bc88214e8582b76543d0fe8c5c0a0ea6608d19d7fbf', 0, '2021-12-01 14:58:52');
-INSERT INTO `oauth_refresh_tokens` VALUES ('607fe4f4d90ae202a30ef241d1b29f71f0b8f9dc9701710d46f3b56ca2564e9adfcf010a9761d61a', 'e650d375bd1c1f64417d6df00b4ab5af0dad9440e7630703b31a6595d4d63070a2726142d6eaf8ba', 0, '2021-12-01 14:59:29');
-INSERT INTO `oauth_refresh_tokens` VALUES ('d30a39d2c90d47a736d33fc44f645859028e25af49778ba98f70efec1d410258fc3cc14f2aa6166e', 'c5ac4d34bbc3418e96d9da2ee0becd66245eff9d6b20d1edfa1a0e4aedc16e9b2453a7aac6963e68', 0, '2021-12-01 14:59:45');
-INSERT INTO `oauth_refresh_tokens` VALUES ('1bf0bf55b51507dd488e213864374b34c551b9240808a14c8a071b9a06b2381bd2d6d5136172ce63', 'd4534813b0a8c86e406953967a63c6d83eb73b9314ebc6a44bb229753104328cc26e5a08aee01de2', 0, '2021-12-01 15:01:40');
-INSERT INTO `oauth_refresh_tokens` VALUES ('f5b04d7b13a30db04b088716fb038424ba18bbd82be8aad01f702c6a938a4c8ebcdbf8d755e35698', '4ecc9793950b8e204461ad1db9559e3dca8ac191090cf4437bb94258f5f863fbff852048b2147c3e', 0, '2021-12-01 15:07:11');
-INSERT INTO `oauth_refresh_tokens` VALUES ('346129ba222814025122a153ee2edcf27f01f6385ed1f18e2f34e8f20d096ed4ff686c67ed103b25', '4b51d755e6d9d889998d7de850302164987a0ef317d014021267cc8fcfbbf639c96c54843b56a8b1', 0, '2021-12-01 15:11:23');
-INSERT INTO `oauth_refresh_tokens` VALUES ('dfa7416f9b562cc9a36be1f4a57d9de83456a7cfebe85b88f908bdf86fdd033f32d86b1c18430f95', 'f44d7d3d60a1f5bc97f6a01fa19770ed666a5a84b532f9d7ee447adb2efd3fed89b0a7a984121835', 0, '2021-12-01 15:11:38');
-INSERT INTO `oauth_refresh_tokens` VALUES ('433473c392939fd29b961f98515193552d7f032689addb90fd4aba6e2b3bc36194831566af39ba0c', '816460d4def0934104f9a45abb90c865ec55721a19811e5ae70b834d02806c5d43544e7fc69e14d3', 0, '2021-12-01 15:12:39');
-INSERT INTO `oauth_refresh_tokens` VALUES ('bc6fb5cd8cd06f6480280debbf71784cc5c9c6c550aa042c852681ab0f06a639d3b6d09113e38940', '978a0818e446d69c3b57581dee6d64e43af2ffbe7375652df953f4267560c8bfde280b255896281c', 0, '2021-12-01 15:13:05');
-INSERT INTO `oauth_refresh_tokens` VALUES ('7805cbb5c0d8ebf9a7214c54f3709f4d8313d16f2c9cd62d650fa28aae422991ed29da4f9098e085', 'ed609631ea51e47a3879a98ad6ecd2d73296f3d5a4f67005de4fbdf868a92f824f02e64f3ac3cea6', 0, '2021-12-01 15:14:43');
-INSERT INTO `oauth_refresh_tokens` VALUES ('b38f251e3ead0651625a35c9a89a3de7f583ed5ee71f8ad91285252e960da08ff2f899656aa09562', '2a470f15080072e1e3e5fd3daf73b5cdb1da0626f22c8c9a5418c77f181d2f14b65169fa1aa268f0', 0, '2021-12-01 15:15:53');
-INSERT INTO `oauth_refresh_tokens` VALUES ('26a05253572841636b86352229b60ecb3dd21929e20b97c4b96b65aac4f71b96b8ae44b43776fa1b', '0c66358c872118853f125926b2ab7d096afdb0f0e85be22772527ff214bf4b862eefa35c8398ea19', 0, '2021-12-01 15:17:56');
-INSERT INTO `oauth_refresh_tokens` VALUES ('c1d1db810de77ba1dd0bb0052aaf89d9922fc7a12de1a3032014733d29a26789f7ee8e368c369532', '04edc9614c3c7c7fdb3e1d55cee7d7aa61e252df2073f2e04d21a290e84b14023cdcea3572120451', 0, '2021-12-01 15:20:35');
-INSERT INTO `oauth_refresh_tokens` VALUES ('1db8afff4d0197b7f2205946a4c43a0353ec54e90b31a53a8b08671961908753338c6410f4acf454', '4839937519174fb1390c690da29e4b22bf8eabc0a14a9bd2ab169e7322e26d40bf02cdf1a38870d0', 0, '2021-12-01 15:21:40');
-INSERT INTO `oauth_refresh_tokens` VALUES ('bfc1f176707f668460241de53fde05c56d65c90b64c27e27136910ee73cafa3f70bede2f5883745f', '6b61f47d4de368df94c16131cdbcffa984604413cb3d706980e4ae3a5dcb7d9f3881afe87378a304', 0, '2021-12-01 15:27:21');
-INSERT INTO `oauth_refresh_tokens` VALUES ('20e2e214e3bb2fe3b080fb042edd2eddfa7e1a5f1b8f48fda9ba2b9c0e2c354b5d8be39d84a6195a', 'a10393ca9b76e23e34c0207031391bf53a70633e9a7f777b1b409489c6c4d84e3210ae694cedd016', 0, '2021-12-01 15:28:17');
-INSERT INTO `oauth_refresh_tokens` VALUES ('f883f09af745503b693fe82f4b5626c365ac8541652574c3c18710f0e358ca0acf13fd4d06ae7b43', '3c7bb8a2c176e5097ab5c30bfcb719e6ef203aa63f1bf859c278b747a6e82ec4c49515402abf1e99', 0, '2021-12-01 15:29:04');
-INSERT INTO `oauth_refresh_tokens` VALUES ('b95079a920e89ece7fe238181a128a661c8a0335bc305fb2f68a608e155b11db4e631a0cff3eeee8', '84417f87efad5de356935bd15efb36eb018d81519602b7c783d3e7cab7c1cb18194e8a493c733904', 0, '2021-12-01 15:30:08');
-INSERT INTO `oauth_refresh_tokens` VALUES ('bbeb4bd564cc2ecc7d954c7161a77ebec44c0471798cf1271796dcd53d20bd0132fe09fdd409bf77', '02738a804e5021edf52a09e58009ee0e998fc657d38bafbf395c63f15bda803f1965de155ad1e14a', 0, '2021-12-01 15:30:25');
-INSERT INTO `oauth_refresh_tokens` VALUES ('0377d9cb233925d78530a696df96a607a9edc002acf9750fb277bbe72f508ef74021a87108298363', '09065ada8975380164d8a5ac1ed687395d4eab0689edc37c5410d55a0ad06d2cad39904260b53880', 0, '2021-12-01 15:30:36');
-INSERT INTO `oauth_refresh_tokens` VALUES ('c0896af2df4674ac1c8bb650353a44f5dc1d2ecb7c0d6b982c9052eac86d0aede49ce9c18fcd8195', 'c1e9351748182036763ac393e15d073be2c7253c38fe801edf40ae186b71bef66cf9a6c82090120a', 0, '2021-12-01 15:32:40');
-INSERT INTO `oauth_refresh_tokens` VALUES ('2e8537d02094af7c23057dd5bb51f753830f534989a45bde19c631f5b79b35647769af932ebd57d8', '15c14b6e79ea50366350d339cad779038562dca09f47c207c30fc2d5749d2d7a650e04f01f2d5a47', 0, '2021-12-01 15:34:06');
-INSERT INTO `oauth_refresh_tokens` VALUES ('01d56e61c23ae0e3c3167ade0987ede1ae620d10d2c1b7bffe53d99fd1691fea19030a6f6a00abce', 'b1d1c12c7493f1734aa82140366e92539e11643dd2acf0ff8af7d7ebd5c36b4ea67276e92438a822', 0, '2021-12-01 15:34:26');
-INSERT INTO `oauth_refresh_tokens` VALUES ('18ad111c378bacc7f41d52c26f3088cebefe0b34b0014213d4f8117d835aabf879d711ef1adb3516', '966dc913cfd4195da5cab68f64b113da3d750b00fec5c38a0e99752b541d71a1e4e23391b31bc574', 0, '2021-12-01 15:35:40');
-INSERT INTO `oauth_refresh_tokens` VALUES ('70062b044f93a0245e545e96b21f744e724c5f0e6deece87e39cf99a64d3f258a6613672b6f26fb4', '8fc253338d6d5d086d245090c9bfb701a6f8b4e7dcc59fed8b6d8a07e888f67b30fb9dd3f94b942a', 0, '2021-12-01 15:36:07');
-INSERT INTO `oauth_refresh_tokens` VALUES ('371ab8c7659e7058b0c216ec58b12b736a65b1dd1cc1f038fb78a1118cf620b2b4658bbd42fcbfd8', '858d9781b11bec17467db45ffa74e24be68af1c33c577b7d0390db65afd7b1b4c7c13cfe93176d55', 0, '2021-12-01 15:36:24');
-INSERT INTO `oauth_refresh_tokens` VALUES ('ff68aa63bdde0dbc7de983da4890417330c48cdd0e5ddd0ad9483d0ab8230433b45a9d9f9a9e6adb', 'c85a966dd2fa6761062479391b8890a845679bd55ca013b68ddb394d7ce13d50beaa367890e0ce2d', 0, '2021-12-01 15:36:51');
-INSERT INTO `oauth_refresh_tokens` VALUES ('a360077d29bba224303496ed7fed1a57c94aa91f0ba5b7956fcbd28e2beae5346c0e313d366576f1', '7853a2e7230ed678c644a197c599c7920b1184e90bbb7498b96cb9ecbd0f741982ae7438d25412ca', 0, '2021-12-01 15:38:04');
-INSERT INTO `oauth_refresh_tokens` VALUES ('df95194a8ea2b88981341abfbcb9353538ed0407b75da572139dcbed21d39e57e114cdbd5f9b1d3c', 'de18282d6eaf100955643ab6cc627dc29df1aa09f2512708248c7c2a71c116d986eae30115512876', 0, '2021-12-01 15:38:15');
-INSERT INTO `oauth_refresh_tokens` VALUES ('e6cb0252565c96a9b35bb6a4b32a0d416dd60f954a832fed8fce5429e78168643ceec24d3949f9a2', '5b6d45e5f72a3c344f4386f735433b33540aca52b5c04e73d2f2744199ca7df8369ca7e4a82595e4', 0, '2021-12-01 15:38:48');
-INSERT INTO `oauth_refresh_tokens` VALUES ('e78aabbb0e417bbeb77495eeb7ebbad012013f35848d6db2536535d5fd0ce18b6d361c07c23e34ab', 'c32c87c802b5c4af978803fcda2cfb53c02539649372b4565f7cf88eb34cefcc84b501ea7ec22c04', 0, '2021-12-02 11:02:48');
-INSERT INTO `oauth_refresh_tokens` VALUES ('106c66d87af1e206abeafcd804f6204b283ab3aea1530bdae85cd5d9d246c3d53395a17ce36dfb0f', 'f2d22b1cd67913524f63e72b56b5eac8fd17142f8707366fbd38fdf7572f20b192a07e028f805794', 0, '2021-12-09 15:46:31');
-INSERT INTO `oauth_refresh_tokens` VALUES ('82e50c10d9e53c385466237a0a2e8e10c816e106dae49ed2b92b2dc3877250c14b60062b897870d3', 'b1825a231c7bc8413e3a3f87fc493dbfe29a84a8a8a3ef853872e744d8155c8ea6d0311b4dbb1b86', 0, '2021-12-12 17:34:32');
-INSERT INTO `oauth_refresh_tokens` VALUES ('4a5f1e04cb6c5812c067de0d69f419d6cee8a0d7a857bdcc8ae91ead864b4ec61d4660e363284cac', '0a62221c0bb7d0726c24d422b6529034b87d25f7de1e28e21e6e8f46f486a14837bd146dd502c8aa', 0, '2021-12-12 17:35:09');
-INSERT INTO `oauth_refresh_tokens` VALUES ('0fbe39376001656a4fbd66b5b8cbab3a40fd09f6921d24a75f40ff88237b7f97f875bac11500f5bb', '4a7b6868495b663de1fabaa08e0d0dcf836d29cce63639536a96fdb1dac8092a0b65665ce71d10ee', 0, '2021-12-12 17:35:47');
-INSERT INTO `oauth_refresh_tokens` VALUES ('5e66174118fd26adcad4b3659ec0665964fe727e98de923b8c5fed10b31609fc617f313bbb8dd74b', '9aca570c03290064d19449ebf25520bf95cec2867d5191d7d145857b5662f53d5bd7080161ac2781', 0, '2021-12-12 17:38:52');
-INSERT INTO `oauth_refresh_tokens` VALUES ('264247649d5a2ba3dffd3265b6765b2f6e35c0b00539965d19e3940ad07982a4f84b6cfa7d393673', 'e600a21361e01ee75be5c977ef311a54d6ff56947bec6609b8a45ac16a493db7485c638108408c7a', 0, '2021-12-12 17:39:13');
-INSERT INTO `oauth_refresh_tokens` VALUES ('6128e59032b73d648d6c9e8dbabe94131f1ab7ea53a2b28499e2ea59ff0a2cafe128675292a6e0c6', '653832436f2f2e218444579c23f703367fcc3c9b3c89786505099b9a7c87c954e7ba2c4c5c9a6275', 0, '2021-12-12 18:03:34');
-INSERT INTO `oauth_refresh_tokens` VALUES ('833f04d1a0639b8940fd02572b2fe7c37c6a6f0a98150c3cccb7ce55e4e60ae0809164c8ce24d271', '1422e47990407d4a0ec83009b266fa04dd51f49971cf32bf1df1bc938c2a9dd89bb5d4ea71069148', 0, '2021-12-12 18:57:03');
-INSERT INTO `oauth_refresh_tokens` VALUES ('cb5bb5d2f77557763eccae0413d368a34f88d65d46f6105b6b1243a7eb68b275750b289429fee985', '05677ff4178aadece3ea2f1fb79469d7fd19b8243a61c14b018bb1c7b864c913ff90c075f516c743', 0, '2021-12-12 18:57:30');
-INSERT INTO `oauth_refresh_tokens` VALUES ('999ab94c7bfb409777777c1bcd7603006a5676b9bb11dc9e3fc923bf03adaf04aaa0aac2e9228102', '1bf8ca4f9228ea9c20aba11c04416d5f9473bf21d7d5bebca7c54829bf7232bb422e44c6c7d67a51', 0, '2021-12-12 18:58:41');
-INSERT INTO `oauth_refresh_tokens` VALUES ('f309b63782225382e9d14fd9bee25f0c160d7d9006f0c848cc373b47074af4bf1b840dd235860e75', '83dfe2590a04779b3ecb04f900c078e84b393cae9540717021096e6b0cb0ea3f85f9339e430cf4ee', 0, '2021-12-12 18:59:06');
-INSERT INTO `oauth_refresh_tokens` VALUES ('185e1acefa72c1be07e2f47d9a6b795147e302211207ab50cd6cbc8056f7308e9f6135c81fc0abd6', '17cb89f0849f33f2ac36999e644075b28bdcbbdc1820b7a7d0fe930f08b7241678678ae3cd5d66a7', 0, '2021-12-12 19:00:27');
-INSERT INTO `oauth_refresh_tokens` VALUES ('c5616ab90951d783f837dcfb36a9716df22e63d37bf602c0e4084ab4c59d5452bb51f19db08d4d89', '34a416f95d0121e43c2131008dea5655addbbcf9cec6da26a42c30d6d065556697cb5d8852204eed', 0, '2021-12-12 19:13:20');
-INSERT INTO `oauth_refresh_tokens` VALUES ('d5d96ff4e6eb6ea79ef053f72861b71298d3f4fe6394b82818541c54d990dc71b8d4ef898d8fcf5d', '0bf16fc9f03996307241c2c379cfed42cf37ad949eb9d5ae086720e1a0491a485371c87256c086b6', 0, '2021-12-12 19:13:41');
-INSERT INTO `oauth_refresh_tokens` VALUES ('5f6ac7bc8c0916fa790df083d8afc8a0be3ecd2e62d17ec4aa71644c1d840f35f15eadc6b53fc94b', 'e567ab948bbe151ad73a83601b83fc83d1468d83b942b4a4154f7e458bf0d1fddc3527fd285dc76a', 0, '2021-12-12 19:14:38');
-INSERT INTO `oauth_refresh_tokens` VALUES ('f87fb5c028613c97be42411307bd4bae9d3a42d1d6d68d6d3f470929d6e39bdab33e5855e49cfdcb', '5dd9e4abce8c9b7a62f24564ef94b633470596a89377a245764a322b748cd59a3f2f0af855699113', 0, '2021-12-12 19:15:32');
-INSERT INTO `oauth_refresh_tokens` VALUES ('fee73fd68456601d62a9b578a01ffbef75e3b5b376409c0114bac59c213bd9409f8adc169556552e', 'bf71d51bc9ae97ac0dd787a18812a92b2ff30746cf448beb9f002447e4c2509af4600fd96aeef00f', 0, '2021-12-12 19:17:55');
-INSERT INTO `oauth_refresh_tokens` VALUES ('d2669d449bad4367aaf591e1d3bb3598dd4b5d47d9091876edea03ea17227ff9adec209fc3975895', '133d35eacd130be4863b370233817c5107aac339900fb92fcac04d8159fe9939f965280d446f2c70', 0, '2021-12-12 19:35:54');
-INSERT INTO `oauth_refresh_tokens` VALUES ('cafec05bf72b45b88a36a1d6aa82830d2786ce48305d5789947f193dd91c43ce508f4c37614c4f1f', '535d7048056dc7e35d3ae0e7500c6378981499df927d6ef1cc6faf04b43417700121105ad9d1bcee', 0, '2021-12-12 19:37:51');
-INSERT INTO `oauth_refresh_tokens` VALUES ('4b58cea19c7a221506db1b1ad72f851b4c3e88109a1a70ef2e4e91cbc4c78c49acd2a55c96d23ad3', 'd5b4f1212267b3d3f85b6fbe5f96d1fcf36154f5e7c511484bf0683bce3c26f69a375642970dcf47', 0, '2021-12-12 20:04:31');
-INSERT INTO `oauth_refresh_tokens` VALUES ('485bf5508284064aa483c83b7c95f22262c18424b0bd8f0c4ae3af81bd8edb685cf656f273b5bfe9', 'f2827658f7c8c6db148fe34066b2a9e64ba52748950d72c2826a72756c45bef5300383fb97250325', 0, '2021-12-12 20:26:24');
-INSERT INTO `oauth_refresh_tokens` VALUES ('f427decbeddd16a052864593bafb6eb582075a89e2e47f34f0925f05ee0e2adae457900bd3d98d65', '7d471280595bf61c82f53ac19d476dd76bde6b44c8163ede95979c6730838bc604ce39c8793d3ca6', 0, '2021-12-17 13:54:39');
-INSERT INTO `oauth_refresh_tokens` VALUES ('54f66cef9658c17832e68285751c2c781f72886385aa1ad97c2bacb4b867602d24652aaba544ba49', '05e4b376f02b3001a0671207a0322a37a72cc6f533d116c0ffb8b341bc01f0b1d1218673711a426e', 0, '2021-12-17 13:55:11');
-INSERT INTO `oauth_refresh_tokens` VALUES ('4b6c6ca57f0271716f3b587a8003b321db625436f0cac97a72b6d9803c92af87c9313ac6f391e0f6', '46afb6d200168da9455d2ccea05bc7d2bad338a935e2acb0de86c04cf1479f7421c9693132852d71', 0, '2021-12-17 13:55:26');
-INSERT INTO `oauth_refresh_tokens` VALUES ('d39c14872498c9c5950f3da091536c4533c73e20e8d86d429b22d288cc67ab2b7b982886c3163c87', '3693292d46e91aaf308600dcd7e8f02f6eed2d1766c0df3c4227687e4e8adef14b67cfa4dfa4c83e', 0, '2021-12-17 14:42:10');
-INSERT INTO `oauth_refresh_tokens` VALUES ('f106cbab43c29a768954768080f54dbe2b7cc7b8e84e1fbc7cf7c4eaf62c6585d8de72b0d6b02cd7', '17666b4d21b7f207f3585dba454707b27341ace5c3631781b2e0c732ebb5f0836826bd4d282abaeb', 0, '2021-12-21 19:18:22');
-INSERT INTO `oauth_refresh_tokens` VALUES ('f4b8d008782aa9d54e7d4ee31db8503ea2b1df4119978cd7c013d627a9b41a4684631b1a5624efdc', '4e966c869ceab624cea1f908ee4a6c1832ca849e2611580b98151c1759f2db1f1d8c8dff5feff127', 0, '2021-12-21 19:30:05');
-INSERT INTO `oauth_refresh_tokens` VALUES ('2545c451d5386b03d9bf04a13510c1a575c02915eb64e5b12723433b06f1d9d688b7f1a1d8a10f79', '1ff3538df2f3937db43024cbc55e74ca015eed0ad0c2bc9938a64d7c567352048b25dee0a037b99d', 0, '2021-12-21 19:32:40');
-INSERT INTO `oauth_refresh_tokens` VALUES ('57f8ab207a4042cc1b9628566f5c6dce22147e3272ab62c800bf203fe11b8ec7ab8d98aa14458fb8', 'e00ba74f959d3a588070b2471be5bb756d7c92e302050844fe1a3feefe19fb4a6f5594ab87dea2ed', 0, '2021-12-21 21:34:39');
-INSERT INTO `oauth_refresh_tokens` VALUES ('1e249bd3d77c92908f1ed0547568ec1c3d09a9cd6fff9afed59b4d2cf061e038b8a5ef5054634810', '29a67de7ddd805718d92c833fbfc5b590136164179d440f3cf7c18b1fbdc6225dc17029302ed5739', 0, '2021-12-21 21:36:42');
-INSERT INTO `oauth_refresh_tokens` VALUES ('9ccb56b58e728fc1b7db71fa996bef21ee1674866ded043749bd5e01fca25771cbb90a3375946071', 'af133b1277f73c670d17668316c0ed84c3b04c5de996f8018f6028d4ec9bc3cea7efd1a10b5557ea', 0, '2021-12-21 21:39:02');
-INSERT INTO `oauth_refresh_tokens` VALUES ('ff2d36e522ce93db831533b320b003651891390e40f97676f23285fba450c87dffdccea117e9bf66', '0a71a2ddc33b9faa72d76762450839c5513eb4c61a3b994acb3b4194d1fe521d9d88a0cd7aa75d88', 0, '2021-12-21 21:39:40');
-INSERT INTO `oauth_refresh_tokens` VALUES ('d1bbc7fd259a3e997b067bb1d8dc6b271f01b8ab332e0a62d6691237179dd045f7f3f03bad8380cb', '03e68a9e5bf4ce374a9a32a11a870a8ea2b02cd0b04e0454accdd09abe86f0a3ddf166d41a10409f', 0, '2021-12-21 21:41:10');
-INSERT INTO `oauth_refresh_tokens` VALUES ('e9c2725783f165933ffb7fd01f59b14d23beb489696d3c4f0e6c9a75c06791e7da7a5f5bd6d64bd8', '9c581c6d43e59c7dd549403ad5e07899cb108bc0db0f7ba68508f572b8c2ffdc8eb1b2047370ee70', 0, '2021-12-21 21:43:15');
-INSERT INTO `oauth_refresh_tokens` VALUES ('fccc04d418e3ba860d1e07cca271bb270518a48f0825f12c7aa87ba905a291038a1807db3cba3efe', '73758853199a01aaba8c5b036f1d30ba17f4d0da2fc9542042b8f79c422152ca2da197d9433db0d8', 0, '2021-12-21 21:47:25');
-INSERT INTO `oauth_refresh_tokens` VALUES ('3509feb78d0da4b901a2e23226b9b7f28f84db43242f854b30a437c1546824d2c0c55154c92e504b', 'a3659c224e95cfb9b3a0f0ff9dbd2a5a6195452721009e63fd1e1802dbb20bcd27db58e7997144ff', 0, '2021-12-21 21:48:41');
-INSERT INTO `oauth_refresh_tokens` VALUES ('c3da1ad77364969b2509a3501f057aeed7d8bb5264b468db3b5cdb94e403d1a6c5d592abee6af62f', '5a7d584f2c96998f8a5afd14b8aa972d89bb63c8be853fd112362813c987a860beae099d3a96c0d2', 0, '2021-12-21 21:50:03');
-INSERT INTO `oauth_refresh_tokens` VALUES ('7203c976e0a594f32b536e194b205e43613129f3ab537073185d569f0a6fe03af81b68d333d16fcb', '3fd438e519dabc89df16abe2e2ed4ddc76328404b777821f70e06188951e79f626a08bdec1c51253', 0, '2021-12-21 21:52:36');
-INSERT INTO `oauth_refresh_tokens` VALUES ('67d1c4c3ce68f4aed1f506a571963886a93143107f236d0578ee145b2a0e3cad80b3820d1291fe9c', '70ba7f770a5a6b80a2c28ccd3a32fce23c1f4fe027280237f03921c7cb30dae3f0c2bf801797bf5b', 0, '2021-12-21 21:59:07');
-INSERT INTO `oauth_refresh_tokens` VALUES ('ebd617460d32a6d0f1863bcf63c8f16a4c81cf16d8e15f6ea12c465834ac7352b0dfa9d15bc103df', '994bab7d9008418c0f6b029ad0c76654e4bbdfbeb19c1a51c6f34785708be0e72e0e94c8b1d78810', 0, '2021-12-21 22:00:43');
-INSERT INTO `oauth_refresh_tokens` VALUES ('619326330a93294458a88e71ad4f7141cdc9117d894c992045fd55c1f321efc1d8f9e2186551806f', '27a5bd552dfff9ddb4dae2531729171c2352238eb269515632c81f6c8b5ccea5bb0325b9a3bf16dc', 0, '2021-12-21 22:03:48');
-INSERT INTO `oauth_refresh_tokens` VALUES ('c0ba54913ce0cdec9e795ac28ad6e67097526e7721719dc631c906ef595f23477be1f87ddc7732bf', '4d21855105cb64301eb0e029629d9c4c16132f0364384f32fa734a03f6760407be140cb2f77254bc', 0, '2021-12-21 22:05:28');
-INSERT INTO `oauth_refresh_tokens` VALUES ('e9d03a7959fca5444c14ed7eff4d7c56d5d83d335fd23529edc84d78028ad29ef4c6c89034c2b3f7', '891176bf32f1e308d7e09bb2a7e4189c7ea74987e9f091d3352f42092fd05b8ff1961ee7d2500199', 0, '2021-12-21 22:07:52');
-INSERT INTO `oauth_refresh_tokens` VALUES ('02c63336cb28860122eade8aa3fc408008b0b3be60628120d54829ebd0934fff23a92b33153a26ee', '8df165291966d3b98bb567619d4ee11c6c7358cca074f656137ba2cd35ece3ee72c64492d5ece0ec', 0, '2021-12-21 22:10:54');
-INSERT INTO `oauth_refresh_tokens` VALUES ('849f4e6ba8f4b1e215cd85f298c65ccb913d881042c08fa339500506f7940076712f894501772345', '593421debe240e0bc5876eabc314b5321f57a60347749f78f4b78f5fb953671f59c789e8e709830c', 0, '2021-12-21 22:15:56');
-INSERT INTO `oauth_refresh_tokens` VALUES ('a2ab87d1182cc7d39e1452c131242ea5359d9ed1f7cd540385828b7d5869c1d874b00d666e0b52fb', '20fa4e1f842ad2ffefab7832722ccb544a497813992a038ba1e971a5d4e3f3f5e357dc24ac248227', 0, '2021-12-21 22:17:10');
-INSERT INTO `oauth_refresh_tokens` VALUES ('90764b1c41595de803a54eaa377bf2ab908c514b03f461dd40f1b7b61328314d1c5d118e6478eead', 'b0eeaeacfe316f40b48b036619bca2d48a2ad22c4bcaba5d9ae99a7a9b2dfa57f31475646da67ed0', 0, '2021-12-21 22:17:25');
-INSERT INTO `oauth_refresh_tokens` VALUES ('cf9409cfb693d6c8fa1a950caf273442247b3f9a2dedb3772ad4dd1de63720ae3b504befb3052048', '863bf36f6e33a82b19a80a6a36b53edc6a34f1dbd46553eab44d2be846392d17932e79ad088b60b5', 0, '2021-12-21 22:19:23');
-INSERT INTO `oauth_refresh_tokens` VALUES ('2803ec1f88d5eee0f9b085616943e8d4d055cc2935d24247142b949be52eaf9014917956455070da', '067b1b627bd330d6203b113c2ba9973061d86822ad49ea7cac89d98243b9b7709a96a40d33c5d843', 0, '2021-12-21 22:19:36');
-INSERT INTO `oauth_refresh_tokens` VALUES ('e8d0bb42ba75fa74b20149f9eb61d9acab9124356a6435755f68dd8a764289cc2edb95c582b61d36', '79276357f48723e2c3e5a2d3db7dacb939f4856e146889aeeec9bee9ed84430e92c0c7af24d827b3', 0, '2021-12-21 22:20:08');
-INSERT INTO `oauth_refresh_tokens` VALUES ('9010fa2a82c131310c245b86f822597c22287893da5d25aeefe9c39aa6943a984d00fc4b6bf1cf77', 'c2349b7f1e3fb757708f5d501ff7d492052344449b9499b76f323cdcf3be808362bffd40b3e8c37b', 0, '2021-12-21 22:20:38');
-INSERT INTO `oauth_refresh_tokens` VALUES ('dd973a35d2737b08948cb59a87aca1784e1ca3a001701df138443e119bf185518be46d8cfab6a367', '55b477f18142d34ed9510cdcfa0e52293e73250a1272a8be2119c0eceaf77f65b0e0bd85ea0c1684', 0, '2021-12-22 06:42:24');
-INSERT INTO `oauth_refresh_tokens` VALUES ('73b0962d455aa24208d1338e4aec5b25e786cb03f3e58d9106a514400c37a8298c27a8bfd3186f9f', 'b7c7ec9d6ff063b0e45127b45c6bcb4471be63869a319d70a9278325b5019c33c647a7df4975d663', 0, '2021-12-22 08:10:36');
-INSERT INTO `oauth_refresh_tokens` VALUES ('299e44c8cbbe9864e648657d989666730360b6e87476b14af63a0a33fb8c5e74ccb9894eb1f33804', '29643117863645112910b07bf2e145a98c4988a9d08a4730330891536afd8ad9e09d0210766cddfe', 0, '2021-12-22 08:11:19');
-INSERT INTO `oauth_refresh_tokens` VALUES ('1652743a850741f1829e8f4be7676da439987be9ceb4043217f618e00e9bd3c902d1b0d6cc4ff9e5', '6a4fe754167981e5c5542bc3a56838727112d68f7b39fd1df765ec3abd994f9372e6b2bc46b2430b', 0, '2021-12-22 19:38:58');
-INSERT INTO `oauth_refresh_tokens` VALUES ('597f7e9f5bb0a7ee095da6774a485208660175ef5c4bf921e5e4a2651390f7611457ac5249c02e52', '2194186fe79d532ce66cef8b35738cdc8c7cf0d9ea54971cb36479fbd5c2d5a48dd21bd9ed8eb97a', 0, '2021-12-23 13:53:45');
-INSERT INTO `oauth_refresh_tokens` VALUES ('98f67fa293bc4edde56605c513c1dd2ec2a5d1eca9a603a4490d80780d57da7646d1cf4f9a72a407', 'ed149e800e0995a5392949ceed68207dde40840fdc874039dbbc1196ca2c9af0c0b332cb6136aedd', 0, '2021-12-23 13:55:52');
-INSERT INTO `oauth_refresh_tokens` VALUES ('dfa09c9158e46e75a29f16d236041cc2a9a5dd3f5f7f1dc8789d8e3030bdc5895279755aba9d344d', 'cd14977b33d6f82adaf10ec69671d8b4932c3ccd9937abe3c6c6cd27da5842652591a2c43ff3417d', 0, '2021-12-23 13:57:53');
-INSERT INTO `oauth_refresh_tokens` VALUES ('e258288947f9fe7fd8e154fe2cd91512862d0e8f0c29a85dee33be7cd47beb057cc96967f13917dc', '2e6079fcb172a3afbbf3e82cfec7f3d873e26a5f8488c9faaaf23389b4160e3dacdb4fb7b2ff2354', 0, '2021-12-23 14:05:14');
-INSERT INTO `oauth_refresh_tokens` VALUES ('93fc4ed5c33b6e49eb0db2698664ffe339111840814886df284b626d4b6ad4abd2fae6e4a3af39f3', 'c812ae29c980f5b12905cb7c95e864da8f42ca1e8f04210a81f19b8fb6438b7697c075f32ea8d6ff', 0, '2021-12-23 17:53:40');
-INSERT INTO `oauth_refresh_tokens` VALUES ('ea5fe99359b95ac5a9aeec296f62d4148e5a01852e7ec1ffdf8bf7e7ecf9774bd8576635e0006811', '10e461015ca5d6c7314ba10cdd29c4511cf9b90c1bdd85e3fae3aac1c9413f7d534d426d17333248', 0, '2021-12-23 17:53:56');
-INSERT INTO `oauth_refresh_tokens` VALUES ('741c689772f376b3c23e06f8d97f2fd3884fa785fb6636c2a3a0f9a3a7a80f527cc64cf67d17940a', 'dafcd8cbe956ed3a3a1a70cdf7fc5b4ff291f885b736120790d104478bacae8a4f30d063975717f7', 0, '2021-12-24 15:51:27');
-INSERT INTO `oauth_refresh_tokens` VALUES ('b240dc09c699bc13f8dbcdd498892917430f89744355c7b1759eebbaeffddfbdeaeda8cb0a4187f1', '5b3c77a2fa608e139ba2cb45e95d0a8eca70e655f65c1d1c4baf1393b1883d7d0e8f7d4315b64d13', 0, '2021-12-31 19:47:31');
-INSERT INTO `oauth_refresh_tokens` VALUES ('0d702b31822bab55ddee60863711e877a4b44dcbf66be761e88f64edf671227574488829d1c7c1f8', '164bc199f9bb12905f9d744540a3f40b941be411ca451f1c139eb4444b6d41a9f9e8970fa9976b2f', 0, '2022-01-02 15:47:08');
-INSERT INTO `oauth_refresh_tokens` VALUES ('3e6afa028b9651e7443def5d8ea8bd67fc11373c09925cbb9bffb286324c1a7cf961abd5ac8a4a42', 'a1cee3a3172656863d7d36cd431e138d916fa04a53cdd6d383db0caf7607b2f44edc68c67dcd22f4', 0, '2022-01-03 10:13:45');
-INSERT INTO `oauth_refresh_tokens` VALUES ('6f6a226ba3e22b1247144c07ad6fbd6e879586d6b96441a55c91918ae4e50a6510efa298d490da52', 'de396cbb32b307c3c6d8b47c91d9e340bd4900431dfc8d2d6278123c1c74bfc49911eb2874d3b12b', 0, '2022-01-03 20:16:39');
-INSERT INTO `oauth_refresh_tokens` VALUES ('e0d08e2ea22341ac0e9b0ad580ae65f6750fabe4fb2866eb9c87356d0cae62c1026f6f4e58ff7bf5', '956dff274fc4df470194b4c55e888d815ff4cb3e7178de7293cb9a74b19138ef049cd72c436c4df8', 0, '2022-01-10 21:46:31');
-INSERT INTO `oauth_refresh_tokens` VALUES ('1254d1ef469e92a768e55f342855c96cb66a0d403266040be2a0423a92a9522b22b644be5ee94280', '096908cdd83ab50cfe283b1d02b87e6d76c47a021223e79f5f27a1fa01cc2ffb3e664e918967ee0c', 0, '2022-01-11 12:35:34');
-INSERT INTO `oauth_refresh_tokens` VALUES ('4ff2c877d2cb9d21eacd407d111b37fdf348153454b66d958177af16973e56d4ceba6647ae7cdcbd', '5d3226b700bd37bcf711c3fbec49d220a6f30b802d088ce0808dac678a5d249230f7d9f54d93b3d3', 0, '2022-01-11 13:02:28');
-INSERT INTO `oauth_refresh_tokens` VALUES ('6c032a137324bda69415e33050746b111fd9c21a3e93373709f450cc8a52289f6a5446df0633d611', '992da1603a5b2923d8d5a33528a406fdb151f3a30a1537e0eb0b3438399b1d6d98506e1822a29b82', 0, '2022-01-11 13:04:31');
-INSERT INTO `oauth_refresh_tokens` VALUES ('e7d976cd2c2ef3c074f66b93d3e7953893821c2b4a139e15948cdb27871ab9ce2e6e7126158be6bd', 'c08671c4792b9621db9a7719b1511c8173d30bf6b07c4e234bcd8bcb9034ba12052b3b863969e3b9', 0, '2022-01-11 13:04:56');
-INSERT INTO `oauth_refresh_tokens` VALUES ('606aaa65ef6135d403a8fc7d479fcd0de327f6594967a8e97820f767b376615b51638ac1bb5955bf', '466b23a9ee2144c5909035c6bcb49c83361c630dc7204fc65ecfa981dc60ed83e72b48cfedb1c5b2', 0, '2022-01-11 13:49:05');
-INSERT INTO `oauth_refresh_tokens` VALUES ('2de336b95729f8db0aaa044b059a462a9b5b043a284b786392e942b2facf3e995bf69c131f02eded', 'b94d9e76c03811c9beb56fc363d34e2798df798930cf055b5e240a530bc9601f17aee3e9998b8447', 0, '2022-01-11 14:05:07');
-INSERT INTO `oauth_refresh_tokens` VALUES ('2348a2b72fd67853e79ca4c0887ebb4d2502ccf6ef9c1a19845501a8d17fe831c42b182c8bdeb1d9', 'f689a2bd95ca40d17ddb8f541c4068e0663924eda7ca5c951c58dac9ad8b8fa2e02ea3a98fb3c428', 0, '2022-01-11 14:05:52');
-INSERT INTO `oauth_refresh_tokens` VALUES ('b7f0953c696b4dcfa2c9faaedabc76f54508eb6c515d6930e1f2bbc6f3a5dbc0cafe24a0b4525605', 'a68eb069aab7d24ff6cd2835384e4e7ba3bedcc4a8a88869e93cd67b690741e7a4cf2393f3669c77', 0, '2022-01-11 14:31:29');
-INSERT INTO `oauth_refresh_tokens` VALUES ('0d316f5550ca8a4dcd1e9d950a461a36febc05c5a3d741274d21791b37f9be4d0ac4b9bcec9e6a90', '4f0df1ceb5f1c5c5c191f1e3cf730e1a578ab9c5022209c57e5eb23f00420cb0a8bf8314ebe1232a', 0, '2022-01-11 14:34:36');
-INSERT INTO `oauth_refresh_tokens` VALUES ('25234a0a88b6ee5538a945b4fcb746c0b81c227157417a45326a1968042c8984be4138da9c859dbe', '2ba4c318cb91cd0cbfea9e49aaf42ccf9f3bda6dbe47d1472f928761d749518cf1c5672f13d43c37', 0, '2022-01-11 14:40:44');
-INSERT INTO `oauth_refresh_tokens` VALUES ('192ae8b3cfd5fa185cdcf6af5f269495592e0cda5a7238983a5ace0b31869a7a509eed2ac0e03344', '3b57be2a541c77d5561d23f8ef8ca8ffc7ebcc8c191c5c89d0bf503a56742d562c708ef2ed155fe5', 0, '2022-01-11 14:41:23');
-INSERT INTO `oauth_refresh_tokens` VALUES ('b4ddc95e19b0b0291b042ca553e81951a68b243b6cf647148fb04016ebc5cd52adcb382796874214', '71b99749d5c93c03a9908453aa1aed852dc79e9dc050ebf3ad2c9591c762e2e8e59a6f5d9979cac5', 0, '2022-01-11 17:56:45');
-INSERT INTO `oauth_refresh_tokens` VALUES ('32c0d429a6ccac6a1256afec7269bf1964cc0a32a183468c0629b56f7ba6ba6b77ba9ab684859076', '9b3bc943fe579a351466026e3b043acad7ecf1d2fcc30e342c4fbced51797e69559aa2cbc0cbe320', 0, '2022-01-11 21:59:05');
-INSERT INTO `oauth_refresh_tokens` VALUES ('795429c113e7811506278e71f8f8ae3efad7bf9b197eefdee5d80ac654660e6c04e9482e0fed200d', 'c605c7d06a20ca76aee7f9b4732c8322e01b9e9466521e9fc8c868914d4374c6973b071726f418d0', 0, '2022-01-12 14:02:18');
-INSERT INTO `oauth_refresh_tokens` VALUES ('e46d46c53e5243d29a8203b77c9b082db374ab45572973a25318ec7db37f4e07a0c1e5a0d4962cc6', '827f68d2f05a39c203ee38b554440fdf4bcd90ebbb89459b2913bb1dc6456f46e9a07d25ae7a4396', 0, '2022-01-12 14:02:53');
-INSERT INTO `oauth_refresh_tokens` VALUES ('e83936214ae4f3cb250b06216e1146c4bbbb680b001dfd7c575b4b7de21513eb5cfaa663aadfa879', '10398fba867523670fdae40697f64e2649d87c0f8b7e61e8db898f0b7453bc6878e269121266191a', 0, '2022-01-12 14:10:45');
-INSERT INTO `oauth_refresh_tokens` VALUES ('1eb66e882416297f4a436b7604e49d24be3115c3af29a03cfce097a79f897dbb52ab5ceb1061d137', '5d1cbc6aa11153beae8b7979c6789ae68bc89f63ed997b16d36e37aa7572a9d202c8ab25b60d643c', 0, '2022-01-12 14:11:29');
-INSERT INTO `oauth_refresh_tokens` VALUES ('ef341708b42fe612583e6d0a779dfee7399387214bffca41d9450218164eff595caa5eaf3f6decbc', 'e25febc3594f63310d12990de07c8fa6e0095a5b390f93a20a461d925bdb2e8d4ff3dd0111b84a3c', 0, '2022-01-12 14:12:11');
-INSERT INTO `oauth_refresh_tokens` VALUES ('297c3bf00d0993c4e8933595fef0f4a1ac452cef1bee3fe09dc831d0bc687dff932423c32e014f60', '269c626028bb6b8c03c429ff55a16610df83c0ce65bd48ea7dae98f2e0c137a163bc53d723baa904', 0, '2022-01-12 14:12:35');
-INSERT INTO `oauth_refresh_tokens` VALUES ('742606c8d715aea14e275b68b26898a06a59685f2b8233c97600f82ae272686dabaecca27c5b1941', '024cfa21b37aca9a242cbea303d7bba141268c82fc4fb5c42b4921c10785a3c7dd09fedbc4552a91', 0, '2022-01-12 14:13:01');
-INSERT INTO `oauth_refresh_tokens` VALUES ('a87ddfa3d4143aacb3eba5a72fccc0a9120144e9f5389b35427ceef4d29f3b59813534cff4fe9904', '745b0f7a6c70351125b5b67128d99a66ef2f06f987ad099175a6a93a339ab461fc700607c5caceb1', 0, '2022-01-12 14:14:16');
-INSERT INTO `oauth_refresh_tokens` VALUES ('9cb7abeada031f90bb1f770b2fa5f998787c3953d7d19b4d9ff6990deb81bafdda977d09636f3b91', 'dc190422dc063e04d4e4f8c9765ee3fe4223528c554402c4470930c5f221747be80f8e3ee4f9f345', 0, '2022-01-12 14:14:39');
-INSERT INTO `oauth_refresh_tokens` VALUES ('3586ef79c01a67c63edca18633c186723e6ddba58d1ac0922950c1e8e9041564389c3709480efe20', '9b31493274b6452ef00fee131d0c1b49edfc4c49f2c0d5df1a2e980a3224a5203720767e507f8083', 0, '2022-01-12 14:17:21');
-INSERT INTO `oauth_refresh_tokens` VALUES ('b5c3de2d0c8951b8300fff3d148cb9afa236d857820de178b89678f8d1a29643fdaae3e592a096dc', '48dff95ce74b88efd778b722b4cbf5a99ac5a33411d5ee0503e01f2d1bf1c39635d24db1edff30aa', 0, '2022-01-12 14:39:24');
-INSERT INTO `oauth_refresh_tokens` VALUES ('6dc77e0d2a5587a029dc8a52c7764a08e184ed54f6290befeac9852aaf7152e8626b609393bffe22', '55ca6d5c37f53ccc7f137a5ed3697acbff3e2d2723f4149bdec0337eb506291495d4e03f08537b25', 0, '2022-01-12 14:41:09');
-INSERT INTO `oauth_refresh_tokens` VALUES ('ac30fa19f2647d7ae463c2db2267de4301088e77118ea473f89fd94d52ae6f951d9b6d445d6dbfdd', '060d57ed920de01e11b79bd49fcf2c83490c84ece590c1d5cbe7b5d6db826296fa6257deb0b63041', 0, '2022-01-12 16:56:19');
-INSERT INTO `oauth_refresh_tokens` VALUES ('752755a0b4c625020c2c04a3e8abb0ee71b9f2cdc3d6db3159cc176157b74c0303ea44df3a8f7a84', 'c0a5da28d73092c9bb3cedda7bb02210ad8e43e7a94a68104e73cdd18bf977edc43f73ec7ce4ea3b', 0, '2022-01-12 18:02:46');
-INSERT INTO `oauth_refresh_tokens` VALUES ('431b2b6b95dc8af5a4b46061f810bb0c17d22f02602ad711561ad41def945d7ea49172c9730e5b6f', 'ee2971641ce3aa59789df40c403b1a006dd40a2d96fffa215b0a405a7aadc2119f898bad005c5865', 0, '2022-01-17 13:46:56');
-INSERT INTO `oauth_refresh_tokens` VALUES ('f4b7a6a95d38f9eb74d6d6437dd256528960c9229135eb7a4f64aeb7696dab6b1b0308f01560d079', '68493843fd741bdc98460b0825e19a0b33676ffd5c41537a874575279f53aca1185c5bc944f4219c', 0, '2022-01-18 23:11:58');
-INSERT INTO `oauth_refresh_tokens` VALUES ('b6fe7b9898f902f93607b676c8aa5ed2afe3024d0e115ce21ad7a0e30fa8e2d90381fce9de464dc6', '2ab22a3ae3c26d551a3334e425a72325a8d4eb346577a759ec0b5547ed62b7ab7d80764f5653f62f', 0, '2022-01-19 20:33:52');
-INSERT INTO `oauth_refresh_tokens` VALUES ('0de7435f268d1ab0c32bf08b4813cdef9441ded7855820dc5c2369540df08c003bacf313d1d9fdd3', 'c8a466d215f25162280e2dff13afe828629438cb5a142d3d6da2e8fbc48016aad6bf08a9f5acd738', 0, '2022-01-24 23:06:55');
-INSERT INTO `oauth_refresh_tokens` VALUES ('cd085d3c54b4408ed9e25b3602e7174b29fa63c5a6fb8d9fd899b8639255eafe1210f57ada1d2832', '2d001d86223fe4876789e64f86df67ef4dd2671cae3c99cbe4da32fe1ddf2933a4c77f59dfa4ef5b', 0, '2022-01-26 13:58:56');
-INSERT INTO `oauth_refresh_tokens` VALUES ('ba5221403c8d6d34c7af8a85c00c949d21dc728e2a97770f9056efc37b6e4e74d6ebe545b1d44d72', '64369acd371798a898f938e916b0b61f41e0bd3c2d4d30dbebc88695e7fa7c90b7bf9ae83fb967bb', 0, '2022-01-26 17:32:22');
-INSERT INTO `oauth_refresh_tokens` VALUES ('ceb5dd07a61c9273aaca4a651f53e491e71c40b452d8994794a701ad9b0bb3e7dca5c3798a968971', '5ced3cf34ed13258e109ae696bcc0564bd8fd7c0e4e7c32a8127b003e2f15206fa227e1bef07b06f', 0, '2022-01-27 20:23:52');
-INSERT INTO `oauth_refresh_tokens` VALUES ('7583e29456ee2a3b3981c69dcdcc4796a5f0e977df6cccbb3f57db37a59ef028ba8996269f32fe9a', '2387c3eb01e12ac31c66812c78fda50bf82b4450513128dfb2cdd289435f1567fca95c80376d9d1f', 0, '2022-02-25 17:01:52');
-INSERT INTO `oauth_refresh_tokens` VALUES ('04c45a18028cac4336be38270c9c2537e303581980ff86aa6bc64fd8f6277449c4c994c745113b83', '1de92e1f80f4af31bdfea3e574c341fad8516a284668726147ee71a0d007a80fbcf771b3be5f00b3', 0, '2022-02-25 17:29:05');
-INSERT INTO `oauth_refresh_tokens` VALUES ('836d35e23963bf95fb0f3c49463692f6cb0b3072e7ea39d7d906281946c0fce877cb08dc17060579', '5328b9e2077b14529151509ad02ba862ddb69e1c6489a68ebbcb85e014e55d1d920a29c5a7d7bea8', 0, '2022-02-26 16:52:20');
-INSERT INTO `oauth_refresh_tokens` VALUES ('5bdacfb4b34480f717bea95d12a506c835c623a688b375f40f1b8e69e1db667a06ff5e40f762e18c', '6d208168ca7cffaa36146616f3b05fabe7609df36bd47070a8c45417c40c328c56aaa6f4fca42827', 0, '2022-02-27 17:03:05');
-INSERT INTO `oauth_refresh_tokens` VALUES ('c83ccdd0345e8135c64adc7378f98d686d88e6a038183b11b3fbfc7f369201c2b61e7d249360e593', '1d456d866ab4c50163c1bded8f1088c8cf5df4f5d1de0bfd539f89c5f9399c4d0dfa1d11285222f3', 0, '2022-02-27 19:31:14');
-INSERT INTO `oauth_refresh_tokens` VALUES ('cdd71f1011d09759fb2b7cedffa600c578415e4b3be7436e666ea37e6dfcb7ad111b7d0277ed1c6b', '4fc2ed1ef758e8f33cb7ab65b055192bd07d5ae039ae13a0863919088edd6d4dbad3a297ee3a4677', 0, '2022-02-27 20:08:46');
-INSERT INTO `oauth_refresh_tokens` VALUES ('cdc3e3424354e0afd89508794cc07fc3d268a076de75813a7a0852be70fa8e93a87fb72d115a02d4', 'af9e8d738f05fdd5b7264ab2f4a4927135a77d8170fe6d8468e3118f479cb64141be35fe81840b93', 0, '2022-02-27 20:09:59');
-INSERT INTO `oauth_refresh_tokens` VALUES ('fbadb8e17d65c4e407e21cb1abbca662777f3a9f44e92334f20c1c83de049ac5e3b6e0f1c50e6770', '44c00fa1c47ecb5cfde8d039ff43b35a93a0a81d81c97c80f22489771aa26deb4839d9ffa395dcbe', 0, '2022-02-27 20:19:07');
-
--- ----------------------------
--- Table structure for oauths
--- ----------------------------
-DROP TABLE IF EXISTS `oauths`;
-CREATE TABLE `oauths`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `belong_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `model_name` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'User' COMMENT '模型名称',
-  `oauth_name` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'User' COMMENT '第三方平台',
-  `nickname` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '第三方昵称',
-  `sex` tinyint(3) UNSIGNED NOT NULL DEFAULT 1 COMMENT '普通用户性别，1 为男性，2 为女性',
-  `headimgurl` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '用户头像',
-  `openid` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '微信单一平台指定标识',
-  `unionid` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '微信平台唯一标识',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of oauths
 -- ----------------------------
-
--- ----------------------------
--- Table structure for order_comments
--- ----------------------------
-DROP TABLE IF EXISTS `order_comments`;
-CREATE TABLE `order_comments`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `order_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '订单ID',
-  `goods_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '商品ID',
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `score` decimal(5, 2) UNSIGNED NOT NULL DEFAULT 5.00 COMMENT '综合评分',
-  `agree` decimal(5, 2) UNSIGNED NOT NULL DEFAULT 5.00 COMMENT '描述相符',
-  `service` decimal(5, 2) UNSIGNED NOT NULL DEFAULT 5.00 COMMENT '服务态度',
-  `speed` decimal(5, 2) UNSIGNED NOT NULL DEFAULT 5.00 COMMENT '发货速度',
-  `reply` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '回复内容',
-  `reply_time` timestamp NOT NULL DEFAULT '2021-12-22 23:48:31' COMMENT '回复时间',
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容',
-  `image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '图片逗号隔开',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_comments
@@ -5213,30 +3973,6 @@ INSERT INTO `order_comments` VALUES (2, 6, 25, 1, 1, 0.00, 0.00, 0.00, 0.00, '',
 INSERT INTO `order_comments` VALUES (3, 6, 25, 1, 1, 5.00, 5.00, 5.00, 5.00, '', '2021-12-22 23:48:31', '大苏打', '', '2022-01-13 23:32:58', '2022-01-13 23:32:58', NULL);
 INSERT INTO `order_comments` VALUES (4, 6, 25, 1, 1, 5.00, 5.00, 5.00, 5.00, '', '2021-12-22 23:48:31', '是否', '', '2022-01-13 23:35:29', '2022-01-13 23:35:29', NULL);
 INSERT INTO `order_comments` VALUES (5, 6, 25, 1, 1, 5.00, 5.00, 5.00, 5.00, '', '2021-12-22 23:48:31', '阿萨大', '/storage/comment/2022-01-13/85zyZglMVs6kTfYwT2RBTJoncdA2fb0TBEK4Od1b.png,/storage/comment/2022-01-13/3wVUCvN1qTkFPS7rMtxw9nlnxnf8K9JSWI8dYwYu.png', '2022-01-13 23:36:42', '2022-01-13 23:36:42', NULL);
-
--- ----------------------------
--- Table structure for order_goods
--- ----------------------------
-DROP TABLE IF EXISTS `order_goods`;
-CREATE TABLE `order_goods`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `order_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '订单ID',
-  `sku_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'SKUID',
-  `goods_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '商品ID',
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `goods_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '商品名称',
-  `goods_image` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '商品图片',
-  `sku_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'SKU 名称',
-  `buy_num` int(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '购买数量',
-  `total_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '总价格',
-  `goods_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '商品单价',
-  `total_weight` decimal(6, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '总重量',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_goods
@@ -5273,30 +4009,6 @@ INSERT INTO `order_goods` VALUES (29, 28, 1, 1, 6, 1, 'as2', '/storage/goods/202
 INSERT INTO `order_goods` VALUES (30, 28, 0, 10, 6, 1, '你当像鸟飞往你的山（比尔·盖茨年度特别推荐，登顶《纽约时报》畅销榜80 周！多一个人读到这个真实故事，就多一个人勇敢做自己！）', '/storage/goods/3/2021-02-21/BZXdVMnA0hMMZQ0CcqMDROJViBjbC59S2Jjgj4xc_150.jpg', '-', 1, 45.00, 45.00, 1.00, '2022-02-14 17:33:47', '2022-02-14 17:33:47', NULL);
 
 -- ----------------------------
--- Table structure for order_pays
--- ----------------------------
-DROP TABLE IF EXISTS `order_pays`;
-CREATE TABLE `order_pays`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `belong_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '所属用户',
-  `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订单名称',
-  `pay_no` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订单号',
-  `order_ids` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订单IDs',
-  `trade_no` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '第三方订单号',
-  `payment_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '支付平台',
-  `device` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '设备',
-  `is_recharge` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '充值',
-  `total` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '金额',
-  `balance` decimal(9, 2) NOT NULL DEFAULT 0.00 COMMENT '支付余额',
-  `pay_status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '支付状态',
-  `pay_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '支付时间',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of order_pays
 -- ----------------------------
 INSERT INTO `order_pays` VALUES (1, 6, '', '20211227173054612082', '1', '', 'balance', 'web', 0, 2.00, 0.00, 0, '2021-12-27 17:30:54', '2021-12-27 17:30:54', '2021-12-27 17:30:54', NULL);
@@ -5321,69 +4033,10 @@ INSERT INTO `order_pays` VALUES (19, 6, '', '20220113202156685849', '25', '', 'w
 INSERT INTO `order_pays` VALUES (20, 6, '', '20220113202309660547', '25', '', 'balance', 'web', 0, 32.90, 32.90, 1, '2022-01-13 20:23:09', '2022-01-13 20:23:09', '2022-01-13 20:23:09', NULL);
 
 -- ----------------------------
--- Table structure for order_settlements
--- ----------------------------
-DROP TABLE IF EXISTS `order_settlements`;
-CREATE TABLE `order_settlements`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `order_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '订单ID',
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `settlement_no` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '结算单号',
-  `total_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '订单金额',
-  `settlement_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '结算金额',
-  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '结算状态',
-  `info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '备注',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of order_settlements
 -- ----------------------------
 INSERT INTO `order_settlements` VALUES (1, 2, 6, 1, '202202121737222359', 2.00, 2.00, 1, '手动订单结算.|商品分佣-0', '2022-02-12 17:37:22', '2022-02-12 17:37:22', NULL);
 INSERT INTO `order_settlements` VALUES (2, 25, 6, 1, '202202121737222359', 32.90, 32.90, 1, '手动订单结算.|商品分佣-0', '2022-02-12 17:37:22', '2022-02-12 17:37:22', NULL);
-
--- ----------------------------
--- Table structure for orders
--- ----------------------------
-DROP TABLE IF EXISTS `orders`;
-CREATE TABLE `orders`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `coupon_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '优惠券日志ID',
-  `collective_id` int(11) NOT NULL DEFAULT 0 COMMENT '拼团日志ID',
-  `order_no` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订单号',
-  `order_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订单标题',
-  `order_image` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订单图片',
-  `total_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '总支付金额',
-  `order_price` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '订单计算金额',
-  `order_balance` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '余额支付金额',
-  `freight_money` decimal(5, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '运费金额',
-  `coupon_money` decimal(5, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '优惠金额',
-  `order_status` tinyint(3) UNSIGNED NOT NULL DEFAULT 1 COMMENT '订单支付 0 取消 1 等待支付 2等待发货 3确认收货 4等待评论 5售后 6订单完成',
-  `refund_status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 退款 1退货 2 处理结束',
-  `is_settlement` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否结算',
-  `delivery_no` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '快递订单号',
-  `delivery_code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '快递公司编码',
-  `receive_name` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '收件人名',
-  `receive_tel` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '收件人手机',
-  `receive_area` varchar(140) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '地址信息',
-  `receive_address` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '详细地址信息',
-  `payment_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '支付方式',
-  `pay_time` timestamp NOT NULL DEFAULT '2021-12-27 15:59:37' COMMENT '支付时间',
-  `delivery_time` timestamp NOT NULL DEFAULT '2021-12-27 15:59:37' COMMENT '发货时间',
-  `receipt_time` timestamp NOT NULL DEFAULT '2021-12-27 15:59:37' COMMENT '确认收货时间',
-  `comment_time` timestamp NOT NULL DEFAULT '2021-12-27 15:59:37' COMMENT '评论时间',
-  `remark` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders
@@ -5418,73 +4071,15 @@ INSERT INTO `orders` VALUES (27, 6, 1, 0, 0, '20220214173148623734', 'as2', '/st
 INSERT INTO `orders` VALUES (28, 6, 1, 0, 0, '20220214173347678568', 'as2', '/storage/goods/2021-12-22/nhWfKVZqi3AXV3hCWtk5GBxuYjuh8DADOuKBduR1_150.png', 55.00, 47.00, 0.00, 8.00, 0.00, 1, 0, 0, '', '', '张三', '18888888888', '河北省 淄博市', '面馆', '', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '2021-12-27 15:59:37', '', '2022-02-14 17:33:47', '2022-02-14 17:33:47', NULL);
 
 -- ----------------------------
--- Table structure for refunds
--- ----------------------------
-DROP TABLE IF EXISTS `refunds`;
-CREATE TABLE `refunds`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `order_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '订单ID',
-  `refund_type` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '售后类型 0 退款 1退货',
-  `refund_verify` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '售后状态 0 处理中 1同意 2拒绝',
-  `refund_step` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '售后步骤  0等待用户填写单号 1等待商家 2商家确定收货并发货 3用户确定收货订单成功',
-  `delivery_no` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '快递订单号',
-  `delivery_code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '快递公司编码',
-  `re_delivery_no` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '商家快递订单号',
-  `re_delivery_code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '商家快递公司编码',
-  `refund_remark` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '售后原因',
-  `images` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '图片',
-  `refuse_remark` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '拒绝原因',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of refunds
 -- ----------------------------
 INSERT INTO `refunds` VALUES (1, 6, 1, 2, 0, 1, 3, '', '', '', '', '其他原因', '', '', '2021-12-30 16:08:39', '2021-12-31 13:54:22', NULL);
 INSERT INTO `refunds` VALUES (2, 6, 1, 4, 1, 1, 3, '45646545664', '', '888888888', '', '物品破损', '', '', '2021-12-31 14:33:28', '2021-12-31 15:22:54', NULL);
 
 -- ----------------------------
--- Table structure for seckills
--- ----------------------------
-DROP TABLE IF EXISTS `seckills`;
-CREATE TABLE `seckills`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `goods_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '商品ID',
-  `discount` decimal(6, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '折扣',
-  `start_time` timestamp NOT NULL DEFAULT '2021-12-30 14:17:16' COMMENT '开始时间',
-  `end_time` timestamp NOT NULL DEFAULT '2022-01-04 14:17:16' COMMENT '结束',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
-
--- ----------------------------
 -- Records of seckills
 -- ----------------------------
 INSERT INTO `seckills` VALUES (1, 1, 1, 1.00, '2022-01-01 00:00:00', '2022-01-06 21:04:35', '2022-01-03 21:04:35', '2022-01-03 21:04:35', NULL);
-
--- ----------------------------
--- Table structure for sms
--- ----------------------------
-DROP TABLE IF EXISTS `sms`;
-CREATE TABLE `sms`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '签名名称',
-  `code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '签名模板',
-  `content` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '签名内容',
-  `description` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '描述',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sms
@@ -5495,24 +4090,6 @@ INSERT INTO `sms` VALUES (3, 'xxx', 'xxx', 'xx', '', '2021-11-27 19:33:20', '202
 INSERT INTO `sms` VALUES (4, 'asd', 'asd', 'asd', '', '2021-11-27 19:35:38', '2021-11-27 19:35:41', NULL);
 
 -- ----------------------------
--- Table structure for sms_logs
--- ----------------------------
-DROP TABLE IF EXISTS `sms_logs`;
-CREATE TABLE `sms_logs`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '手机号',
-  `name` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '类型',
-  `content` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '发送内容',
-  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '发送状态',
-  `error_msg` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '错误信息',
-  `ip` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.0.0' COMMENT '操作IP',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of sms_logs
 -- ----------------------------
 INSERT INTO `sms_logs` VALUES (1, '15073010917', 'register', '4064', 0, 'Client error: `GET http://dysmsapi.aliyuncs.com?RegionId=cn-hangzhou&Format=JSON&SignatureMethod=HMAC-SHA1&SignatureVersion=1.0&SignatureNonce=61a234a98c683&Timestamp=2021-11-27T13%3A37%3A45Z&Action=SendSms&Version=2017-05-25&PhoneNumbers=15073010917&SignName=%E6%8E%A8%E6%B5%81%E7%A0%81&TemplateCode=SMS_135030478&TemplateParam=%7B%22code%22%3A4064%7D&Signature=54OeuA41pw%2BvMl%2F8XTRs8SgRSU4%3D` resulted in a `400 Bad Request` response:\n{\"RequestId\":\"BCF392D1-7A8F-5D20-807D-1B3CF5FCC901\",\"Message\":\"AccessKeyId is mandatory for this action.\",\"Recommend\":\"h (truncated...)\n', '127.0.0.1', '2021-11-27 21:37:45', '2021-11-27 21:37:45', NULL);
@@ -5521,117 +4098,19 @@ INSERT INTO `sms_logs` VALUES (3, '15073010917', 'register', '9889', 0, 'Client 
 INSERT INTO `sms_logs` VALUES (5, '15073010917', 'register', '7427', 1, 'Client error: `GET http://dysmsapi.aliyuncs.com?RegionId=cn-hangzhou&Format=JSON&SignatureMethod=HMAC-SHA1&SignatureVersion=1.0&SignatureNonce=61af464c70f42&Timestamp=2021-12-07T11%3A32%3A28Z&Action=SendSms&Version=2017-05-25&PhoneNumbers=15073010917&SignName=%E6%8E%A8%E6%B5%81%E7%A0%81&TemplateCode=SMS_135030478&TemplateParam=%7B%22code%22%3A7427%7D&Signature=ewrk6vBOa6lCXEPAIEUR1ZPvWvw%3D` resulted in a `400 Bad Request` response:\n{\"RequestId\":\"40B8A3CD-24DF-5FA0-AB33-3573CC0B3038\",\"Message\":\"AccessKeyId is mandatory for this action.\",\"Recommend\":\"h (truncated...)\n', '127.0.0.1', '2021-12-07 19:32:28', '2021-12-07 19:32:28', NULL);
 
 -- ----------------------------
--- Table structure for store_classes
--- ----------------------------
-DROP TABLE IF EXISTS `store_classes`;
-CREATE TABLE `store_classes`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `store_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺ID',
-  `class_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '栏目ID',
-  `class_name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '栏目名称',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of store_classes
 -- ----------------------------
 INSERT INTO `store_classes` VALUES (1, 1, '[[\"2\",\"8\",\"26\"],[\"2\",\"8\",\"27\"],[\"2\",\"8\",\"28\"]]', '', NULL, '2021-12-29 15:35:07', NULL);
 
 -- ----------------------------
--- Table structure for stores
--- ----------------------------
-DROP TABLE IF EXISTS `stores`;
-CREATE TABLE `stores`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `store_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '神秘商户' COMMENT '商户名称',
-  `store_logo` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '店铺LOGO',
-  `store_face_image` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '店铺门面',
-  `store_mobile` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '店铺电话',
-  `store_description` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '该商户很懒，什么也没留下' COMMENT '店铺描述',
-  `store_slide` varchar(550) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '店铺幻灯片',
-  `store_mobile_slide` varchar(550) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '店铺app幻灯片',
-  `store_company_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '公司名称',
-  `province_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '省ID',
-  `city_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '市ID',
-  `region_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '区ID',
-  `store_lat` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '39.92' COMMENT '纬度',
-  `store_lng` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '116.46' COMMENT '经度',
-  `area_info` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '地区信息',
-  `store_address` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '详细地址',
-  `business_license` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '营业执照',
-  `business_license_no` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '营业执照号码',
-  `legal_person` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '法人',
-  `store_phone` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '法人电话',
-  `id_card_no` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '身份证号码',
-  `id_card_t` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '身份证上',
-  `id_card_b` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '身份证下',
-  `emergency_contact` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '紧急联系人',
-  `emergency_contact_phone` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '紧急联系人电话',
-  `store_money` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '账号余额',
-  `store_frozen_money` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '账号冻结资金',
-  `store_status` tinyint(3) UNSIGNED NOT NULL DEFAULT 1 COMMENT '店铺状态',
-  `store_verify` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺审核状态',
-  `store_refuse_info` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '拒绝原因',
-  `after_sale_service` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '售后服务',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of stores
 -- ----------------------------
-INSERT INTO `stores` VALUES (1, 6, '神秘商户', '/storage/store_logo/2021-12-08/qfhUXnFojC4VWYAO0laiOMAYppWbchfovO9X1DTR.png', '/storage/store_face/2021-12-19/vZug2Wh3P0cY4oB43Np0Hds1d7r5edo0tcx24Mfr.png', '18888888888', '该商户很懒，什么也没留下', '[\"\\/storage\\/store_slide\\/2021-12-19\\/gBdc8TcbznZlhi0fjAXz1KSAnByJAsLuwFSZXHwN.png\",\"\",\"\\/storage\\/store_slide\\/2021-12-19\\/E1F33oz2Mdk5R3NrrQkD0zh2eBtmink0uOZ3nxoI.png\"]', '', 'asd', 1, 2, 3, '39.853106', '116.344857', '北京市 市辖区 东城区', 'asd', '/storage/business_license/2021-12-08/D8Wwqf2oLsUONi1lrDTBhXhCEMHO7Sny3FzOu69G.png', 'ds', 'sd', 'sd', 'sd', '/storage/id_card_t/2021-12-08/V08LXAyh21eGE6xLp78q9qx6o4GTmtMQhL9wADZX.png', '/storage/id_card_b/2021-12-08/v5GeXw1wUJt7Q5id5T7kZOPatlYn0JSRRHkLWYfK.png', 'ad', 'asd', 40.90, 5.00, 1, 4, '暂无原因', '<p>打撒cc</p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"打撒cc\"}]}]', '2021-12-08 00:21:10', '2022-02-12 23:51:48', NULL);
-
--- ----------------------------
--- Table structure for user_checks
--- ----------------------------
-DROP TABLE IF EXISTS `user_checks`;
-CREATE TABLE `user_checks`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户',
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
-  `card_no` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '身份证号',
-  `card_t` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '身份证图片上',
-  `card_b` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '身份证图片下',
-  `bank_no` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '银行卡号',
-  `bank_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '银行名称',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+INSERT INTO `stores` VALUES (1, 6, '神秘商户', '/storage/store_logo/2021-12-08/qfhUXnFojC4VWYAO0laiOMAYppWbchfovO9X1DTR.png', '/storage/store_face/2021-12-19/vZug2Wh3P0cY4oB43Np0Hds1d7r5edo0tcx24Mfr.png', '18888888888', '该商户很懒，什么也没留下', '', '', 'asd', 1, 2, 3, '39.853106', '116.344857', '北京市 市辖区 东城区', 'asd', '/storage/business_license/2021-12-08/D8Wwqf2oLsUONi1lrDTBhXhCEMHO7Sny3FzOu69G.png', 'ds', 'sd', 'sd', 'sd', '/storage/id_card_t/2021-12-08/V08LXAyh21eGE6xLp78q9qx6o4GTmtMQhL9wADZX.png', '/storage/id_card_b/2021-12-08/v5GeXw1wUJt7Q5id5T7kZOPatlYn0JSRRHkLWYfK.png', 'ad', 'asd', 41.90, 5.00, 1, 4, '暂无原因', '<p>打撒cc</p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"打撒cc\"}]}]', '2021-12-08 00:21:10', '2022-02-15 23:25:01', NULL);
 
 -- ----------------------------
 -- Records of user_checks
 -- ----------------------------
 INSERT INTO `user_checks` VALUES (1, 6, 'asd', 'asd', '/storage/card_t/2021-12-24/4PKTrUIewHEtLVnx8CH6aRkiU2h5HhJsgytm6zbw.png', '/storage/card_b/2021-12-24/yf6cBr8qoZ3B3mjTOCnYKsXPUuZyCkPDOcCB1YEF.png', 'asd', 'asd', '2021-12-24 22:12:29', '2021-12-24 22:12:29', NULL);
-
--- ----------------------------
--- Table structure for user_menus
--- ----------------------------
-DROP TABLE IF EXISTS `user_menus`;
-CREATE TABLE `user_menus`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `pid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上级ID',
-  `name` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '菜单名称',
-  `ename` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '英文名称',
-  `icon` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '图标',
-  `apis` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '菜单路由',
-  `view` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '前端视图',
-  `is_open` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '外链跳转',
-  `content` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '菜单描述',
-  `is_sort` int(10) UNSIGNED NULL DEFAULT 0 COMMENT '排序',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_menus
@@ -5674,116 +4153,20 @@ INSERT INTO `user_menus` VALUES (36, 25, '优惠劵日志', '', '', '/Seller/cou
 INSERT INTO `user_menus` VALUES (37, 1, '仪表盘', '', 'fa-dashboard', '/Seller/dashboard', 'Seller/dashboard/index', 1, '', 0, '2022-01-08 18:29:38', '2022-01-08 18:41:44', NULL);
 
 -- ----------------------------
--- Table structure for user_permission_groups
--- ----------------------------
-DROP TABLE IF EXISTS `user_permission_groups`;
-CREATE TABLE `user_permission_groups`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '权限分组名称',
-  `content` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '接口分组描述',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of user_permission_groups
 -- ----------------------------
 
--- ----------------------------
--- Table structure for user_permissions
--- ----------------------------
-DROP TABLE IF EXISTS `user_permissions`;
-CREATE TABLE `user_permissions`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `pid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '权限分组ID',
-  `name` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '权限名称',
-  `apis` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '接口名称',
-  `content` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '接口描述',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of user_permissions
--- ----------------------------
-
--- ----------------------------
--- Table structure for user_roles
--- ----------------------------
-DROP TABLE IF EXISTS `user_roles`;
-CREATE TABLE `user_roles`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `belong_id` int(10) UNSIGNED NULL DEFAULT 0 COMMENT '所属',
-  `name` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '角色名称',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_roles
 -- ----------------------------
 INSERT INTO `user_roles` VALUES (1, 6, '测试子账号', '2021-12-09 16:05:21', '2021-12-09 16:42:43', '2021-12-09 16:42:43');
-INSERT INTO `user_roles` VALUES (2, 6, '测试子账号', '2021-12-09 16:06:27', '2021-12-09 16:06:27', NULL);
+INSERT INTO `user_roles` VALUES (2, 6, '测试2', '2021-12-09 16:06:27', '2022-02-15 19:31:22', NULL);
 
--- ----------------------------
--- Table structure for user_to_menus
--- ----------------------------
-DROP TABLE IF EXISTS `user_to_menus`;
-CREATE TABLE `user_to_menus`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `role_id` int(10) UNSIGNED NOT NULL,
-  `menu_id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
+INSERT INTO `user_to_menus` VALUES (7, 2, 9, NULL, NULL, NULL);
+INSERT INTO `user_to_menus` VALUES (6, 2, 12, NULL, NULL, NULL);
+INSERT INTO `user_to_menus` VALUES (5, 2, 3, NULL, NULL, NULL);
 
--- ----------------------------
--- Records of user_to_menus
--- ----------------------------
-INSERT INTO `user_to_menus` VALUES (1, 2, 5, NULL, NULL, NULL);
-INSERT INTO `user_to_menus` VALUES (2, 2, 6, NULL, NULL, NULL);
-INSERT INTO `user_to_menus` VALUES (3, 2, 7, NULL, NULL, NULL);
-INSERT INTO `user_to_menus` VALUES (4, 2, 8, NULL, NULL, NULL);
-
--- ----------------------------
--- Table structure for user_to_permissions
--- ----------------------------
-DROP TABLE IF EXISTS `user_to_permissions`;
-CREATE TABLE `user_to_permissions`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `role_id` int(10) UNSIGNED NOT NULL,
-  `permission_id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
-
--- ----------------------------
--- Records of user_to_permissions
--- ----------------------------
-
--- ----------------------------
--- Table structure for user_to_roles
--- ----------------------------
-DROP TABLE IF EXISTS `user_to_roles`;
-CREATE TABLE `user_to_roles`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `role_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of user_to_roles
@@ -5791,43 +4174,13 @@ CREATE TABLE `user_to_roles`  (
 INSERT INTO `user_to_roles` VALUES (1, 8, 2, NULL, NULL, NULL);
 
 -- ----------------------------
--- Table structure for users
--- ----------------------------
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `belong_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '所属',
-  `username` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '用户名',
-  `password` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '密码',
-  `pay_password` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '支付密码',
-  `nickname` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '昵称',
-  `sex` tinyint(3) UNSIGNED NOT NULL DEFAULT 1 COMMENT '性别',
-  `avatar` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '头像',
-  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '电话',
-  `email` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '邮箱',
-  `money` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '余额',
-  `frozen_money` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '冻结资金',
-  `integral` decimal(9, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '积分',
-  `inviter_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '邀请人ID',
-  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 1 COMMENT '账号状态',
-  `invalid_time` timestamp NULL DEFAULT NULL COMMENT '失效时间',
-  `ip` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.0.0' COMMENT '登陆IP',
-  `login_time` timestamp NULL DEFAULT NULL COMMENT '登陆时间',
-  `last_login_time` timestamp NULL DEFAULT NULL COMMENT '最后一次登陆',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES (1, 0, 'demo', '$2y$10$N3KlG7rZMWAbt4nDg6BSYeLwMitvVady1JtXbf8NNtXI1TOVGzbH2', '$2y$10$WLrwQG.Mbf.S3wEn0LcFZugy/L8WcukTT7JA/axsi.7yAXTrRkMeO', 'demo', 1, '', 'demo', '', 0.00, 0.00, 0.00, 0, 1, NULL, '0.0.0.0', NULL, NULL, '2021-10-01 11:00:48', '2021-10-01 11:00:48', NULL);
 INSERT INTO `users` VALUES (2, 0, 'demo', '$2y$10$1csxEmvyjEEiIHd10QHsd.8GbtuLuuE.vvJwPGHOdBkESxcqQ0eAu', '$2y$10$.xc4w.1r5KazlbmoDY3InuWka3org3J1zXzmHJzmXWob/Jhw3ewl.', 'demo', 1, '', 'demo', '', 0.00, 0.00, 0.00, 0, 1, NULL, '0.0.0.0', NULL, NULL, '2021-10-01 11:03:05', '2021-10-01 11:03:05', NULL);
 INSERT INTO `users` VALUES (3, 0, 'demo', '$2y$10$WqUCMWwrebrPaWyU26NWHO8Y0Qd1/015dwe4WRcM/aN2Pte7R/YOm', '$2y$10$cXc6Zo665gC1x0p.IOVBDeOWTfvFllrcZG2fZ7067tvp5/BjP4H4y', 'demo', 1, '', 'demo', '', 0.00, 0.00, 0.00, 0, 1, NULL, '0.0.0.0', NULL, NULL, '2021-10-01 11:04:02', '2021-10-01 11:04:02', NULL);
-INSERT INTO `users` VALUES (6, 0, '18888888888', '', '$2y$10$NaBTixd8YOw1B2oHv2xwtevE9bDKsV.tzbfbNqgDCZvV2W2sM6agC', '商家234', 1, '/storage/avatar/2021-12-24/9JpHKKkdPPfWnwgFa2dSh9rV9TvHokOVA9eW5z6x.jpg', '15073010917', '', 44.12, 11.00, 99.00, 0, 1, NULL, '0.0.0.0', NULL, NULL, '2021-12-07 19:32:40', '2022-02-14 23:03:42', NULL);
+INSERT INTO `users` VALUES (6, 0, '18888888888', '$2y$10$WqUCMWwrebrPaWyU26NWHO8Y0Qd1/015dwe4WRcM/aN2Pte7R/YOm', '$2y$10$NaBTixd8YOw1B2oHv2xwtevE9bDKsV.tzbfbNqgDCZvV2W2sM6agC', '商家234', 1, '/storage/avatar/2021-12-24/9JpHKKkdPPfWnwgFa2dSh9rV9TvHokOVA9eW5z6x.jpg', '15073010917', '', 44.12, 11.00, 99.00, 0, 1, NULL, '0.0.0.0', '2022-02-15 23:44:18', '2022-02-15 23:43:41', '2021-12-07 19:32:40', '2022-02-15 23:44:18', NULL);
 INSERT INTO `users` VALUES (7, 6, 'seller', '$2y$10$uXNKD0KiINj6RXM8f7RXFu9OeEtTUGekWy9z9Q0RTt6.qLGdrcuyG', '', 'seller', 1, '', '', '', 0.00, 0.00, 0.00, 0, 1, NULL, '0.0.0.0', NULL, NULL, '2021-12-09 17:33:28', '2021-12-09 17:34:23', '2021-12-09 17:34:23');
-INSERT INTO `users` VALUES (8, 6, 'seller', '$2y$10$ccg/lk5R2mWecfaYxi2zlOEQFOZ4TgBtfS3o0ki8VekYFiB6/.Kfi', '', 'seller', 1, '', '', '', 100.00, 0.00, 0.00, 0, 1, NULL, '0.0.0.0', NULL, NULL, '2021-12-09 17:34:18', '2021-12-09 17:34:18', NULL);
+INSERT INTO `users` VALUES (8, 6, 'seller', '$2y$10$ccg/lk5R2mWecfaYxi2zlOEQFOZ4TgBtfS3o0ki8VekYFiB6/.Kfi', '', 'seller', 1, '', '', '', 101.00, 0.00, 0.00, 0, 1, NULL, '0.0.0.0', NULL, NULL, '2021-12-09 17:34:18', '2022-02-15 23:18:03', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -2,27 +2,27 @@
     <div class="banner_bottom_adv center1200">
         <div class="shop_left_on">
             <ul>
-                <li><router-link to="/">
+                <li><router-link to="/user/safe">
                 <img :src="require('@/assets/Home/001.png').default" alt="">
                 <p>实名认证</p>
                 </router-link></li>
-                <li><router-link to="/">
+                <li><router-link to="/integral">
                 <img :src="require('@/assets/Home/002.png').default" alt="">
                 <p>积分商城</p>
                 </router-link></li>
-                <li><router-link to="/">
+                <li><router-link to="/collectives/eyJrZXl3b3JkcyI6IiJ9">
                 <img :src="require('@/assets/Home/003.png').default" alt="">
                 <p>优惠团购</p>
                 </router-link></li>
-                <li><router-link to="/">
+                <li><router-link to="/seckills">
                 <img :src="require('@/assets/Home/004.png').default" alt="">
                 <p>秒杀活动</p>
                 </router-link></li>
-                <li><router-link to="/">
+                <li><router-link to="/user">
                 <img :src="require('@/assets/Home/005.png').default" alt="">
                 <p>公告</p>
                 </router-link></li>
-                <li><router-link to="/">
+                <li><router-link to="/store/join">
                 <img :src="require('@/assets/Home/006.png').default" alt="">
                 <p>入驻商家</p>
                 </router-link></li>

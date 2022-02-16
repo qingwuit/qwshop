@@ -402,6 +402,9 @@ export default {
     height: 364px;
     box-sizing: border-box;
     margin: 0 20px 20px 0;
+    &:nth-child(5n){
+        margin-right: 0;
+    }
 }
 .home .s_goods_list .item dl{
     border: 1px solid #efefef;
