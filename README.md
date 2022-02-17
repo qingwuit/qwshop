@@ -1,75 +1,31 @@
+## Qingwu Mall 青梧商城 (B2B2C)
+![logo](https://gitee.com/qingwuitcn/qwshop/raw/master/resources/js/asset/pc/logo.png "logo")
 
-# v3测试版本
-## 手动安装
+> 我们理解您需要一套前后端分离，功能齐全操作简易的商城框架 青梧商城系统 就是秉承着这样的目的开发出来的，或许您是开发人员，又或许您是即将要创业的老板，都可以基于青梧商城系统进行快速项目启动。
 
-+ 前往github下载源码
-+ 复制根目录 `.env.example` 为 `.env`
-+ 修改 `.env` 内容 域名和数据库
-```shell
-APP_URL=http://127.0.0.1:8000 
-...
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=test
-DB_USERNAME=root
-DB_PASSWORD=
-```
+## Need environment 需要环境和已有功能
+- Laravel 8.x + Vue3 前后分离
+- 多商户、秒杀、团购、优惠券、在线聊天、三级分销、积分商城、Wechat支付、Alipay支付
+- 支持二次开发
+- PHP >= 7.4
 
-+ 在根目录执行以下命令
-```shell
-php artisan key:generate
-php artisan passport:keys --ansi
-php artisan storage:link
-```
-+ 导入sql文件
-```shell
-php artisan migrate
-php artisan qwshop:mysql
-```
-+ 下载PHP Composer扩展 
-```shell
-composer install
-```
+## Documentation 安装文档
+[[简体中文]](http://doc.qingwuit.com/ "点击它[详细文档]") - [[English]](http://doc.qingwuit.com/en/ "Click It Documentation")
 
-+ 下载Node扩展 
-```shell
-npm install --registry=https://registry.npm.taobao.org --force
-```
-+  前端打包
-```shell
-npm run prod
-```
+## Code address 代码地址
+[[Github] click it](https://github.com/qingwuit/qwshop "Click It") - [[Gitee] click it](https://gitee.com/qingwuitcn/qwshop "Click It")
 
-+ linux 得给下权限 window 不用执行
-```shell
-chmod -R 777 ./storage/
-```
+## Demo address 演示地址
+[[Demo]](https://pc.qingwuit.com "Click It")
 
-+ Nginx 虚拟站点配置
-```nginx
-server {
-    listen  80;
+- 管理员后台：/Admin/login
+- 账号密码：admin 123456
 
-    server_name localhost;
-    root  /var/www/laravel-app/public;
-    index  index.html index.htm index.php;
-    ...
+- 商家后台：/Seller/login
+- 账号密码：18888888888 123456
 
-```
-### 访问
-http://localhost 进入PC首页
-http://localhost/Admin/login 进入PC平台后台
-http://localhost/Seller/login 进入PC商户后台
+- 用户后台：/user/login
+- 账号密码：18888888888 123456
 
-## Exchange of views 意见交流 
-
-欢迎各位提交建议、star。
-
-**QQ群:1062159788**
-
-**私人QQ：364825702**
-
-**Email:bishashiwo@gmail.com**
-
-添加请写上说明如：`青梧商城`
+## H5 bate demo H5版本(测试版本) v3 暂未开发 
+![H5](https://gitee.com/qingwuitcn/qwshop/raw/master/resources/js/asset/qrcode.png "H5")
