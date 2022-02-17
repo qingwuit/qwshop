@@ -13,10 +13,10 @@
 [[简体中文]](http://doc.qingwuit.com/ "点击它[详细文档]") - [[English]](http://doc.qingwuit.com/en/ "Click It Documentation")
 
 ## Code address 代码地址
-[[Github] click it](https://github.com/qingwuit/qwshop "Click It") - [[Gitee] click it](https://gitee.com/qingwuitcn/qwshop "Click It")
+[[Github]](https://github.com/qingwuit/qwshop "Click It") - [[Gitee]](https://gitee.com/qingwuitcn/qwshop "Click It")
 
 ## Demo address 演示地址
-[[Demo]](https://pc.qingwuit.com "Click It")
+[[Demo Link]](https://pc.qingwuit.com "Click It")
 
 - 管理员后台：/Admin/login
 - 账号密码：admin 123456
