@@ -58,7 +58,8 @@
         "used":"已使用",
         "notStarted":"未开始",
         "haveInHand":"进行中",
-        "HasEnded":"已结束"
+        "HasEnded":"已结束",
+        "sendMsg":"发送"
     },
 
     "user":{

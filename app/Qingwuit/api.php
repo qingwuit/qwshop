@@ -174,6 +174,19 @@ Route::prefix('Seller')->middleware('auth:users')->group(function () {
 /**
  *
  * @author hg <bishashiwo@gmail.com>
+ * 在线聊天
+ *
+ */
+Route::prefix('Chat')->namespace('Chat')->group(function () {
+    Route::post('/friends', [App\Http\Controllers\Chat\IndexController::class,'friends']);  // 好友列表
+    Route::post('/add', [App\Http\Controllers\Chat\IndexController::class,'add']);  // 互相关注好友
+    Route::post('/friend_content', [App\Http\Controllers\Chat\IndexController::class,'friend_content']); // 查看聊天内容 
+    Route::post('/send', [App\Http\Controllers\Chat\IndexController::class,'send']);  // 发送信息
+});
+
+/**
+ *
+ * @author hg <bishashiwo@gmail.com>
  * 商城支付回调|其他回调 路由
  *
  */

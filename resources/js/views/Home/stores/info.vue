@@ -36,7 +36,7 @@
                     <div class="store_com" style="margin-bottom:10px">公司地址：<em style="color:#999">{{data.store_info.area_info+' '+data.store_info.store_address}}</em></div>
                     <div class="btn">
                         <span :class="isFav?'navstore':''"  @click="storeFav()">{{isFav?'已收藏':'收藏店铺'}}</span>
-                        <span class="contact" @click="chat=true">联系客服</span>
+                        <span class="contact" @click="$refs['chat'].openChat()">联系客服</span>
                         <div class="clear"></div>
                     </div>
                 </div>
@@ -133,18 +133,18 @@
         <!-- S -->
 
         <!-- 聊天 -->
-        <chat v-if="chat" :store_id="store_info.id" />
+        <chat ref="chat" :position="true" :params="data.chatParams" />
     </div>
 </template>
 
 <script>
-// import Chat from "@/components/chat/index"
+import Chat from "@/components/common/chat"
 import Banner from '@/components/home/banner'
 import {reactive,onMounted,getCurrentInstance} from "vue"
 import { useRoute,useRouter } from 'vue-router'
 import { CaretTop,CaretBottom } from '@element-plus/icons'
 export default {
-    components: {Banner,CaretTop,CaretBottom},
+    components: {Banner,CaretTop,CaretBottom,Chat},
     setup() {
         const {proxy} = getCurrentInstance()
         const route = useRoute()
@@ -164,7 +164,7 @@ export default {
                 store_address:'',
                 sale_list:[],
             },
-            chat:false,
+            chatParams:{},
             list:[],
             comment_statistics:[],
             rate_info:{},
@@ -186,6 +186,8 @@ export default {
                     if(res.store_verify != 4 || res.store_status != 1){
                         router.go(-1)
                     }
+                    // 设置聊天参数
+                    data.chatParams = {provider:'anonymous',rid:data.store_info.user_id,rtype:'users',token:localStorage.getItem('token')}
                 }
             })
         }

@@ -27,9 +27,16 @@ axios.interceptors.request.use(function (config) {
         if(config.url.indexOf(item.loginName) != -1 && item.tokenName != '') tokenName = item.tokenName+'_token'
     })
     token = localStorage.getItem(tokenName);
-    
     if(!R.isEmpty(token)){
 		config.headers['Authorization'] = 'Bearer '+token; // 如果token 存在则携带token访问
+    }
+
+    // 聊天相关
+    if(config.url.indexOf('api/Chat') != -1){
+        token = config.data.split('token')[1].split('&')[0]
+        if(!R.isEmpty(token)){
+            config.headers['Authorization'] = 'Bearer '+(token.slice(1)); // 如果token 存在则携带token访问
+        }
     }
     
     return config;

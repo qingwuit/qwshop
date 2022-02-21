@@ -18,6 +18,7 @@
         "overtrue/easy-sms": "^2.0",
         "socialiteproviders/weixin": "^4.1",
         "socialiteproviders/weixin-web": "^4.1",
+        "workerman/workerman": "^4.0",
         "yansongda/pay": "~3.0.0"
     },
     "require-dev": {

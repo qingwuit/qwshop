@@ -66,8 +66,6 @@ export const baseRoute = [
         {path:'/order/success',component:_import('Home/orders/success')},
     ]},
     
-
-
     {path: '/Admin/login', component: _import('Admin/login')},
     {path: '/Seller/login', component: _import('Seller/login')},
     // {path: "/:catchAll(.*)",name: '404',component: _import('Error/404')},

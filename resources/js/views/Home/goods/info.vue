@@ -156,7 +156,7 @@
                     <div class="store_com" style="margin-bottom:10px">公司地址：<em style="color:#999">{{data.store_info.area_info+' '+data.store_info.store_address}}</em></div>
                     <div class="btn">
                         <span class="navstore" @click="$router.push('/store/'+data.store_info.id)">进入店铺</span>
-                        <span class="contact" @click="data.chat=true">联系客服</span>
+                        <span class="contact" @click="$refs['chat'].openChat()">联系客服</span>
                         <div class="clear"></div>
                     </div>
                 </div>
@@ -241,13 +241,13 @@
         </div>
 
         <!-- 聊天 -->
-        <!-- <chat v-if="chat" :store_id="store_info.id" /> -->
+        <chat ref="chat" :position="true" :params="data.chatParams" />
 
     </div>
 </template>
 
 <script>
-// import Chat from "@/components/chat/index"
+import Chat from "@/components/common/chat"
 import {reactive,watch,onMounted,onBeforeUnmount,getCurrentInstance} from "vue"
 import {useRoute,useRouter} from 'vue-router'
 import { useStore } from 'vuex'
@@ -256,7 +256,7 @@ import {ArrowLeftBold,ArrowRightBold,Star,Timer,UserFilled,SemiSelect,Plus} from
 import PicZoom from '@/components/home/vue-piczoom.vue' // 放大镜组件 
 import {editorHandle,formatTime} from '@/plugins/config'
 export default {
-    components: {PicZoom,ArrowLeftBold,ArrowRightBold,Star,Timer,UserFilled,SemiSelect,Plus}, // Chat
+    components: {PicZoom,ArrowLeftBold,ArrowRightBold,Star,Timer,UserFilled,SemiSelect,Plus,Chat}, // Chat
     setup(props) {
         const {proxy} = getCurrentInstance()
         const route = useRoute()
@@ -276,7 +276,7 @@ export default {
                 area_info:'',
                 store_address:'',
             },
-            chat:false,
+            chatParams:{},
             rate_info:{},
             buy_num:1, // 购买数量
             goods_id:0,
@@ -314,6 +314,8 @@ export default {
                 if(data.save_history){
                     save_history_fun(data.goods_info);
                 }
+                // 设置聊天参数
+                data.chatParams = {provider:'anonymous',rid:data.store_info.user_id,rtype:'users',token:localStorage.getItem('token')}
             }else{
                 proxy.$message.error(res.msg)
                 router.go(-1);

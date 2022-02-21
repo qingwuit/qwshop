@@ -4151,7 +4151,7 @@ INSERT INTO `user_menus` VALUES (34, 24, '分销日志', '', '', '/Seller/distri
 INSERT INTO `user_menus` VALUES (35, 25, '优惠劵管理', '', '', '/Seller/coupons', 'Seller/coupons/index', 0, '', 0, '2022-01-03 19:15:12', '2022-01-03 19:15:12', NULL);
 INSERT INTO `user_menus` VALUES (36, 25, '优惠劵日志', '', '', '/Seller/coupon_logs', 'Seller/coupons/log', 0, '', 1, '2022-01-03 19:15:33', '2022-01-03 19:15:33', NULL);
 INSERT INTO `user_menus` VALUES (37, 1, '仪表盘', '', 'fa-dashboard', '/Seller/dashboard', 'Seller/dashboard/index', 1, '', 0, '2022-01-08 18:29:38', '2022-01-08 18:41:44', NULL);
-
+INSERT INTO `user_menus` VALUES (38, 1, '客服聊天', '', 'fa-comments-o', '/Seller/chats', 'Seller/chats/index', 1, '', 0, '2022-02-21 14:30:45', '2022-02-21 14:30:51', NULL);
 -- ----------------------------
 -- Records of user_permission_groups
 -- ----------------------------
