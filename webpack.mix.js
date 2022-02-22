@@ -34,9 +34,6 @@ mix.js('resources/js/app.js', 'public/dist/js').vue({ version: 3 })
             'clipboardjs':'ClipboardJS',
             'g2plot':'G2Plot',
             'amap-loader':'AMapLoader',
-            
-            // // 'vue-amap':'VueAMap',
-            // 'clipboard':'ClipboardJS',
             // 'vue-i18n':'VueI18n',
         },
         output: {
