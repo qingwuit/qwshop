@@ -9,6 +9,14 @@ class GoodsController extends Controller
 {
     public $modelName = 'Goods';
     public $auth = 'users';
+
+    public function index(Request $request)
+    {
+        $storeId = $this->getService('Store')->getStoreId()['data'];
+        $rs = $this->getService('Base')->getPageData($this->modelName, ['store_id'=>$storeId]);
+        return $this->handle($rs);
+    }
+    
     public function store(Request $request)
     {
         $rs = $this->getService('Goods')->addGoods();
