@@ -21,7 +21,7 @@
                     </el-col>
                     <el-col :span="12">
                         <el-form-item :label="'商品品牌'" prop="brand_id">
-                            <q-input :params="{value:'brand_id',type:'select',labelName:'name',valueName:'id'}" v-model:formData="data.form.brand_id" :dictData="{brand_id:data.goodsBrand}" />
+                            <q-input :params="{value:'brand_id',type:'select',labelName:'name',valueName:'id'}" v-model:formData="data.form.brand_id" :dictData="{brand_id:data.goodsBrands}" />
                         </el-form-item>
                     </el-col>
                     

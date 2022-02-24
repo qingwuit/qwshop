@@ -50,7 +50,7 @@
                         </el-row>
                         <div class="area_list" v-show="data.list[k].area_show">
                             <el-checkbox-group  v-model="data.list[k].area_id" @change="onChange">
-                                <el-checkbox v-for="(vo,key) in data.areas" :key="key" :label="vo.id">{{vo.name}}</el-checkbox>
+                                <el-checkbox v-for="(vo,key) in data.areas" :key="key" :label="vo.id+''">{{vo.name}}</el-checkbox>
                             </el-checkbox-group>
                         </div>
                     </div>
@@ -102,7 +102,7 @@ export default {
         }
 
         const onChange = (e)=>{
-
+            console.log(e)
         }
 
         const onSubmit = async ()=>{
