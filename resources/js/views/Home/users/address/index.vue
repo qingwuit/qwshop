@@ -188,10 +188,8 @@ export default {
         const openEdit = async (id)=>{
             let resp = await proxy.R.get('/user/addresses/'+id+'?isResource=Home')
             formData.add = resp
-            console.log(formData.add.area)
             addVis.value = true
             isEdit.value = true
-            
         }
 
         const del = async (id)=>{
