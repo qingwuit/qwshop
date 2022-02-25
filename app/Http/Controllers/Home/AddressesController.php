@@ -27,8 +27,4 @@ class AddressesController extends Controller
         return $this->handle($this->getService('Address')->setDefault($id));
     }
 
-    public function show($id)
-    {
-        $this->handle($this->getService('Address')->getDefault());
-    }
 }

@@ -92,7 +92,7 @@ class AddressService extends BaseService
         $address = $this->getService('Address', true)->where('user_id', $userId)->where('is_default', 1)->first();
 
         if (empty($address)) {
-            $address =  $this->getService('Address', true)->where('user_id', $userId['id'])->first();
+            $address =  $this->getService('Address', true)->where('user_id', $userId)->first();
         }
 
         return $this->format($address, __('tip.success'));
