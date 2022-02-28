@@ -98,6 +98,9 @@ export default {
             
         }
 
+        // 懒加载处理
+        if(props.params.type == 'cascader_lazy') props.params.props.lazyLoad = lazyLoad
+
         // 自动补全
         const querySearch = (queryString,cb)=>{
             let data = props.dictData[props.params.value].filter((e)=>{
