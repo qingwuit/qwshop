@@ -95,7 +95,10 @@ export default {
                 const data = await proxy.R.get(props.params.lazyUrl+'&pid='+node.data[props.params.idName||'code'])
                 resolve(data)
             }
-            
+        }
+
+        if(props.params.type == 'cascader_lazy' && props.params.props && props.params.props.lazy ){
+            props.params.props.lazyLoad = lazyload
         }
 
         // 懒加载处理

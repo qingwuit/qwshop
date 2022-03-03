@@ -135,7 +135,7 @@
                     <el-row :gutter="20">
                         <el-col v-for="(v,k) in dialogParams.view.column" :key="k" :span="v.span || dialogParams.span"><div class="table-form-content">
                             <el-form-item :label="v.label+' : '" :prop="v.value">
-                                <q-tags v-if="v.viewType=='tag' || (v.viewType==undefined && v.type==undefined) || v.type=='number' || v.type=='datetime'  || v.type=='date'"  :value="formData.view[v.value]||''" :color="v.color||null" :effect="v.effect||null" :size="v.size||null" :isText="v.isText||false" />
+                                <q-tags v-if="v.viewType=='tag' || (v.viewType==undefined && v.type==undefined) || v.type=='number' || v.type=='datetime'  || v.type=='date' || v.type=='cascader_lazy' || v.type=='map'"  :value="formData.view[v.value]||''" :color="v.color||null" :effect="v.effect||null" :size="v.size||null" :isText="v.isText||false" />
                                 <span v-if="v.viewType=='text'">{{formData.view[v.value]}}</span>
                                 <div class="html_view" v-if="v.viewType=='html'" v-html="editorSplit(formData.view[v.value])"></div>
                                 <span v-if="v.viewType=='tags_array'"><q-tags :styles="{marginRight:'8px'}" v-for="(arrItem,arrKey) in formData.view[v.value]" :key="arrKey" :value="arrItem" /></span>
@@ -514,6 +514,10 @@ export default {
             formData.edit = {}
             formData.edit = await proxy.R.get(pageUrl+'/'+row[props.columnId])
             editVis.value = true
+            dialogParams.edit.column.map((item,key)=>{
+                // placeholder关联字段
+                if(item.relation) dialogParams.edit.column[key]['placeholder'] = formData.edit[item.relation]
+            })
             dialogParams.editOpenAfter()
         }
         // 编辑数据
