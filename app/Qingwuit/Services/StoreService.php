@@ -190,10 +190,7 @@ class StoreService extends BaseService
             $class_id = [];
             foreach (request()->class_id as $k => $v) {
                 if (count($v) > 3) {
-                    $class_id[] = [];
-                    foreach ($v as $key => $vo) {
-                        $class_id[$key][] = $vo;
-                    }
+                    $class_id[] = $v;
                 }
             }
 
