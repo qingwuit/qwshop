@@ -1,7 +1,7 @@
 <template>
     <div class="user_main table_lists">
         <div class="block_title">
-            用户密码
+            支付密码
         </div>
         <div class="x20"></div>
         <el-form class="el_form" v-if="dialogParams.add && dialogParams.add.column.length>0" ref="addForm" label-position="right" :rules="dialogParams.rules||null" :model="formData" :label-width="dialogParams.labelWidth" :fullscreen="dialogParams.fullscreen">
@@ -70,7 +70,7 @@ export default {
                 if(formData.password != formData.re_password) return proxy.$message.error(proxy.$t('msg.reInputError'))
                 loading.value = true
                 try {
-                    let formDatas = {password:formData.password}
+                    let formDatas = {pay_password:formData.pay_password}
                     const servUser = await store.dispatch('login/editUserSer',formDatas)
                     if(!servUser.code){
                         proxy.$refs.addForm.resetFields()

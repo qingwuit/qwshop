@@ -82,7 +82,7 @@ export default {
         const addColumn = [
             {label:'店铺名称',value:'store_name'},
             {label:'店铺图标',value:'store_logo',type:'avatar',span:24},
-            {label:'产品栏目',value:'class_id',span:24,type:'cascader',props:{multiple:true,label:'name',value:'id',emitPath:false}},
+            {label:'产品栏目',value:'class_id',span:24,type:'cascader',props:{multiple:true,label:'name',value:'id'}},
             {label:'公司名称',value:'store_company_name'},
             {label:'公司地址',value:'area',type:'cascader',props:{emitPath:true,label:'name',value:'id'}},
             {label:'详细地址',value:'store_address',span:24},
@@ -118,7 +118,8 @@ export default {
                 ],
             },
             rules:{
-                name:[{required:true,message:'不能为空'}]
+                store_name:[{required:true,message:'不能为空'}],
+                class_id:[{required:true,message:'不能为空'}]
             },
             view:{column:viewColumn},
             add:{column:addColumn},

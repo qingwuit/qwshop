@@ -18,9 +18,9 @@ class StoreResource extends JsonResource
         $stroeClass = DB::table('store_classes')->where('store_id', $this->id)->first();
         $classId = [];
         if ($stroeClass && !empty($stroeClass->class_id)) {
-            $classId = json_decode($stroeClass->class_id, true);
-            foreach ($classId as $classKey=>$classItem) {
-                foreach ($classItem as $k=>$v) {
+            $classIds = json_decode($stroeClass->class_id, true);
+            foreach ($classIds as $classKey => $classItem) {
+                foreach ($classItem as $k => $v) {
                     $classId[$classKey][$k] = intval($v);
                 }
             }
@@ -44,8 +44,8 @@ class StoreResource extends JsonResource
             'area_info'                     =>  $this->area_info,
             'area'                          =>  $area,
             'class_id'                      =>  $classId,
-            'store_slide'                   =>  !empty($this->store_slide)?explode(',', $this->store_slide):[],
-            'store_mobile_slide'            =>  !empty($this->store_mobile_slide)?explode(',', $this->store_mobile_slide):[],
+            'store_slide'                   =>  !empty($this->store_slide) ? explode(',', $this->store_slide) : [],
+            'store_mobile_slide'            =>  !empty($this->store_mobile_slide) ? explode(',', $this->store_mobile_slide) : [],
             'store_address'                 =>  $this->store_address,
             'store_lat'                     =>  $this->store_lat,
             'store_lng'                     =>  $this->store_lng,
@@ -70,7 +70,7 @@ class StoreResource extends JsonResource
             'after_sale_service'            =>  $this->after_sale_service,
             'store_status'                  =>  $this->store_status,
             'store_verify'                  =>  $this->store_verify,
-            'store_refuse_info'             =>  $this->store_refuse_info??'无原因',
+            'store_refuse_info'             =>  $this->store_refuse_info ?? '无原因',
             'created_at'                    =>  $this->created_at->format('Y-m-d H:i:s'),
             'updated_at'                    =>  $this->updated_at->format('Y-m-d H:i:s'),
         ];

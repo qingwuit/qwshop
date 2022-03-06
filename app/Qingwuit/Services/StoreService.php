@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Qingwuit\Services;
 
 use App\Http\Resources\StoreHomeCollection;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class StoreService extends BaseService
 {
-    public $storeStatus = ['store_status'=>1,'store_verify'=>4]; // 正常店铺
+    public $storeStatus = ['store_status' => 1, 'store_verify' => 4]; // 正常店铺
 
     // 入驻
     public function createStore($auth = 'users')
@@ -31,20 +32,20 @@ class StoreService extends BaseService
         if ($store) {
             return $this->formatError(__('tip.store.defined'), $store);
         }
-        
+
         $rs = $this->getService('Store', true)->create([
             'user_id'           =>  $userId,
             'store_verify'      =>  1,
             'store_status'      =>  0,
             'store_refuse_info' =>  '',
-            'after_sale_service'=>  '',
+            'after_sale_service' =>  '',
         ]);
- 
+
         return $this->format($rs, __('tip.success'));
     }
 
     // 编辑店铺数据
-    public function editStore($storeId = null, $whereName='user_id', $auth = 'users')
+    public function editStore($storeId = null, $whereName = 'user_id', $auth = 'users')
     {
         if (empty($storeId)) {
             return $this->formatError(__('tip.store.notMall'));
@@ -56,7 +57,7 @@ class StoreService extends BaseService
             return $this->formatError($e->getMessage());
         }
 
-        $userId = $whereName=='belong_id'?$userInfo['belong_id']:$userInfo['id'];
+        $userId = $whereName == 'belong_id' ? $userInfo['belong_id'] : $userInfo['id'];
         if ($whereName == 'user_id') {
             $storeId = $userId;
         }
@@ -121,7 +122,7 @@ class StoreService extends BaseService
             if ($areaList) {
                 $areaInfo = '';
                 foreach ($areaList as $v) {
-                    $areaInfo .= ' '.$v['name'];
+                    $areaInfo .= ' ' . $v['name'];
                 }
                 $store_model->area_info =  ltrim($areaInfo, ' ');
             }
@@ -183,23 +184,23 @@ class StoreService extends BaseService
             $store_model->after_sale_service = request()->after_sale_service;
         }
         // 商家商品栏目
-        if (isset(request()->class_id)) {
+        if (isset(request()->class_id) && !empty(request()->class_id)) {
             $store_classes_model = new StoreClass();
             $store_classes_info = $store_classes_model->where('store_id', $store_model->id)->first();
-            foreach (request()->class_id as $k=>$v) {
-                $class_id[$k] = [];
-                // $class_name[$k] = [];
-                foreach ($v as $vo) {
-                    $class_id[$k][] = $vo;
-                    // $class_name[$k][] = $vo['name'];
+            $class_id = [];
+            foreach (request()->class_id as $k => $v) {
+                if (count($v) > 3) {
+                    $class_id[] = [];
+                    foreach ($v as $key => $vo) {
+                        $class_id[$key][] = $vo;
+                    }
                 }
             }
-            
+
             $data = [
-                'store_id'=>$store_model->id,
-                'class_id'=>json_encode($class_id),
-                'class_name'=>'',
-                // 'class_name'=>json_encode($class_name),
+                'store_id' => $store_model->id,
+                'class_id' => json_encode(request('class_id', [])),
+                'class_name' => '',
             ];
             if (empty($store_classes_info)) {
                 $store_classes_model->insert($data);
@@ -275,7 +276,7 @@ class StoreService extends BaseService
     }
 
     // 获取店铺信息
-    public function getStoreInfo($storeId = null, $whereName='user_id', $auth = 'users')
+    public function getStoreInfo($storeId = null, $whereName = 'user_id', $auth = 'users')
     {
         if (empty($storeId)) {
             return $this->formatError(__('tip.store.notMall'));
@@ -288,7 +289,7 @@ class StoreService extends BaseService
         }
 
         // $userId = $whereName=='belong_id'?$userInfo['belong_id']:$userInfo['id'];
-        $userId = empty($userInfo['belong_id'])?$userInfo['id']:$userInfo['belong_id'];
+        $userId = empty($userInfo['belong_id']) ? $userInfo['id'] : $userInfo['belong_id'];
         if ($whereName == 'user_id') {
             $storeId = $userId;
         }
@@ -302,22 +303,23 @@ class StoreService extends BaseService
             }
         }
 
+        if (!$store_model) throw new \Exception('store not join.');
         return $this->format(new StoreResource($store_model));
     }
 
     // 获取店铺ID
-    public function getStoreId($whereName='user_id', $auth = 'users')
+    public function getStoreId($whereName = 'user_id', $auth = 'users')
     {
         try {
             $userInfo = $this->getUser($auth)['data'];
         } catch (\Exception $e) {
             return $this->formatError($e->getMessage());
         }
-        $userId = empty($userInfo['belong_id'])?$userInfo['id']:$userInfo['belong_id'];
+        $userId = empty($userInfo['belong_id']) ? $userInfo['id'] : $userInfo['belong_id'];
         $store_model = new Store();
         $store_model = $store_model->select('id')->where($whereName, $userId)->first();
         if (!$store_model) {
-            return $this->formatError(__('tip.store.notMall').'-2');
+            return $this->formatError(__('tip.store.notMall') . '-2');
         }
         return $this->format($store_model->id);
     }
@@ -332,24 +334,24 @@ class StoreService extends BaseService
             DB::raw('avg(service) as serviceAll'),
             DB::raw('avg(speed) as speedAll'),
         ])->toArray();
-        foreach ($info as $k=>$v) {
-            $info[$k] = intval($v)==0?5:intval($v);
+        foreach ($info as $k => $v) {
+            $info[$k] = intval($v) == 0 ? 5 : intval($v);
         }
         $storeInfo['rate'] = $info;
-        unset($storeInfo['id_card_b'],$storeInfo['id_card_t'],$storeInfo['id_card_no'],$storeInfo['store_money'],$storeInfo['legal_person'],$storeInfo['emergency_contact_phone'],$storeInfo['emergency_contact'],$storeInfo['business_license']);
+        unset($storeInfo['id_card_b'], $storeInfo['id_card_t'], $storeInfo['id_card_no'], $storeInfo['store_money'], $storeInfo['legal_person'], $storeInfo['emergency_contact_phone'], $storeInfo['emergency_contact'], $storeInfo['business_license']);
         return $this->format($storeInfo);
     }
 
     // 无权限获取店铺
     public function stores()
     {
-        $params = request()->params??'';
-        $lat = request()->lat??'39.56';
-        $lng = request()->lng??'116.20'; // 默认北京的经纬度
+        $params = request()->params ?? '';
+        $lat = request()->lat ?? '39.56';
+        $lng = request()->lng ?? '116.20'; // 默认北京的经纬度
 
         $distance = "ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN(('$lat' * PI() / 180 - store_lat * PI() / 180) / 2),2) + COS(40.0497810000 * PI() / 180) * COS(store_lat * PI() / 180) * POW(SIN(('$lng' * PI() / 180 - store_lng * PI() / 180) / 2),2))) * 1000 )  AS distance ";
 
-        $storeModel = $this->getService('Store', true)->select(DB::raw('*,'.$distance))->withCount(['comments','comments as good_comment'=>function ($q) {
+        $storeModel = $this->getService('Store', true)->select(DB::raw('*,' . $distance))->withCount(['comments', 'comments as good_comment' => function ($q) {
             $q->whereRaw('(score+agree+speed+service)>=15');
         }])->where($this->storeStatus);
 
@@ -366,10 +368,10 @@ class StoreService extends BaseService
                 // 关键词
                 if (isset($params_array['keywords']) && !empty($params_array['keywords'])) {
                     $params_array['keywords'] = urldecode($params_array['keywords']);
-                    $storeModel = $storeModel->where('store_name', 'like', '%'.$params_array['keywords'].'%');
+                    $storeModel = $storeModel->where('store_name', 'like', '%' . $params_array['keywords'] . '%');
                 }
             }
-            $list = $storeModel->paginate(request()->per_page??30);
+            $list = $storeModel->paginate(request()->per_page ?? 30);
             return $this->format(new StoreHomeCollection($list));
         } catch (\Exception $e) {
             return $this->formatError($e->getMessage());

@@ -62,7 +62,7 @@ export default {
                 column:[
                     {label:'店铺图标',value:'store_logo',type:'avatar',option:JSON.stringify({width:150,height:150}), span:24},
                     {label:'店铺名称',value:'store_name'},
-                    {label:'产品栏目',value:'class_id',type:'cascader',props:{multiple:true,label:'name',value:'id',emitPath:false}},
+                    {label:'产品栏目',value:'class_id',type:'cascader',props:{multiple:true,label:'name',value:'id'}},
                     {label:'公司名称',value:'store_company_name'},
                     {label:'公司地址',value:'area',type:'cascader',props:{emitPath:true,label:'name',value:'id'}},
                     {label:'详细地址',value:'store_address',span:24,type:'textarea' ,maxlength:50},

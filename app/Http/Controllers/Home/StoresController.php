@@ -20,7 +20,12 @@ class StoresController extends Controller
     // 获取详情
     public function info()
     {
-        return $this->handle($this->getService('Store')->getStoreInfo(true));
+        try {
+            $data = $this->getService('Store')->getStoreInfo(true);
+            return $this->handle($data);
+        } catch (\Exception $e) {
+            return $this->success([], $e->getMessage());
+        }
     }
 
     // 获取列表
