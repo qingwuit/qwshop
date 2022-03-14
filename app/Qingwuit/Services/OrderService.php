@@ -383,7 +383,7 @@ class OrderService extends BaseService
                 // $order_balance += $v['order_balance'];
             }
             // 余额支付时判断是否余额足够
-            if ($params['payment_name'] == 'money') {
+            if ($params['payment_name'] == 'balance') {
                 if ($total_price > $params['balance']) {
                     return $this->formatError(__('tip.order.moneyNotEnough'));
                 }
