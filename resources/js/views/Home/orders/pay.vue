@@ -156,7 +156,6 @@ export default {
             }
             proxy.R.post('/user/order/pay',sendData).then(res=>{
                 if(res.qr_code || res.code_url){
-                    if(payment_name == 'balance') return router.push('/order/success')
                     if(payment_name == 'alipay') data.qr_code = res.qr_code
                     if(payment_name == 'wechat') data.qr_code = res.code_url
                     data.dialogVisible = true;
@@ -169,6 +168,8 @@ export default {
                             }
                         })
                     },1000)
+                }else{
+                    if(payment_name == 'balance' && !res.code) return router.push('/order/success')
                 }
                 
             })
