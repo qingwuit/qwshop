@@ -66,7 +66,7 @@ export default {
                 localStorage.setItem('ip',ip.value)
                 // if(!navigator.geolocation) return console.log('geolocation not allow')
                 if(!amapKey) return
-                const amapUrl = 'https://restapi.amap.com/v5/ip?parameters'
+                const amapUrl = 'https://restapi.amap.com/v3/ip?parameters'
                 proxy.R.get(amapUrl,{key:amapKey.value,ip:ip.value,type:4},true).then(res=>{
                     if(res.data.status == 0){
                         return console.log(res.data.info)
