@@ -258,6 +258,7 @@ export default {
             uploadOptions:{option:JSON.stringify({width:800,height:800,thumb:[[400,400],[300,300],[150,150]]}),name:'goods'},
         })
         const nextStep = (e)=>{
+            data.step = e
             if(e == 2){
                 proxy.$refs.addForm.validate((valid)=>{
                     // 验证失败直接断点
@@ -296,7 +297,6 @@ export default {
                 })
                 if (!status) return false
             }
-            data.step = e
         }
 
         // 获取店铺分类
