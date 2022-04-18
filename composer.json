@@ -19,7 +19,7 @@
         "socialiteproviders/weixin": "^4.1",
         "socialiteproviders/weixin-web": "^4.1",
         "workerman/workerman": "^4.0",
-        "yansongda/pay": "~3.0.0"
+        "yansongda/pay": "^3.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

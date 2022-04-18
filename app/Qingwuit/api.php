@@ -171,6 +171,7 @@ Route::prefix('Seller')->middleware('auth:users')->group(function () {
     Route::get('/dashboard/order', [App\Http\Controllers\Seller\DashboardController::class,'order'])->name('seller.dashboard.order'); // 销售分析
 });
 
+
 /**
  *
  * @author hg <bishashiwo@gmail.com>

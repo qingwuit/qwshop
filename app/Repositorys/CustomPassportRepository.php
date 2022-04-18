@@ -7,7 +7,7 @@ use Laravel\Passport\Bridge\UserRepository;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use RuntimeException;
 
-class CustomPassportProvider extends UserRepository
+class CustomPassportRepository extends UserRepository
 {
     public function getUserEntityByUserCredentials($username, $password, $grantType, ClientEntityInterface $clientEntity)
     {

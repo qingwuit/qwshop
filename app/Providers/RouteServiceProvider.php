@@ -51,6 +51,10 @@ class RouteServiceProvider extends ServiceProvider
             Route::prefix('api')
                 ->middleware('api')
                 ->namespace($this->namespace)
+                ->group(app_path('Qingwuit/app.php'));
+            Route::prefix('api')
+                ->middleware('api')
+                ->namespace($this->namespace)
                 ->group(app_path('Qingwuit/api.php'));
             Route::middleware('web')
                 ->namespace($this->namespace)
