@@ -1,0 +1,33 @@
+# update from laradock/laradock qingwuit <bishashiwo@gmail.com>
+services:
+    qwshop:
+      build:
+        context: ./qwshop
+      volumes:
+        - ../:/var/www:cached
+    mysql:
+      build:
+        context: ./mysql
+      environment:
+        - MYSQL_DATABASE=qwshop
+        - MYSQL_USER=default
+        - MYSQL_PASSWORD=root
+        - MYSQL_ROOT_PASSWORD=root  
+      ports:
+        - "3306:3306"
+    php-fpm:
+      build:
+        context: ./php-fpm
+      volumes:
+        - ../:/var/www:cached
+    nginx:
+      build:
+        context: ./nginx
+      volumes:
+        - ../:/var/www:cached
+      ports:
+        - "80:80"
+        - "443:443"
+        - "81:81"
+      depends_on:
+        - php-fpm
