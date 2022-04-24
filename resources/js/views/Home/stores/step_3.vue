@@ -21,6 +21,7 @@
 
 <script>
 import {reactive,onMounted,getCurrentInstance} from "vue"
+import router from '@/plugins/router'
 import { Reading,CircleCheckFilled,List,SetUp } from '@element-plus/icons'
 export default {
     components: {Reading,CircleCheckFilled,List,SetUp},
@@ -49,7 +50,7 @@ export default {
             }
         })
         const nextStep = ()=>{
-
+            router.push('/Seller/login')
         }
         return {nextStep,data}
     }
