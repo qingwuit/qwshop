@@ -195,6 +195,42 @@ class AuthService extends BaseService
         }
     }
 
+    // 找回密码服务
+    public function forgetPassword()
+    {
+        $username = request('username');
+        $password = request('password');
+        $code = request('code'); // 短信验证码
+        $type = request('type') ?? 'username'; // 注册方式 phone email
+
+        $provider = request('provider') ?? 'users'; // 用户类型 users | admins
+        $modelName = ucwords(rtrim($provider, 's'));
+
+        if ($provider == 'admins') {
+            return;
+        }
+
+        $model = $this->getService($modelName, true);
+
+        // 判断是否存在相同得账号和电话
+        if (!$model->where($type, $username)->exists()) {
+            // 该账号已经存在
+            return $this->formatError(__('tip.userExist'));
+        }
+
+        if ($type == 'phone') {
+            $smsCheck = $this->getService('Sms')->checkSms($username, $code, 'forget_password');
+            if (!$smsCheck['status']) {
+                return $this->formatError($smsCheck['msg']);
+            }
+
+            $model->password = Hash::make($password);
+            $model->save();
+        }
+
+        return $this->login(false, ['username' => $username, 'password' => $password, 'provider' => $provider]);
+    }
+
     // 退出账号
     public function logout()
     {

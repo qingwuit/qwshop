@@ -25,6 +25,13 @@ class AuthController extends Controller
         return $this->handle($rs);
     }
 
+    // 找回密码
+    public function forget_password()
+    {
+        $rs = $this->getService('Auth')->forgetPassword();
+        return $this->handle($rs);
+    }
+
     // 退出账号
     public function logout()
     {
@@ -45,9 +52,9 @@ class AuthController extends Controller
         }
         $pro = lcfirst(str_replace('api/', '', $request->route()->action['prefix']));
         if ($request->provider != 'users') {
-            $defaultUrl = $this->getService($pro.'Menu', true)->whereRaw('apis!=""')->orderBy('is_sort', 'asc')->first();
+            $defaultUrl = $this->getService($pro . 'Menu', true)->whereRaw('apis!=""')->orderBy('is_sort', 'asc')->first();
             if ($defaultUrl) {
-                $info['data']['defaultUrl'] = $defaultUrl->apis??'/';
+                $info['data']['defaultUrl'] = $defaultUrl->apis ?? '/';
             }
         }
         return $this->handle($info);
@@ -87,7 +94,7 @@ class AuthController extends Controller
                 unset($data['code']);
             }
         }
-        
+
         $rs = $this->getService($pro, true)->where('id', $id)->update($data);
         return $this->success($rs);
     }

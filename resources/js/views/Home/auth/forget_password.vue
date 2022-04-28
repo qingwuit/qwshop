@@ -10,19 +10,19 @@
                     </ul>
                 </div>
                 <div class="login_input">
-                    <div class="input_block"><input type="text" v-model="data.username" placeholder="手机" @keyup.enter="register"></div>
-                    <div class="input_block"><input type="password" v-model="data.password" placeholder="新密码" @keyup.enter="register"></div>
-                    <div class="input_block"><input type="password" v-model="data.re_password" placeholder="确认密码" @keyup.enter="register"></div>
+                    <div class="input_block"><input type="text" v-model="data.username" placeholder="手机" @keyup.enter="forgetPassword"></div>
+                    <div class="input_block"><input type="password" v-model="data.password" placeholder="新密码" @keyup.enter="forgetPassword"></div>
+                    <div class="input_block"><input type="password" v-model="data.re_password" placeholder="确认密码" @keyup.enter="forgetPassword"></div>
                     <div class="input_block">
-                        <input class="yzm" type="code" v-model="data.code" :placeholder="$t('btn.code')" @keyup.enter="register">
-                        <span :class="data.math>0?'yzmbtn dis':'yzmbtn'" @click="sendSms">{{code_text}}</span>
+                        <input class="yzm" type="code" v-model="data.code" :placeholder="$t('btn.code')" @keyup.enter="forgetPassword">
+                        <span :class="data.math>0?'yzmbtn dis':'yzmbtn'" @click="sendSms">{{data.code_text}}</span>
                     </div>
                 </div>
 
-                <div class="login_btn" @click="register">确 定</div>
+                <div class="login_btn" @click="forgetPassword">确 定</div>
 
                 <div class="login_btn_b">
-                    <router-link to="/forget_password">忘记密码？</router-link>
+                    <router-link to="/login">立即登录?</router-link>
                 </div>
 
 
@@ -32,9 +32,14 @@
 </template>
 
 <script>
+import {reactive,getCurrentInstance} from "vue"
+import { useStore } from 'vuex'
+import { useRouter} from 'vue-router'
 export default {
     setup(props) {
         const {ctx,proxy} = getCurrentInstance()
+        const store = useStore()
+        const router = useRouter()
         const data = reactive({
             username: "",
             password: "",
@@ -45,90 +50,46 @@ export default {
             math:0,
         })
 
-        const register = ()=>{
+        const forgetPassword = async ()=>{
             if (data.username == "" || data.password == "") {
                 proxy.$message.error(proxy.$t('msg.loginAbn'));
                 return;
+            }
+
+            let loginData = await proxy.R.post('/forget_password',{
+                username: data.username,
+                password: data.password,
+                re_password: data.re_password,
+                code: data.code,
+                type:'phone',
+            })
+
+            loginData.routeUriIndex = store.state.load.routeUriIndex
+            if(!loginData.code){
+                proxy.$message.success(proxy.$t('msg.success'))
+                await store.commit('login/loginAfter',loginData)
+                router.push('/') 
             }
         }
 
         // 发送短信
         const sendSms = ()=>{
-
+            if(data.username == ''){
+                return proxy.$message.error(proxy.$t('sms.phoneEmpty'));
+            }
+            if(data.math>0){
+                return proxy.$message.error(proxy.$t('manySend'));
+            }
+            proxy.R.post('/sms',{phone:data.username,name:'forget_password'}).then(res=>{
+                if(!res.code) return proxy.$message.success(proxy.$t('sms.sendSuc'))
+            })
         }
 
         return {
             data,
-            register,sendSms
+            forgetPassword,sendSms
         }
-    },
-    // methods: {
-    //     // 登录
-    //     register: function() {
-    //         // 重新赋值vm使 axios可用vue实例
-    //         var vm = this;
-
-    //         if (this.username == "" || this.password == "") {
-    //             this.$message.error("用户名和密码不能为空！");
-    //             return;
-    //         }
-
-    //         this.$post(this.$api.homeForgetPassword, {
-    //             phone: this.username,
-    //             password: this.password,
-    //             re_password: this.re_password,
-    //             code: this.code
-    //         }).then(function(res) {
-    //             if (res.code == 200) {
-    //                 // console.log(res);
-    //                 // 存储用户的token
-    //                 localStorage.setItem("token", res.data.token);
-    //                 vm.$store.dispatch('homeLogin/login',res);
-    //                 vm.$message.success('找回成功！');
-    //                 vm.$router.push({ name: "home_user_default" });
-    //             }else{
-    //                 vm.$message.error(res.msg);
-    //             }
-    //         });
-    //     },
-    //     // 发送短信
-    //     send_sms(){
-    //         if(this.username == ''){
-    //             return this.$message.error('手机不能为空.');
-    //         }
-    //         if(this.math>0){
-    //             return this.$message.error('不要频繁发送短信.');
-    //         }
-
-    //         // 发送
-    //         this.$get(this.$api.homeSendSms,{phone:this.username,name:'forget_password'}).then(res=>{
-    //             if(res.code == 200){
-    //                 this.math = 60;
-    //                 this.timeObj = setInterval(()=>{
-    //                     this.math--;
-    //                     this.code_text = this.math+'s'
-    //                     if(this.math<=0){
-    //                         this.code_text = '发送验证码'
-    //                         clearInterval(this.timeObj);
-    //                     }
-    //                 },1000);
-    //             }
-    //             return this.$returnInfo(res);
-    //         })
-
-            
-    //     }
-    // },
-    // created: function() {
-    //     var _this = this;
-    //     // 判断token是否失效
-    //     this.$get(this.$api.homeCheckLogin).then(function(res) {
-    //         // console.log(res);
-    //         if (res.code == 200) {
-    //             _this.$router.push({ name: "home_user_default" });
-    //         }
-    //     });
-    // },
+    }
 };
 </script>
 <style lang="scss" scoped>

@@ -66,6 +66,7 @@ Route::middleware('auth:users')->group(function () {
 Route::any('/login', [App\Http\Controllers\Auth\AuthController::class,'login']);
 Route::any('/logout', [App\Http\Controllers\Auth\AuthController::class,'logout']);
 Route::any('/register', [App\Http\Controllers\Auth\AuthController::class,'register']);
+Route::post('/forget_password', [App\Http\Controllers\Auth\AuthController::class,'forget_password']);
 
 // 后台接口
 Route::get('/load_goods_classes', [App\Http\Controllers\Admin\Exts\GoodsClassesController::class,'loadMenu'])->name('base.loadMenu');

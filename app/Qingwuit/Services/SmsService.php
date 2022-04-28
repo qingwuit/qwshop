@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Qingwuit\Services;
 
 use Overtrue\EasySms\EasySms;
@@ -45,15 +46,15 @@ class SmsService extends BaseService
      */
     public function sendSms($phone, $name)
     {
-        
+
         // 检测手机号码
         if (!$this->check_phone($phone)) {
             return $this->formatError(__('tip.sms.phoneError'));
         }
-        
+
         $configService = $this->getService('Configs');
         $alisms = $configService->getFormatConfig('sms'); // 获取下签名密钥
-        $sms = $this->getService('Sms', true)->where('name', $name)->first();// 获取签名配置
+        $sms = $this->getService('Sms', true)->where('name', $name)->first(); // 获取签名配置
 
         if (!$sms) {
             return $this->formatError(__('tip.sms.signEmpty'));
@@ -89,7 +90,7 @@ class SmsService extends BaseService
             $rs = $easySms->send($phone, [
                 'content'  => '',
                 'template' => $sms['code'],
-                'data' => ['code'=>$rand],
+                'data' => ['code' => $rand],
             ]);
         } catch (\Overtrue\EasySms\Exceptions\NoGatewayAvailableException $e) {
             $error_msg = $e->getException('aliyun')->getMessage();
@@ -98,7 +99,7 @@ class SmsService extends BaseService
             $smsLog->save();
             return $this->formatError(__('tip.sms.sendErr'));
         }
-        
+
 
         if (isset($rs) && $rs['aliyun']['status'] == 'success' && $rs['aliyun']['result']['Code'] == 'OK') {
             return $this->format([], __('sms.send_success'));
@@ -111,13 +112,14 @@ class SmsService extends BaseService
     }
 
     // 验证短信是否正确
-    public function checkSms($phone, $code)
+    public function checkSms($phone, $code, $smsName = 'register')
     {
         $failureTime = 600; // 失效时间
         if (empty($smsInfo = $this->getService('SmsLog', true)->where([
             'ip'    =>  request()->getClientIp(),
             'content'    =>  $code,
             'status'    =>  1,
+            'name'      =>  $smsName,
             'phone'   =>  $phone,
         ])->first())) {
             return $this->formatError(__('tip.sms.smsErr'));
@@ -125,7 +127,7 @@ class SmsService extends BaseService
 
         // 验证码失效 十分钟
         $ct = strtotime($smsInfo->created_at->format('Y-m-d H:i:s'));
-        if (($ct+$failureTime)<time()) {
+        if (($ct + $failureTime) < time()) {
             return $this->formatError(__('tip.sms.smsInvalid'));
         }
 
@@ -140,11 +142,11 @@ class SmsService extends BaseService
         // 验证码失效
         if ($smsInfo) {
             $ct = strtotime($smsInfo->created_at->format('Y-m-d H:i:s'));
-            if (($ct+30)>time()) {
+            if (($ct + 30) > time()) {
                 return $this->formatError(__('tip.sms.reSend'));
             }
         }
-        
+
 
         // 创建注册的时候判断是否存在账号
         if ($name == 'register') {
