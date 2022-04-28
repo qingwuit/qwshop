@@ -56,6 +56,11 @@ export default {
                 return;
             }
 
+            if (data.password != data.re_password) {
+                proxy.$message.error(proxy.$t('msg.reInputError'));
+                return;
+            }
+
             let loginData = await proxy.R.post('/forget_password',{
                 username: data.username,
                 password: data.password,
