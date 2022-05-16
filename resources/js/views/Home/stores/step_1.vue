@@ -16,9 +16,10 @@
 </template>
 
 <script>
-import {reactive,getCurrentInstance} from "vue"
+import {reactive,onMounted,getCurrentInstance} from "vue"
 import router from '@/plugins/router'
 import { Reading,CircleCheckFilled,List,SetUp } from '@element-plus/icons'
+import {editorHandle} from '@/plugins/config'
 export default {
     components: {Reading,CircleCheckFilled,List,SetUp},
     setup(props) {
@@ -27,11 +28,18 @@ export default {
             checked:false,
             info:{}
         })
+
         const nextStep = async ()=>{
             if(!data.checked) return proxy.$message.error(proxy.$t('msg.readAgreement'))
             let joinData = await proxy.R.post('/store/join',{})
             router.push('/store/step_2')
         }
+
+        onMounted(()=>{
+            proxy.R.get('/agreements/agreement').then(res=>{
+                if(!proxy.R.isEmpty(res.content)) data.info.content = editorHandle(res.content)
+            })
+        })
         return {nextStep,data}
     }
 }

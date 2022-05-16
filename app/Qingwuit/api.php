@@ -75,7 +75,8 @@ Route::get('/expresses', [App\Http\Controllers\Admin\Exts\ExpressesController::c
 Route::get('/load_article_menu', [App\Http\Controllers\Admin\ArticleMenusController::class,'loadMenu']);
 Route::post('/uploads', [App\Http\Controllers\Home\UploadsController::class,'upload'])->name('home.uploads');
 Route::post('/sms', [App\Http\Controllers\Home\SmsController::class,'send'])->name('home.sms'); // 短信发送
-Route::get('/article/{name}', [App\Http\Controllers\Home\ArticlesController::class,'article'])->name('home.Article'); // 文章
+Route::get('/article/{name}', [App\Http\Controllers\Home\ArticlesController::class,'article'])->name('home.article'); // 文章
+Route::get('/agreements/{name}', [App\Http\Controllers\Home\AgreementsController::class,'agreement'])->name('home.agreement'); // 协议
 Route::get('/Admin/load_menu', [App\Http\Controllers\Admin\MenusController::class,'loadMenu']);
 Route::prefix('Admin')->middleware('auth:admins')->group(function () {
     // Route::get('/load_menu', [App\Http\Controllers\Admin\MenusController::class,'loadMenu']);

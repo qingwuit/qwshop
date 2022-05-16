@@ -24,7 +24,7 @@ export default {
             {label:'排序',value:'is_sort'},
         ]
         const dialogParam = reactive({
-            dict:[{name:'pid',url:'/load_goods_classes?deep=2'}],
+            dict:[{name:'pid',url:'/load_goods_classes?deep=2',addSelect:{name:proxy.$t('btn.default'),id:0}}],
             rules:{
                 pid:[{required:true,message:'不能为空'}],
                 name:[{required:true,message:'不能为空'}]
