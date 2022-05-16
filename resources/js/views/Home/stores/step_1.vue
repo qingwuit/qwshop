@@ -9,14 +9,14 @@
             </div>
         </div>
         <el-divider style="width:420px;margin:0 auto;"><em style="font-size:20px;">入驻协议</em></el-divider>
-        <el-scrollbar class="agreement_content"  v-html="data.info.content||''"></el-scrollbar>
+        <el-scrollbar class="agreement_content"  v-html="editorSplit(data.info.text) || ''"></el-scrollbar>
         <div class="agreement_btn"><el-checkbox v-model="data.checked">是否了解且同意商家入驻协议</el-checkbox></div>
         <div class="agreement_btn"><el-button color="#e50e19" type="primary" @click="nextStep">同意协议，下一步</el-button></div>
     </div>
 </template>
 
 <script>
-import {reactive,getCurrentInstance} from "vue"
+import {onMounted,reactive,getCurrentInstance} from "vue"
 import router from '@/plugins/router'
 import { Reading,CircleCheckFilled,List,SetUp } from '@element-plus/icons'
 export default {
@@ -32,7 +32,19 @@ export default {
             let joinData = await proxy.R.post('/store/join',{})
             router.push('/store/step_2')
         }
-        return {nextStep,data}
+
+        onMounted( async ()=>{
+            data.info = await proxy.R.get('/Admin/configs',{name: 'store_join_rule'})
+        })
+
+        const editorSplit = (val)=>{
+            if(!proxy.R.isEmpty(val)){
+                const splitStr = '##qingwuit##'
+                return val.split(splitStr)[0]
+            }
+        }
+
+        return { nextStep, editorSplit, data}
     }
 }
 </script>

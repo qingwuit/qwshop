@@ -3717,6 +3717,7 @@ INSERT INTO `configs` VALUES (18, 'task', '{\"cancel\":\"1\",\"confirm\":\"4\",\
 INSERT INTO `configs` VALUES (19, 'kuaibao', '{\"appid\":\"106111\",\"appkey\":\"c3b848153dbc8cd\"}', '物流配置', 1, NULL, '2022-02-13 17:29:10', NULL);
 INSERT INTO `configs` VALUES (16, 'amap', '{\"key\":\"79f3a628c906e\",\"jsapi\":\"f7619d49a4aea5cb76631\"}', '高德地图', 1, NULL, '2022-02-14 22:14:25', NULL);
 INSERT INTO `configs` VALUES (17, 'store', '{\"goods_verify\":false,\"cash\":\"0\"}', '店铺配置', 1, NULL, '2022-02-11 19:41:49', NULL);
+INSERT INTO `configs` VALUES (20, 'store_join_rule', '{\"text\":\"{"text":"<p><span style=\"color: black;\">123<\/span><\/p>##qingwuit##[{\"type\":\"paragraph\",\"children\":[{\"text\":\"123",\"color\":\"black\"}]}]"}\"}', '入驻协议', 1, NULL, '2022-02-11 19:41:49', NULL);
 
 -- ----------------------------
 -- Records of coupon_logs
