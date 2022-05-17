@@ -37,7 +37,7 @@
                     <span v-if="v.type=='icon_tags'"><i :class="'icon_tags fa '+scope.row[v.value]" /><q-tags :value="scope.row[v.value]" /></span>
                     <span v-if="v.type == 'dict'">{{dictFind(v.value,scope.row[v.value],v.labelName||'label',v.valueName||'value')}}</span>
                     <q-tags v-if="v.type=='dict_tags'"  :tag_type="v.tag_type||false" :value="dictFind(v.value,scope.row[v.value],v.labelName||'label',v.valueName||'value')" />
-                    <el-image v-if="v.type=='avatar' || v.type == 'image'" :style="v.style||{width:'50px',height:'50px',borderRadius:'4px',textAlign:'center',lineHeight:'65px',background:R.isEmpty(scope.row[v.value])?'#f2f2f2':'null',display:'block'}" :fit="v.fit||'fill'" :hide-on-click-modal="true" :src="scope.row[v.value]" lazy :preview-src-list="v.perView?[scope.row[v.value]]:null">
+                    <el-image v-if="v.type=='avatar' || v.type == 'image'" :style="v.style||{width:'50px',height:'50px',borderRadius:'4px',textAlign:'center',lineHeight:'65px',background:R.isEmpty(scope.row[v.value])?'#f2f2f2':'null',display:'block'}" :fit="v.fit||'fill'" :hide-on-click-modal="true" :src="scope.row[v.value]" lazy :preview-src-list="v.perView?[scope.row[v.value]]:null" :preview-teleported="v.perView?true:false">
                         <template #error>
                             <el-icon :color="v.errColor||'#888'" :size="v.errorPicSize||26"><Picture /></el-icon>
                         </template>

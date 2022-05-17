@@ -27,7 +27,7 @@ export default {
             isWith:'goods_class,goods_brand'
         }
         const options = reactive([
-            {label:'图片',value:'goods_master_image',type:'avatar'},
+            {label:'图片',value:'goods_master_image',type:'avatar',perView:true},
             {label:'名称',value:'goods_name'},
             {label:'品牌',value:'brand_name',type:'tags'},
             {label:'分类',value:'class_name',type:'tags'},
