@@ -349,7 +349,7 @@ class GoodsService extends BaseService
         } catch (\Exception $e) {
             return $this->formatError($e->getMessage());
         }
-        dd($list);
+        
         return $this->format(new GoodsHomeSearchCollection($list));
     }
 
