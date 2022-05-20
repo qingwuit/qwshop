@@ -193,6 +193,7 @@ export default {
         }
 
         const get_goods_list = async ()=>{
+            data.base64Decode.store_id = data.id
             data.params.params = data.base64Code;
             const resp = await proxy.R.get('/goods',data.params)
             if(!resp.code){
