@@ -9,7 +9,8 @@ import App from '@/views/App.vue'
 import '@/plugins/css/style.css'
 import qInput from '@/components/common/input'
 
-const localeElementPlus = require(`@/locales/element/${R.getLocalesName()}`)
+const ElementMessage = R.loadLocaleMessages()
+const localeElementPlus = require(`@/locales/element/${ElementMessage[R.getLocalesName()]?R.getLocalesName():'zh-cn'}`)
 let elementInit = { size: 'default', zIndex: 3000, locale: localeElementPlus.default }
 
 router.afterEach(() => {
