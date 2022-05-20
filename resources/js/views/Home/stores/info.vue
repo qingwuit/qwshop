@@ -206,7 +206,7 @@ export default {
         }
 
         const sortChange = ()=>{
-            this.params.page = 1;
+            data.params.page = 1;
             if(e == ''){
                 if(data.base64Decode.sort_order== 'desc'){
                     data.base64Decode.sort_order= 'asc';
@@ -233,7 +233,7 @@ export default {
             }
             data.base64Decode.store_id = data.id
             data.base64Code = window.btoa(JSON.stringify(data.base64Decode));
-            this.get_goods_list();
+            get_goods_list();
         }
 
         // 页面切换
