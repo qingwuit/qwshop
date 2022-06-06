@@ -375,7 +375,7 @@ class BaseService
             if ($auth != 'admins') {
                 return !empty($info['belong_id']) ? false : true;
             }
-            return empty($info['is_super']) ? false : true;
+            return empty($info) || empty($info['is_super']) ? false : true;
         } catch (\Exception $th) {
             throw new \Exception(__('tip.userThr'));
         }
