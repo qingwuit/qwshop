@@ -153,7 +153,7 @@ class GoodsService extends BaseService
         $configs = $this->getService('Configs')->getFormatConfig('store');
         if (!empty($configs) && isset($configs['goods_verify'])) {
             // 如果是内容标题修改则进行审核（暂时不写）
-            if($configs['goods_verify'] && $auth == 'users') $goodsModel->goods_verify = 2;
+            if ($configs['goods_verify'] && $auth == 'users') $goodsModel->goods_verify = 2;
         }
 
         try {
@@ -340,7 +340,7 @@ class GoodsService extends BaseService
             $list = $goodsModel->where($this->status)
                 ->with(['goods_skus' => function ($q) {
                     return $q->select('goods_id', 'goods_price', 'goods_stock')->orderBy('goods_price', 'asc');
-                },'store','collective'])
+                }, 'store', 'collective'])
                 ->withCount('order_comment')
                 ->whereHas('store', function ($q) {
                     return $q->where($this->getService('Store')->storeStatus);
@@ -349,7 +349,7 @@ class GoodsService extends BaseService
         } catch (\Exception $e) {
             return $this->formatError($e->getMessage());
         }
-        
+
         return $this->format(new GoodsHomeSearchCollection($list));
     }
 
@@ -414,10 +414,10 @@ class GoodsService extends BaseService
                 //     return $q->select('goods_id','goods_price','goods_stock','goods_market_price')->orderBy('goods_price','asc');
                 // }])
                 ->whereHas('seckill', function ($q) {
-                    if (empty(request()->start_time)) {
-                        return $q->where('start_time', '<', now()->format('Y-m-d H') . ':00:00')->where('end_time', '>', now()->addHours(1)->format('Y-m-d H') . ':00:00');
+                    if (!isset(request()->start_time) || request('start_time') == null) {
+                        return $q->where('start_time', '<', now()->format('Y-m-d H') . ':00:00')->where('start_time', '>', now()->addHours(1)->format('Y-m-d H') . ':00:00');
                     }
-                    return $q->where('start_time', '>', now()->addHours(request()->start_time)->format('Y-m-d H') . ':00:00')->where('end_time', '<', now()->addHours(request()->start_time + 1)->format('Y-m-d H') . ':00:00');
+                    return $q->where('start_time', '>=', now()->addHours(request()->start_time)->format('Y-m-d H') . ':00:00')->where('start_time', '<', now()->addHours(request()->start_time + 1)->format('Y-m-d H') . ':00:00');
                 })
                 ->orderBy('goods_sale', 'desc')
                 ->paginate(request()->per_page ?? 30);

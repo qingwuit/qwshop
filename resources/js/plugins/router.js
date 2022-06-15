@@ -37,6 +37,7 @@ export function createRouteTmp(permissionRouteTmp = [],index=2){
 const router = createRouter({
     history: createWebHistory(),
     routes,
+    sensitive: true
 })
 
 // 路由加之前先获取数据

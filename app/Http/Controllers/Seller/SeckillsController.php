@@ -32,7 +32,7 @@ class SeckillsController extends Controller
         if ($request->discount>100) {
             return $this->error(__('tip.discount.over100'));
         }
-        return $this->handle($this->getService('base')->editDat($this->modelName, $id, ['goods_id','discount','start_time'], ['store_id'=>$storeId]));
+        return $this->handle($this->getService('base')->editDat($this->modelName, $id, ['goods_id','discount','start_time','end_time'], ['store_id'=>$storeId]));
     }
 
     public function destroy($id)
