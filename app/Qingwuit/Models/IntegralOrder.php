@@ -17,4 +17,9 @@ class IntegralOrder extends Model
     {
         return $this->hasOne('App\Qingwuit\Models\User', 'id', 'user_id');
     }
+
+    public function integral_order_goods()
+    {
+        return $this->hasMany('App\Qingwuit\Models\IntegralOrderGoods', 'order_id', 'id');
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Qingwuit\Services;
 
 class AddressService extends BaseService
@@ -9,29 +10,31 @@ class AddressService extends BaseService
 
     public function add()
     {
-        $area = $this->getService('Area', true)->select('name')->whereIn('id', request('area'))->get();
+        $areaReq = request('area');
+        if (empty($areaReq))  $areaReq = [request('province_id'), request('city_id'), request('region_id')];
+        $area = $this->getService('Area', true)->select('id', 'name')->whereIn('id', $areaReq)->get();
         $areaInfo = '';
         if (!empty($area)) {
             foreach ($area as $v) {
-                $areaInfo .= $v['name'].' ';
+                $areaInfo .= $v['name'] . ' ';
             }
         }
         $areaInfo = rtrim($areaInfo, ' ');
         $userId = $this->getUserId('users');
         $data = [
             'user_id'  =>  $userId,
-            'receive_name'  =>  request()->receive_name??'',
-            'receive_tel'  =>  request()->receive_tel??'',
-            'province_id'  =>  request()->area[0]??0,
-            'city_id'  =>  request()->area[1]??0,
-            'region_id'  =>  request()->area[2]??0,
-            'address'  =>  request()->address??'',
+            'receive_name'  =>  request()->receive_name ?? '',
+            'receive_tel'  =>  request()->receive_tel ?? '',
+            'province_id'  =>  $area[0]['id'] ?? 0,
+            'city_id'  =>  $area[1]['id'] ?? 0,
+            'region_id'  =>  $area[2]['id'] ?? 0,
+            'address'  =>  request()->address ?? '',
             'area_info' =>  $areaInfo,
-            'is_default'  =>  request()->is_default?1:0,
+            'is_default'  =>  request()->is_default ? 1 : 0,
         ];
         try {
             if ($data['is_default']) {
-                $this->getService($this->modelName, true)->where('user_id', $userId)->update(['is_default'=>0]);
+                $this->getService($this->modelName, true)->where('user_id', $userId)->update(['is_default' => 0]);
             }
             $rs = $this->getService($this->modelName, true)->create($data);
             return $this->format($rs);
@@ -42,28 +45,30 @@ class AddressService extends BaseService
 
     public function edit($id)
     {
-        $area = $this->getService('Area', true)->select('name')->whereIn('id', request()->area)->get();
+        $areaReq = request('area');
+        if (empty($areaReq))  $areaReq = [request('province_id'), request('city_id'), request('region_id')];
+        $area = $this->getService('Area', true)->select('id', 'name')->whereIn('id', $areaReq)->get();
         $areaInfo = '';
         if (!empty($area)) {
             foreach ($area as $v) {
-                $areaInfo .= $v['name'].' ';
+                $areaInfo .= $v['name'] . ' ';
             }
         }
         $areaInfo = rtrim($areaInfo, ' ');
         $userId = $this->getUserId('users');
         $data = [
-            'receive_name'  =>  request()->receive_name??'',
-            'receive_tel'  =>  request()->receive_tel??'',
-            'province_id'  =>  request()->area[0]??0,
-            'city_id'  =>  request()->area[1]??0,
-            'region_id'  =>  request()->area[2]??0,
-            'address'  =>  request()->address??'',
+            'receive_name'  =>  request()->receive_name ?? '',
+            'receive_tel'  =>  request()->receive_tel ?? '',
+            'province_id'  =>  $area[0]['id'] ?? 0,
+            'city_id'  =>  $area[1]['id'] ?? 0,
+            'region_id'  =>  $area[2]['id'] ?? 0,
+            'address'  =>  request()->address ?? '',
             'area_info' =>  $areaInfo,
-            'is_default'  =>  request()->is_default?1:0,
+            'is_default'  =>  request()->is_default ? 1 : 0,
         ];
         try {
             if ($data['is_default']) {
-                $this->getService($this->modelName, true)->where('user_id', $userId)->update(['is_default'=>0]);
+                $this->getService($this->modelName, true)->where('user_id', $userId)->update(['is_default' => 0]);
             }
             $rs = $this->getService($this->modelName, true)->where('id', $id)->where($this->belongName, $userId)->update($data);
             return $this->format($rs);
@@ -76,8 +81,8 @@ class AddressService extends BaseService
     {
         $userId = $this->getUserId('users');
         try {
-            $this->getService($this->modelName, true)->where($this->belongName, $userId)->update(['is_default'=>0]);
-            $rs = $this->getService($this->modelName, true)->where('id', $id)->where($this->belongName, $userId)->update(['is_default'=>1]);
+            $this->getService($this->modelName, true)->where($this->belongName, $userId)->update(['is_default' => 0]);
+            $rs = $this->getService($this->modelName, true)->where('id', $id)->where($this->belongName, $userId)->update(['is_default' => 1]);
             return $this->format($rs);
         } catch (\Exception $e) {
             return $this->formatError($e->getMessage());
