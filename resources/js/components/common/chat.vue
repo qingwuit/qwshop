@@ -16,8 +16,8 @@
                         <div class="content_item" >
                             <img class="avatar" :src="(data.selfData.sid == v.sid && data.selfData.stype == v.stype) ? (v.rinfo.avatar||require('@/assets/Home/kefu.png').default) : (v.sinfo.avatar||require('@/assets/Home/kefu.png').default)" />
                             <div class="avatar_right">
-                                <div class="nickname text_over">{{(data.selfData.sid == v.sid && data.selfData.stype == v.stype) ? (v.rinfo.nickname||'anonymous') : (v.sinfo.avatar||'anonymous')}}</div>
-                                <div class="text text_over">{{v.lastMsg.content_type && v.lastMsg.content_type == 'text' ? v.lastMsg.content : '[ '+ v.lastMsg.content_type +' ]'}}</div>
+                                <div class="nickname text_over">{{(data.selfData.sid == v.sid && data.selfData.stype == v.stype) ? (v.rinfo.nickname||'anonymous') : (v.sinfo.nickname||'anonymous')}}</div>
+                                <div class="text text_over">{{v.lastMsg ? v.lastMsg.content_type && v.lastMsg.content_type == 'text' ? v.lastMsg.content : '[ '+ v.lastMsg.content_type +' ]' : ''}}</div>
                             </div>
                         </div>
                     </li>
@@ -194,7 +194,7 @@ export default {
         }
 
         // 发送socket信息
-        const send = (sendType = 'text')=>{
+        const send = ({sendType = 'text'})=>{
             let rData = loadAllById(data.selectId)
             let params = {
                 provider:props.params.provider,

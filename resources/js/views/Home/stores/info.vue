@@ -142,6 +142,7 @@ import Chat from "@/components/common/chat"
 import Banner from '@/components/home/banner'
 import {reactive,onMounted,getCurrentInstance} from "vue"
 import { useRoute,useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import { CaretTop,CaretBottom } from '@element-plus/icons'
 export default {
     components: {Banner,CaretTop,CaretBottom,Chat},
@@ -149,6 +150,7 @@ export default {
         const {proxy} = getCurrentInstance()
         const route = useRoute()
         const router = useRouter()
+        const store = useStore()
         const data = reactive({
             id:0,
             params:{
@@ -171,6 +173,9 @@ export default {
             isFav:false,
         })
 
+        const routeUriIndex = store.state.load.routeUriIndex
+        const isLogin = computed( () => store.state.login.loginData[routeUriIndex].isLogin )
+
         const loadData = ()=>{
             if(!proxy.R.isEmpty(route.params.id)) data.id = route.params.id
             get_store_info();
@@ -187,7 +192,7 @@ export default {
                         router.go(-1)
                     }
                     // 设置聊天参数
-                    data.chatParams = {provider:'anonymous',rid:data.store_info.user_id,rtype:'users',token:localStorage.getItem('token')}
+                    data.chatParams = {provider:isLogin.value?'users':'anonymous',rid:data.store_info.user_id,rtype:'users',token:localStorage.getItem('token')}
                 }
             })
         }

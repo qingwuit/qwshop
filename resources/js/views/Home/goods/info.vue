@@ -248,7 +248,7 @@
 
 <script>
 import Chat from "@/components/common/chat"
-import {reactive,watch,onMounted,onBeforeUnmount,getCurrentInstance} from "vue"
+import {reactive,watch,onMounted,computed,onBeforeUnmount,getCurrentInstance} from "vue"
 import {useRoute,useRouter} from 'vue-router'
 import { useStore } from 'vuex'
 import dayjs from "dayjs"
@@ -294,6 +294,9 @@ export default {
             timeObj:null,
         })
 
+        const routeUriIndex = store.state.load.routeUriIndex
+        const isLogin = computed( () => store.state.login.loginData[routeUriIndex].isLogin )
+
         const loadData = async ()=>{
             if(!data.goods_id) return
             const resp = await proxy.R.get('/goods/'+data.goods_id,{saveCheck:true})
@@ -315,7 +318,7 @@ export default {
                     save_history_fun(data.goods_info);
                 }
                 // 设置聊天参数
-                data.chatParams = {provider:'anonymous',rid:data.store_info.user_id,rtype:'users',token:localStorage.getItem('token')}
+                data.chatParams = {provider:isLogin.value?'users':'anonymous',rid:data.store_info.user_id,rtype:'users',token:localStorage.getItem('token')}
             }else{
                 proxy.$message.error(res.msg)
                 router.go(-1);

@@ -24,7 +24,7 @@ class ChatFriendCollection extends ResourceCollection
                 'rid'                       =>  $item->rid,
                 'rtype'                     =>  $item->rtype,
                 'rinfo'                     =>  $item->rtype != 'anonymous' ? DB::table($item->rtype)->select('nickname','avatar')->find($item->rid) : ['nickname'=>'anonymous'],
-                'lastMsg'                   =>  DB::table('chat_contents')->select('content','content_type')->orWhere(function ($q) use ($item) {
+                'lastMsg'                   =>  DB::table('chat_contents')->select('content','s_read','r_read','content_type')->orWhere(function ($q) use ($item) {
                                                     return $q->where('sid', $item->sid)->where('stype', $item->stype)->where('rid', $item->rid)->where('rtype', $item->rtype);
                                                 })->orWhere(function ($q) use ($item) {
                                                     return $q->where('rid', $item->sid)->where('rtype', $item->stype)->where('rid', $item->sid)->where('rtype', $item->stype);
