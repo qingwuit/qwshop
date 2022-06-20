@@ -140,7 +140,7 @@
 <script>
 import Chat from "@/components/common/chat"
 import Banner from '@/components/home/banner'
-import {reactive,onMounted,getCurrentInstance} from "vue"
+import {reactive,onMounted,computed,getCurrentInstance} from "vue"
 import { useRoute,useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { CaretTop,CaretBottom } from '@element-plus/icons'
