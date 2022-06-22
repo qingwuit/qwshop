@@ -14,6 +14,7 @@
         "reInputError":"两次输入不一致.",
         "payPasswordThr":"请输入0-9数字支付密码.",
         "inputLengthThr":"位长度的字符.",
+        "waitPageJump":"等待页面跳转.",
         "requiredMsg":"不能为空."
     },
 

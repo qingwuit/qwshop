@@ -142,6 +142,10 @@
             </el-form>
         </div>
 
+        <div class="goods_form_item" v-if="data.step == 2">
+            <el-result icon="success" :title="$t('msg.success')" :sub-title="$t('msg.waitPageJump')" />
+        </div>
+
         <div class="goods_form_attr" v-if="data.step == 3">
             <el-form ref="addForm" label-position="right" :model="data.form" :rules="data.rules" label-width="80px">
                 <el-row :gutter="20">
@@ -276,13 +280,13 @@ export default {
                         }
                         proxy.R[method](url,data.form).then(res=>{
                             if(!res.code){
-                                goodsBack();
                                 proxy.$message.success(proxy.$t('msg.success'))
                             }
                         }).catch((err)=>{
                             console.log(err)
                         }).finally(()=>{
                             loading.value = false
+                            goodsBack();
                         })
                     } catch (error) {
                         loading.value = false
