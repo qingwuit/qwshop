@@ -323,7 +323,7 @@ class GoodsService extends BaseService
                 if (isset($params_array['sort_type']) && !empty($params_array['sort_type'])) {
                     $goodsModel = $goodsModel->orderBy($params_array['sort_type'], $params_array['sort_order']);
                 } else {
-                    $goodsModel = $goodsModel->orderBy('id', 'desc')->orderBy('goods_sale', 'desc');
+                    $goodsModel = $goodsModel->orderBy('id', $params_array['sort_order'] ?? 'desc')->orderBy('goods_sale', $params_array['sort_order'] ?? 'desc');
                 }
             }
 

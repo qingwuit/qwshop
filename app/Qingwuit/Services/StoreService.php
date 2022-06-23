@@ -359,7 +359,7 @@ class StoreService extends BaseService
                 if (isset($params_array['sort_type']) && !empty($params_array['sort_type'])) {
                     $storeModel = $storeModel->orderBy($params_array['sort_type'], $params_array['sort_order']);
                 } else {
-                    $storeModel = $storeModel->orderBy('distance', 'desc')->orderBy('id', 'desc');
+                    $storeModel = $storeModel->orderBy('distance', $params_array['sort_order'] ?? 'desc')->orderBy('id', $params_array['sort_order'] ?? 'desc');
                 }
 
                 // 关键词

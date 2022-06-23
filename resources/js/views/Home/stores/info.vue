@@ -72,14 +72,14 @@
                                             <el-icon :class="((!R.isEmpty(data.base64Decode.sort_order) && data.base64Decode.sort_order=='desc') && (R.isEmpty(data.base64Decode.sort_type) || data.base64Decode.sort_type==''))?'caret red':'caret'" ><CaretBottom /></el-icon>
                                         </div>
                                     </li>
-                                    <li @click="sortChange('goods_price')" :class="(!R.isEmpty(data.base64Decode.sort_type) && base64Decode.sort_type=='goods_price')?'red':''">
+                                    <li @click="sortChange('goods_price')" :class="(!R.isEmpty(data.base64Decode.sort_type) && data.base64Decode.sort_type=='goods_price')?'red':''">
                                         价格
                                         <div class="sorts">
                                             <el-icon :class="((!R.isEmpty(data.base64Decode.sort_order) && data.base64Decode.sort_order=='asc') && (!R.isEmpty(data.base64Decode.sort_type) && data.base64Decode.sort_type=='goods_price'))?'caret red':'caret'" ><CaretTop /></el-icon>
                                             <el-icon :class="((!R.isEmpty(data.base64Decode.sort_order) && data.base64Decode.sort_order=='desc') && (!R.isEmpty(data.base64Decode.sort_type) && data.base64Decode.sort_type=='goods_price'))?'caret red':'caret'" ><CaretBottom /></el-icon>
                                         </div>
                                     </li>
-                                    <li @click="sortChange('goods_sale')" :class="(!R.isEmpty(data.base64Decode.sort_type) && base64Decode.sort_type=='goods_sale')?'red':''">
+                                    <li @click="sortChange('goods_sale')" :class="(!R.isEmpty(data.base64Decode.sort_type) && data.base64Decode.sort_type=='goods_sale')?'red':''">
                                         销量
                                         <div class="sorts">
                                             <el-icon :class="((!R.isEmpty(data.base64Decode.sort_order) && data.base64Decode.sort_order=='asc') && (!R.isEmpty(data.base64Decode.sort_type)  &&  data.base64Decode.sort_type=='goods_sale'))?'caret red':'caret'" ><CaretTop /></el-icon>
@@ -213,13 +213,14 @@ export default {
         const sortChange = ()=>{
             data.params.page = 1;
             if(e == ''){
-                if(data.base64Decode.sort_order== 'desc'){
+                if(!proxy.R.isEmpty(data.base64Decode.sort_type)){
                     data.base64Decode.sort_order= 'asc';
                 }else{
-                    data.base64Decode.sort_order= 'desc';
-                }
-                if(data.base64Decode.sort_type != undefined){
-                    data.base64Decode.sort_order= 'asc';
+                    if(data.base64Decode.sort_order== 'desc'){
+                        data.base64Decode.sort_order= 'asc';
+                    }else{
+                        data.base64Decode.sort_order= 'desc';
+                    }
                 }
                 data.base64Decode.sort_type = undefined
             }else{

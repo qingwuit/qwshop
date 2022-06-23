@@ -95,13 +95,14 @@ export default {
         const sortChange = (e)=>{
             data.params.page = 1;
             if(e == ''){
-                if(data.base64Decode.sort_order== 'desc'){
+                if(!proxy.R.isEmpty(data.base64Decode.sort_type)){
                     data.base64Decode.sort_order= 'asc';
                 }else{
-                    data.base64Decode.sort_order= 'desc';
-                }
-                if(data.base64Decode.sort_type != undefined){
-                    data.base64Decode.sort_order= 'asc';
+                    if(data.base64Decode.sort_order== 'desc'){
+                        data.base64Decode.sort_order= 'asc';
+                    }else{
+                        data.base64Decode.sort_order= 'desc';
+                    }
                 }
                 data.base64Decode.sort_type = undefined
             }else{
@@ -130,6 +131,7 @@ export default {
         }
 
         const loadData = async ()=>{
+            data.params.params = data.base64Code
             const resp = await proxy.R.get('/stores',data.params)
             if(!resp.code){
                 data.list = resp.data
