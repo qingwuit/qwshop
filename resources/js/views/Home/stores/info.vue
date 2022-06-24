@@ -210,7 +210,7 @@ export default {
             }
         }
 
-        const sortChange = ()=>{
+        const sortChange = (e)=>{
             data.params.page = 1;
             if(e == ''){
                 if(!proxy.R.isEmpty(data.base64Decode.sort_type)){
