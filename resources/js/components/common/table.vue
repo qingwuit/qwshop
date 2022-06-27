@@ -512,11 +512,9 @@ export default {
         const openEditDialog = async (row)=>{
             dialogParams.editOpenBefore()
             formData.edit = {}
-            setTimeout(async ()=>{
-                formData.edit = await proxy.R.get(pageUrl+'/'+row[props.columnId])
-            },50)
             editVis.value = true
-            dialogParams.edit.column.map((item,key)=>{
+            formData.edit = await proxy.R.get(pageUrl+'/'+row[props.columnId])
+            await dialogParams.edit.column.map((item,key)=>{
                 // placeholder关联字段
                 if(item.relation) dialogParams.edit.column[key]['placeholder'] = formData.edit[item.relation]
             })
