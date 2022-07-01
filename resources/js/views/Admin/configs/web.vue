@@ -205,7 +205,7 @@ export default {
         
         const onSubmit = (e)=>{
             if(e == 'cfgForm'){
-                proxy.$refs.cfgForm.validate((valid)=>{
+                proxy.$refs[e].validate((valid)=>{
                     // 验证失败直接断点
                     if (!valid) return false
                     loading.value = true
@@ -228,7 +228,7 @@ export default {
             }
 
             if(e == 'cfgUploadForm'){
-                proxy.$refs.cfgForm.validate((valid)=>{
+                proxy.$refs[e].validate((valid)=>{
                     // 验证失败直接断点
                     if (!valid) return false
                     loading.value = true
@@ -251,7 +251,7 @@ export default {
             }
 
             if(e == 'cfgAmapForm'){
-                proxy.$refs.cfgForm.validate((valid)=>{
+                proxy.$refs[e].validate((valid)=>{
                     // 验证失败直接断点
                     if (!valid) return false
                     loading.value = true
@@ -274,7 +274,7 @@ export default {
             }
 
             if(e == 'cfgTaskForm'){
-                proxy.$refs.cfgForm.validate((valid)=>{
+                proxy.$refs[e].validate((valid)=>{
                     // 验证失败直接断点
                     if (!valid) return false
                     loading.value = true
@@ -297,7 +297,7 @@ export default {
             }
 
             if(e == 'cfgKuaiBaoForm'){
-                proxy.$refs.cfgForm.validate((valid)=>{
+                proxy.$refs[e].validate((valid)=>{
                     // 验证失败直接断点
                     if (!valid) return false
                     loading.value = true

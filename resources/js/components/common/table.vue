@@ -408,7 +408,6 @@ export default {
         const loadData = async ()=>{
             if(props.tableData.data){
                 if(props.tableData.data.length == 0) return
-                listData.listData = props.tableData.data
                 listCount.data = props.tableData.count
                 listData.listData = props.tableData.data
                 listParams.total = parseInt(props.tableData.total)
