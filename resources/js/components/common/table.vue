@@ -348,6 +348,7 @@ export default {
         // 根据键值字典名称获取对应label 最多三层
         const dictFind = (dictName,value,labelName='label',valueName='value')=>{
             let dictVal = '-'
+            if(!value) return dictVal
             if(dialogParams.dictData[dictName] && dialogParams.dictData[dictName].length>0){
                 dialogParams.dictData[dictName].map(item=>{
                     if(item[valueName] == value) dictVal = item[labelName]
@@ -365,7 +366,6 @@ export default {
             }
             return dictVal
         }
-        dictHandle()
 
         const editorSplit = (val)=>{
             if(!proxy.R.isEmpty(val)){
