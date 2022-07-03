@@ -14,6 +14,7 @@
                         </li>
                         <li style="padding:0;" >
                             <el-date-picker
+                                style="width:250px" 
                                 v-model="data.params.created_at"
                                 type="daterange"
                                 :start-placeholder="'Start date'"

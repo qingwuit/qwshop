@@ -7,12 +7,12 @@
         <div class="x20 clear_line"></div>
         <table-view v-if="data.isGoods" :params="{is_type:0}" :handleWidth="150" :options="options" :btnConfig="btnConfigs" >
             <template #table_handleright_hook="{rows}">
-                <el-button :title="$t('btn.view')"  :icon="View" @click="$router.push((rows.is_type==0?'/goods/':'/store/')+rows.id)" />
+                <el-button :title="$t('btn.view')"  :icon="View" @click="$router.push((rows.is_type==0?'/goods/':'/store/')+rows.out_id)" />
             </template>
         </table-view>
         <table-view v-if="!data.isGoods" :params="{is_type:1}" :handleWidth="150" :options="options2" :btnConfig="btnConfigs" >
             <template #table_handleright_hook="{rows}">
-                <el-button :title="$t('btn.view')"  :icon="View" @click="$router.push((rows.is_type==0?'/goods/':'/store/')+rows.id)" />
+                <el-button :title="$t('btn.view')"  :icon="View" @click="$router.push((rows.is_type==0?'/goods/':'/store/')+rows.out_id)" />
             </template>
         </table-view>
     </div>
