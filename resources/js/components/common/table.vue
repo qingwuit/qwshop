@@ -4,7 +4,7 @@
         <div class="table_top">
             <div class="table_btn_left">
                 <el-button v-if="btnConfigs.store && btnConfigs.store.show" :disabled="btnConfigs.store && btnConfigs.store.disabled" type="primary" :icon="Plus" @click="openAddDialog">{{$t('btn.add')}}</el-button>
-                <slot name="table_topleft_hook" :dialogParams="dialogParams" :listCount="listCount.data" :multipleSelection="multipleSelection"></slot>
+                <slot name="table_topleft_hook" :dialogParams="dialogParams" :listCount="listCount.data" :multipleSelectionData="multipleSelectionData" :multipleSelection="multipleSelection"></slot>
                 <el-button v-if="btnConfigs.search && btnConfigs.search.show"  @click="searchOpen"  type="primary" plain :icon="Search">{{$t('btn.search2')}}</el-button>
             </div>
             <div class="table_btn_right">
@@ -263,6 +263,7 @@ export default {
         const route = useRoute()
         const store = useStore()
         const multipleSelection = reactive([])
+        const multipleSelectionData = reactive([])
         const searchVis = ref(false)
         const listCount = reactive({data:{}})
         const listData = reactive({listData:[]})
@@ -306,6 +307,7 @@ export default {
             rules:null,
             destroyOnClose:true,
             isPageDict:false,
+            selectDictByColumId:false,
             dict:[], // 字典链接 {name:"menus",url:'xxx.com'}
             dictData:{}, // 字典数据 {menus:[]}
             multipleSelection:()=>{
@@ -337,10 +339,21 @@ export default {
         dialogParam = Object.assign(dialogParam,props.dialogParam)
         const dialogParams = reactive(dialogParam)
         // 字典处理
-        const dictHandle = ()=>{
+        const dictHandle = async ()=>{
             if(dialogParam.dict.length<=0) return
+            
             dialogParam.dict.map(async item=>{
-                let dictResp = await proxy.R.get(item.url)
+                let dictUrlParams = {}
+                let columnIds = []
+                if(dialogParam.selectDictByColumId && listData.listData.length>0){
+                    listData.listData.map(listItem=>{
+                        if(!proxy.R.isEmpty(listItem[item.name]) && listItem[item.name]!=0) columnIds.push(listItem[item.name])
+                    })
+                }
+                if(dialogParam.selectDictByColumId){
+                    if(!proxy.R.isEmpty(columnIds) && columnIds.length>0) dictUrlParams[props.columnId] = columnIds.join(',')+'|in'
+                }
+                let dictResp = await proxy.R.get(item.url,dictUrlParams)
                 dialogParams.dictData[item.name] = dialogParam.isPageDict?dictResp['data']:dictResp
                 if(item.addSelect) dialogParams.dictData[item.name].unshift(item.addSelect)
             })
@@ -348,7 +361,6 @@ export default {
         // 根据键值字典名称获取对应label 最多三层
         const dictFind = (dictName,value,labelName='label',valueName='value')=>{
             let dictVal = '-'
-            if(!value) return dictVal
             if(dialogParams.dictData[dictName] && dialogParams.dictData[dictName].length>0){
                 dialogParams.dictData[dictName].map(item=>{
                     if(item[valueName] == value) dictVal = item[labelName]
@@ -366,6 +378,7 @@ export default {
             }
             return dictVal
         }
+        dictHandle()
 
         const editorSplit = (val)=>{
             if(!proxy.R.isEmpty(val)){
@@ -390,8 +403,10 @@ export default {
         // 选择数据
         const handleSelectionChange = (e)=>{
             let idArr = []
-            e.map(item=>{idArr.push(item[props.columnId])})
+            let rows = []
+            e.map(item=>{idArr.push(item[props.columnId]);rows.push(item)})
             multipleSelection.value = idArr
+            multipleSelectionData.value = rows
         }
         // 修改页面大小
         const handleSizeChange = (e)=>{
@@ -660,7 +675,7 @@ export default {
             showData,viewData,
             storeData,updateData,formData,searchOpen,
             deleteData,deleteRowData,
-            multipleSelection,
+            multipleSelection,multipleSelectionData,
             searchVis,addVis,editVis,viewVis,openEditDialog,openAddDialog,closeDialog,searchData ,loading,loadData,
             listCount,listData,listParams,lazyLoad,dictFind,editorSplit,
             btnConfigs,dialogParams,
