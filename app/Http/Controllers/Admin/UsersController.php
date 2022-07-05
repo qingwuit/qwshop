@@ -22,7 +22,7 @@ class UsersController extends Controller
                     'phone' => $request->phone ?? '',
                     'inviter_id' => $request->inviter_id ?? 0,
                     'password' => Hash::make($request->password ?? '123456'),
-                    'nickname' => $request->username ?? 'Mysterious',
+                    'nickname' => $request->nickname ?? 'Mysterious',
                     'avatar' => $request->avatar ?? '',
                 ]);
             DB::commit();
