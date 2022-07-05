@@ -339,7 +339,7 @@ class GoodsService extends BaseService
 
             $list = $goodsModel->where($this->status)
                 ->with(['goods_skus' => function ($q) {
-                    return $q->select('goods_id', 'goods_price', 'goods_stock')->orderBy('goods_price', 'asc');
+                    return $q->select('goods_id', 'goods_price', 'goods_stock','deleted_at')->orderBy('goods_price', 'asc');
                 }, 'store', 'collective'])
                 ->withCount('order_comment')
                 ->whereHas('store', function ($q) {

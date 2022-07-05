@@ -18,80 +18,16 @@ class PaymentService extends BaseService
 
         try {
             DB::beginTransaction();
-            if (!$result->out_trade_no) {
-                throw new \Exception('not found out_trade_no');
-            }
-
+            if (!$result->out_trade_no) throw new \Exception('not found out_trade_no');
             $orderPay = $this->getService('OrderPay', true)->where('pay_no', $result->out_trade_no)->first();
-            if ($orderPay->pay_status == 1) throw new \Exception(__('tip.order.payed')); // 订单已经支付
-            $order_ids = $orderPay->order_ids; // 订单ID
-            $userId = $orderPay->belong_id; // 用户ID
-            $oid_arr = [];
-            if (!empty($order_ids)) {
-                $oid_arr = explode(',', $order_ids);
-            }
-
-            $trade_no = 'not default';
-            if ($paymentName == 'wechat') {
-                if ($result->result_code != 'SUCCESS') {
-                    Log::error($result);
-                    throw new \Exception('wechat pay error - ' . $result->out_trade_no);
-                }
-                $trade_no = $result->transaction_id;
-            }
-            if ($paymentName == 'alipay') {
-                if ($result->trade_status != 'TRADE_SUCCESS') {
-                    Log::error($result);
-                    throw new \Exception('alipay pay error - ' . $result->out_trade_no);
-                }
-                $trade_no = $result->trade_no;
-            }
-
-            $orderPay->trade_no = $trade_no;
-            $orderPay->pay_status = 1;
-            $orderPay->pay_time = now();
-            $orderPay->save();
-
-            // 如果是充值
-            if ($orderPay->is_recharge == 1) {
-                $this->getService('MoneyLog')->edit([
-                    'name'  =>  __('tip.payment.onlineRecharge'),
-                    'user_id'  =>  $userId,
-                    'money'  =>  $orderPay->total,
-                ]);
-                DB::commit();
-                return Pay::$paymentName($this->config)->success();
-            }
-
-            // 如果不是充值
-            if ($orderPay->is_recharge == 0) {
-                $this->getService('Order', true)->whereIn('id', $oid_arr)->update([
-                    'order_status'  =>  2,
-                    'pay_time'      =>  now(),
-                    'payment_name'  =>  $paymentName,
-                ]);
-
-                // 金额日志 用户账户变更
-                $this->getService('MoneyLog')->edit([
-                    'user_id'  =>  $userId,
-                    'money'  =>  -$orderPay->total,
-                    'info'  =>  $trade_no,
-                    'isLog'  =>  true,
-                ]);
-
-                // 分销处理
-                try {
-                    $this->getService('Distribution')->addDisLog($oid_arr);
-                } catch (\Exception $e) {
-                    Log::error($e->getMessage());
-                }
-
-                DB::commit();
-                return Pay::$paymentName($this->config)->success();
-            }
+            $paySuccessData = $this->paySuccess($paymentName, $orderPay, $result);
+            if (!$paySuccessData['status']) throw new \Exception($paySuccessData['msg']);
+            DB::commit();
+            return $paySuccessData;
         } catch (\Exception $e) {
             DB::rollback();
             Log::error($e->getMessage());
+            return $this->formatError($e->getMessage());
         }
     }
 
@@ -118,38 +54,22 @@ class PaymentService extends BaseService
 
         // 余额支付处理
         if ($paymentName == 'balance') {
-            $resp = $this->getService('MoneyLog')->edit(['money' => -$orderPay['total']]);
-            if (!$resp['status']) {
-                return $this->formatError($resp['msg']);
-            }
-
             // 支付订单回调处理  下面的处理看能否整理成公共
             $orderPayModel = $this->getService('OrderPay', true)->where('pay_no', $orderPay['pay_no'])->first();
-            if ($orderPayModel->pay_status == 1) return $this->formatError(__('tip.order.payed')); // 订单已经支付
-            $orderPayModel->pay_status = 1;
-            $orderPayModel->pay_time = now();
-            $orderPayModel->balance = $orderPayModel->total;
-            $orderPayModel->save();
-
-            // 增加销量 - 其他支付回调的时候也要处理一遍
-            $orderIds = explode(',', $orderPayModel->order_ids);
-            $orderGoodsList = $this->getService('OrderGoods', true)->whereIn('order_id', $orderIds)->get();
-            if (!$orderGoodsList->isEmpty()) {
-                $orderService = $this->getService('Order');
-                foreach ($orderGoodsList as $v) {
-                    $orderService->orderSale($v->goods_id, $v->buy_num, 1);
-                }
+            try {
+                DB::beginTransaction();
+                $paySuccessData = $this->paySuccess($paymentName, $orderPayModel);
+                if (!$paySuccessData['status']) throw new \Exception($paySuccessData['msg']);
+                DB::commit();
+                return $this->format($paySuccessData['data']);
+            } catch (\Exception $e) {
+                DB::rollback();
+                Log::error($e->getMessage());
+                return $this->formatError($e->getMessage());
             }
-            // 订单状态修改
-            $this->getService('Order', true)->whereIn('id', $orderIds)->update([
-                'order_status'  =>  2,
-                'pay_time'      =>  now(),
-                'payment_name'  =>  $paymentName,
-            ]);
-            return $this->format();
         }
-        // orderPay 的数据进行赋值给payData
 
+        // orderPay 的数据进行赋值给payData
         // 充值管理
         if ($recharge) {
             $this->payData['name'] = __('tip.payment.onlineRecharge');
@@ -187,6 +107,96 @@ class PaymentService extends BaseService
             Log::error('[' . $paymentName . ']:' . $e->getMessage());
             return $this->formatError(__('tip.payment.paymentFailed'));
         }
+    }
+
+    // 支付成功后处理订单
+    public function paySuccess($paymentName = 'balance', $orderPay = null, $result = null)
+    {
+        if (empty($orderPay)) return $this->formatError('pay success params $orderPay empty .');
+
+        // 支付订单回调处理  下面的处理看能否整理成公共
+        if ($orderPay->pay_status == 1) return $this->formatError(__('tip.order.payed')); // 订单已经支付
+        $trade_no = 'not default';
+
+        if ($paymentName == 'balance') {
+            $resp = $this->getService('MoneyLog')->edit(['money' => -$orderPay->total, 'user_id' => $orderPay->belong_id]);
+            if (!$resp['status']) return $this->formatError($resp['msg']);
+        } else {
+            if ($paymentName == 'wechat') {
+                if ($result->result_code != 'SUCCESS') {
+                    Log::error($result);
+                    throw new \Exception('wechat pay error - ' . $result->out_trade_no);
+                }
+                $trade_no = $result->transaction_id;
+            }
+            if ($paymentName == 'alipay') {
+                if ($result->trade_status != 'TRADE_SUCCESS') {
+                    Log::error($result);
+                    throw new \Exception('alipay pay error - ' . $result->out_trade_no);
+                }
+                $trade_no = $result->trade_no;
+            }
+
+            // 金额日志 用户账户变更 第三方支付的只要日志不要实质删除用户余额
+            $this->getService('MoneyLog')->edit([
+                'user_id'  =>  $orderPay->belong_id,
+                'money'  =>  -$orderPay->total,
+                'info'  =>  $trade_no,
+                'isLog'  =>  true,
+            ]);
+        }
+
+        $orderPay->trade_no = $trade_no;
+        $orderPay->pay_status = 1;
+        $orderPay->pay_time = now();
+        $orderPay->balance = $orderPay->total;
+        $orderPay->save();
+
+        // 如果是充值
+        if ($orderPay->is_recharge == 1) {
+            $this->getService('MoneyLog')->edit([
+                'name'  =>  __('tip.payment.onlineRecharge'),
+                'user_id'  =>  $orderPay->belong_id,
+                'money'  =>  $orderPay->total,
+            ]);
+            return $this->format();
+        }
+
+        // 如果不是充值
+        if (empty($orderPay->order_ids)) return $this->formatError('paySuccess $orderPay fail .');
+        $orderIds = explode(',', $orderPay->order_ids);
+        $orderGoodsList = $this->getService('OrderGoods', true)->whereIn('order_id', $orderIds)->get();
+        if (!$orderGoodsList->isEmpty()) {
+            $orderService = $this->getService('Order');
+            foreach ($orderGoodsList as $v) {
+                $orderService->orderSale($v->goods_id, $v->buy_num, 1);
+            }
+        }
+        // 订单状态修改
+        $this->getService('Order', true)->whereIn('id', $orderIds)->update([
+            'order_status'  =>  2,
+            'pay_time'      =>  now(),
+            'payment_name'  =>  $paymentName,
+        ]);
+
+        // 分销处理
+        try {
+            $this->getService('Distribution')->addDisLog($orderIds);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+        }
+
+        // 增加销量 - 其他支付回调的时候也要处理一遍
+        $orderGoodsList = $this->getService('OrderGoods', true)->whereIn('order_id', $orderIds)->get();
+        if (!$orderGoodsList->isEmpty()) {
+            $orderService = $this->getService('Order');
+            foreach ($orderGoodsList as $v) {
+                $orderService->orderSale($v->goods_id, $v->buy_num, 1);
+            }
+        }
+
+        // 余额支付需要返回信息 第三方支付需要返回指定信息给回调服务器
+        return $paymentName == 'balance' ? $this->format() : Pay::$paymentName($this->config)->success();
     }
 
     // 检测是否订单支付成功

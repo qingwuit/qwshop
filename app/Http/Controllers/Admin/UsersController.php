@@ -20,6 +20,7 @@ class UsersController extends Controller
                 ->create([
                     'username' => $request->username ?? '',
                     'phone' => $request->phone ?? '',
+                    'inviter_id' => $request->inviter_id ?? 0,
                     'password' => Hash::make($request->password ?? '123456'),
                     'nickname' => $request->username ?? 'Mysterious',
                     'avatar' => $request->avatar ?? '',
@@ -52,6 +53,7 @@ class UsersController extends Controller
             $model->nickname = $request->nickname ?? '';
             $model->phone = $request->phone ?? '';
             $model->avatar = $request->avatar ?? '';
+            $model->inviter_id = $request->inviter_id ?? 0;
             $model->save();
             DB::commit();
             return $this->success([], __('tip.success'));

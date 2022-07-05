@@ -26,13 +26,17 @@ class GoodsCollection extends ResourceCollection
                 // 判断是否存在sku
                 if (isset($item->goods_skus) && count($item->goods_skus)>0) {
                     $goods_stock = 0;
+                    $skus = [];
                     foreach ($item->goods_skus as $v) {
-                        $goods_stock += $v['goods_stock'];
+                        if(empty($v['deleted_at'])) $goods_stock += $v['goods_stock'];
+                        if(empty($v['deleted_at'])) $skus[] = $v;
                     }
-                    if (count($item->goods_skus)>1) {
-                        $goods_price = $item->goods_skus[0]['goods_price'].' ~ '.$item->goods_skus[count($item->goods_skus)-1]['goods_price'];
-                    } else {
-                        $goods_price = $item->goods_skus[0]['goods_price'];
+                    if(!empty($skus)){
+                        if (count($skus)>1) {
+                            $goods_price =$skus[0]['goods_price'].' ~ '.$skus[count($skus)-1]['goods_price'];
+                        } else {
+                            $goods_price = $skus[0]['goods_price'];
+                        }
                     }
                 }
                 return [
