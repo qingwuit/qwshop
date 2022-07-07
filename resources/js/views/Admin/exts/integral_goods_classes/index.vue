@@ -1,5 +1,5 @@
 <template>
-    <table-view :options="options" :dialogParam="dialogParam"></table-view>
+    <table-view :options="options" :searchOption="searchOptions" :dialogParam="dialogParam"></table-view>
 </template>
 
 <script>
@@ -14,7 +14,10 @@ export default {
             {label:'创建时间',value:'created_at'},
         ]);
 
-
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'分类名称',value:'name',where:'like'},
+        ])
         // 表单配置 
         const addColumn = [
             {label:'分类名称',value:'name'},
@@ -27,7 +30,7 @@ export default {
             add:{column:addColumn},
             edit:{column:addColumn},
         })
-        return {options,dialogParam}
+        return {options,searchOptions,dialogParam}
     }
 }
 </script>

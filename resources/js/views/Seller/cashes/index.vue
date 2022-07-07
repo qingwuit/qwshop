@@ -1,6 +1,6 @@
 <template>
     <div class="qwit">
-        <table-view :options="options" :handleWidth="'80px'" :params="params" :btnConfig="btnConfigs" :dialogParam="dialogParam" ></table-view>
+        <table-view :options="options" :handleWidth="'80px'" :params="params" :searchOption="searchOptions" :btnConfig="btnConfigs" :dialogParam="dialogParam" ></table-view>
     </div>
 </template>
 
@@ -20,6 +20,14 @@ export default {
             {label:'提现状态',value:'cash_status',type:'dict_tags'},
             {label:'创建时间',value:'created_at'},
         ]);
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'真实姓名',value:'name',where:'likeLeft'},
+            {label:'提现银行',value:'bank_name',where:'likeLeft'},
+            {label:'银行卡号',value:'card_no',where:'likeLeft'},
+            {label:'提现金额',value:'money'},
+            {label:'提现状态',value:'cash_status',type:'select'},
+        ])
         // 表单配置 
         const addColumn = [
             {label:'真实姓名',value:'name'},
@@ -37,7 +45,7 @@ export default {
 
         const dialogParam = reactive({
             dictData:{
-                cash_status:[{label:proxy.$t('btn.waitExamine'),value:0},{label:proxy.$t('btn.success'),value:1},{label:proxy.$t('btn.rejected'),value:2}]
+                cash_status:[{label:proxy.$t('btn.waitExamine'),value:0},{label:proxy.$t('btn.success'),value:1},{label:proxy.$t('btn.rejected'),value:2}],
             },
             rules:{
                 name:[{required:true,message:proxy.$t('msg.requiredMsg')}],
@@ -52,7 +60,7 @@ export default {
         const params = reactive({
             store_id:'0|gt'
         })
-        return {options,btnConfigs,dialogParam,params}
+        return {options,btnConfigs,searchOptions,dialogParam,params}
     }
 }
 </script>

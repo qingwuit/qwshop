@@ -12,6 +12,7 @@ export default {
     setup(props) {
         const {ctx,proxy} = getCurrentInstance()
         const options = reactive([
+            {label:'用户',value:'user_id',type:'dict_tags',labelName:'nickname',valueName:'id'},
             {label:'名称',value:'name'},
             {label:'资金',value:'money',type:'money'},
             {label:'类型',value:'is_type',type:'dict_tags'},
@@ -42,6 +43,11 @@ export default {
         })
 
         const dialogParam = reactive({
+            selectDictByColumId:true,
+            isPageDict:true,
+            dict:[
+                {name:'user_id',url:'/Admin/users'}
+            ],
             dictData:{
                 is_type:[{label:proxy.$t('user.frozen_money'),value:'1'},{label:proxy.$t('user.money'),value:'0'},{label:proxy.$t('user.integral'),value:'2'}],
                 is_belong:[{label:proxy.$t('btn.yes'),value:'1'},{label:proxy.$t('btn.no'),value:'0'}],

@@ -45,19 +45,9 @@ export default {
 
         // 搜索字段
         const searchOptions = reactive([
-            {label:'订单号',value:'order_no',where:'likeRight'},
-            {label:'订单名称',value:'order_name',where:'likeRight'},
-            {label:'订单状态',value:'order_status',type:'select',data:{
-                order_status:[
-                    {label:proxy.$t('order.orderCancel'),value:0},
-                    {label:proxy.$t('order.waitPay'),value:1},
-                    {label:proxy.$t('order.waitSend'),value:2},
-                    {label:proxy.$t('order.orderConfirm'),value:3},
-                    {label:proxy.$t('order.waitComment'),value:4},
-                    {label:proxy.$t('order.orderRefund'),value:5},
-                    {label:proxy.$t('order.orderCompletion'),value:6},
-                ]
-            }},
+            {label:'订单号',value:'order_no',where:'likeLeft'},
+            {label:'订单名称',value:'order_name',where:'like'},
+            {label:'订单状态',value:'order_status',type:'select'},
         ])
 
         const params = {
@@ -84,6 +74,7 @@ export default {
             {label:'详细地址',value:'receive_address'},
             {label:'快递单号',value:'delivery_no'},
             {label:'订单状态',value:'order_status_cn'},
+            {label:'订单号',value:'order_no'},
         ]
         const addColumn = [
             {label:'订单名称',value:'order_name'},
@@ -99,6 +90,17 @@ export default {
             {label:'快递单号',value:'delivery_no'},
         ]
         const dialogParam = reactive({
+            dictData:{
+                order_status:[
+                    {label:proxy.$t('order.orderCancel'),value:0},
+                    {label:proxy.$t('order.waitPay'),value:1},
+                    {label:proxy.$t('order.waitSend'),value:2},
+                    {label:proxy.$t('order.orderConfirm'),value:3},
+                    {label:proxy.$t('order.waitComment'),value:4},
+                    {label:proxy.$t('order.orderRefund'),value:5},
+                    {label:proxy.$t('order.orderCompletion'),value:6},
+                ]
+            },
             view:{column:viewColumn},
             edit:{column:addColumn},
         })

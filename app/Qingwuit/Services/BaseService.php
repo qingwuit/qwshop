@@ -79,6 +79,11 @@ class BaseService
                         if ($vArr[1] == 'between') {
                             $tableModel = $tableModel->whereBetween($k, explode(',', $vArr[0]));
                         }
+                        if ($vArr[1] == 'whereHas') {
+                            $tableModel = $tableModel->whereHas($vArr[2], function ($q) use ($k, $vArr) {
+                                $q->where($k, 'like', '%' . $vArr[0]??'' . '%');
+                            });
+                        }
                     } else {
                         $tableModel = $tableModel->where($k, $v);
                     }

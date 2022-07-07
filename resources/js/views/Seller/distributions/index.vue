@@ -1,6 +1,6 @@
 <template>
     <div class="qwit">
-        <table-view :handleWidth="'80px'" :options="options" :params="params" :btnConfig="btnConfigs" :dialogParam="dialogParam" >
+        <table-view :handleWidth="'80px'" :options="options" :searchOption="searchOptions" :params="params" :btnConfig="btnConfigs" :dialogParam="dialogParam" >
             <template #lev="{scopeData}">
                 <span class="lev_rate">一级佣金比例 {{scopeData.lev_1||0.00}} %</span>
                 <span class="lev_rate">二级佣金比例 {{scopeData.lev_2||0.00}} %</span>
@@ -25,6 +25,10 @@ export default {
             {label:'分销佣金',value:'is_belong',type:'tags'},
             {label:'创建时间',value:'created_at'},
         ]);
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'商品名称',value:'goods_name',where:'whereHas|goods'},
+        ])
         // 表单配置 
         const addColumn = [
             {label:'商品',value:'goods_id',type:'table_select',params:{},
@@ -65,7 +69,7 @@ export default {
         const params = reactive({
             // is_belong:'0|gt',
         })
-        return {options,btnConfigs,dialogParam,params}
+        return {options,btnConfigs,dialogParam,params,searchOptions}
     }
 }
 </script>

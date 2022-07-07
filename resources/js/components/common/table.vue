@@ -351,7 +351,7 @@ export default {
                     })
                 }
                 if(dialogParam.selectDictByColumId){
-                    if(!proxy.R.isEmpty(columnIds) && columnIds.length>0) dictUrlParams[props.columnId] = columnIds.join(',')+'|in'
+                    if(!proxy.R.isEmpty(columnIds) && columnIds.length>0) dictUrlParams[props.columnId] = _.uniq(columnIds).join(',')+'|in'
                 }
                 let dictResp = await proxy.R.get(item.url,dictUrlParams)
                 dialogParams.dictData[item.name] = dialogParam.isPageDict?dictResp['data']:dictResp
@@ -458,7 +458,9 @@ export default {
         })
 
         const getChildrenData = async (pid=0)=>{
-            let childrenData = await proxy.R.get(pageUrl,{isChildren:true,pid:pid})
+            listParams.isChildren = true
+            listParams.pid = pid
+            let childrenData = await proxy.R.get(pageUrl,listParams)
             childrenData.forEach(item=>{
                 if(item.has_children != null){
                     item.hasChildren = true

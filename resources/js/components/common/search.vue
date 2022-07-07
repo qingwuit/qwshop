@@ -1,7 +1,7 @@
 <template>
     <div class="search_layout">
         <el-row :gutter="20" v-if="options.length>0"  class="search_layout2">
-            <el-col :sm="24" :md="4" v-for="(v,k) in advanced?optionsRef.slice(0,5):optionsRef" :key="k">
+            <el-col :sm="24" :md="8" :lg="4" v-for="(v,k) in advanced?optionsRef.slice(0,5):optionsRef" :key="k">
                 <div class="search-content">
                     <q-input :params="v" :dictData="JSON.stringify(dictData) != '{}'?dictData:(v.data||{})" v-model:formData="searchParams[v.value]" />
                     <!-- <el-input v-if="v.type='text'" :type="v.type" v-model="searchParams[v.value]" :placeholder="v.label" /> -->
@@ -9,7 +9,7 @@
             </el-col>
 
             <!-- 搜索按钮 :icon="Search" -->
-            <el-col :sm="24" :md="4">
+            <el-col :sm="24" :md="8" :lg="4">
                 <div class="search-content">
                     <el-button type="primary"  @click="searchSubmit">{{$t('btn.search')}}</el-button>
                     <el-button @click="resetSearch">{{$t('btn.reset')}}</el-button>
@@ -90,6 +90,8 @@ export default {
             propOptions.map(optionItem=>{
                 if(newParams[optionItem.value] && optionItem.where !== null && optionItem.where !== undefined){
                     newParams[optionItem.value] += '|' + optionItem.where
+                }else{
+                    newParams[optionItem.value] = undefined
                 }
             })
             content.emit("data",newParams)

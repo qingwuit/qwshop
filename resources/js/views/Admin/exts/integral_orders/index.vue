@@ -1,6 +1,6 @@
 <template>
     <div class="qwit">
-        <table-view  :params="params" :btnConfig="btnConfigs" :options="options" :dialogParam="dialogParam">
+        <table-view  :params="params" :btnConfig="btnConfigs" :searchOption="searchOptions" :options="options" :dialogParam="dialogParam">
             <template #table_topleft_hook="{dialogParams}">
                 <el-button type="primary" :icon="Promotion" @click="openAddDialog(dialogParams)">订单发货</el-button>
                 <el-button type="primary" :icon="Printer" @click="$message.info('暂无功能')">打印面单</el-button>
@@ -67,6 +67,12 @@ export default {
             delivery:[],
             loading:false,
         })
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'订单号',value:'order_no',where:'likeLeft'},
+            {label:'订单名称',value:'order_name',where:'likeLeft'},
+            {label:'订单状态',value:'order_status',type:'select'},
+        ])
         const options = reactive([
             {label:'订单图片',value:'order_image',type:'avatar'},
             {label:'订单名称',value:'order_name'},
@@ -100,7 +106,8 @@ export default {
             {label:'地址信息',value:'receive_area'},
             {label:'详细地址',value:'receive_address'},
             {label:'快递订单号',value:'delivery_no'},
-            {label:'订单状态',value:'order_status_cn'},
+            {label:'订单状态',value:'order_status',viewType:'dict_tags'},
+            {label:'订单号',value:'order_no'},
         ]
         const editColumn = [
             {label:'收件人名',value:'receive_name'},
@@ -111,6 +118,17 @@ export default {
             {label:'快递订单号',value:'delivery_no'},
         ]
         const dialogParam = reactive({
+            dictData:{
+                order_status:[
+                    {label:proxy.$t('order.orderCancel'),value:0},
+                    {label:proxy.$t('order.waitPay'),value:1},
+                    {label:proxy.$t('order.waitSend'),value:2},
+                    {label:proxy.$t('order.orderConfirm'),value:3},
+                    {label:proxy.$t('order.waitComment'),value:4},
+                    {label:proxy.$t('order.orderRefund'),value:5},
+                    {label:proxy.$t('order.orderCompletion'),value:6},
+                ]
+            },
             rules:{
                 name:[{required:true,message:'不能为空'}]
             },
@@ -173,7 +191,7 @@ export default {
 
         return {
             Promotion,Printer,Picture,
-            options,dialogParam,btnConfigs,params,data,
+            options,dialogParam,btnConfigs,searchOptions,params,data,
             openAddDialog,postDelivery
         }
     }

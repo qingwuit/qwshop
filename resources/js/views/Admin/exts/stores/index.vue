@@ -1,6 +1,6 @@
 <template>
     <div class="qwit">
-        <table-view :options="options" :btnConfig="btnConfigs" :params="params" :dialogParam="dialogParam"  :handleWidth="210">
+        <table-view :options="options" :btnConfig="btnConfigs" :params="params" :searchOption="searchOptions" :dialogParam="dialogParam"  :handleWidth="210">
             <template #table_topleft_hook="{dialogParams,listCount}">
                 <el-badge class="badge_item">
                     <el-button :type="tabs.active == 4?'primary':null " @click="tabsClick(4,dialogParams)" >{{$t('store.verifyStatus.passVerify')}}</el-button>
@@ -77,6 +77,10 @@ export default {
             active:4,
         })
 
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'店铺名称',value:'store_name',where:'like'},
+        ])
 
         // 表单配置 
         const addColumn = [
@@ -160,7 +164,7 @@ export default {
             })
         }
 
-        return {options,dialogParam,params,btnConfigs,tabs,Coin,editVis,loading,selectType,money,tabsClick,updateData,moneyOpen}
+        return {options,dialogParam,searchOptions,params,btnConfigs,tabs,Coin,editVis,loading,selectType,money,tabsClick,updateData,moneyOpen}
     }
 }
 </script>

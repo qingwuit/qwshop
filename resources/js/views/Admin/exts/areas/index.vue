@@ -1,6 +1,6 @@
 <template>
     <div class="qwit">
-        <table-view :options="options" :dialogParam="dialogParam" :tableCfg="{lazy:true,pid:'code'}">
+        <table-view :options="options" :dialogParam="dialogParam" :searchOption="searchOptions" :tableCfg="{lazy:true,pid:'code'}">
             <template #table_topleft_hook>
                 <el-button :icon="MagicStick" :loading="loading" @click="clearCache">{{$t('btn.clearCache')}}</el-button>
             </template>
@@ -22,8 +22,10 @@ export default {
             {label:'编码',value:'code',type:'tags'},
             {label:'创建时间',value:'created_at'},
         ]);
-
-
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'地区名称',value:'name',where:'likeLeft'},
+        ])
         // 表单配置 
         const addColumn = [
             {label:'上级地区',value:'pid',type:'cascader',props:{emitPath:false,checkStrictly: true,label:'name',value:'code'}},
@@ -56,7 +58,7 @@ export default {
                 loading.value=false
             })
         }
-        return {MagicStick,loading,options,dialogParam,clearCache}
+        return {MagicStick,loading,options,dialogParam,searchOptions,clearCache}
     }
 }
 </script>

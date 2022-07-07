@@ -10,7 +10,7 @@
         </div>
         
         <div :id="'order_plot'+data.random" style="margin-top:20px;margin-bottom:40px"></div>
-        <table-view :options="options" :btnConfig="btnConfigs" :tableData="data.list" :pagination="data.list.data && data.list.data.length>0" :handleHide="false" ></table-view>
+        <table-view :options="options" :searchOption="searchOptions" :btnConfig="btnConfigs" :tableData="data.list" :pagination="data.list.data && data.list.data.length>0" :handleHide="false" ></table-view>
     </div>
 </template>
 
@@ -95,6 +95,10 @@ export default {
             {label:'手机',value:'phone',type:'tags'},
             {label:'创建时间',value:'created_at'},
         ]);
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'昵称',value:'nickname',where:'likeLeft'},
+        ])
         const btnConfigs = reactive({
             store:{show:false},
             update:{show:false},
@@ -104,7 +108,7 @@ export default {
         })
 
         return {
-            data,params,options,btnConfigs,
+            data,params,options,btnConfigs,searchOptions,
             typeChange,onChange
         }
     }    

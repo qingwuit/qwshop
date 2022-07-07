@@ -10,7 +10,7 @@
         </div>
         
         <div :id="'order_plot'+data.random" style="margin-top:20px;margin-bottom:40px"></div>
-        <table-view :options="options" :btnConfig="btnConfigs" :tableData="data.list" :pagination="data.list.data && data.list.data.length>0" :handleHide="false" ></table-view>
+        <table-view :options="options" :searchOption="searchOptions" :btnConfig="btnConfigs" :tableData="data.list" :pagination="data.list.data && data.list.data.length>0" :handleHide="false" ></table-view>
     </div>
 </template>
 
@@ -96,6 +96,11 @@ export default {
             {label:'支付时间',value:'pay_time'},
             {label:'创建时间',value:'created_at'},
         ]);
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'支付订单号',value:'pay_no',where:'likeLeft'},
+            {label:'第三方订单',value:'trade_no',where:'likeLeft'},
+        ])
         const btnConfigs = reactive({
             store:{show:false},
             update:{show:false},
@@ -105,7 +110,7 @@ export default {
         })
 
         return {
-            data,params,options,btnConfigs,
+            data,params,options,btnConfigs,searchOptions,
             typeChange,onChange
         }
     }    

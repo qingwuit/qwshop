@@ -10,7 +10,7 @@
         </div>
         
         <div :id="'order_plot'+data.random" style="margin-top:20px;margin-bottom:40px"></div>
-        <table-view :options="options" :btnConfig="btnConfigs" :tableData="data.list" :dialogParam="dialogParam" :pagination="data.list.data && data.list.data.length>0"  :handleHide="false" ></table-view>
+        <table-view :options="options" :searchOption="searchOptions" :btnConfig="btnConfigs" :tableData="data.list" :dialogParam="dialogParam" :pagination="data.list.data && data.list.data.length>0"  :handleHide="false" ></table-view>
     </div>
 </template>
 
@@ -96,6 +96,10 @@ export default {
             {label:'审核',value:'store_verify',type:'dict_tags'},
             {label:'创建时间',value:'created_at'},
         ]);
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'店铺名称',value:'store_name',where:'likeLeft'},
+        ])
         const btnConfigs = reactive({
             store:{show:false},
             update:{show:false},
@@ -117,7 +121,7 @@ export default {
         })
 
         return {
-            data,params,options,btnConfigs,dialogParam,
+            data,params,options,btnConfigs,dialogParam,searchOptions,
             typeChange,onChange
         }
     }    

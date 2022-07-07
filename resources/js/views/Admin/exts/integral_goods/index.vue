@@ -1,6 +1,6 @@
 <template>
     <div class="seller_goods">
-        <table-view v-if="tableVis" :options="options" :btnConfig="btnConfigs" :params="params" :dialogParam="dialogParam" >
+        <table-view v-if="tableVis" :options="options" :btnConfig="btnConfigs" :searchOption="searchOptions" :params="params" :dialogParam="dialogParam" >
             <template #table_topleft_hook>
                 <el-button type="primary" :icon="Plus" @click="addGoods">{{$t('btn.add')}}</el-button>
             </template>
@@ -41,8 +41,10 @@ export default {
             // {label:'排序',value:'is_sort'},
             {label:'创建时间',value:'created_at'},
         ]);
-
-
+        // 搜索字段
+        const searchOptions = reactive([
+            {label:'商品名称',value:'goods_name',where:'like'},
+        ])
         const dialogParam = reactive({
             dictData:{
                 goods_status:[{label:proxy.$t('btn.offTheShelf'),value:0},{label:proxy.$t('btn.putOnTheShelf'),value:1}],
@@ -66,7 +68,7 @@ export default {
         }
 
         return {
-            options,dialogParam,btnConfigs,tableVis,params,
+            options,dialogParam,btnConfigs,tableVis,params,searchOptions,
             Plus,Edit,
             addGoods,editGoods,
         }
