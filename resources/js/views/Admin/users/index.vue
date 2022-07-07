@@ -76,6 +76,10 @@ export default {
             {label:'密码',value:'password',type:'password'},
             {label:'邀请人',value:'inviter_id',type:'table_select',viewType:'dict_tags',labelName:'nickname',valueName:'id',params:{},span:24,
             pageUrl:'/Admin/users',
+            searchOptions:[
+                {label:'昵称',value:'nickname',where:'likeRight'},
+                {label:'用户名',value:'username',where:'likeRight'}
+            ],
             options:[
                 {label:'头像',value:'avatar',type:'avatar',perView:true},
                 {label:'昵称',value:'nickname'},

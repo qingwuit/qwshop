@@ -74,6 +74,7 @@ class AuthService extends BaseService
 
             return $this->format($resp->json());
         }
+        if(isset($resp->json()['error']) && $resp->json()['error'] == 'invalid_grant') return $this->formatError(__('tip.userThr'));
         return $this->formatError($resp->json()['message'], $respData);
     }
 
@@ -210,12 +211,12 @@ class AuthService extends BaseService
             return;
         }
 
-        $model = $this->getService($modelName, true);
+        $model = $this->getService($modelName, true)->where($type, $username)->first();
 
         // 判断是否存在相同得账号和电话
         if (!$model->where($type, $username)->exists()) {
             // 该账号已经存在
-            return $this->formatError(__('tip.userExist'));
+            return $this->formatError(__('tip.userThr'));
         }
 
         if ($type == 'phone') {

@@ -9,7 +9,7 @@ class AutoService extends BaseService
     protected $config = [];
     public function __construct()
     {
-        $this->config = $this->getService('Config')->getFormatConfig('task');
+        $this->config = $this->getService('Configs')->getFormatConfig('task');
     }
     
     /**

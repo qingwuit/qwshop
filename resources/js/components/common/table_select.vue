@@ -1,7 +1,7 @@
 <template>
     <div class="table_select">
         <el-dialog v-model="vis" destroy-on-close :title="params.label" :width="params.width||'60%'" :fullscreen="params.fullscreen||true">
-            <table-view :pageUrl="params.pageUrl" :options="params.options" :handleHide="params.handleHide||false" :params="params.params||[]" :btnConfig="btnConfigs" >
+            <table-view :pageUrl="params.pageUrl" :options="params.options" :handleHide="params.handleHide||false" :searchOption="params.searchOptions" :params="params.params||[]" :btnConfig="btnConfigs" >
                 <template #table_topleft_hook={multipleSelection,multipleSelectionData}>
                     <el-button type="success" :icon="Finished" @click="selectRow(multipleSelection,multipleSelectionData.value)">{{$t('btn.determine')}}</el-button>
                 </template>

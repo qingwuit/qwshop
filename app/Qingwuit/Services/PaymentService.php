@@ -162,7 +162,8 @@ class PaymentService extends BaseService
             return $this->format();
         }
 
-        // 如果不是充值
+        // 如果不是充值 
+        // 增加销量 - 其他支付回调的时候也要处理一遍
         if (empty($orderPay->order_ids)) return $this->formatError('paySuccess $orderPay fail .');
         $orderIds = explode(',', $orderPay->order_ids);
         $orderGoodsList = $this->getService('OrderGoods', true)->whereIn('order_id', $orderIds)->get();
@@ -184,15 +185,6 @@ class PaymentService extends BaseService
             $this->getService('Distribution')->addDisLog($orderIds);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-        }
-
-        // 增加销量 - 其他支付回调的时候也要处理一遍
-        $orderGoodsList = $this->getService('OrderGoods', true)->whereIn('order_id', $orderIds)->get();
-        if (!$orderGoodsList->isEmpty()) {
-            $orderService = $this->getService('Order');
-            foreach ($orderGoodsList as $v) {
-                $orderService->orderSale($v->goods_id, $v->buy_num, 1);
-            }
         }
 
         // 余额支付需要返回信息 第三方支付需要返回指定信息给回调服务器
