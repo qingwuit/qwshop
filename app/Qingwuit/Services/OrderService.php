@@ -536,6 +536,7 @@ class OrderService extends BaseService
     // @param mixed $area_id 省份ID
     protected function sumFreight($freight_id, $total_weight, $store_id, $area_id)
     {
+        if ($freight_id == -1) return 0;
         $freight_model = $this->getService('Freight', true);
         $default_info = $freight_model->where('is_type', 0)->where('store_id', $store_id)->first(); // 默认快递模版
         if ($freight_id == 0) { // 默认模版

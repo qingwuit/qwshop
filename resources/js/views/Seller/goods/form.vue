@@ -316,7 +316,7 @@ export default {
         const loadFreght = ()=>{
             proxy.R.get('/Seller/freights',{isAll:true}).then(res=>{
                 if(!res.code) data.freight = res
-                data.freight.unshift({name:proxy.$t('freight.free'),id:0})
+                data.freight.unshift({name:proxy.$t('freight.free'),id:-1})
             })
         }
 
