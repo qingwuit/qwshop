@@ -22,7 +22,7 @@ export default {
 
         // 表单配置 
         const addColumn = [
-            {label:'上级菜单',value:'pid',type:'cascader',props:{emitPath:false,label:'name',value:'id'}},
+            {label:'上级菜单',value:'pid',type:'cascader',props:{emitPath:false,checkStrictly: true,label:'name',value:'id'}},
             {label:'分类名称',value:'name'},
             {label:'缩略图',value:'thumb',type:'avatar'},
             {label:'排序',value:'is_sort'},
