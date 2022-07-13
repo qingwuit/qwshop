@@ -22,6 +22,7 @@ class UsersController extends Controller
                     'phone' => $request->phone ?? '',
                     'inviter_id' => $request->inviter_id ?? 0,
                     'password' => Hash::make($request->password ?? '123456'),
+                    'pay_password' => Hash::make($request->pay_password ?? '123456'),
                     'nickname' => $request->nickname ?? 'Mysterious',
                     'avatar' => $request->avatar ?? '',
                 ]);
@@ -49,6 +50,9 @@ class UsersController extends Controller
             $model->username = $request->username;
             if (!empty($request->password)) {
                 $model->password = Hash::make($request->password);
+            }
+            if (!empty($request->pay_password)) {
+                $model->pay_password = Hash::make($request->pay_password);
             }
             $model->nickname = $request->nickname ?? '';
             $model->phone = $request->phone ?? '';

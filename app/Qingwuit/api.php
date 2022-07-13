@@ -17,6 +17,7 @@ Route::get('/integral/class', [App\Http\Controllers\Home\IntegralController::cla
 Route::get('/integral/goods', [App\Http\Controllers\Home\IntegralController::class,'index'])->name('home.integral.goods');
 Route::get('/integral/goods/{id}', [App\Http\Controllers\Home\IntegralController::class,'show'])->name('home.integral.show');
 Route::get('/seckills', [App\Http\Controllers\Home\SeckillsController::class,'index'])->name('home.seckills.index');
+Route::get('/adv',[App\Http\Controllers\Home\AdvSpacesController::class,'index'])->name('home.advspaces.index'); // 获取广告幻灯片
 
 
 

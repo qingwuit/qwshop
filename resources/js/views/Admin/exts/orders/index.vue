@@ -78,11 +78,6 @@ export default {
         ]
         const addColumn = [
             {label:'订单名称',value:'order_name'},
-            {label:'店铺名称',value:'store_name'},
-            {label:'买家昵称',value:'buyer_name'},
-            {label:'订单总额',value:'total_price'},
-            {label:'商品总额',value:'order_price'},
-            {label:'优惠价格',value:'coupon_money'},
             {label:'收件人名',value:'receive_name'},
             {label:'收件人手机',value:'receive_tel'},
             {label:'地址信息',value:'receive_area'},
