@@ -68,6 +68,6 @@ trait ResourceTrait
     // 快捷返回数据处理
     protected function handle($data)
     {
-        return $data['status']?$this->success($data['data']):$this->error($data['msg'], $data['data']);
+        return $data['status']?$this->success($data['data'],$data['msg']):$this->error($data['msg'], $data['data']);
     }
 }

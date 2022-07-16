@@ -9,7 +9,8 @@ class AdvService extends BaseService
     {
         if(empty($name)) return $this->formatError('space name find error.');
         $space = $this->getService('AdvSpace',true)->where('name',$name)->first();
-        $list = $this->getService('Adv',true)->where('pid',$space['id'])->where('adv_start','<',date('Y-m-d H:i:s'))->where('adv_end','>',date('Y-m-d H:i:s'))->get();
+        if(!$space) return $this->format();
+        $list = $this->getService('Adv',true)->where('pid',$space['id'])->where('status',1)->where('adv_start','<',date('Y-m-d H:i:s'))->where('adv_end','>',date('Y-m-d H:i:s'))->get();
         return $this->format($list);
     }
 }
