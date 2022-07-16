@@ -346,7 +346,7 @@ class StoreService extends BaseService
         $lat = request()->lat ?? '39.56';
         $lng = request()->lng ?? '116.20'; // 默认北京的经纬度
 
-        $distance = "ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN(('$lat' * PI() / 180 - store_lat * PI() / 180) / 2),2) + COS(40.0497810000 * PI() / 180) * COS(store_lat * PI() / 180) * POW(SIN(('$lng' * PI() / 180 - store_lng * PI() / 180) / 2),2))) * 1000 )  AS distance ";
+        $distance = "ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN(('$lat' * PI() / 180 - store_lat * PI() / 180) / 2),2) + COS($lat * PI() / 180) * COS(store_lat * PI() / 180) * POW(SIN(('$lng' * PI() / 180 - store_lng * PI() / 180) / 2),2))) * 1000 )  AS distance ";
 
         $storeModel = $this->getService('Store', true)->select(DB::raw('*,' . $distance))->withCount(['comments', 'comments as good_comment' => function ($q) {
             $q->whereRaw('(score+agree+speed+service)>=15');

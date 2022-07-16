@@ -21,8 +21,8 @@ class UsersController extends Controller
                     'username' => $request->username ?? '',
                     'phone' => $request->phone ?? '',
                     'inviter_id' => $request->inviter_id ?? 0,
-                    'password' => Hash::make($request->password ?? '123456'),
-                    'pay_password' => Hash::make($request->pay_password ?? '123456'),
+                    'password' => Hash::make(isset($request->password) && !empty($request->password) ? $request->password : '123456'),
+                    'pay_password' => Hash::make(isset($request->password) && !empty($request->password) ? $request->password : '123456'),
                     'nickname' => $request->nickname ?? 'Mysterious',
                     'avatar' => $request->avatar ?? '',
                 ]);
