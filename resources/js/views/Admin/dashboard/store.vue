@@ -10,7 +10,7 @@
         </div>
         
         <div :id="'order_plot'+data.random" style="margin-top:20px;margin-bottom:40px"></div>
-        <table-view :options="options" :searchOption="searchOptions" :btnConfig="btnConfigs" :tableData="data.list" :dialogParam="dialogParam" :pagination="data.list.data && data.list.data.length>0"  :handleHide="false" ></table-view>
+        <table-view :options="options" @tableHandleSizeChange="handleSizeChange" @tableHandleCurrentChange="handleCurrentChange" :params="params" :searchOption="searchOptions" :btnConfig="btnConfigs" :tableData="data.list" :dialogParam="dialogParam" :pagination="data.list.data && data.list.data.length>0"  :handleHide="false" ></table-view>
     </div>
 </template>
 
@@ -43,7 +43,18 @@ export default {
                     data.line.changeData(data.plot)
                 }
             })
-            
+        }
+
+        const handleSizeChange = (e)=>{
+            params.page = e.page
+            params.per_page = e.per_page
+            loadData()
+        }
+
+        const handleCurrentChange = (e)=>{
+            params.page = e.page
+            params.per_page = e.per_page
+            loadData()
         }
 
         const typeChange = (e)=>{
@@ -122,7 +133,7 @@ export default {
 
         return {
             data,params,options,btnConfigs,dialogParam,searchOptions,
-            typeChange,onChange
+            typeChange,onChange,handleSizeChange,handleCurrentChange
         }
     }    
 }

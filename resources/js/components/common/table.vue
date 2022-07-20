@@ -411,11 +411,13 @@ export default {
         // 修改页面大小
         const handleSizeChange = (e)=>{
             listParams.per_page = e
+            emit('tableHandleSizeChange',listParams)
             loadData()
         }
         // 修改页面内容
         const handleCurrentChange = (e)=>{
             listParams.page = e
+            emit('tableHandleCurrentChange',listParams)
             if(listParams.per_page) loadData()
         }
 
