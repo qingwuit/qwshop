@@ -169,10 +169,10 @@
         "configAliMini":"支付宝小程序",
         "configPay":{
             "appid":"APPID",
-            "secret":"商户秘钥",
+            "secret":"商户秘钥(SECRET)",
             "mch_secret_cert":"商户私钥",
             "mch_public_cert_path":"商户公钥",
-            "mach_id":"商户ID(MCH_ID)",
+            "mch_id":"商户ID(MCH_ID)",
             "key":"KEY",
             "app_secret_cert":"应用私钥",
             "app_public_cert_path":"应用公钥",

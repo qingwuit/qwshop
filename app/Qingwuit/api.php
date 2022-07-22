@@ -199,5 +199,5 @@ Route::namespace('PayCallBack')->group(function () {
     Route::any('/payment/{name}/{device}', [App\Http\Controllers\PayCallBack\PaymentController::class,'payment']); // 回调地址  [/api/payment/wechat/web] | [/api/payment/alipay/mini]
     Route::any('/oauth/{name}', [App\Http\Controllers\PayCallBack\OauthController::class,'oauth']); // Oauth 第三方登录  [/api/oauth/weixin] | [/api/oauth/weixinweb] | [/api/oauth/github]
     Route::any('/oauth/callback/{name}', [App\Http\Controllers\PayCallBack\OauthController::class,'oauthCallback']); // Oauth 第三方登录回调地址  [/api/oauth/callback/weixin|/api/callback/oauth/weixinweb] | [/api/payment/github]
-    Route::get('/oauth/openid', [App\Http\Controllers\PayCallBack\OauthController::class,'getOpenId']); // 根据Code 获取openId 小程序和公众号需要
+    Route::get('/openid/code', [App\Http\Controllers\PayCallBack\OauthController::class,'getOpenId']); // 根据Code 获取openId 小程序和公众号需要
 });
