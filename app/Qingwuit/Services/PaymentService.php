@@ -80,7 +80,7 @@ class PaymentService extends BaseService
             $this->payData['out_trade_no'] = $orderPay['pay_no'];
             $this->payData['description'] = $recharge ? $this->payData['name'] : $orderPay['name'];
             $this->payData['amount'] = [
-                'total' => $orderPay['total'] * 1000,
+                'total' => $orderPay['total'] * 100,
             ];
 
             // 小程序和公众号需要openID

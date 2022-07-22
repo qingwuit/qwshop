@@ -620,6 +620,10 @@ export default {
         // 搜索
         const searchData = (e)=>{
             Object.assign(listParams,e)
+            // 清掉为空的字段
+            Object.keys(listParams).map(delVal=>{
+                if(proxy.R.isEmpty(listParams[delVal])) delete listParams[delVal]
+            })  
             loadData()
         }
         const searchOpen = ()=>{

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Qingwuit\Services;
 
 use Illuminate\Support\Facades\Storage;
@@ -17,11 +18,11 @@ class UploadsService extends BaseService
 {
     protected $path = 'myfiles'; // 文件上传目录，默认地址
     protected $fileName = 'file'; // 上传的字段
-    protected $fileAllow = ['ico','crt','xls','xlsx','png']; // 文件允许上传
-    protected $photoAllow = ['jpg','png','gif','jpeg']; // 图片允许上传
+    protected $fileAllow = ['ico', 'crt', 'pem', 'xls', 'xlsx', 'png']; // 文件允许上传
+    protected $photoAllow = ['jpg', 'png', 'gif', 'jpeg']; // 图片允许上传
 
     // 上传图片
-    public function uploadPic($path='', $opt=[])
+    public function uploadPic($path = '', $opt = [])
     {
         if (!request()->hasFile($this->fileName)) {
             return $this->formatError(__('tip.upload.fileNotFound'));
@@ -41,7 +42,7 @@ class UploadsService extends BaseService
             } catch (\Exception $e) {
                 return $this->formatError($e->getMessage());
             }
-            
+
             return $this->format($rs, __('tip.success'));
         }
 
@@ -60,7 +61,7 @@ class UploadsService extends BaseService
     }
 
     // 上传文件
-    public function uploadFile($path='', $filename='')
+    public function uploadFile($path = '', $filename = '')
     {
         if (!request()->hasFile($this->fileName)) {
             return $this->formatError(__('tip.upload.fileNotFound'));
@@ -76,7 +77,7 @@ class UploadsService extends BaseService
         $ext = strtolower($file->getClientOriginalExtension()); // 后缀
 
         if (!in_array($ext, $this->fileAllow)) {
-            return $this->formatError(__('tip.upload.notAllow').'['.$ext.']');
+            return $this->formatError(__('tip.upload.notAllow') . '[' . $ext . ']');
         }
 
         if (!empty($path)) {
@@ -92,23 +93,23 @@ class UploadsService extends BaseService
         }
 
         $disk = 'public'; // 默认是本地
-        
+
         if (!empty($config['save_type'])) {
             $disk = 'alioss';
         }
 
-        $this->path .= '/'.date('Y-m-d'); // 加上日期
+        $this->path .= '/' . date('Y-m-d'); // 加上日期
 
         if (empty($filename)) {
-            $rs = Storage::disk($disk)->putFileAs($this->path, $file, time().mt_rand(1000, 9999).'.'.$ext);
+            $rs = Storage::disk($disk)->putFileAs($this->path, $file, time() . mt_rand(1000, 9999) . '.' . $ext);
         } else {
-            $rs = Storage::disk($disk)->putFileAs($this->path, $file, $filename.'.'.$ext);
+            $rs = Storage::disk($disk)->putFileAs($this->path, $file, $filename . '.' . $ext);
         }
 
         if ($disk != 'public') {
             $rs = Storage::disk($disk)->url($rs);
         } else {
-            $rs = '/storage/'.$rs;
+            $rs = '/storage/' . $rs;
         }
 
         return $this->format($rs, __('tip.success'));
@@ -121,11 +122,11 @@ class UploadsService extends BaseService
         if (!$file->isValid()) { //无效文件
             throw new \Exception(__('tip.upload.invalidFile'));
         }
-        
+
         $ext = strtolower($file->getClientOriginalExtension()); // 后缀
 
         if (!in_array($ext, $this->photoAllow)) {
-            throw new \Exception(__('tip.upload.notAllow').'['.implode(',', $this->photoAllow).']');
+            throw new \Exception(__('tip.upload.notAllow') . '[' . implode(',', $this->photoAllow) . ']');
         }
 
         if (!empty($path)) {
@@ -140,12 +141,12 @@ class UploadsService extends BaseService
         }
 
         $disk = 'public'; // 默认是本地
-        
+
         if (!empty($config['save_type'])) {
             $disk = 'alioss';
         }
 
-        $this->path .= '/'.date('Y-m-d'); // 加上日期
+        $this->path .= '/' . date('Y-m-d'); // 加上日期
 
         // 实例化扩展 使用gd  imagick
         $manager = new ImageManager(['driver' => 'gd']);
@@ -169,12 +170,12 @@ class UploadsService extends BaseService
         if (!file_exists(storage_path($tempfilepath))) {
             mkdir(storage_path($tempfilepath), 0644, true);
         }
-        $tempfile = storage_path($tempfilepath).'/'.$random.'.'.$ext;
+        $tempfile = storage_path($tempfilepath) . '/' . $random . '.' . $ext;
         $obj->save($tempfile);
         $obj->destroy();
 
         if (!isset($opt['filename'])) {
-            $rs = Storage::disk($disk)->putFileAs($this->path, new File($tempfile), $random.'.'.$ext);
+            $rs = Storage::disk($disk)->putFileAs($this->path, new File($tempfile), $random . '.' . $ext);
             // Log::channel('qwlog')->debug($rs);
             // 如果有缩略图
             if (isset($opt['thumb']) && !empty($opt['thumb'])) {
@@ -184,17 +185,17 @@ class UploadsService extends BaseService
                         $item->aspectRatio();  // 这个应该是同比例缩减
                     })->resizeCanvas($items[0], $items[1]);
 
-                    $tempfile2 = storage_path($tempfilepath).'/'.$random.'_'.$items[0].'.'.$ext;
+                    $tempfile2 = storage_path($tempfilepath) . '/' . $random . '_' . $items[0] . '.' . $ext;
                     $obj->save($tempfile2);
                     $obj->destroy();
 
-                    Storage::disk($disk)->putFileAs($this->path, new File($tempfile2), $random.'_'.$items[0].'.'.$ext);
+                    Storage::disk($disk)->putFileAs($this->path, new File($tempfile2), $random . '_' . $items[0] . '.' . $ext);
                     unlink($tempfile2);
                 }
             }
             unlink($tempfile);
         } else {
-            $rs = Storage::disk($disk)->putFileAs($this->path, new File($tempfile), $opt['filename'].'.'.$ext);
+            $rs = Storage::disk($disk)->putFileAs($this->path, new File($tempfile), $opt['filename'] . '.' . $ext);
 
             // 如果有缩略图
             if (isset($opt['thumb']) && !empty($opt['thumb'])) {
@@ -204,22 +205,22 @@ class UploadsService extends BaseService
                         $item->aspectRatio();  // 这个应该是同比例缩减
                     })->resizeCanvas($items[0], $items[1]);
 
-                    $tempfile2 = storage_path($tempfilepath).'/'.$opt['filename'].'_'.$items[0].'.'.$ext;
+                    $tempfile2 = storage_path($tempfilepath) . '/' . $opt['filename'] . '_' . $items[0] . '.' . $ext;
                     $obj->save($tempfile2);
                     $obj->destroy();
 
-                    Storage::disk($disk)->putFileAs($this->path, new File($tempfile2), $opt['filename'].'_'.$items[0].'.'.$ext);
-                    
+                    Storage::disk($disk)->putFileAs($this->path, new File($tempfile2), $opt['filename'] . '_' . $items[0] . '.' . $ext);
+
                     unlink($tempfile2);
                 }
             }
             unlink($tempfile);
         }
-        
+
         if ($disk != 'public') {
             $rs = Storage::disk($disk)->url($rs);
         } else {
-            $rs = '/storage/'.$rs;
+            $rs = '/storage/' . $rs;
         }
 
         return $rs;

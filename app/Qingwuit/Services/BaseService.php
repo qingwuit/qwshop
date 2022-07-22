@@ -80,8 +80,21 @@ class BaseService
                             $tableModel = $tableModel->whereBetween($k, explode(',', $vArr[0]));
                         }
                         if ($vArr[1] == 'whereHas') {
-                            $tableModel = $tableModel->whereHas($vArr[2], function ($q) use ($k, $vArr) {
-                                $q->where($k, 'like', '%' . $vArr[0]??'' . '%');
+                            // 如果有whereHas则删掉 isWith
+                            $isWith = request('isWith') ?? false;
+                            if (!empty($isWith)) {
+                                $withArr = explode(',', $isWith);
+                                foreach($withArr as $withKey=>$withItem){
+                                    if($withItem == $vArr[2]){
+                                        unset($withArr[$withKey]);
+                                        break;
+                                    }
+                                }
+                                request()->merge(['isWith'=>implode(',',$withArr)]);
+                            }
+                            $tableModel = $tableModel->whereHas($vArr[2],function($q) use($k,$vArr){
+                                if(!isset($vArr[3])) return $q->where($k,'like','%'.$vArr[0].'%');
+                                $q->where($k,$vArr[3],$vArr[0]);
                             });
                         }
                     } else {

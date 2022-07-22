@@ -1,6 +1,8 @@
 <?php
 namespace App\Qingwuit\Services;
 
+use GuzzleHttp\Client;
+
 class ToolService extends BaseService
 {
     /**
@@ -175,5 +177,27 @@ class ToolService extends BaseService
             $data[] = $name.'_'.$size.$ext;
         }
         return $data;
+    }
+
+    // http 请求
+    public function httpRequest($url, $method = 'GET', $data = [], $header = [] , $type = "form_params")
+    {
+        $client = new Client(['verify' => false]); // 去掉证书验证
+        $queryData = [];
+
+        if ($method = 'GET') {
+            $queryData = ['query' => $data];
+        }
+        if ($method = 'POST') {
+            $queryData = [$type => $data];
+        }
+
+        if(!empty($header)){
+            $queryData['headers'] = $header;
+        }
+        $response = $client->request($method, $url, $queryData);
+        $info = $response->getBody();
+        $infos = $info->getContents();
+        return $this->format($infos);
     }
 }

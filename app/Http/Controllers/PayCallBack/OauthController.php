@@ -31,6 +31,19 @@ class OauthController extends Controller
         $config = new \SocialiteProviders\Manager\Config($info['client_id'], $info['key'], $info['return_url'], []);
         $user = Socialite::driver($oauth_name)->setConfig($config)->stateless()->user(); // 无认证状态#
         $rs = $this->getService('Auth')->oauthLogin($user, $oauth_name);
-        return $rs['status']?$this->success($rs['data']):$this->error($rs['msg']);
+        return $rs['status'] ? $this->success($rs['data']) : $this->error($rs['msg']);
+    }
+
+    // 微信获取用户Openid 根据Code
+    public function getOpenId()
+    {
+        $payment_name = request('payment_name');
+        $device = request('device', 'mp');
+        $pay = $this->getService('Configs')->getFormatConfig('pay');
+        $payCfg = $pay[$payment_name . $device];
+        $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' . $payCfg['app_id'] . '&secret=SECRET&code=' . request('code') . '&grant_type=authorization_code';
+        $resp = $this->getService('Tool')->httpRequest($url);
+        $resp = json_decode($resp['data'], true);
+        return $this->success($resp);
     }
 }
