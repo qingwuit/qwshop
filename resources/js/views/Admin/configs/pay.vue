@@ -33,6 +33,9 @@
                     <el-form-item :label="$t('config.configPay.appid')" prop="mp_app_id">
                         <el-input v-model="form.wechatmp.mp_app_id"  />
                     </el-form-item>
+                    <el-form-item :label="$t('config.configPay.app_secret')" prop="secret_key">
+                        <el-input v-model="form.wechatmp.secret_key"  />
+                    </el-form-item>
                     <el-form-item :label="$t('config.configPay.mch_id')" prop="mch_id">
                         <el-input v-model="form.wechatmp.mch_id"  />
                     </el-form-item>
@@ -59,6 +62,9 @@
                 <el-form style="width:60%;margin-top:8px;" :model="form.wechatmini" ref="wechatmini" label-position="right" label-width="180px">
                     <el-form-item :label="$t('config.configPay.appid')" prop="mini_app_id">
                         <el-input v-model="form.wechatmini.mini_app_id"  />
+                    </el-form-item>
+                    <el-form-item :label="$t('config.configPay.app_secret')" prop="secret_key">
+                        <el-input v-model="form.wechatmp.secret_key"  />
                     </el-form-item>
                     <el-form-item :label="$t('config.configPay.mch_id')" prop="mch_id">
                         <el-input v-model="form.wechatmini.mch_id"  />

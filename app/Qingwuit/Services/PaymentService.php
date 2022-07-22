@@ -18,9 +18,12 @@ class PaymentService extends BaseService
 
         try {
             DB::beginTransaction();
-            if (!$result->out_trade_no) throw new \Exception('not found out_trade_no');
-            $orderPay = $this->getService('OrderPay', true)->where('pay_no', $result->out_trade_no)->first();
+            if ($paymentName == 'wechat') $out_trade_no = $result->resource['ciphertext']['out_trade_no'];
+            if ($paymentName == 'alipay') $out_trade_no = $result->out_trade_no;
+            if (empty($out_trade_no)) throw new \Exception('not found out_trade_no');
+            $orderPay = $this->getService('OrderPay', true)->where('pay_no', $out_trade_no)->first();
             $paySuccessData = $this->paySuccess($paymentName, $orderPay, $result);
+            if(!is_array($paySuccessData)) return $paySuccessData;
             if (!$paySuccessData['status']) throw new \Exception($paySuccessData['msg']);
             DB::commit();
             return $paySuccessData;
@@ -123,11 +126,11 @@ class PaymentService extends BaseService
             if (!$resp['status']) return $this->formatError($resp['msg']);
         } else {
             if ($paymentName == 'wechat') {
-                if ($result->result_code != 'SUCCESS') {
+                if ($result->event_type != 'TRANSACTION.SUCCESS' && $result->resource['ciphertext']['trade_state'] != 'SUCCESS') {
                     Log::error($result);
-                    throw new \Exception('wechat pay error - ' . $result->out_trade_no);
+                    throw new \Exception('wechat pay error - ' . $result->resource['ciphertext']['out_trade_no']);
                 }
-                $trade_no = $result->transaction_id;
+                $trade_no = $result->resource['ciphertext']['transaction_id'];
             }
             if ($paymentName == 'alipay') {
                 if ($result->trade_status != 'TRADE_SUCCESS') {
