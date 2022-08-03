@@ -48,6 +48,7 @@
             <el-radio v-for="(v,k) in (dictData[params.value] || [])" :key="k" :label="params.oneArray?v:(v[(params.labelName||'value')])" >{{params.oneArray?v:(v[(params.valueName||'label')])}}</el-radio>
         </el-radio-group>
         <el-date-picker v-if="params.type=='datetime'" style="width:100%" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" :placeholder="params.placeholder||''" v-model="formData" />
+        <el-date-picker v-if="params.type=='daterange'" style="width:100%" type="daterange" value-format="YYYY-MM-DD HH:mm:ss" :placeholder="params.placeholder||''" v-model="formData" />
         <el-date-picker v-if="params.type=='date'"  style="width:100%" type="date" value-format="YYYY-MM-DD" :placeholder="params.placeholder||''" v-model="formData" />
     </div>
 </template>

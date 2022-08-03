@@ -39,7 +39,7 @@ class GoodsService extends BaseService
         $storeConfig = $this->getService('Configs')->getFormatConfig('store');
         if (!empty($storeConfig)) {
             if ($storeConfig['goods_verify']) {
-                $data['goods_verify'] = 0;
+                $data['goods_verify'] = 2;
             }
         }
 
@@ -153,7 +153,17 @@ class GoodsService extends BaseService
         $configs = $this->getService('Configs')->getFormatConfig('store');
         if (!empty($configs) && isset($configs['goods_verify'])) {
             // 如果是内容标题修改则进行审核（暂时不写）
-            if ($configs['goods_verify'] && $auth == 'users') $goodsModel->goods_verify = 2;
+            if ($configs['goods_verify'] && $auth == 'users') {
+                if (
+                    (!empty(request('goods_name')) && request('goods_name') != $goodsModel->goods_name) ||
+                    (!empty(request('goods_subname')) && request('goods_subname') != $goodsModel->goods_subname) ||
+                    (!empty(request('goods_content')) && request('goods_content') != $goodsModel->goods_content)
+                ) {
+                    $goodsModel->goods_verify = 2;
+                }
+            } else {
+                $goodsModel->goods_verify = 1;
+            }
         }
 
         try {
@@ -339,7 +349,7 @@ class GoodsService extends BaseService
 
             $list = $goodsModel->where($this->status)
                 ->with(['goods_skus' => function ($q) {
-                    return $q->select('goods_id', 'goods_price', 'goods_stock','deleted_at')->orderBy('goods_price', 'asc');
+                    return $q->select('goods_id', 'goods_price', 'goods_stock', 'deleted_at')->orderBy('goods_price', 'asc');
                 }, 'store', 'collective'])
                 ->withCount('order_comment')
                 ->whereHas('store', function ($q) {

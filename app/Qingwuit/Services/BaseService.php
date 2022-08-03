@@ -50,6 +50,10 @@ class BaseService
         if (!empty($requestAll)) {
             foreach ($requestAll as $k => $v) {
                 if (!in_array($k, $this->whereExcept)) {
+                    if (is_array($v)) { // 如果是数组默认区间查询
+                        $tableModel = $tableModel->where($k, '>=', $v[0])->where($k, '<', $v[1]);
+                        continue;
+                    }
                     $vArr = explode('|', $v); // 判断是否其他查询
                     if (count($vArr) >= 2) {
                         if ($vArr[1] == 'like') {
@@ -84,17 +88,17 @@ class BaseService
                             $isWith = request('isWith') ?? false;
                             if (!empty($isWith)) {
                                 $withArr = explode(',', $isWith);
-                                foreach($withArr as $withKey=>$withItem){
-                                    if($withItem == $vArr[2]){
+                                foreach ($withArr as $withKey => $withItem) {
+                                    if ($withItem == $vArr[2]) {
                                         unset($withArr[$withKey]);
                                         break;
                                     }
                                 }
-                                request()->merge(['isWith'=>implode(',',$withArr)]);
+                                request()->merge(['isWith' => implode(',', $withArr)]);
                             }
-                            $tableModel = $tableModel->whereHas($vArr[2],function($q) use($k,$vArr){
-                                if(!isset($vArr[3])) return $q->where($k,'like','%'.$vArr[0].'%');
-                                $q->where($k,$vArr[3],$vArr[0]);
+                            $tableModel = $tableModel->whereHas($vArr[2], function ($q) use ($k, $vArr) {
+                                if (!isset($vArr[3])) return $q->where($k, 'like', '%' . $vArr[0] . '%');
+                                $q->where($k, $vArr[3], $vArr[0]);
                             });
                         }
                     } else {

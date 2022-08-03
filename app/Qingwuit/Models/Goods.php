@@ -25,7 +25,7 @@ class Goods extends Model
 
     public function goods_skus()
     {
-        return $this->hasMany('App\Qingwuit\Models\GoodsSku', 'goods_id', 'id')->withTrashed();
+        return $this->hasMany('App\Qingwuit\Models\GoodsSku', 'goods_id', 'id');
     }
 
     public function goods_sku()
