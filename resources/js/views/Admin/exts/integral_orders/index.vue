@@ -69,8 +69,8 @@ export default {
         })
         // 搜索字段
         const searchOptions = reactive([
-            {label:'订单号',value:'order_no',where:'likeLeft'},
-            {label:'订单名称',value:'order_name',where:'likeLeft'},
+            {label:'订单号',value:'order_no',where:'likeRight'},
+            {label:'订单名称',value:'order_name',where:'likeRight'},
             {label:'订单状态',value:'order_status',type:'select'},
         ])
         const options = reactive([

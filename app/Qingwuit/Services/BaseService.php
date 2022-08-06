@@ -59,10 +59,10 @@ class BaseService
                         if ($vArr[1] == 'like') {
                             $tableModel = $tableModel->where($k, 'like', '%' . $vArr[0] . '%');
                         }
-                        if ($vArr[1] == 'likeLeft') {
+                        if ($vArr[1] == 'likeRight') {
                             $tableModel = $tableModel->where($k, 'like', $vArr[0] . '%');
                         }
-                        if ($vArr[1] == 'likeRight') {
+                        if ($vArr[1] == 'likeLeft') {
                             $tableModel = $tableModel->where($k, 'like', '%' . $vArr[0]);
                         }
                         if ($vArr[1] == 'gt') {

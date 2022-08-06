@@ -22,9 +22,9 @@ export default {
         ]);
         // 搜索字段
         const searchOptions = reactive([
-            {label:'真实姓名',value:'name',where:'likeLeft'},
-            {label:'提现银行',value:'bank_name',where:'likeLeft'},
-            {label:'银行卡号',value:'card_no',where:'likeLeft'},
+            {label:'真实姓名',value:'name',where:'likeRight'},
+            {label:'提现银行',value:'bank_name',where:'likeRight'},
+            {label:'银行卡号',value:'card_no',where:'likeRight'},
             {label:'提现金额',value:'money'},
             {label:'提现状态',value:'cash_status',type:'select'},
         ])

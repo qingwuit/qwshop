@@ -73,9 +73,8 @@ export default {
         })
 
         const advParams = reactive({
-            isPageDict:true,
             dict:[
-                {name:'pid',url:'/Admin/adv_spaces?per_page=100'}
+                {name:'pid',url:'/Admin/adv_spaces?per_page=100',isPageDict:true}
 
             ],
             dictData:{

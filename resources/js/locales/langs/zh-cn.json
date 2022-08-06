@@ -37,6 +37,8 @@
         "select":"选择",
         "clearCache":"清理缓存",
         "inputContent":"请输入内容",
+        "dateRangeStart":"开始时间",
+        "dateRangeEnd":"结束时间",
         "code":"验证码",
         "yes":"是",
         "no":"否",

@@ -109,8 +109,8 @@ export default {
         ]);
         // 搜索字段
         const searchOptions = reactive([
-            {label:'支付订单号',value:'pay_no',where:'likeLeft'},
-            {label:'第三方订单',value:'trade_no',where:'likeLeft'},
+            {label:'支付订单号',value:'pay_no',where:'likeRight'},
+            {label:'第三方订单',value:'trade_no',where:'likeRight'},
         ])
         const btnConfigs = reactive({
             store:{show:false},

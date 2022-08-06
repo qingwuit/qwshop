@@ -17,7 +17,7 @@ export default {
 
         // 搜索字段
         const searchOptions = reactive([
-            {label:'分类名称',value:'name',where:'likeLeft'},
+            {label:'分类名称',value:'name',where:'likeRight'},
         ])
 
         // 表单配置 

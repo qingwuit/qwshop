@@ -26,6 +26,7 @@ export default {
             {label:'资金',value:'money'},
             {label:'类型',value:'is_type',type:'select'},
             {label:'是否商家',value:'is_belong',type:'select'},
+            {label:'时间',value:'created_at',type:'daterange'},
         ])
 
         // 表单配置 
@@ -43,10 +44,8 @@ export default {
         })
 
         const dialogParam = reactive({
-            selectDictByColumId:true,
-            isPageDict:true,
             dict:[
-                {name:'user_id',url:'/Admin/users'}
+                {name:'user_id',url:'/Admin/users',selectDictByColumId:true,isPageDict:true}
             ],
             dictData:{
                 is_type:[{label:proxy.$t('user.frozen_money'),value:'1'},{label:proxy.$t('user.money'),value:'0'},{label:proxy.$t('user.integral'),value:'2'}],

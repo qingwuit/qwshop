@@ -24,10 +24,9 @@ class KuaiBaoService extends BaseService
 
         $data['data'] = json_encode($data2);
         $client = new Client(['verify' => false]); // 去掉证书验证
+        $this->getService('Tool')->httpRequest($url,'POST',$data);
         $response = $client->request('POST', $url, ['form_params' => $data]);
-        $info = $response->getBody();
-        $infos = $info->getContents();
-        $kbInfo = json_decode($infos, true);
+        $kbInfo = json_decode($response['data'], true);
         if ($kbInfo['code'] != 0) {
             return $this->formatError($kbInfo['msg']);
         }

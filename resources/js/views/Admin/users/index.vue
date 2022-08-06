@@ -66,7 +66,8 @@ export default {
         // 搜索字段
         const searchOptions = reactive([
             {label:'昵称',value:'nickname',where:'like'},
-            {label:'用户名',value:'username',where:'like'}
+            {label:'用户名',value:'username',where:'like'},
+            {label:'时间',value:'created_at',type:'daterange'},
         ])
 
         // 表单配置 

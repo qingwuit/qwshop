@@ -24,7 +24,7 @@ export default {
         ]);
         // 搜索字段
         const searchOptions = reactive([
-            {label:'地区名称',value:'name',where:'likeLeft'},
+            {label:'地区名称',value:'name',where:'likeRight'},
         ])
         // 表单配置 
         const addColumn = [

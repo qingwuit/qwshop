@@ -108,7 +108,7 @@ export default {
         ]);
         // 搜索字段
         const searchOptions = reactive([
-            {label:'昵称',value:'nickname',where:'likeLeft'},
+            {label:'昵称',value:'nickname',where:'likeRight'},
         ])
         const btnConfigs = reactive({
             store:{show:false},

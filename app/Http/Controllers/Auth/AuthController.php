@@ -42,13 +42,12 @@ class AuthController extends Controller
     public function info(Request $request)
     {
         $info = $this->getUser($request->provider);
-        if ($info['status']) {
-            if (isset($info['data']['password'])) {
-                unset($info['data']['password']);
-            }
-            if (isset($info['data']['pay_password'])) {
-                unset($info['data']['pay_password']);
-            }
+        if (!$info['status'] || empty($info['data'])) return $this->error(__('tip.userThr'));
+        if (isset($info['data']['password'])) {
+            unset($info['data']['password']);
+        }
+        if (isset($info['data']['pay_password'])) {
+            unset($info['data']['pay_password']);
         }
         $pro = lcfirst(str_replace('api/', '', $request->route()->action['prefix']));
         if ($request->provider != 'users') {

@@ -109,7 +109,7 @@ export default {
         ]);
         // 搜索字段
         const searchOptions = reactive([
-            {label:'店铺名称',value:'store_name',where:'likeLeft'},
+            {label:'店铺名称',value:'store_name',where:'likeRight'},
         ])
         const btnConfigs = reactive({
             store:{show:false},

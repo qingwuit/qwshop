@@ -85,13 +85,10 @@ export default {
         const searchSubmit = async ()=>{
             // let data = await proxy.R.get(props.searchUrl,{...searchParams})
             let newParams = _.cloneDeep(searchParams)
-            
             // 其他非等于的条件处理
             propOptions.map(optionItem=>{
                 if(newParams[optionItem.value] && optionItem.where !== null && optionItem.where !== undefined){
                     newParams[optionItem.value] += '|' + optionItem.where
-                }else{
-                    newParams[optionItem.value] = undefined
                 }
             })
             content.emit("data",newParams)

@@ -305,10 +305,8 @@ export default {
             column:[], // 默认字段
             fullscreen:false, // 是否全屏
             rules:null,
-            destroyOnClose:true,
-            isPageDict:false,
-            selectDictByColumId:false,
-            dict:[], // 字典链接 {name:"menus",url:'xxx.com'}
+            destroyOnClose:true, // dialog 关闭时销毁Dom
+            dict:[], // 字典链接 {name:"menus",url:'xxx.com',isPageDict:false,selectDictByColumId:false} isPageDict // 带分页的字典 selectDictByColumId // 字典根据当前页面数据ID查询
             dictData:{}, // 字典数据 {menus:[]}
             multipleSelection:()=>{
                 return multipleSelection.value
@@ -345,16 +343,16 @@ export default {
             dialogParam.dict.map(async item=>{
                 let dictUrlParams = {}
                 let columnIds = []
-                if(dialogParam.selectDictByColumId && listData.listData.length>0){
+                if(item.selectDictByColumId && listData.listData.length>0){
                     listData.listData.map(listItem=>{
                         if(!proxy.R.isEmpty(listItem[item.name]) && listItem[item.name]!=0) columnIds.push(listItem[item.name])
                     })
                 }
-                if(dialogParam.selectDictByColumId){
+                if(item.selectDictByColumId){
                     if(!proxy.R.isEmpty(columnIds) && columnIds.length>0) dictUrlParams[props.columnId] = _.uniq(columnIds).join(',')+'|in'
                 }
                 let dictResp = await proxy.R.get(item.url,dictUrlParams)
-                dialogParams.dictData[item.name] = dialogParam.isPageDict?dictResp['data']:dictResp
+                dialogParams.dictData[item.name] = item.isPageDict?dictResp['data']:dictResp
                 if(item.addSelect) dialogParams.dictData[item.name].unshift(item.addSelect)
             })
         }
@@ -378,7 +376,7 @@ export default {
             }
             return dictVal
         }
-        dictHandle()
+        // dictHandle()
 
         const editorSplit = (val)=>{
             if(!proxy.R.isEmpty(val)){
@@ -643,7 +641,11 @@ export default {
                 // 判断是否有选择数据 没有则取全部数据
                 if(!multipleSelection.value || multipleSelection.value.length<=0){
                     props.options.map(itemOption=>{
-                        colItem.push(item[itemOption.value]||'')
+                        let colItemVal = item[itemOption.value]||''
+                        if(itemOption.type == 'dict_tags' || itemOption.type == 'dict'){
+                            colItemVal = dictFind(itemOption.value,colItemVal,itemOption.labelName||'label',itemOption.valueName||'value')
+                        }
+                        colItem.push(colItemVal)
                         headerData.push(itemOption.label)
                     })
                     excelExportData.push(colItem)
@@ -651,7 +653,11 @@ export default {
                     let ids = multipleSelection.value.join(',').split(',')
                     if(_.indexOf(ids,item[props.columnId]+'') > -1){
                         props.options.map(itemOption=>{
-                            colItem.push(item[itemOption.value]||'')
+                            let colItemVal = item[itemOption.value]||''
+                            if(itemOption.type == 'dict_tags' || itemOption.type == 'dict'){
+                                colItemVal = dictFind(itemOption.value,colItemVal,itemOption.labelName||'label',itemOption.valueName||'value')
+                            }
+                            colItem.push(colItemVal)
                             headerData.push(itemOption.label)
                         })
                         excelExportData.push(colItem)

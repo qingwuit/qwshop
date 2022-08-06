@@ -43,9 +43,8 @@ export default {
             // {label:'内容',value:'content',type:'editor',span:24,viewType:'html'},
         ]
         const dialogParam = reactive({
-            isPageDict:true,
             dict:[
-                {name:'pid',url:'/Admin/adv_spaces?per_page=100'}
+                {name:'pid',url:'/Admin/adv_spaces?per_page=100',isPageDict:true}
 
             ],
             dictData:{

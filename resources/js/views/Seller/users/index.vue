@@ -21,8 +21,8 @@ export default {
         ]);
         // 搜索字段
         const searchOptions = reactive([
-            {label:'昵称',value:'nickname',where:'likeLeft'},
-            {label:'用户名',value:'username',where:'likeLeft'},
+            {label:'昵称',value:'nickname',where:'likeRight'},
+            {label:'用户名',value:'username',where:'likeRight'},
         ])
         // 表单配置 
         const addColumn = [
