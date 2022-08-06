@@ -4,18 +4,15 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import {reactive,getCurrentInstance} from "vue"
 import tableView from "@/components/common/table"
-export default {
-    components:{tableView},
-    setup(props) {
-        const options = reactive({
 
-        });
-        return {options}
-    }
-}
+const {proxy} = getCurrentInstance()
+
+const options = reactive({
+
+});
 </script>
 
 <style>

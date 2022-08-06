@@ -142,174 +142,166 @@
         </el-dialog>
     </div>
 </template>
-<script>
+<script setup>
 import { ArrowDown,Fold,Plus } from '@element-plus/icons'
 import {_open,getToken,getUploadPath} from '@/plugins/config'
-import {ref,reactive,computed,onMounted,getCurrentInstance} from "vue"
+import {ref,reactive,computed,onMounted,getCurrentInstance,defineProps} from "vue"
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
-export default {
-    components:{ArrowDown,Fold,Plus},
-    computed:{},
-    props:{
-        hideTitle:{
-            type:Boolean,
-            default:false
-        }, // 隐藏标题栏
-        hideMian:{
-            type:Boolean,
-            default:false
-        }, // 隐藏主体框
-    },
-    setup(props) {
-        const {ctx,proxy} = getCurrentInstance()
-        const router = useRouter()
-        const route = useRoute()
-        const store = useStore()
-        const collapse = ref(false)
-        const loading = ref(false)
-        const editUserVis = ref(false)
-        const editUserForm = reactive({})
-        const userRules = reactive({
-            nickname:[{required:true,message:proxy.$t('msg.requiredMsg')}],
-        })
-        const collapseChange = ()=>{
-            collapse.value = !collapse.value
-        }
 
-        // 跳转和打开新页面
-        const openWin = (row)=>{
-            if(row.apis != ''){
-                // 看是否是跳转外链的存在
-                if(row.apis.indexOf('http://') != -1 || row.apis.indexOf('https://') != -1){
-                    _open(row.apis,true)
-                }else{
-                    // 判断你是否存在路由 和 相关页面组件是否配置 && router.hasRoute(row.apis)
-                    if(row.view != '' && router.hasRoute(row.apis)){
-                        router.push(row.apis)
-                    }else{
-                        // 判断是否又子栏目
-                        if(!row.children || (row.children && row.children.length === 0) ){
-                            console.error('view:'+row.view,'router has '+router.hasRoute(row.apis),'children has '+(row.children && row.children.length)||'empty') // 异常信息提醒
-                        }
-                    }
-                }
+const {proxy} = getCurrentInstance()
+const props = defineProps({
+    hideTitle:{
+        type:Boolean,
+        default:false
+    }, // 隐藏标题栏
+    hideMian:{
+        type:Boolean,
+        default:false
+    }, // 隐藏主体框
+})
+
+const router = useRouter()
+const route = useRoute()
+const store = useStore()
+const collapse = ref(false)
+const loading = ref(false)
+const editUserVis = ref(false)
+const editUserForm = reactive({})
+const userRules = reactive({
+    nickname:[{required:true,message:proxy.$t('msg.requiredMsg')}],
+})
+const collapseChange = ()=>{
+    collapse.value = !collapse.value
+}
+
+// 跳转和打开新页面
+const openWin = (row)=>{
+    if(row.apis != ''){
+        // 看是否是跳转外链的存在
+        if(row.apis.indexOf('http://') != -1 || row.apis.indexOf('https://') != -1){
+            _open(row.apis,true)
+        }else{
+            // 判断你是否存在路由 和 相关页面组件是否配置 && router.hasRoute(row.apis)
+            if(row.view != '' && router.hasRoute(row.apis)){
+                router.push(row.apis)
             }else{
-                // 如果存在子栏目
-                const findRoute = (row)=>{
-                    if(row.children){
-                        let hasApisIndex = -1
-                        row.children.map((item,key)=>{
-                            if(item.apis != '' && hasApisIndex == -1){
-                                hasApisIndex = key
-                            }
-                        })
-
-                        if(hasApisIndex != -1) return row.children[hasApisIndex]
-                        let findFirstRoute = null
-                        row.children.map(item=>{
-                            if(findFirstRoute == null){
-                                const findRouteObj = findRoute(item)
-                                if(findRouteObj)  findFirstRoute = findRouteObj
-                            }
-                            
-                        })
-                        if(findFirstRoute == null) return false
-                        return findFirstRoute
-                    }
-                    return false
+                // 判断是否又子栏目
+                if(!row.children || (row.children && row.children.length === 0) ){
+                    console.error('view:'+row.view,'router has '+router.hasRoute(row.apis),'children has '+(row.children && row.children.length)||'empty') // 异常信息提醒
                 }
-                const routeObj =  findRoute(row)
-                if(!routeObj) return console.error('No Route')
-                return openWin(routeObj)
             }
         }
-
-        // 模型选中状态处理
-        const selectModule = (menuDataTmp,indexs=0)=>{
-            menuDataTmp.map((item,key)=>{
-                menuDataTmp[key].checked = false
-                if(indexs == key) menuDataTmp[indexs].checked = true
-            })
-            return menuDataTmp
-        }
-        
-        const selectModuleHandle = async (indexs=0)=>{
-            let menuData = await store.dispatch('load/getMenus',-1)
-            const menuDataTmp = selectModule(menuData,indexs)
-            await store.commit('load/setMenus',menuDataTmp,-1)
-            await store.commit('load/setRoutePointIndex', indexs)
-            // moduleIndex.value = indexs
-            // ctx.$forceUpdate()
-        }
-
-        const users = reactive({})
-        onMounted( async ()=>{
-            let user = await store.dispatch('load/getUser')
-            Object.assign(users,user)
-        })
-
-
-        // 用户相关
-        const openUserForm = async ()=>{
-            editUserVis.value = true
-            const servUser = await store.dispatch('login/getUserSer')
-            Object.assign(editUserForm,servUser)
-            Object.assign(users,editUserForm)
-        }
-        const updateUser = async ()=>{
-            proxy.$refs.userEdit.validate( async (valid)=>{
-                if (!valid) return false
-                loading.value = true
-                let userEditForm = {
-                    nickname:editUserForm.nickname,
-                    password:editUserForm.password||'',
-                }
-                if(editUserForm.avatar) userEditForm.avatar = editUserForm.avatar
-                try{
-                    const servUser = await store.dispatch('login/editUserSer',userEditForm)
-                    if(!servUser.code){
-                        let servUser2 = await store.dispatch('login/getUserSer')
-                        Object.assign(users,servUser2)
-                        Object.assign(editUserForm,servUser2)
-                        ElementPlus.ElMessage.success(proxy.$t('msg.success'))
-                    }else{
-                        ElementPlus.ElMessage.error(servUser.msg)
+    }else{
+        // 如果存在子栏目
+        const findRoute = (row)=>{
+            if(row.children){
+                let hasApisIndex = -1
+                row.children.map((item,key)=>{
+                    if(item.apis != '' && hasApisIndex == -1){
+                        hasApisIndex = key
                     }
-                    editUserVis.value = false
-                    loading.value = false
-                }catch(e){
-                    console.log(e)
-                    editUserVis.value = false
-                    loading.value = false
-                }
-            })
-            
-            
-        }
+                })
 
-        // 头像上传
-        const handleAvatarSuccess = (e)=>{
-            if(e.code != 200) return ElementPlus.ElMessage.error(e.msg)
-            editUserForm.avatar = e.data
+                if(hasApisIndex != -1) return row.children[hasApisIndex]
+                let findFirstRoute = null
+                row.children.map(item=>{
+                    if(findFirstRoute == null){
+                        const findRouteObj = findRoute(item)
+                        if(findRouteObj)  findFirstRoute = findRouteObj
+                    }
+                    
+                })
+                if(findFirstRoute == null) return false
+                return findFirstRoute
+            }
+            return false
         }
-
-        const Token = getToken()
-        const uploadPath = getUploadPath()
-        
-        return {
-            collapse,collapseChange,openWin,selectModuleHandle,
-            menuData:computed(()=>store.state.load.menuData),
-            routeUriIndex:computed(()=>store.state.load.routeUriIndex),
-            nowRoutePoint:computed(()=>store.state.load.nowRoutePoint),
-            nowRoutePointIds:computed(()=>store.state.load.nowRoutePointIds),
-            routeMenuName:computed(()=>store.state.load.routeMenuName),
-            moduleIndex:computed(()=>store.state.load.moduleIndex),
-            users,Token,uploadPath,
-            openUserForm,updateUser,loading,editUserVis,editUserForm,userRules,handleAvatarSuccess
-        }
+        const routeObj =  findRoute(row)
+        if(!routeObj) return console.error('No Route')
+        return openWin(routeObj)
     }
 }
+
+// 模型选中状态处理
+const selectModule = (menuDataTmp,indexs=0)=>{
+    menuDataTmp.map((item,key)=>{
+        menuDataTmp[key].checked = false
+        if(indexs == key) menuDataTmp[indexs].checked = true
+    })
+    return menuDataTmp
+}
+
+const selectModuleHandle = async (indexs=0)=>{
+    let menuData = await store.dispatch('load/getMenus',-1)
+    const menuDataTmp = selectModule(menuData,indexs)
+    await store.commit('load/setMenus',menuDataTmp,-1)
+    await store.commit('load/setRoutePointIndex', indexs)
+    // moduleIndex.value = indexs
+    // ctx.$forceUpdate()
+}
+
+const users = reactive({})
+onMounted( async ()=>{
+    let user = await store.dispatch('load/getUser')
+    Object.assign(users,user)
+})
+
+
+// 用户相关
+const openUserForm = async ()=>{
+    editUserVis.value = true
+    const servUser = await store.dispatch('login/getUserSer')
+    Object.assign(editUserForm,servUser)
+    Object.assign(users,editUserForm)
+}
+const updateUser = async ()=>{
+    proxy.$refs.userEdit.validate( async (valid)=>{
+        if (!valid) return false
+        loading.value = true
+        let userEditForm = {
+            nickname:editUserForm.nickname,
+            password:editUserForm.password||'',
+        }
+        if(editUserForm.avatar) userEditForm.avatar = editUserForm.avatar
+        try{
+            const servUser = await store.dispatch('login/editUserSer',userEditForm)
+            if(!servUser.code){
+                let servUser2 = await store.dispatch('login/getUserSer')
+                Object.assign(users,servUser2)
+                Object.assign(editUserForm,servUser2)
+                ElementPlus.ElMessage.success(proxy.$t('msg.success'))
+            }else{
+                ElementPlus.ElMessage.error(servUser.msg)
+            }
+            editUserVis.value = false
+            loading.value = false
+        }catch(e){
+            console.log(e)
+            editUserVis.value = false
+            loading.value = false
+        }
+    })
+    
+    
+}
+
+// 头像上传
+const handleAvatarSuccess = (e)=>{
+    if(e.code != 200) return ElementPlus.ElMessage.error(e.msg)
+    editUserForm.avatar = e.data
+}
+
+const Token = getToken()
+const uploadPath = getUploadPath()
+
+const menuData = computed(()=>store.state.load.menuData)
+const routeUriIndex = computed(()=>store.state.load.routeUriIndex)
+const nowRoutePoint = computed(()=>store.state.load.nowRoutePoint)
+const nowRoutePointIds = computed(()=>store.state.load.nowRoutePointIds)
+const routeMenuName = computed(()=>store.state.load.routeMenuName)
+const moduleIndex = computed(()=>store.state.load.moduleIndex)
+
 </script>
 <style lang="scss" scoped>
 .qwbase{
