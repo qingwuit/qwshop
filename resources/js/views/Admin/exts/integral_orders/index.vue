@@ -3,7 +3,7 @@
         <table-view  :params="params" :btnConfig="btnConfigs" :searchOption="searchOptions" :options="options" :dialogParam="dialogParam">
             <template #table_topleft_hook="{dialogParams}">
                 <el-button type="primary" :icon="Promotion" @click="openAddDialog(dialogParams)">订单发货</el-button>
-                <el-button type="primary" :icon="Printer" @click="$message.info('暂无功能')">打印面单</el-button>
+                <!-- <el-button type="primary" :icon="Printer" @click="$message.info('暂无功能')">打印面单</el-button> -->
             </template>
         </table-view>
         <el-dialog custom-class="table_dialog_class" v-model="data.vis" title="订单处理">

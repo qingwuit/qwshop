@@ -59,7 +59,7 @@
                         <div class="content" style="margin-top:0;">
                             <div class="copyright">
                                 <span class="copyright_title">当前版本：</span>
-                                <span class="copyright_rs"><el-tag type="info">3.0.0</el-tag></span>
+                                <span class="copyright_rs"><a target="_blank" href='https://github.com/qingwuit/qwshop'><img alt="GitHub last release" style="vertical-align:middle;height:18px;" src="https://img.shields.io/packagist/v/qingwuit/qwshop" /></a></span>
                             </div>
                             <div class="unline"></div>
                             <div class="copyright">

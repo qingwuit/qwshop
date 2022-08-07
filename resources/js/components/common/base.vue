@@ -79,10 +79,11 @@
                         <div v-if="!hideTitle" class="mian_title"><slot name="main_title">{{routeMenuName||'Menu Name'}}</slot></div>
                         <slot v-if="!hideTitle" name="main_line"><div class="main_line"></div></slot>
                         
-                        
-                        <slot name="main_view">
-                            <router-view></router-view>
-                        </slot>
+                        <transition name="fade" mode="out-in">
+                            <slot name="main_view">
+                                <router-view></router-view>
+                            </slot>
+                        </transition>
                     </div>
                     <div v-else>
                         <slot name="main_view_sub" >
@@ -571,6 +572,19 @@ $admin_subactive:#409eff;;
     height: 178px;
     display: block;
     }
+}
+
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: 0.5s ease;
+  opacity: 1;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateX(80px);
 }
 
 

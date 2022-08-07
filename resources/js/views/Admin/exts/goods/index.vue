@@ -4,6 +4,9 @@
             <template #table_handleright_hook="row">
                 <el-button :title="$t('btn.edit')"  type="primary" @click="editGoods(row)" :icon="Edit" />
             </template>
+            <template #goods_status="{scopeData}">
+                <el-switch v-model="scopeData.goods_status" :active-value="1" @change="(e)=>{goodsStatusChange(e,scopeData)}" :inactive-value="0" />
+            </template>
         </table-view>
 
         <div v-if="tableVis" class="goods_form">
@@ -35,7 +38,7 @@ export default {
             {label:'价格',value:'goods_price'},
             {label:'库存',value:'goods_stock'},
             {label:'销量',value:'goods_sale'},
-            {label:'上架状态',value:'goods_status',type:'dict_tags'},
+            {label:'上架状态',value:'goods_status',type:'custom'},
             {label:'审核状态',value:'goods_verify',type:'dict_tags'},
             // {label:'排序',value:'is_sort'},
             {label:'创建时间',value:'created_at'},
@@ -71,7 +74,14 @@ export default {
             const editForm = await proxy.R.get('/Admin/goods/'+e.rows.id)
             proxy.$refs.goods_form.editGoods(editForm)
         }
-        return {options,searchOptions,dialogParam,btnConfigs,params,tableVis,Edit,editGoods}
+
+        const goodsStatusChange = async (e,scopeData)=>{
+            let res = await proxy.R.put('/Admin/goods/'+scopeData.id,{goods_status:e})
+            if(!res.code){
+                proxy.$message.success(proxy.$t('msg.success'))
+            }
+        }
+        return {options,searchOptions,dialogParam,btnConfigs,params,tableVis,Edit,editGoods,goodsStatusChange}
     }
 }
 </script>
