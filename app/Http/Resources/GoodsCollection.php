@@ -27,15 +27,18 @@ class GoodsCollection extends ResourceCollection
                 if (isset($item->goods_skus) && count($item->goods_skus)>0) {
                     $goods_stock = 0;
                     $skus = [];
+                    $prices= []; // 得到最高和最低
                     foreach ($item->goods_skus as $v) {
                         if(empty($v['deleted_at'])) $goods_stock += $v['goods_stock'];
                         if(empty($v['deleted_at'])) $skus[] = $v;
+                        if(empty($v['deleted_at'])) $prices[] = $v->goods_price;
                     }
+                    sort($prices);
                     if(!empty($skus)){
                         if (count($skus)>1) {
-                            $goods_price =$skus[0]['goods_price'].' ~ '.$skus[count($skus)-1]['goods_price'];
+                            $goods_price =$prices[0].' ~ '.$prices[count($prices)-1];
                         } else {
-                            $goods_price = $skus[0]['goods_price'];
+                            $goods_price =$prices[0];
                         }
                     }
                 }

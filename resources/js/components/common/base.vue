@@ -145,7 +145,7 @@
 <script setup>
 import { ArrowDown,Fold,Plus } from '@element-plus/icons'
 import {_open,getToken,getUploadPath} from '@/plugins/config'
-import {ref,reactive,computed,onMounted,getCurrentInstance,defineProps} from "vue"
+import {ref,reactive,computed,onMounted,getCurrentInstance} from "vue"
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 
@@ -421,7 +421,7 @@ const moduleIndex = computed(()=>store.state.load.moduleIndex)
     background: #fff;
     height: 100%;
     width: 100%;
-    border-radius: 3px;
+    border-radius: 8px;
     padding:15px 20px;
     box-sizing: border-box;
     box-shadow: 0 2px 12px 0 rgba(170, 170, 170, 0.1);
@@ -445,8 +445,9 @@ const moduleIndex = computed(()=>store.state.load.moduleIndex)
     margin-left: 6px;
 }
 .aside_class{
-    transition: width 0.15s;
+    transition: width 0.18s;
     overflow-x: hidden;
+    background: #111;
 }
 
 </style>
@@ -470,7 +471,8 @@ $admin_subactive:#409eff;;
     background: $admin_subcolor;
     height: calc(100% - 60px);
     overflow-x: hidden;
-    transition: width 0.07s;
+    width: 200px;
+    transition: width 0.18s;
     border-right:none;
     color:#fff;
     .el-menu.el-menu--inline{
@@ -507,7 +509,8 @@ $admin_subactive:#409eff;;
     background: $admin_subcolor;
     height: calc(100% - 60px);
     overflow-x: hidden;
-    transition: width 0.07s;
+    width: 63px;
+    transition: width 0.18s;
     border-right:none;
     color:$admin_subfontcolor;
     .el-sub-menu__title{

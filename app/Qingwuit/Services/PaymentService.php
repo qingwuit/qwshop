@@ -119,7 +119,7 @@ class PaymentService extends BaseService
 
         // 支付订单回调处理  下面的处理看能否整理成公共
         if ($orderPay->pay_status == 1) return $this->formatError(__('tip.order.payed')); // 订单已经支付
-        $trade_no = 'not default';
+        $trade_no = '-';
 
         if ($paymentName == 'balance') {
             $resp = $this->getService('MoneyLog')->edit(['money' => -$orderPay->total, 'user_id' => $orderPay->belong_id]);

@@ -1,13 +1,14 @@
 <template>
     <div class="admin_goods_form">
-        <table-view :options="options" :searchOption="searchOptions" :btnConfig="btnConfigs" :params="params" :dialogParam="dialogParam" handleWidth='80px'>
+        <table-view v-if="!tableVis" :options="options" :searchOption="searchOptions" :btnConfig="btnConfigs" :params="params" :dialogParam="dialogParam" handleWidth='80px'>
             <template #table_handleright_hook="row">
                 <el-button :title="$t('btn.edit')"  type="primary" @click="editGoods(row)" :icon="Edit" />
             </template>
         </table-view>
-        <el-dialog v-model="tableVis" :title="$t('btn.edit')">
+
+        <div v-if="tableVis" class="goods_form">
             <goods-form ref="goods_form"  />
-        </el-dialog>
+        </div>
             
     </div>
     

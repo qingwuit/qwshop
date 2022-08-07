@@ -16,10 +16,12 @@
                     <el-form-item>
                         <el-button style="width:100%" size="medium" type="primary" @click="data.onsubmit">登 录</el-button>
                     </el-form-item>
-                    <el-form-item class="disclaimers"><el-checkbox v-model="data.disclaimers" label="请先阅读《网站协议》"></el-checkbox></el-form-item>
+                    <el-form-item class="disclaimers"><el-checkbox v-model="data.disclaimers" ><span @click="$refs.agreementRef.openDialog" >请先阅读《网站协议》</span></el-checkbox></el-form-item>
                 </el-form>
             </div>
         </div>
+
+        <agreementView ref="agreementRef" ename="agreement" /> 
     </div>
 </template>
 <script>
@@ -27,7 +29,9 @@ import { Key,User } from '@element-plus/icons'
 import { useStore } from 'vuex'
 import {reactive,toRefs,getCurrentInstance} from "vue"
 import { useRouter, useRoute } from 'vue-router'
+import agreementView from "@/components/common/agreement"
 export default ({
+    components:{agreementView},
     setup() {
         const {ctx,proxy} = getCurrentInstance()
         const store = useStore()
@@ -115,6 +119,16 @@ export default ({
             }
             
         }
+    }
+}
+@media  (max-width: 1200px) {
+    .admin_login .login_block .left_block{
+        display: none;
+    }
+}
+@media (max-width: 767px) {
+    .admin_login .login_block{
+        width: 80%;
     }
 }
 </style>

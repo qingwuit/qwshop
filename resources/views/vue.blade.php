@@ -12,11 +12,11 @@
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue-i18n@8.24.2/dist/vue-i18n.min.js"></script> 国际化 -->
 
-    <link rel="stylesheet" href="//unpkg.com/element-plus@2.2.5/dist/index.css" /> 
-    <script src="//unpkg.com/vue@3.2.26/dist/vue.global.prod.js"></script>
-    <script src="//unpkg.com/vue-router@4.0.12/dist/vue-router.global.prod.js"></script>
+    <link rel="stylesheet" href="//unpkg.com/element-plus@2.2.12/dist/index.css" /> 
+    <script src="//unpkg.com/vue@3.2.37/dist/vue.global.prod.js"></script>
+    <script src="//unpkg.com/vue-router@4.1.3/dist/vue-router.global.prod.js"></script>
     <script src="//unpkg.com/vuex@4.0.2/dist/vuex.global.prod.js"></script>
-    <script src="//unpkg.com/element-plus@2.2.5/dist/index.full.min.js"></script>
+    <script src="//unpkg.com/element-plus@2.2.12/dist/index.full.min.js"></script>
     <script src="//unpkg.com/nprogress@0.2.0/nprogress.js"></script>
     <script src="//unpkg.com/dayjs@1.10.7/dayjs.min.js"></script>
     <script src="//unpkg.com/xlsx@0.17.4/dist/xlsx.core.min.js"></script> <!-- excel -->
@@ -24,7 +24,6 @@
     <script src="//unpkg.com/clipboard@2.0.8/dist/clipboard.min.js"></script> <!-- clipboard -->
     <script src="//unpkg.com/@antv/g2plot@2.4.5/dist/g2plot.min.js"></script> <!-- g2plot -->
     <script src="//unpkg.com/@amap/amap-jsapi-loader@1.0.1/dist/index.js"></script> <!-- amap -->
-    
     
     <link href="//unpkg.com/font-awesome@4.7.0/css/font-awesome.css" rel="stylesheet" />
     <link href="//unpkg.com/nprogress@0.2.0/nprogress.css" rel="stylesheet" /> <!-- 进度条 -->

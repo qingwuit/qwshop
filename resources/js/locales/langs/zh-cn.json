@@ -65,6 +65,10 @@
         "sendMsg":"发送"
     },
 
+    "agreement":{
+        "title":"网站协议"
+    },
+
     "user":{
         "username":"账号",
         "password":"密码",
