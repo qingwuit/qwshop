@@ -93,6 +93,17 @@
                             <q-input :params="{value:'goods_status',type:'radio'}" v-model:formData="data.form.goods_status" :dictData="{goods_status:[{label:$t('btn.yes'),value:1},{label:$t('btn.no'),value:0}]}" />
                         </el-form-item>
                     </el-col>
+                    <el-col :span="12">
+                        <el-form-item :label="'推荐位'" prop="is_master">
+                            <q-input :params="{value:'is_master',type:'radio'}" v-model:formData="data.form.is_master" :dictData="{is_master:[{label:$t('btn.yes'),value:1},{label:$t('btn.no'),value:0}]}" />
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item :label="'审核通过'" prop="goods_verify">
+                            <q-input :params="{value:'goods_verify',type:'select'}" v-model:formData="data.form.goods_verify" :dictData="{goods_verify:[{label:$t('store.verifyStatus.passVerify'),value:1},{label:$t('store.verifyStatus.verifying'),value:0},{label:$t('store.verifyStatus.verifyError'),value:2}]}" />
+                        </el-form-item>
+                    </el-col>
+
                     <el-col :span="24">
                         <el-form-item >
                             <el-button type="primary" @click="nextStep(3)">{{$t('btn.attrNext')}}</el-button>

@@ -488,6 +488,9 @@ class OrderService extends BaseService
                     if (empty($delivery_code) || empty($delivery_no)) {
                         throw new \Exception(__('tip.order.deliveryEmpty'));
                     }
+
+                    // 如果已经是该数据就不再更新订单状态
+                    if ($order_model->order_status >= 3) $order_status = $order_model->order_status;
                     break;
                 case 4: // 确认收货 等待评论
                     if ($order_model->order_status != 3) {

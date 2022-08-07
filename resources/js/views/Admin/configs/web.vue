@@ -115,6 +115,9 @@
                     <el-form-item :label="$t('config.kuaibao.appkey')" prop="appkey">
                         <el-input v-model="form.cfgKuaiBaoForm.appkey"  />
                     </el-form-item>
+                    <el-form-item :label="$t('config.kuaibao.agentId')" prop="agent_id">
+                        <el-input v-model="form.cfgKuaiBaoForm.agent_id"  />
+                    </el-form-item>
                     <el-form-item >
                         <el-button type="primary" :loading="loading" @click="onSubmit('cfgKuaiBaoForm')">{{$t('btn.determine')}}</el-button>
                         <el-button @click="$refs['cfgKuaiBaoForm'].resetFields()">{{$t('btn.reset')}}</el-button>

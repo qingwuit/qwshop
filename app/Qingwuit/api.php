@@ -129,6 +129,8 @@ Route::prefix('Admin')->middleware('auth:admins')->group(function () {
     Route::resource('distribution_logs', App\Http\Controllers\Admin\Exts\DistributionLogsController::class)->only(['index']);
     Route::post('/orders/express/find', [App\Http\Controllers\Admin\Exts\OrdersController::class,'express'])->name('admin.order.express');
     Route::get('/orders/find/all', [App\Http\Controllers\Admin\Exts\OrdersController::class,'all'])->name('admin.order.findall');
+    Route::get('/orders/print/waybill/{id}', [App\Http\Controllers\Admin\Exts\OrdersController::class,'print_waybill'])->name('admin.order.print.waybill');
+    Route::put('/orders/status/edit', [App\Http\Controllers\Admin\Exts\OrdersController::class,'edit'])->name('admin.order.edit');
     Route::get('/dashboard/all', [App\Http\Controllers\Admin\DashboardController::class,'all'])->name('admin.dashboard.all'); // 仪表盘
     Route::get('/dashboard/order', [App\Http\Controllers\Admin\DashboardController::class,'order'])->name('admin.dashboard.order'); // 数据统计
     Route::get('/dashboard/user', [App\Http\Controllers\Admin\DashboardController::class,'user'])->name('admin.dashboard.user'); // 数据统计
@@ -168,6 +170,7 @@ Route::prefix('Seller')->middleware('auth:users')->group(function () {
     Route::resource('seckills', App\Http\Controllers\Seller\SeckillsController::class);
     Route::post('/orders/express/find', [App\Http\Controllers\Seller\OrdersController::class,'express'])->name('seller.order.express');
     Route::get('/orders/find/all', [App\Http\Controllers\Seller\OrdersController::class,'all'])->name('seller.order.findall');
+    Route::get('/orders/print/waybill/{id}', [App\Http\Controllers\Seller\OrdersController::class,'print_waybill'])->name('seller.order.print.waybill');
     Route::put('/orders/status/edit', [App\Http\Controllers\Seller\OrdersController::class,'edit'])->name('seller.status.edit');
     Route::put('/refunds/{id}', [App\Http\Controllers\Seller\RefundsController::class,'update'])->name('seller.refunds.update');
     Route::get('/dashboard/all', [App\Http\Controllers\Seller\DashboardController::class,'all'])->name('seller.dashboard.all'); // 仪表盘

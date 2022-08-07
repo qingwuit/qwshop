@@ -153,7 +153,8 @@
         "configKuaibaoDesc":"物流接口为[快宝]第三方查询",
         "kuaibao":{
             "appid":"APPID",
-            "appkey":"APPkEY"
+            "appkey":"APPKEY",
+            "agentId":"访问密钥"
         },
         "configSms":"短信配置",
         "sms":{

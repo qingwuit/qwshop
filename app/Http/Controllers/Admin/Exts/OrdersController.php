@@ -15,6 +15,14 @@ class OrdersController extends Controller
         return $this->handle($this->getService('Order')->createOrderAfter());
     }
 
+    // 编辑发货信息
+    public function edit(Request $request)
+    {
+        $id = $request->id ?? 0;
+        $status = $request->status ?? 3;
+        return $this->handle($this->getService('Order')->editOrderStatus($id, $status, 'admin'));
+    }
+
     // 物流查询
     public function express(Request $request)
     {
@@ -28,5 +36,12 @@ class OrdersController extends Controller
     public function update(Request $request, $id)
     {
         return $this->handle($this->getService('base')->editDat($this->modelName, $id, ['delivery_no', 'order_name', 'receive_name', 'receive_tel', 'receive_area', 'receive_address']));
+    }
+
+    // 云打印订单
+    public function print_waybill($id)
+    {
+        $rs = $this->getService('KuaiBao')->printWaybill($id);
+        return $this->handle($rs);
     }
 }

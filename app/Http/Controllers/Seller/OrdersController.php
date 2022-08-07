@@ -40,8 +40,15 @@ class OrdersController extends Controller
     public function express(Request $request)
     {
         // 根据订单Id查询
-        $order = $this->getService('Order',true)->where(['store_id'=>$this->getService('Store')->getStoreId()['data'],'id'=>$request->id])->first();
-        if(!$order) return $this->error(__('tip.order.empty'));
+        $order = $this->getService('Order', true)->where(['store_id' => $this->getService('Store')->getStoreId()['data'], 'id' => $request->id])->first();
+        if (!$order) return $this->error(__('tip.order.empty'));
         return $this->handle($this->getService('KuaiBao')->getExpressInfo($order->delivery_no, $order->delivery_code, $order->receive_tel));
+    }
+
+    // 云打印订单
+    public function print_waybill($id)
+    {
+        $rs = $this->getService('KuaiBao')->printWaybill($id);
+        return $this->handle($rs);
     }
 }

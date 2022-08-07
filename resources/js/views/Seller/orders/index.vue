@@ -3,7 +3,7 @@
         <table-view  :params="params" :btnConfig="btnConfigs" :options="options" :searchOption="searchOptions" :dialogParam="dialogParam">
             <template #table_topleft_hook="{dialogParams}">
                 <el-button type="primary" :icon="Promotion" @click="openAddDialog(dialogParams)">订单发货</el-button>
-                <el-button type="primary" :icon="Printer" @click="$message.info('暂无功能')">打印面单</el-button>
+                <!-- <el-button type="primary" :icon="Printer" @click="$message.info('暂无功能')">打印面单</el-button> -->
             </template>
             <!-- 物流信息 -->
             <template #table_show_bottom_hook="{formData}">
@@ -39,7 +39,7 @@
                                 </template>
                             </el-image>
                         </el-col>
-                        <el-col :span="4">{{vo.goods_name||'-'}}</el-col>
+                        <el-col :span="4" style="line-height:18px">{{vo.goods_name||'-'}}</el-col>
                         <el-col :span="4">{{vo.sku_name||'-'}}</el-col>
                         <el-col :span="4">{{$t('btn.money')}}{{vo.goods_price||'-'}}</el-col>
                         <el-col :span="4">x {{vo.buy_num||'-'}}</el-col>
@@ -64,6 +64,7 @@
             </div>
             <div class="dialog_btn">
                 <el-button type="primary" :loading="data.loading" @click="postDelivery" :icon="Promotion" >订单发货</el-button>
+                <el-button :loading="data.loading" @click="printWaybill" :icon="Printer" >打印面单</el-button>
             </div>
         </el-dialog>
     </div>
@@ -158,18 +159,18 @@ export default {
             edit:{column:editColumn},
         })
 
-        const loadData = async ()=>{
-            delivery() // 加载物流公司
-            let base64Code = window.btoa(JSON.stringify({order_id:data.selected}))
-            const res = await proxy.R.get('/Seller/orders/find/all',{params:base64Code})
-            if(!res.code) data.order = res
-        }
-
         const delivery = ()=>{
             if(data.delivery.length != 0) return
             proxy.R.get('/expresses',{isAll:true}).then(res=>{
                 if(!res.code) data.delivery = res
             })
+        }
+
+        const loadData = async ()=>{
+            delivery() // 加载物流公司
+            let base64Code = window.btoa(JSON.stringify({order_id:data.selected}))
+            const res = await proxy.R.get('/Seller/orders/find/all',{params:base64Code})
+            if(!res.code) data.order = res
         }
 
         const openAddDialog = async (dialogParams)=>{
@@ -209,6 +210,31 @@ export default {
             
         }
 
+        const printWaybill = async ()=>{
+            data.loading = true
+            let sucNum = 0;
+            let allNum = data.order.length
+            const loading = ElementPlus.ElLoading.service({
+                lock: true,
+                text: sucNum+'/'+allNum,
+                background: 'rgba(0, 0, 0, 0.7)',
+            })
+            data.order.map(item=>{
+                proxy.R.get('/Seller/print/waybill/'+item.id).then(()=>{
+                }).finally(()=>{
+                    sucNum++
+                    loading.setText(sucNum+'/'+allNum)
+                    if(sucNum >= allNum){
+                        loading.close()
+                        data.loading = false
+                        data.vis = false
+                        location.reload()
+                    }
+                })
+            })
+            
+        }
+
         // 物流查询
         const collapseChange = (formData,activeName)=>{
             data.express = []
@@ -223,6 +249,7 @@ export default {
         return {
             Promotion,Printer,Picture,
             options,searchOptions,dialogParam,btnConfigs,params,data,
+            printWaybill,
             openAddDialog,postDelivery,collapseChange
         }
     }
@@ -240,6 +267,7 @@ export default {
 }
 .order_goods{
     margin-top: 15px;
+    padding-bottom: 15px;
     line-height: 30px;
     border-bottom: 1px solid #efefef;
 }
