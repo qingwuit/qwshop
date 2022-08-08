@@ -63,6 +63,10 @@ export default ({
                             await store.commit('login/loginAfter',loginData) 
                             const routeUrl = await store.dispatch('load/loadRoute') 
                             window.location.href=routeUrl
+                        }else{
+                            setTimeout(()=>{
+                                cap.closeCaptcha()
+                            },500)
                         }
                     },
                     onFail() {

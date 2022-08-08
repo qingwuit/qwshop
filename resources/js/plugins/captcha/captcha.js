@@ -112,6 +112,8 @@ class Captcha {
       padding:'20px',
       borderRadius:'6px',
       zIndex:'200',
+      opacity: 0,
+      transform:'translateY(-180px)'
     })
     this.width = width
     this.height = height
@@ -125,6 +127,13 @@ class Captcha {
     this.initDOM()
     this.initImg()
     this.bindEvents()
+    
+    // this.el.style.transition = ' 0.3s ease',
+    setTimeout(()=>{
+        this.el.style.transition = ' 0.5s ease'
+        this.el.style.opacity = 1
+        this.el.style.transform = 'translateY(0)'
+    },200)
     return this
   }
 
@@ -222,11 +231,16 @@ class Captcha {
       typeof this.onRefresh === 'function' && this.onRefresh()
     }
     this.closeBtn.onclick = () => {
-        var childs = this.el.childNodes; 
-        for(var i = childs.length - 1; i >= 0; i--) {
-            this.el.removeChild(childs[i]);
-        }
-        this.el.removeAttribute("style")
+        this.el.style.transition = ' 0.3s ease'
+        this.el.style.opacity = 0
+        this.el.style.transform = 'translateY(-180px)'
+        setTimeout(()=>{
+            var childs = this.el.childNodes; 
+            for(var i = childs.length - 1; i >= 0; i--) {
+                this.el.removeChild(childs[i]);
+            }
+            this.el.removeAttribute("style")
+        },400)
     }
 
     let originX, originY, trail = [], isMouseDown = false
@@ -264,8 +278,18 @@ class Captcha {
       const { spliced, verified } = this.verify()
       if (spliced) {
         if (verified) {
-          addClass(this.sliderContainer, 'sliderContainer_success')
-          typeof this.onSuccess === 'function' && this.onSuccess()
+            addClass(this.sliderContainer, 'sliderContainer_success')
+            typeof this.onSuccess === 'function' && this.onSuccess()
+            this.el.style.transition = ' 0.3s ease'
+            this.el.style.opacity = 0
+            this.el.style.transform = 'translateY(-180px)'
+            setTimeout(()=>{
+                var childs = this.el.childNodes; 
+                for(var i = childs.length - 1; i >= 0; i--) {
+                    this.el.removeChild(childs[i]);
+                }
+                this.el.removeAttribute("style")
+            },400)
         } else {
           addClass(this.sliderContainer, 'sliderContainer_fail')
           this.text.innerHTML = '请再试一次'
@@ -321,11 +345,17 @@ class Captcha {
     return this.x
   }
   closeCaptcha(){
-    var childs = this.el.childNodes; 
-    for(var i = childs.length - 1; i >= 0; i--) {
-        this.el.removeChild(childs[i]);
-    }
-    this.el.removeAttribute("style")
+    this.el.style.transition = ' 0.3s ease'
+    this.el.style.opacity = 0
+    this.el.style.transform = 'translateY(-180px)'
+    setTimeout(()=>{
+        var childs = this.el.childNodes; 
+        for(var i = childs.length - 1; i >= 0; i--) {
+            this.el.removeChild(childs[i]);
+        }
+        this.el.removeAttribute("style")
+    },400)
+    
   }
 
   
