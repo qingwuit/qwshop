@@ -32,8 +32,7 @@
     <link href="//unpkg.com/@wangeditor/editor@0.13.6/dist/css/style.css" rel="stylesheet">
     <script src="//unpkg.com/@wangeditor/editor@0.13.6/dist/index.js"></script>
     <!-- edit -->
-    
-        
+
     <link href="{{ mix('css/base.css','dist') }}" rel="stylesheet" />
 
     

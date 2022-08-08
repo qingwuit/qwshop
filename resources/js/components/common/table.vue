@@ -73,9 +73,13 @@
         </div>
 
         <!-- 添加dialog -->
-        <el-dialog :destroy-on-close="dialogParams.destroyOnClose" ref="addDialog" custom-class="table_dialog_class" v-model="addVis" :title="$t('btn.add')" :width="dialogParams.width">
+        <el-dialog :destroy-on-close="dialogParams.destroyOnClose" ref="addDialog" custom-class="table_dialog_class" v-model="addVis" :title="$t('btn.add')" :width="dialogParams.width" :draggable="dialogParams.draggable" :fullscreen="dialogParams.fullscreen">
+            <template #header>
+                <span class="el-dialog__title">{{$t('btn.add')}}</span>
+                <span class="fullscreenbtn" @click="dialogParams.fullscreen=!dialogParams.fullscreen"><el-icon><FullScreen /></el-icon></span>
+            </template>
             <slot name="table_add_hook" :dialogParams="dialogParams">
-                <el-form v-if="dialogParams.add && dialogParams.add.column.length>0" ref="addForm" label-position="right" :rules="dialogParams.rules||null" :model="formData.add" :label-width="dialogParams.labelWidth" :fullscreen="dialogParams.fullscreen">
+                <el-form v-if="dialogParams.add && dialogParams.add.column.length>0" ref="addForm" label-position="right" :rules="dialogParams.rules||null" :model="formData.add" :label-width="dialogParams.labelWidth">
                     <el-row :gutter="20">
                         <el-col v-for="(v,k) in dialogParams.add.column" :key="k" :span="v.span || dialogParams.span"><div class="table-form-content">
                             <el-form-item :label="v.label" :prop="v.value">
@@ -101,9 +105,13 @@
         </el-dialog>
 
         <!-- 编辑dialog -->
-        <el-dialog :destroy-on-close="dialogParams.destroyOnClose" ref="editDialog" custom-class="table_dialog_class" v-model="editVis" :title="$t('btn.edit')" :width="dialogParams.width">
+        <el-dialog :destroy-on-close="dialogParams.destroyOnClose" ref="editDialog" custom-class="table_dialog_class" v-model="editVis" :title="$t('btn.edit')" :width="dialogParams.width" :draggable="dialogParams.draggable" :fullscreen="dialogParams.fullscreen">
+            <template #header>
+                <span class="el-dialog__title">{{$t('btn.edit')}}</span>
+                <span class="fullscreenbtn" @click="dialogParams.fullscreen=!dialogParams.fullscreen"><el-icon><FullScreen /></el-icon></span>
+            </template>
             <slot name="table_edit_hook" :dialogParams="dialogParams" :formData="formData">
-                <el-form v-if="dialogParams.edit && dialogParams.edit.column.length>0" ref="editForm" label-position="right" :rules="dialogParams.rules||null" :model="formData.edit" :label-width="dialogParams.labelWidth" :fullscreen="dialogParams.fullscreen">
+                <el-form v-if="dialogParams.edit && dialogParams.edit.column.length>0" ref="editForm" label-position="right" :rules="dialogParams.rules||null" :model="formData.edit" :label-width="dialogParams.labelWidth">
                     <el-row :gutter="20">
                         <el-col v-for="(v,k) in dialogParams.edit.column" :key="k" :span="v.span || dialogParams.span"><div class="table-form-content">
                             <el-form-item :label="v.label" :prop="v.value">
@@ -129,9 +137,13 @@
         </el-dialog>
 
         <!-- 显示dialog -->
-        <el-dialog destroy-on-close ref="viewDialog" custom-class="table_dialog_class" v-model="viewVis" :title="$t('btn.view')" :width="dialogParams.width">
+        <el-dialog destroy-on-close ref="viewDialog" custom-class="table_dialog_class" v-model="viewVis" :title="$t('btn.view')" :width="dialogParams.width" :draggable="dialogParams.draggable" :fullscreen="dialogParams.fullscreen">
+            <template #header>
+                <span class="el-dialog__title">{{$t('btn.view')}}</span>
+                <span class="fullscreenbtn" @click="dialogParams.fullscreen=!dialogParams.fullscreen"><el-icon><FullScreen /></el-icon></span>
+            </template>
             <slot name="table_show_hook" :dialogParams="dialogParams" :formData="formData">
-                <el-form v-if="dialogParams.view && dialogParams.view.column.length>0"  label-position="right"  :label-width="dialogParams.labelWidth" :fullscreen="dialogParams.fullscreen">
+                <el-form v-if="dialogParams.view && dialogParams.view.column.length>0"  label-position="right"  :label-width="dialogParams.labelWidth">
                     <el-row :gutter="20">
                         <el-col v-for="(v,k) in dialogParams.view.column" :key="k" :span="v.span || dialogParams.span"><div class="table-form-content">
                             <el-form-item :label="v.label+' : '" :prop="v.value">
@@ -170,10 +182,10 @@ import {reactive,ref,watch,provide,onMounted,getCurrentInstance} from "vue"
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 import layoutSearch from "@/components/common/search"
-import { Plus,Edit,View,Delete,Download,Upload,Picture,Search  } from '@element-plus/icons'
+import { Plus,Edit,View,Delete,Download,Upload,Picture,Search,FullScreen  } from '@element-plus/icons'
 import qTags from "@/components/common/tags"
 export default {
-    components: {layoutSearch,qTags,Picture},
+    components: {layoutSearch,qTags,Picture,FullScreen},
     props:{
         // label , elabel , prop  显示字段
         searchOption:{
@@ -304,6 +316,7 @@ export default {
             span:12, // 默认宽度
             column:[], // 默认字段
             fullscreen:false, // 是否全屏
+            draggable:false, // 是否可拖拽
             rules:null,
             destroyOnClose:true, // dialog 关闭时销毁Dom
             dict:[], // 字典链接 {name:"menus",url:'xxx.com',isPageDict:false,selectDictByColumId:false} isPageDict // 带分页的字典 selectDictByColumId // 字典根据当前页面数据ID查询
@@ -730,8 +743,21 @@ export default {
     }
     .html_view{
         // background: #f8f8f8;
+        width: 100%;
+        border-radius: 4px;
         border:1px solid #efefef;
         padding:5px;
+    }
+    .fullscreenbtn{
+        position: absolute;
+        right: 52px;
+        top: 23px;
+        color: var(--el-color-info);
+        font-size: inherit;
+        cursor: pointer;
+        &:hover{
+            color:var(--el-color-primary);
+        }
     }
 }
 </style>

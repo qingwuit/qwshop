@@ -38,6 +38,14 @@ axios.interceptors.request.use(function (config) {
             config.headers['Authorization'] = 'Bearer '+(token.slice(1)); // 如果token 存在则携带token访问
         }
     }
+
+    // 验证登录
+    if(config.url.indexOf('api/is_login') != -1){
+        token = localStorage.getItem('setToken')
+        if(!R.isEmpty(token)){
+            config.headers['Authorization'] = 'Bearer '+ token; // 如果token 存在则携带token访问
+        }
+    }
     
     return config;
   }, function (error) {
@@ -65,7 +73,6 @@ axios.interceptors.response.use(function (res) {
 	// 如果出现401 代表token 失效
 	if(res.data.code == 401){
         ElMessage.error(res.data.msg);
-        console.log(tokenName)
         if(tokenName != 'token'){
             localStorage.removeItem(tokenName);
             return router.push(loginName+'login');

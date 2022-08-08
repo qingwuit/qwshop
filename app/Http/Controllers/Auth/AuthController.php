@@ -97,4 +97,21 @@ class AuthController extends Controller
         $rs = $this->getService($pro, true)->where('id', $id)->update($data);
         return $this->success($rs);
     }
+
+    // 验证用户是否登录
+    public function is_login(Request $request)
+    {
+        try {
+            $id = $this->getUserId($request->provider);
+            return !empty($id) ? $this->success($id) : $this->auto(200);
+        } catch (\Exception $e) {
+            return $this->auto(200,$e->getMessage());
+        }
+    }
+
+    // 验证码请求
+    public function captcha()
+    {
+        return $this->handle($this->getService('Captcha')->createCap());
+    }
 }

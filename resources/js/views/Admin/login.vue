@@ -14,7 +14,7 @@
                         <el-input size="medium" :prefix-icon="Key" v-model="data.form.password" @keyup.enter.native="data.onsubmit" placeholder="密码" show-password />
                     </el-form-item>
                     <el-form-item>
-                        <el-button style="width:100%" size="medium" type="primary" @click="data.onsubmit">登 录</el-button>
+                        <el-button style="width:100%" size="medium" type="primary" @click="data.oncheck">登 录</el-button>
                     </el-form-item>
                     <el-form-item class="disclaimers"><el-checkbox v-model="data.disclaimers" ><span @click="$refs.agreementRef.openDialog" >请先阅读《网站协议》</span></el-checkbox></el-form-item>
                 </el-form>
@@ -22,14 +22,16 @@
         </div>
 
         <agreementView ref="agreementRef" ename="agreement" /> 
+        <div id="captcha"></div>
     </div>
 </template>
 <script>
 import { Key,User } from '@element-plus/icons'
 import { useStore } from 'vuex'
-import {reactive,toRefs,getCurrentInstance} from "vue"
+import {reactive,onMounted,toRefs,getCurrentInstance} from "vue"
 import { useRouter, useRoute } from 'vue-router'
 import agreementView from "@/components/common/agreement"
+import captcha from '@/plugins/captcha/captcha.js'
 export default ({
     components:{agreementView},
     setup() {
@@ -39,11 +41,42 @@ export default ({
         const data = reactive({
             disclaimers:true,
             form:{},
-            onsubmit:async ()=>{
+            oncheck:async ()=>{
                 let {disclaimers,form} = data
                 if(!disclaimers){
                     return ElementPlus.ElMessage.error('请先阅读《网站协议》')
                 }
+                if(proxy.R.isEmpty(form.username) || proxy.R.isEmpty(form.password)) return proxy.$message.error('请输入账户密码')
+                const cap = captcha({
+                    el: document.getElementById('captcha'),
+                    widht: 310,
+                    height: 150,
+                    onSuccess: async ()=> {
+                        let loginData = await proxy.R.post('/captcha',form)
+                        form.sign = loginData
+                        form.provider = 'admins'
+                        loginData = await proxy.R.post('/login',form)
+                        loginData.routeUriIndex = store.state.load.routeUriIndex
+                        // loginData.isTo = true // 是否跳转
+                        loginData.path = '/Admin/login'
+                        if(!loginData.code){
+                            await store.commit('login/loginAfter',loginData) 
+                            const routeUrl = await store.dispatch('load/loadRoute') 
+                            window.location.href=routeUrl
+                        }
+                    },
+                    onFail() {
+                        data.form.step = this.x
+                        setTimeout(()=>{
+                            this.closeCaptcha()
+                        },500)
+                    },
+                    onRefresh() {
+                        data.form.step = this.x
+                    },
+                })
+            },
+            onsubmit:async ()=>{
                 form.provider = 'admins'
                 let loginData = await proxy.R.post('/login',form)
                 loginData.routeUriIndex = store.state.load.routeUriIndex
@@ -51,13 +84,27 @@ export default ({
                 loginData.path = '/Admin/login'
                 
                 if(!loginData.code){
-                    await store.commit('login/loginAfter',loginData)
                     const routeUrl = await store.dispatch('load/loadRoute') 
                     window.location.href=routeUrl
                 }
                 // console.log(proxy.$i18n.locale)
             }
         })
+
+        const isLogin = async ()=>{
+            localStorage.setItem('setToken',localStorage.getItem('admin_token'))
+            let loginData = await proxy.R.get('/is_login',{provider:'admins'})
+            if(!proxy.R.isEmpty(loginData) && loginData.code != 500 && loginData>0){
+                const routeUrl = await store.dispatch('load/loadRoute') 
+                window.location.href=routeUrl
+            }
+        }
+
+        onMounted(()=>{
+            
+        })
+        
+        isLogin()
      
         return {data,Key,User}
     },

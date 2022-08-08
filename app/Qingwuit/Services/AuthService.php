@@ -13,13 +13,30 @@ class AuthService extends BaseService
     // 登录服务
     public function login($apiLogin = true, $loginData = [])
     {
-        $provider = request('provider') ?? 'users'; // 用户类型 User Admin
-        $grantType = request('grant_type') ?? 'password'; // 登录方式
-        $clientType = request('client_type') ?? 'password_client'; // 客户端类型默认密码类型得会过期
-        $username = request('username');
-        $password = request('password');
+        $provider = request('provider','users'); // 用户类型 User Admin
+        $grantType = request('grant_type','password'); // 登录方式
+        $clientType = request('client_type','password_client'); // 客户端类型默认密码类型得会过期
+        $username = request('username','');
+        $password = request('password','');
+        $type = request('type','username'); // 登录方式 phone email
+        $code = request('code'); // 手机登录验证码
         // $phone = request()->phone;
 
+        if ($type == 'phone') {
+            $smsCheck = $this->getService('Sms')->checkSms($username, $code);
+            if (!$smsCheck['status']) {
+                return $this->formatError($smsCheck['msg']);
+            }
+        }
+        
+        // 总后台要做滑块验证
+        if($provider == 'admins'){
+            $capCheck = $this->getService('Captcha')->checkCap();
+            if (!$capCheck['status']) {
+                return $this->formatError($capCheck['msg']);
+            }
+        }
+        
         // 外部API请求登录
         $where = ['password_client' => 1, 'personal_access_client' => 0, 'provider' => $provider];
         // 个人客户端无限时间
@@ -50,10 +67,10 @@ class AuthService extends BaseService
             'grant_type'    =>  $grantType,
             'client_id'     =>  $client->id,
             'client_secret' =>  $client->secret,
-            'username'      =>  $username,
             'password'      =>  $password,
             'scope'         =>  '',
         ];
+        $respData[$type] = $username;
 
         try {
             $resp = Http::asForm()->post(url('/oauth/token'), $respData);

@@ -68,6 +68,8 @@ Route::any('/login', [App\Http\Controllers\Auth\AuthController::class,'login']);
 Route::any('/logout', [App\Http\Controllers\Auth\AuthController::class,'logout']);
 Route::any('/register', [App\Http\Controllers\Auth\AuthController::class,'register']);
 Route::post('/forget_password', [App\Http\Controllers\Auth\AuthController::class,'forget_password']);
+Route::get('/is_login', [App\Http\Controllers\Auth\AuthController::class,'is_login']); // 检查是否登录
+Route::post('/captcha', [App\Http\Controllers\Auth\AuthController::class,'captcha']); // 获取滑动验证码
 
 // 后台接口
 Route::get('/load_goods_classes', [App\Http\Controllers\Admin\Exts\GoodsClassesController::class,'loadMenu'])->name('base.loadMenu');
