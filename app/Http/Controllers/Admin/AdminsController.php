@@ -58,6 +58,7 @@ class AdminsController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            DB::beginTransaction();
             $belongName = $this->belongName;
             $model = $this->getService($this->modelName, true)->find($id);
             $model->username = $request->username;
