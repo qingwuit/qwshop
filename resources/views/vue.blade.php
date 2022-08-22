@@ -29,8 +29,8 @@
     <link href="//unpkg.com/nprogress@0.2.0/nprogress.css" rel="stylesheet" /> <!-- 进度条 -->
 
     <!-- edit -->
-    <link href="//unpkg.com/@wangeditor/editor@0.13.6/dist/css/style.css" rel="stylesheet">
-    <script src="//unpkg.com/@wangeditor/editor@0.13.6/dist/index.js"></script>
+    <link href="//unpkg.com/@wangeditor/editor@5.1.14/dist/css/style.css" rel="stylesheet">
+    <script src="//unpkg.com/@wangeditor/editor@5.1.14/dist/index.js"></script>
     <!-- edit -->
 
     <link href="{{ mix('css/base.css','dist') }}" rel="stylesheet" />
