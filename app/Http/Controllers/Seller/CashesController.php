@@ -11,6 +11,12 @@ class CashesController extends Controller
     protected $modelName = 'Cash';
     public $auth = 'users';
 
+    public function index(Request $request)
+    {
+        $storeId = $this->getService('Store')->getStoreId()['data'];
+        return $this->handle($this->getService('base')->getPageData($this->modelName, ['store_id'=>$storeId]));
+    }
+
     public function store(Request $request)
     {
         $money = round(abs($request->money), 2);

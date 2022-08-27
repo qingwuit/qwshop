@@ -33,6 +33,9 @@
                             <el-col :span="24">
                                 <el-form-item label="发货信息">{{v.receive_name}} | {{v.receive_tel}} ( {{v.receive_area}} {{v.receive_address}} )</el-form-item>
                             </el-col>
+                            <el-col :span="24">
+                                <el-form-item label="备注">{{v.remark||'-'}}</el-form-item>
+                            </el-col>
                             <el-col :span="12">
                                 <el-form-item label="物流公司"><q-input v-model:formData="data.order[k].delivery_code" :params="{label:'物流公司',value:'delivery_code',type:'select',labelName:'name',valueName:'code'}" :dictData="{delivery_code:data.delivery}" /></el-form-item>
                             </el-col>
@@ -81,6 +84,7 @@ export default {
         const searchOptions = reactive([
             {label:'订单号',value:'order_no',where:'likeRight'},
             {label:'订单名称',value:'order_name',where:'likeRight'},
+            {label:'买家',value:'nickname',where:'whereHas|user'},
             {label:'时间',value:'created_at',type:'daterange'},
         ])
 
