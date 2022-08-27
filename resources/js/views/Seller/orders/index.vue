@@ -105,6 +105,7 @@ export default {
         const searchOptions = reactive([
             {label:'订单号',value:'order_no',where:'likeRight'},
             {label:'订单名称',value:'order_name',where:'likeRight'},
+            {label:'买家',value:'nickname',where:'whereHas|user'},
             {label:'订单状态',value:'order_status',type:'select'},
             {label:'时间',value:'created_at',type:'daterange'},
         ])
