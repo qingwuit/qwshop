@@ -31,7 +31,7 @@ class GoodsService extends BaseService
             'goods_content'         => request()->goods_content ?? '',                  // 商品内容详情
             'goods_content_mobile'  => request()->goods_content_mobile ?? '',           // 商品内容详情（手机）
             'goods_status'          => abs(request()->goods_status) ?? 0,               // 商品上架状态
-            'freight_id'            => abs(request()->freight_id) ?? 0,                 // 运费模版ID
+            'freight_id'            => intval(request()->freight_id) ?? 0,              // 运费模版ID
             'goods_images'          => implode(',', request()->goods_images ?? []),
         ];
 
@@ -142,7 +142,7 @@ class GoodsService extends BaseService
         }
         // 商品快递情况状态
         if (isset(request()->freight_id)) {
-            $goodsModel->freight_id = abs(request()->freight_id ?? 0);
+            $goodsModel->freight_id = intval(request()->freight_id ?? 0);
         }
         // 商品图片
         if (isset(request()->goods_images) && !empty(request()->goods_images)) {

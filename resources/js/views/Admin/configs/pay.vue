@@ -3,8 +3,8 @@
         <el-tabs tab-position="left" style="height:500px" @tab-click="handleClick" v-model="tabsIndex">
             <el-tab-pane :label="$t('config.configWechatPayWap')" name="wechatwap">
                 <el-form style="width:60%;margin-top:8px;" :model="form.wechatwap" ref="wechatwap" label-position="right" label-width="180px">
-                    <el-form-item :label="$t('config.configPay.appid')" prop="app_id">
-                        <el-input v-model="form.wechatwap.app_id"  />
+                    <el-form-item :label="$t('config.configPay.appid')" prop="mp_app_id">
+                        <el-input v-model="form.wechatwap.mp_app_id"  />
                     </el-form-item>
                     <el-form-item :label="$t('config.configPay.mch_id')" prop="mch_id">
                         <el-input v-model="form.wechatwap.mch_id"  />
@@ -117,8 +117,8 @@
 
             <el-tab-pane :label="$t('config.configWechatPayScan')" name="wechatscan">
                 <el-form style="width:60%;margin-top:8px;" :model="form.wechatscan" ref="wechatscan" label-position="right" label-width="180px">
-                    <el-form-item :label="$t('config.configPay.appid')" prop="app_id">
-                        <el-input v-model="form.wechatscan.app_id"  />
+                    <el-form-item :label="$t('config.configPay.appid')" prop="mp_app_id">
+                        <el-input v-model="form.wechatscan.mp_app_id"  />
                     </el-form-item>
                     <el-form-item :label="$t('config.configPay.mch_id')" prop="mch_id">
                         <el-input v-model="form.wechatscan.mch_id"  />

@@ -32,7 +32,7 @@ class CreateGoodsTable extends Migration
             $table->unsignedTinyInteger('goods_status')->default(0)->comment('上架状态');
             $table->unsignedTinyInteger('goods_verify')->default(1)->comment('审核状态');
             $table->string('refuse_info', 80)->default('暂无缘由')->comment('拒绝原因');
-            $table->unsignedInteger('freight_id')->default(0)->comment('运费模版 0默认');
+            $table->integer('freight_id')->default(0)->comment('运费模版 0默认');
             $table->text('goods_content')->comment('详情');
             $table->text('goods_content_mobile')->comment('手机端详情');
             $table->unsignedTinyInteger('is_recommend')->default(0)->comment('是否推荐商家首页');
