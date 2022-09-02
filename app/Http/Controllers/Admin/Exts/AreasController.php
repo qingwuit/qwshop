@@ -30,14 +30,11 @@ class AreasController extends Controller
 
         $data = $this->getService('Area', true)->select('id', 'name', 'code', 'pid')->get();
         try {
-            if (Cache::has('area') && $deep==-1) {
-                return $this->success(Cache::get('area'));
-            }
+            if (Cache::has('area') && $deep==-1) return $this->success(Cache::get('area'));
             $tree = $this->getService('Tool')->$treeType($data, 0, 0, $deep);
-            if ($deep==-1) {
-                Cache::put('area', $tree);
-            }
+            if ($deep==-1) Cache::put('area', $tree);
         } catch (\Exception $e) {
+            echo $e->getMessage();
             return $this->error(__('tip.failed'));
         }
         return $this->success($tree);
