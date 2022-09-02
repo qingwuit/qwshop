@@ -10,7 +10,7 @@
         </div>
         
         <div :id="'order_plot'+data.random" style="margin-top:20px;margin-bottom:40px"></div>
-        <table-view :options="options" @tableHandleSizeChange="handleSizeChange" @tableHandleCurrentChange="handleCurrentChange" :params="params" :searchOption="searchOptions" :btnConfig="btnConfigs" :tableData="data.list" :pagination="data.list.data && data.list.data.length>0" :handleHide="false" ></table-view>
+        <table-view :options="options" :dialogParam="dialogParam" @tableHandleSizeChange="handleSizeChange" @tableHandleCurrentChange="handleCurrentChange" :params="params" :searchOption="searchOptions" :btnConfig="btnConfigs" :tableData="data.list" :pagination="data.list.data && data.list.data.length>0" :handleHide="false" ></table-view>
     </div>
 </template>
 
@@ -102,8 +102,9 @@ export default {
         const options = reactive([
             {label:'支付订单号',value:'pay_no'},
             {label:'第三方订单',value:'trade_no'},
-            {label:'支付方式',value:'payment_name',type:'tags'},
+            {label:'支付方式',value:'payment_name',type:'dict_tags'},
             {label:'金额',value:'total',type:'tags'},
+            {label:'支付状态',value:'pay_status',type:'dict_tags'},
             {label:'支付时间',value:'pay_time'},
             {label:'创建时间',value:'created_at'},
         ]);
@@ -111,17 +112,32 @@ export default {
         const searchOptions = reactive([
             {label:'支付订单号',value:'pay_no',where:'likeRight'},
             {label:'第三方订单',value:'trade_no',where:'likeRight'},
+            {label:'支付方式',value:'payment_name',type:'select'},
+            {label:'支付状态',value:'pay_status',type:'select'},
         ])
         const btnConfigs = reactive({
             store:{show:false},
             update:{show:false},
             destroy:{show:false},
             show:{show:false},
-            export:{show:false},
+        })
+
+        const dialogParam = reactive({
+            dictData:{
+                payment_name:[
+                    {label:proxy.$t('order.paymentMoney'),value:'balance'},
+                    {label:proxy.$t('order.paymentAli'),value:'alipay'},
+                    {label:proxy.$t('order.paymentWechat'),value:'wechat'},
+                ],
+                pay_status:[
+                    {label:proxy.$t('btn.success'),value:1},
+                    {label:proxy.$t('btn.no'),value:0},
+                ],
+            }
         })
 
         return {
-            data,params,options,btnConfigs,searchOptions,
+            data,dialogParam,params,options,btnConfigs,searchOptions,
             typeChange,onChange,handleSizeChange,handleCurrentChange
         }
     }    

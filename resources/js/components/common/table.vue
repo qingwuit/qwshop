@@ -8,7 +8,7 @@
                 <el-button v-if="btnConfigs.search && btnConfigs.search.show"  @click="searchOpen"  type="primary" plain :icon="Search">{{$t('btn.search2')}}</el-button>
             </div>
             <div class="table_btn_right">
-                <el-button v-if="btnConfigs.import && btnConfigs.import.show" :icon="Upload">{{$t('btn.import')}}</el-button>
+                <el-button v-if="btnConfigs.import && btnConfigs.import.show" :icon="Upload" @click="excelImport">{{$t('btn.import')}}</el-button>
                 <el-button v-if="btnConfigs.export && btnConfigs.export.show" :icon="Download" @click="excelExport">{{$t('btn.export')}}</el-button>
                 <el-button v-if="btnConfigs.destroy && btnConfigs.destroy.show" type="danger" @click="deleteData" :icon="Delete">{{$t('btn.del')}}</el-button>
                 <slot name="table_topright_hook" ></slot>
@@ -321,6 +321,8 @@ export default {
             destroyOnClose:true, // dialog 关闭时销毁Dom
             dict:[], // 字典链接 {name:"menus",url:'xxx.com',isPageDict:false,selectDictByColumId:false} isPageDict // 带分页的字典 selectDictByColumId // 字典根据当前页面数据ID查询
             dictData:{}, // 字典数据 {menus:[]}
+            exportData:[],
+            exportDataAdd:[],
             multipleSelection:()=>{
                 return multipleSelection.value
             },
@@ -644,8 +646,12 @@ export default {
 
         // excel导出
         const excelExport = ()=>{
+            // 如果自定义导出数据则走自定义导出数据
+            let exportOptions = _.cloneDeep(props.options)
+            if(dialogParam.exportData.length > 0) exportOptions = dialogParam.exportData
+            if(dialogParam.exportDataAdd.length > 0) exportOptions = _.concat(exportOptions,dialogParam.exportDataAdd)
             // 显示字段
-            if(props.options.length<0) return proxy.$message.error(proxy.$t('msg.selectErr'))
+            if(exportOptions.length<0) return proxy.$message.error(proxy.$t('msg.selectErr'))
             let excelExportData = []
             let headerData = []
             listData.listData.map(item=>{
@@ -653,7 +659,7 @@ export default {
                 headerData = []
                 // 判断是否有选择数据 没有则取全部数据
                 if(!multipleSelection.value || multipleSelection.value.length<=0){
-                    props.options.map(itemOption=>{
+                    exportOptions.map(itemOption=>{
                         let colItemVal = item[itemOption.value]||''
                         if(itemOption.type == 'dict_tags' || itemOption.type == 'dict'){
                             colItemVal = dictFind(itemOption.value,colItemVal,itemOption.labelName||'label',itemOption.valueName||'value')
@@ -665,7 +671,7 @@ export default {
                 }else{
                     let ids = multipleSelection.value.join(',').split(',')
                     if(_.indexOf(ids,item[props.columnId]+'') > -1){
-                        props.options.map(itemOption=>{
+                        exportOptions.map(itemOption=>{
                             let colItemVal = item[itemOption.value]||''
                             if(itemOption.type == 'dict_tags' || itemOption.type == 'dict'){
                                 colItemVal = dictFind(itemOption.value,colItemVal,itemOption.labelName||'label',itemOption.valueName||'value')
@@ -687,7 +693,9 @@ export default {
         }
 
         // excel导入
-        const excelImport = ()=>{}
+        const excelImport = ()=>{
+            emit('import',pageUrl)
+        }
 
         // 初始化获取数据
         loadData()
