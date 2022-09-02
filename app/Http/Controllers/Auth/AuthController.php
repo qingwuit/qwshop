@@ -49,7 +49,7 @@ class AuthController extends Controller
         if (isset($info['data']['pay_password'])) {
             unset($info['data']['pay_password']);
         }
-        $pro = lcfirst(str_replace('api/', '', $request->route()->action['prefix']));
+        $pro = str_replace('api/', '', $request->route()->action['prefix']);
         if ($request->provider != 'users') {
             $defaultUrl = $this->getService($pro . 'Menu', true)->whereRaw('apis!=""')->orderBy('is_sort', 'asc')->first();
             if ($defaultUrl) {
@@ -64,7 +64,7 @@ class AuthController extends Controller
     {
         $data = $request->except('provider');
         $id = $this->getUserId($request->provider);
-        $pro = lcfirst(str_replace('api/', '', $request->route()->action['prefix']));
+        $pro = str_replace('api/', '', $request->route()->action['prefix']);
         if ($pro != 'Admin') {
             $pro = 'User';
         }
