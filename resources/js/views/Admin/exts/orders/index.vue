@@ -157,6 +157,13 @@ export default {
                     {label:proxy.$t('order.orderCompletion'),value:6},
                 ]
             },
+            exportDataAdd:[
+                {label:'收件人名',value:'receive_name'},
+                {label:'收件人手机',value:'receive_tel'},
+                {label:'地址信息',value:'receive_area'},
+                {label:'详细地址',value:'receive_address'},
+                {label:'快递单号',value:'delivery_no'},
+            ],
             view:{column:viewColumn},
             edit:{column:addColumn},
         })

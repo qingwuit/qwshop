@@ -198,6 +198,19 @@ class ToolService extends BaseService
         return $data;
     }
 
+    public function ToUrlParams(array $array)
+    {
+        $buff = "";
+        foreach ($array as $k => $v) {
+            if ($v != "" && !is_array($v)) {
+                $buff .= $k . "=" . $v . "&";
+            }
+        }
+
+        $buff = trim($buff, "&");
+        return $buff;
+    }
+
     // http 请求
     public function httpRequest($url, $method = 'GET', $data = [], $header = [], $type = "form_params")
     {

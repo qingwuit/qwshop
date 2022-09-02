@@ -323,6 +323,7 @@ export default {
     padding:2px 15px;
     border-radius: 3px;
     background: #f1f1f1;
+    cursor: pointer;
 }
 .admin_card .title .right_block ul{
     float: left;

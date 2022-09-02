@@ -167,6 +167,7 @@ export default {
         padding:5px 15px;
         border-radius: 3px;
         background: #f1f1f1;
+        cursor: pointer;
         &.ck{
             background: #1890ff;
             color:#fff;

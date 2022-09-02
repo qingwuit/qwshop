@@ -12,13 +12,19 @@
         <div class="goods_chose" v-if="data.step == 0">
             <div class="goods_add_chose_class_bg">
                 <div class="chose_class_bg_item">
-                    <ul><li @click="chose(v,0,k)" v-for="(v,k) in data.classList" :key="k" :class="data.choseId[0] == v.id?'checked':''">{{v.name}}<el-icon><ArrowRight /></el-icon></li></ul>
+                    <el-scrollbar height="378px">
+                        <ul><li @click="chose(v,0,k)" v-for="(v,k) in data.classList" :key="k" :class="data.choseId[0] == v.id?'checked':''">{{v.name}}<el-icon><ArrowRight /></el-icon></li></ul>
+                    </el-scrollbar>
                 </div>
                 <div :class="data.choseId[0]==0?'chose_class_bg_item disabled':'chose_class_bg_item'">
-                    <ul><li @click="chose(v,1,k)" v-for="(v,k) in data.choseId[0]==0?[]:data.classList[data.index[0]].children" :key="k" :class="data.choseId[1] == v.id?'checked':''">{{v.name}}<el-icon><ArrowRight /></el-icon></li></ul>
+                    <el-scrollbar height="378px">
+                        <ul><li @click="chose(v,1,k)" v-for="(v,k) in data.choseId[0]==0?[]:data.classList[data.index[0]].children" :key="k" :class="data.choseId[1] == v.id?'checked':''">{{v.name}}<el-icon><ArrowRight /></el-icon></li></ul>
+                    </el-scrollbar>
                 </div>
                 <div :class="data.choseId[1]==0?'chose_class_bg_item disabled':'chose_class_bg_item'">
-                    <ul><li @click="chose(v,2,k)" v-for="(v,k) in data.choseId[1]==0?[]:data.classList[data.index[0]].children[data.index[1]].children" :key="k" :class="data.choseId[2] == v.id?'checked':''">{{v.name}}<el-icon><ArrowRight /></el-icon></li></ul>
+                    <el-scrollbar height="378px">
+                        <ul><li @click="chose(v,2,k)" v-for="(v,k) in data.choseId[1]==0?[]:data.classList[data.index[0]].children[data.index[1]].children" :key="k" :class="data.choseId[2] == v.id?'checked':''">{{v.name}}<el-icon><ArrowRight /></el-icon></li></ul>
+                    </el-scrollbar>
                 </div>
             </div>
 

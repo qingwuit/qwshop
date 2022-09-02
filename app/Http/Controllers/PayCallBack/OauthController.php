@@ -41,9 +41,52 @@ class OauthController extends Controller
         $device = request('device', 'mp');
         $pay = $this->getService('Configs')->getFormatConfig('pay');
         $payCfg = $pay[$payment_name . $device];
-        $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' . $payCfg[(in_array($device, ['mp', 'mini']) ? $device . '_' : '') . 'app_id'] . '&secret=' . $payCfg['secret_key'] . '&code=' . request('code') . '&grant_type=authorization_code';
+        $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' . $payCfg[(in_array($device, ['wap', 'mp', 'mini']) ? 'mp' . '_' : '') . 'app_id'] . '&secret=' . $payCfg['secret_key'] . '&code=' . request('code') . '&grant_type=authorization_code';
         $resp = $this->getService('Tool')->httpRequest($url);
         $resp = json_decode($resp['data'], true);
         return $this->success($resp);
+    }
+
+    // 微信获取用户分享参数 根据Code
+    public function getWechatJsapi()
+    {
+        $url = request('url', null);
+        $fileName = 'jsapi_ticket.txt';
+        $payment_name = request('payment_name', 'wechat');
+        $device = request('device', 'mp');
+        $pay = $this->getService('Configs')->getFormatConfig('pay');
+        $payCfg = $pay[$payment_name . $device];
+        if (!file_exists(storage_path($fileName)) || filemtime(storage_path($fileName)) < time() - 6000) {
+            $urls = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' . $payCfg[(in_array($device, ['wap', 'mp', 'mini']) ? 'mp' . '_' : '') . 'app_id'] . '&secret=' . $payCfg['secret_key'] . '&code=' . request('code');
+            $resp = $this->getService('Tool')->httpRequest($urls);
+            $resp = json_decode($resp['data'], true);
+            $urls = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' . $resp['access_token'] . '&type=jsapi';
+            $resp = $this->getService('Tool')->httpRequest($urls);
+            $resp = json_decode($resp['data'], true);
+            $myfile = fopen(storage_path($fileName), 'w');
+            //要写入文件的内容
+            fwrite($myfile, $resp['ticket']);
+            //关闭文件
+            fclose($myfile);
+        }
+        $ticket = file_get_contents(storage_path($fileName));
+        $nowTime = time();
+        $data = [
+            'noncestr'  =>  'Wm3WZYTPz0wzccnW',
+            'jsapi_ticket'  =>  $ticket,
+            'timestamp'  =>  $nowTime,
+            'url'  =>  $url,
+        ];
+        ksort($data);
+        $dataStr = $this->getService('Tool')->ToUrlParams($data);
+        $sign = sha1($dataStr);
+        $signPackage = array(
+            'appId' => $payCfg[(in_array($device, ['wap', 'mp', 'mini']) ? 'mp' . '_' : '') . 'app_id'],
+            'nonceStr' => 'Wm3WZYTPz0wzccnW',
+            'timestamp' => $nowTime,
+            'signature' => $sign,
+            'str'   => $dataStr
+        );
+        return $this->success($signPackage);
     }
 }
