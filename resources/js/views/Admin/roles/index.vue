@@ -175,6 +175,7 @@ export default {
         const handleCheckChange = (data,all)=>{
             roleData.addForm.menu_id = all.checkedKeys || []
             roleData.editForm.menu_id = all.checkedKeys || []
+            roleData.editForm.menu_id = _.concat(roleData.editForm.menu_id,proxy.$refs.roleTree.getHalfCheckedKeys())
         }
 
         // 全选按钮被点击
@@ -277,8 +278,14 @@ export default {
             roleData.checkList = permissions
             roleData.editForm.permission_id = permissions
             nextTick(()=>{
-                proxy.$refs.roleTree.setCheckedKeys(menus)
+                // proxy.$refs.roleTree.setCheckedKeys(menus)
                 roleData.editForm.menu_id = menus
+                menus.map(item=>{
+                    let node = proxy.$refs.roleTree.getNode(item);
+                    if(node.isLeaf){
+                        proxy.$refs.roleTree.setChecked(node, true)
+                    }
+                })
             })
             
         }
