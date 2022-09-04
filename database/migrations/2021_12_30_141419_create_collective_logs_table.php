@@ -14,6 +14,7 @@ class CreateCollectiveLogsTable extends Migration
     public function up()
     {
         Schema::create('collective_logs', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('collective_id')->default(0)->comment('团ID');
             $table->unsignedInteger('user_id')->default(0)->comment('用户ID');

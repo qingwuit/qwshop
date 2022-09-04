@@ -14,6 +14,7 @@ class CreateOrderPaysTable extends Migration
     public function up()
     {
         Schema::create('order_pays', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('belong_id')->default(0)->comment('所属用户');
             $table->string('name', 150)->default('')->comment('订单名称');

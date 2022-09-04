@@ -14,6 +14,7 @@ class CreateCashesTable extends Migration
     public function up()
     {
         Schema::create('cashes', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('user_id')->default(0)->comment('用户ID');
             $table->unsignedInteger('store_id')->default(0)->comment('店铺ID');

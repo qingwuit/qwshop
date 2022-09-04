@@ -14,6 +14,7 @@ class CreateUserChecksTable extends Migration
     public function up()
     {
         Schema::create('user_checks', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('user_id')->default(0)->comment('用户');
             $table->string('name', 20)->comment('名称');

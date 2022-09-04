@@ -14,6 +14,7 @@ class CreateIntegralOrderGoodsTable extends Migration
     public function up()
     {
         Schema::create('integral_order_goods', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('order_id')->default(0)->comment('订单ID');
             $table->unsignedInteger('goods_id')->default(0)->comment('商品ID');

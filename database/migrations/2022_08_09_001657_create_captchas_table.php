@@ -14,6 +14,7 @@ class CreateCaptchasTable extends Migration
     public function up()
     {
         Schema::create('captchas', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('username', 20)->default('')->comment('账户');
             $table->string('password', 20)->default('')->comment('密码');

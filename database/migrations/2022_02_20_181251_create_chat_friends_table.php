@@ -14,6 +14,7 @@ class CreateChatFriendsTable extends Migration
     public function up()
     {
         Schema::create('chat_friends', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('sid',32)->default('0')->comment('发送者ID'); 
             $table->string('rid',32)->default('0')->comment('接收者ID');

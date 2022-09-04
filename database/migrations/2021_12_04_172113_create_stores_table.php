@@ -14,6 +14,7 @@ class CreateStoresTable extends Migration
     public function up()
     {
         Schema::create('stores', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('user_id')->default(0)->comment('用户ID');
             $table->string('store_name', 30)->default('神秘商户')->comment('商户名称');

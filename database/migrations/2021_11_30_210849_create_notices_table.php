@@ -14,6 +14,7 @@ class CreateNoticesTable extends Migration
     public function up()
     {
         Schema::create('notices', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('belong_id')->default(0)->comment('所属用户');
             $table->string('tag', 20)->default('')->comment('标签');

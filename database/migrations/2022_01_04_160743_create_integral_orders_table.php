@@ -14,6 +14,7 @@ class CreateIntegralOrdersTable extends Migration
     public function up()
     {
         Schema::create('integral_orders', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('user_id')->default(0)->comment('用户ID');
             $table->string('order_no', 30)->default('')->comment('订单号');

@@ -14,6 +14,7 @@ class CreateAgreementsTable extends Migration
     public function up()
     {
         Schema::create('agreements', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name', 15)->default('')->comment('协议名称');
             $table->string('ename', 15)->default('')->comment('调取名称');

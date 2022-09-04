@@ -14,6 +14,7 @@ class CreateDistributionsTable extends Migration
     public function up()
     {
         Schema::create('distributions', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('store_id')->default(0)->comment('店铺ID');
             $table->unsignedInteger('goods_id')->default(0)->comment('商品ID');

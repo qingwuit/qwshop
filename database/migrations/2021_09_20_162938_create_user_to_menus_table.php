@@ -14,6 +14,7 @@ class CreateUserToMenusTable extends Migration
     public function up()
     {
         Schema::create('user_to_menus', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('role_id');
             $table->unsignedInteger('menu_id');

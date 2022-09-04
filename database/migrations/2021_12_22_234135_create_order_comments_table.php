@@ -14,6 +14,7 @@ class CreateOrderCommentsTable extends Migration
     public function up()
     {
         Schema::create('order_comments', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('user_id')->default(0)->comment('用户ID');
             $table->unsignedInteger('order_id')->default(0)->comment('订单ID');

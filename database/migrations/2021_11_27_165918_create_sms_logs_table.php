@@ -14,6 +14,7 @@ class CreateSmsLogsTable extends Migration
     public function up()
     {
         Schema::create('sms_logs', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('phone', 15)->default('')->comment('手机号');
             $table->string('name', 15)->default('')->comment('类型');

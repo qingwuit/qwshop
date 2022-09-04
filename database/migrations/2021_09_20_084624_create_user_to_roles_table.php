@@ -14,6 +14,7 @@ class CreateUserToRolesTable extends Migration
     public function up()
     {
         Schema::create('user_to_roles', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('user_id')->default(0);
             $table->unsignedInteger('role_id')->default(0);

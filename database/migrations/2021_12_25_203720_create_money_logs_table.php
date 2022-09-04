@@ -14,6 +14,7 @@ class CreateMoneyLogsTable extends Migration
     public function up()
     {
         Schema::create('money_logs', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('user_id')->default(0)->comment('用户');
             $table->string('name', 20)->default('未知变动')->comment('名称');

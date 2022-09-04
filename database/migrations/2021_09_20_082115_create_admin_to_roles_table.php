@@ -14,6 +14,7 @@ class CreateAdminToRolesTable extends Migration
     public function up()
     {
         Schema::create('admin_to_roles', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('admin_id')->default(0);
             $table->unsignedInteger('role_id')->default(0);

@@ -14,6 +14,7 @@ class CreateStoreClassesTable extends Migration
     public function up()
     {
         Schema::create('store_classes', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('store_id')->default(0)->comment("店铺ID");
             $table->text('class_id')->comment("栏目ID");

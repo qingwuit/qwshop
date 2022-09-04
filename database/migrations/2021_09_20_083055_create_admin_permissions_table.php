@@ -14,6 +14,7 @@ class CreateAdminPermissionsTable extends Migration
     public function up()
     {
         Schema::create('admin_permissions', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('pid')->default(0)->comment('权限分组ID');
             $table->string('name', 35)->default('')->comment('权限名称');

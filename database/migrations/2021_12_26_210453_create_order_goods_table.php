@@ -14,6 +14,7 @@ class CreateOrderGoodsTable extends Migration
     public function up()
     {
         Schema::create('order_goods', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('order_id')->default(0)->comment('订单ID');
             $table->unsignedInteger('sku_id')->default(0)->comment('SKUID');

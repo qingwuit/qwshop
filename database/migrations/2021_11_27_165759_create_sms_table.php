@@ -14,6 +14,7 @@ class CreateSmsTable extends Migration
     public function up()
     {
         Schema::create('sms', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name', 15)->default('')->comment('签名名称');
             $table->string('code', 20)->comment('签名模板');

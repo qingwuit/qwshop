@@ -14,6 +14,7 @@ class CreateGoodsTable extends Migration
     public function up()
     {
         Schema::create('goods', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('brand_id')->default(0)->comment('品牌ID');
             $table->unsignedInteger('class_id')->default(0)->comment('栏目ID');

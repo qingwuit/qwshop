@@ -14,6 +14,7 @@ class CreateIntegralGoodsTable extends Migration
     public function up()
     {
         Schema::create('integral_goods', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('cid')->default(0)->comment('栏目ID');
             $table->string('goods_name', 120)->comment('商品名');

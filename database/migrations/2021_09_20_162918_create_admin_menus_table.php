@@ -14,6 +14,7 @@ class CreateAdminMenusTable extends Migration
     public function up()
     {
         Schema::create('admin_menus', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('pid')->default(0)->comment('上级ID');
             $table->string('name', 35)->default('')->comment('菜单名称');
