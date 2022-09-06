@@ -437,7 +437,7 @@ class OrderService extends BaseService
             if ($auth == 'users') {
                 $userId = $this->getUserId($auth);
                 // 用户不允许随意操作状态，只能修改 取消订单和确定订单
-                $statusArr = [0.1, 4];
+                $statusArr = [0,1, 4];
                 if (!in_array($order_status, $statusArr)) {
                     throw new \Exception(__('tip.error'));
                 }

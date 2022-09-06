@@ -102,7 +102,7 @@ class SmsService extends BaseService
 
 
         if (isset($rs) && $rs['aliyun']['status'] == 'success' && $rs['aliyun']['result']['Code'] == 'OK') {
-            return $this->format([], __('sms.send_success'));
+            return $this->format([], __('tip.sms.send_success'));
         } else {
             $smsLog->error_msg = json_encode($rs);
             $smsLog->status = 0;
