@@ -20,6 +20,6 @@ class AdminRole extends Model
 
     public function menus()
     {
-        return $this->belongsToMany('App\Qingwuit\Models\AdminMenu', 'admin_to_menus', 'role_id', 'menu_id');
+        return $this->belongsToMany('App\Qingwuit\Models\AdminMenu', 'admin_to_menus', 'role_id', 'menu_id')->orderBy('is_sort', 'asc');
     }
 }

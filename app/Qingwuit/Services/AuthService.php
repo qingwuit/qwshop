@@ -68,6 +68,7 @@ class AuthService extends BaseService
             'client_id'     =>  $client->id,
             'client_secret' =>  $client->secret,
             'password'      =>  $password,
+            'username'      =>  $username,
             'scope'         =>  '',
         ];
         $respData[$type] = $username;
