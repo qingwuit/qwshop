@@ -59,13 +59,14 @@ class AutoService extends BaseService
     public function orderConfirm()
     {
         // 将订单状态为 2 等待收货 3 确定收货 自动确认收货并评价
-        $order_list = $this->getService('Order', true)->select('id')->whereIn('order_status', [2,3])->where('pay_time', '<', Carbon::parse($this->config['confirm'].' days ago')->toDateTimeString())->get();
+        $order_list = $this->getService('Order', true)->select('id','order_status')->whereIn('order_status', [3,4])->where('pay_time', '<', Carbon::parse($this->config['confirm'].' days ago')->toDateTimeString())->get();
         if ($order_list->isEmpty()) {
             return $this->formatError('order list is empty in autoService');
         }
         $ids = [];
         foreach ($order_list as $v) {
             $ids[] = $v['id'];
+            if($v['order_status'] == 3 ) $this->getService('Order')->editOrderStatus($v['id'],4,'admins');
         }
         $rs = $this->getService('OrderComment')->systemAdd($ids);
         return $rs['status']?$this->format($rs['data']):$this->formatError($rs['msg']);
