@@ -49,7 +49,7 @@ class GoodsController extends Controller
         foreach ($goodsList as $v) {
             $goodsId[] = $v->id;
         }
-        $this->getService('GoodSku', true)->where('goods_id', $goodsId)->delete();
+        $this->getService('GoodsSku', true)->where('goods_id', $goodsId)->delete();
         $this->getService('Goods', true)->whereIn('id', $goodsId)->delete();
         return $this->success();
     }
