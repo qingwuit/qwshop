@@ -278,12 +278,14 @@ export default {
             nextTick(()=>{
                 // proxy.$refs.roleTree.setCheckedKeys(menus)
                 roleData.editForm.menu_id = menus
-                menus.map(item=>{
-                    let node = proxy.$refs.roleTree.getNode(item);
-                    if(node.isLeaf){
-                        proxy.$refs.roleTree.setChecked(node, true)
-                    }
-                })
+                setTimeout(()=>{
+                    menus.map(item=>{
+                        let node = proxy.$refs.roleTree.getNode(item);
+                        if(node && node.isLeaf){
+                            proxy.$refs.roleTree.setChecked(node, true)
+                        }
+                    })
+                },200);
             })
             
         }

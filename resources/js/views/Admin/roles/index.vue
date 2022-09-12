@@ -265,7 +265,6 @@ export default {
 
         // solt父组件传过来的数据做接收
         const formDataChange = (e)=>{
-            console.log(e)
             let permissions = []
             let menus = []
             roleData.editForm = e.edit || {}
@@ -278,14 +277,15 @@ export default {
             roleData.checkList = permissions
             roleData.editForm.permission_id = permissions
             nextTick(()=>{
-                // proxy.$refs.roleTree.setCheckedKeys(menus)
                 roleData.editForm.menu_id = menus
-                menus.map(item=>{
-                    let node = proxy.$refs.roleTree.getNode(item);
-                    if(node.isLeaf){
-                        proxy.$refs.roleTree.setChecked(node, true)
-                    }
-                })
+                setTimeout(()=>{
+                    menus.map(item=>{
+                        let node = proxy.$refs.roleTree.getNode(item);
+                        if(node && node.isLeaf){
+                            proxy.$refs.roleTree.setChecked(node, true)
+                        }
+                    })
+                },200);
             })
             
         }
