@@ -85,7 +85,7 @@ class DashboardController extends Controller
         $data['user_plot'] = DB::select($sql, [Carbon::now()->subDays(11)->format('Y-m-d'),Carbon::now()->addDays(1)->format('Y-m-d')]);
 
         // 获取店铺销售排行
-        $data['list'] = $this->getService('Store', true)->select('store_name', 'id')->withCount(['orders'=>function ($q) {
+        $data['list'] = $this->getService('Store', true)->select('store_name', 'id')->where('store_status',1)->where('store_verify',4)->withCount(['orders'=>function ($q) {
             $q->select(DB::raw('sum(total_price)'))->where('order_status', '>', 1);
         }])->orderBy('orders_count', 'desc')->take(6)->get();
 

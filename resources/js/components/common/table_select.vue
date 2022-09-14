@@ -44,23 +44,23 @@ export default {
                 emit('changeVla',e.value[0])
                 if(proxy.R.isEmpty(rows[0][data.defaultShowName])) data.defaultShowName = 'goods_name'
                 if(proxy.R.isEmpty(rows[0][data.defaultShowName])) data.defaultShowName = 'nickname'
-                if(!props.showName){
+                if(!props.params.showName){
                     data.showName = rows[0][data.defaultShowName]
                 }else{
-                    data.showName = rows[0][props.showName]
+                    data.showName = rows[0][props.params.showName]
                 }
             }else{
                 emit('changeVla',e.value.join(','))
                 let rowName = []
                 if(proxy.R.isEmpty(rows[0][data.defaultShowName])) data.defaultShowName = 'goods_name'
                 if(proxy.R.isEmpty(rows[0][data.defaultShowName])) data.defaultShowName = 'nickname'
-                if(!props.showName){
+                if(!props.params.showName){
                     rows.map((e)=>{
                         rowName.push(e[data.defaultShowName])
                     })
                 }else{
                     rows.map((e)=>{
-                        rowName.push(e[props.showName])
+                        rowName.push(e[props.params.showName])
                     })
                 }
                 data.showName = rowName.join(',')

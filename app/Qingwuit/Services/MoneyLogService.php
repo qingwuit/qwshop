@@ -37,6 +37,7 @@ class MoneyLogService extends BaseService
             $ml_model->money = $data['money'];
             $ml_model->is_type = $data['is_type'];
             $ml_model->name = $data['name'];
+            $ml_model->ename = $data['ename']??'money';
             $ml_model->is_belong = $data['is_belong'];
             $ml_model->info = $data['info'];
 

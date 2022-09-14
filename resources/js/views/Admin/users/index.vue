@@ -74,6 +74,7 @@ export default {
         const addColumn = [
             {label:'昵称',value:'nickname'},
             {label:'用户名',value:'username'},
+            {label:'手机号',value:'phone'},
             {label:'密码',value:'password',type:'password'},
             {label:'邀请人',value:'inviter_id',type:'table_select',viewType:'dict_tags',labelName:'nickname',valueName:'id',params:{},span:24,
             pageUrl:'/Admin/users',

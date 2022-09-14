@@ -82,8 +82,11 @@
                 <el-form v-if="dialogParams.add && dialogParams.add.column.length>0" ref="addForm" label-position="right" :rules="dialogParams.rules||null" :model="formData.add" :label-width="dialogParams.labelWidth">
                     <el-row :gutter="20">
                         <el-col v-for="(v,k) in dialogParams.add.column" :key="k" :span="v.span || dialogParams.span"><div class="table-form-content">
-                            <el-form-item :label="v.label" :prop="v.value">
+                            <el-form-item v-if="v.type!='custom'" :label="v.label" :prop="v.value">
                                 <q-input :params="v" :dictData="dialogParams.dictData||[]" v-model:formData="formData.add[v.value]" />
+                            </el-form-item>
+                            <el-form-item v-else :label="v.label" :prop="v.value">
+                                <div class="custom_column" ><slot :name="'edit_'+v.value" :scopeData="formData.edit" ></slot></div>
                             </el-form-item>
                         </div></el-col>
                         <!-- <el-col :span="12"><div class="table-form-content"></div></el-col> -->
@@ -114,8 +117,11 @@
                 <el-form v-if="dialogParams.edit && dialogParams.edit.column.length>0" ref="editForm" label-position="right" :rules="dialogParams.rules||null" :model="formData.edit" :label-width="dialogParams.labelWidth">
                     <el-row :gutter="20">
                         <el-col v-for="(v,k) in dialogParams.edit.column" :key="k" :span="v.span || dialogParams.span"><div class="table-form-content">
-                            <el-form-item :label="v.label" :prop="v.value">
+                            <el-form-item v-if="v.type!='custom'" :label="v.label" :prop="v.value">
                                 <q-input :params="v" :dictData="dialogParams.dictData||[]" v-model:formData="formData.edit[v.value]" />
+                            </el-form-item>
+                            <el-form-item v-else :label="v.label" :prop="v.value">
+                                <div class="custom_column" ><slot :name="'edit_'+v.value" :scopeData="formData.edit" ></slot></div>
                             </el-form-item>
                         </div></el-col>
                         <!-- <el-col :span="12"><div class="table-form-content"></div></el-col> -->
@@ -165,6 +171,7 @@
                                         </template>
                                     </el-image>
                                 </div>
+                                <div class="custom_column" v-if="v.type=='custom' || v.viewType=='custom'"><slot :name="'view_'+v.value" :scopeData="formData.view" ></slot></div>
                             </el-form-item>
                         </div></el-col>
                         <!-- <el-col :span="12"><div class="table-form-content"></div></el-col> -->

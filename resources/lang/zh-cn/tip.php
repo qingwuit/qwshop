@@ -14,6 +14,7 @@ return [
     'pmsThr'                            =>  '权限异常.',
     'pwdErr'                            =>  '密码错误.',
     'userThr'                           =>  '账号异常.',
+    'userErr'                           =>  '账号或密码错误.',
     'oauthThr'                          =>  'oAuth异常.',
     'configThr'                         =>  '配置信息异常.',
     'phoneThr'                          =>  '手机号码错误.',

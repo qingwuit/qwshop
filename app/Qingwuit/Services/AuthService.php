@@ -92,7 +92,7 @@ class AuthService extends BaseService
 
             return $this->format($resp->json());
         }
-        if(isset($resp->json()['error']) && $resp->json()['error'] == 'invalid_grant') return $this->formatError(__('tip.userThr'));
+        if(isset($resp->json()['error']) && $resp->json()['error'] == 'invalid_grant') return $this->formatError(__('tip.userErr'));
         return $this->formatError($resp->json()['message'], $respData);
     }
 
@@ -112,7 +112,7 @@ class AuthService extends BaseService
             return;
         }
 
-        $model = app()->make('App\Qingwuit\Models\\' . $modelName);
+        $model = $this->getService($modelName,true);
 
         // 判断是否存在相同得账号和电话
         if ($model->where($type, $username)->exists()) {
