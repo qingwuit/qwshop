@@ -8,7 +8,9 @@
                 <el-button v-if="btnConfigs.search && btnConfigs.search.show"  @click="searchOpen"  type="primary" plain :icon="Search">{{$t('btn.search2')}}</el-button>
             </div>
             <div class="table_btn_right">
-                <el-button v-if="btnConfigs.import && btnConfigs.import.show" :icon="Upload" @click="excelImport">{{$t('btn.import')}}</el-button>
+                <el-upload class="import_file" ref="import_file" v-if="btnConfigs.import && btnConfigs.import.show" action :auto-upload="false" :show-file-list="false" :on-change="excelImport" :limit="1">
+                    <el-button :icon="Upload">{{$t('btn.import')}}</el-button>
+                </el-upload>
                 <el-button v-if="btnConfigs.export && btnConfigs.export.show" :icon="Download" @click="excelExport">{{$t('btn.export')}}</el-button>
                 <el-button v-if="btnConfigs.destroy && btnConfigs.destroy.show" type="danger" @click="deleteData" :icon="Delete">{{$t('btn.del')}}</el-button>
                 <slot name="table_topright_hook" ></slot>
@@ -699,10 +701,33 @@ export default {
             XLSX.writeFile(wb, (store.state.load.routeMenuName||'table')+".xlsx");
         }
 
-        // excel导入
-        const excelImport = ()=>{
-            emit('import',pageUrl)
+        const ReadFile = async (file)=>{
+            return new Promise(resolve => {
+                let reader = new FileReader()
+                reader.readAsBinaryString(file)
+                reader.onload = ev => {  resolve(ev.target.result) }
+            })
         }
+
+        // excel导入
+        const excelImport = async (fileRaw)=>{
+            let dataBinary = await ReadFile(fileRaw.raw)    // 读取文件
+            let workBook = XLSX.read(dataBinary, { type: "binary", cellDates: true })
+            let workSheet = workBook.Sheets[workBook.SheetNames[0]];
+            let xlsdata = XLSX.utils.sheet_to_json(workSheet);
+            if (xlsdata.length == 0)  proxy.$refs["import_file"].clearFiles();
+            if (xlsdata.length > 0){
+                proxy.R.post(pageUrl+'/import/excel',xlsdata)
+                .catch((errXls)=>{
+                    console.error(errXls)
+                }).finally(()=>{
+                    proxy.$message.success(proxy.$t('msg.success'))
+                })
+            }
+            emit('import',xlsdata)
+        }
+
+        
 
         // 初始化获取数据
         loadData()
@@ -773,6 +798,11 @@ export default {
         &:hover{
             color:var(--el-color-primary);
         }
+    }
+    .import_file{
+        vertical-align: middle;
+        display: inline-flex;
+        margin-right: 12px;
     }
 }
 </style>

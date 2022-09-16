@@ -2,7 +2,7 @@ window._ = require('lodash');
 import {createApp} from 'vue'
 import store from '@/stores'
 import ElementPlus from 'element-plus'
-import i18n from '@/locales'
+import i18n from '@/locales/index'
 import router from '@/plugins/router'
 import R from '@/plugins/http'
 import App from '@/views/App.vue'

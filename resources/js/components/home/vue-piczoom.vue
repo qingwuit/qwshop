@@ -214,7 +214,8 @@ export default {
       });
     },
     imgLoaded () {
-      let imgInfo = this.$img.getBoundingClientRect();
+      this.$img = this.$refs["img"]
+      let imgInfo = this.$refs["img"].getBoundingClientRect();
       if (JSON.stringify(this.imgInfo) != JSON.stringify(imgInfo)) {
         this.imgInfo = imgInfo;
         this.initSelectorProperty(this.width);
