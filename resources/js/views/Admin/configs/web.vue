@@ -38,7 +38,7 @@
                         <el-input v-model="form.cfgForm.email"  />
                     </el-form-item>
                     <el-form-item :label="$t('config.web.icp')" prop="icp">
-                        <el-input v-model="form.cfgForm.mobile"  />
+                        <el-input v-model="form.cfgForm.icp"  />
                     </el-form-item>
                     <el-form-item :label="$t('config.web.closeStatus')" prop="close_status">
                         <el-radio-group v-model="form.cfgForm.close_status">
