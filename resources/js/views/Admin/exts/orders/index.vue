@@ -7,6 +7,21 @@
             </template>
             <!-- 物流信息 -->
             <template #table_show_bottom_hook="{formData}">
+                <div class="order_goods">
+                    <el-row :gutter="20" v-for="(vo,key) in formData.view.order_goods" :key="key">
+                        <el-col :span="4">
+                            <el-image :style="{width:'30px',height:'30px'}" :fit="'cover'" :hide-on-click-modal="true" :src="vo.goods_image" lazy >
+                                <template #error>
+                                    <el-icon :color="'#888'" :size="26"><Picture /></el-icon>
+                                </template>
+                            </el-image>
+                        </el-col>
+                        <el-col :span="8" style="line-height:18px">{{vo.goods_name||'-'}}</el-col>
+                        <el-col :span="4">{{vo.sku_name||'-'}}</el-col>
+                        <el-col :span="4">{{$t('btn.money')}}{{vo.goods_price||'-'}}</el-col>
+                        <el-col :span="4">x {{vo.buy_num||'-'}}</el-col>
+                    </el-row>
+                </div>
                 <div class="delivery_list" v-if="!R.isEmpty(formData.view.delivery_no) && !R.isEmpty(formData.view.delivery_code)">
                     <el-collapse accordion @change="(activeName)=>{collapseChange(formData,activeName)}">
                         <el-collapse-item name="1">

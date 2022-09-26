@@ -818,14 +818,17 @@ class OrderService extends BaseService
                 $cn = __('tip.waitComment');
                 break;
             case 5:
-                if ($order_info['refund_type'] == 0) {
+                if($order_info['refund']){
+                    if ($order_info['refund_type'] == 0) {
+                        $cn = __('tip.orderRefund');
+                    } elseif ($order_info['refund_type'] == 1) {
+                        $cn = __('tip.orderReturned');
+                    } else {
+                        $cn = __('tip.orderRefundOver');
+                    }
+                }else{
                     $cn = __('tip.orderRefund');
-                } elseif ($order_info['refund_type'] == 1) {
-                    $cn = __('tip.orderReturned');
-                } else {
-                    $cn = __('tip.orderRefundOver');
                 }
-
                 break;
             case 6:
                 $cn = __('tip.orderCompletion');

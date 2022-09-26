@@ -289,6 +289,7 @@ class GoodsService extends BaseService
                         }
                     }
                 }
+                if(isset($goods_attr[$k]['specs']) && is_array($goods_attr[$k]['specs'])) $goods_attr[$k]['specs'] = array_merge($goods_attr[$k]['specs'],[]);
             }
             $goodsInfo['attrList'] = $goods_attr;
             $goodsInfo['skuList'] = $skuList;
