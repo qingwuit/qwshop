@@ -132,7 +132,7 @@
                             action="/api/Seller/uploads"
                             :show-file-list="false"
                             :headers="{Authorization:Token}"
-                            :data="{name:'store_slide'}"
+                            :data="{name:'store_mobile_slide'}"
                             :on-success="(e)=>handleAvatarSuccess(e,'mobileSlideForm','store_mobile_slide',0)"
                         >
                             <img v-if="form.mobileSlideForm.store_mobile_slide && form.mobileSlideForm.store_mobile_slide[0]" style="width:100%;height:100%" :src="form.mobileSlideForm.store_mobile_slide[0]" class="avatar slides" />
@@ -145,7 +145,7 @@
                             action="/api/Seller/uploads"
                             :show-file-list="false"
                             :headers="{Authorization:Token}"
-                            :data="{name:'store_slide'}"
+                            :data="{name:'store_mobile_slide'}"
                             :on-success="(e)=>handleAvatarSuccess(e,'mobileSlideForm','store_mobile_slide',1)"
                         >
                             <img v-if="form.mobileSlideForm.store_mobile_slide && form.mobileSlideForm.store_mobile_slide[1]" style="width:100%;height:100%" :src="form.mobileSlideForm.store_mobile_slide[1]" class="avatar slides" />
@@ -158,7 +158,7 @@
                             action="/api/Seller/uploads"
                             :show-file-list="false"
                             :headers="{Authorization:Token}"
-                            :data="{name:'store_slide'}"
+                            :data="{name:'store_mobile_slide'}"
                             :on-success="(e)=>handleAvatarSuccess(e,'mobileSlideForm','store_mobile_slide',2)"
                         >
                             <img v-if="form.mobileSlideForm.store_mobile_slide && form.mobileSlideForm.store_mobile_slide[2]" style="width:100%;height:100%" :src="form.mobileSlideForm.store_mobile_slide[2]" class="avatar slides" />
@@ -270,12 +270,10 @@ export default {
         }
         const handleAvatarSuccess = (e,formName,columnName,index=0)=>{
             if(e.code != 200) return ElementPlus.ElMessage.error(e.msg)
-            console.log(formName)
             if(formName == 'pcSlideForm' || formName == 'mobileSlideForm' ){
                 if(form[formName][columnName] && form[formName][columnName].length == 0){
                     form[formName][columnName] = ['','','']
                 }
-                console.log(form[formName][columnName])
                 return form[formName][columnName][index] = e.data
             }
             form[formName][columnName] = e.data

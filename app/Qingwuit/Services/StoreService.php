@@ -91,7 +91,7 @@ class StoreService extends BaseService
         }
         // 店铺手机幻灯片
         if (isset(request()->store_mobile_slide)) {
-            $store_model->store_slide = request()->store_mobile_slide;
+            $store_model->store_mobile_slide = request()->store_mobile_slide;
         }
         // 店铺电话
         if (isset(request()->store_mobile)) {
