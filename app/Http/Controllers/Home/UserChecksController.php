@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class UserChecksController extends Controller
 {
-    protected $modelName = 'OrderComment';
     protected $setUser = true;
     protected $auth = 'users';
     protected $belongName = 'user_id';

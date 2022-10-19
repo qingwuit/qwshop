@@ -289,7 +289,7 @@ class GoodsService extends BaseService
                         }
                     }
                 }
-                if(isset($goods_attr[$k]['specs']) && is_array($goods_attr[$k]['specs'])) $goods_attr[$k]['specs'] = array_merge($goods_attr[$k]['specs'],[]);
+                if (isset($goods_attr[$k]['specs']) && is_array($goods_attr[$k]['specs'])) $goods_attr[$k]['specs'] = array_merge($goods_attr[$k]['specs'], []);
             }
             $goodsInfo['attrList'] = $goods_attr;
             $goodsInfo['skuList'] = $skuList;
@@ -312,6 +312,35 @@ class GoodsService extends BaseService
 
                 // 栏目
                 if (isset($params_array['class_id']) && !empty($params_array['class_id'])) {
+                    if (isset($params_array['deep'])) {
+                        $classIds = [$params_array['class_id']];
+                        if ($params_array['deep'] == 1) {
+                            $classList = $this->getService('GoodsClass', true)->select('id')->where('pid', $params_array['class_id'])->get();
+                            $classChildIds = [];
+                            if (!$classList->isEmpty()) {
+                                foreach ($classList as $cItem) {
+                                    $classIds[] = $cItem->id;
+                                    $classChildIds[] = $cItem->id;
+                                }
+                                $classList = $this->getService('GoodsClass', true)->select('id')->whereIn('pid', $classChildIds)->get();
+                                if (!$classList->isEmpty()) {
+                                    foreach ($classList as $cItem) {
+                                        $classIds[] = $cItem->id;
+                                    }
+                                }
+                            }
+                        }
+                        if ($params_array['deep'] == 2) {
+                            $classList = $this->getService('GoodsClass', true)->select('id')->where('pid', $params_array['class_id'])->get();
+                            $classChildIds = [];
+                            if (!$classList->isEmpty()) {
+                                foreach ($classList as $cItem) {
+                                    $classIds[] = $cItem->id;
+                                }
+                            }
+                        }
+                        $params_array['class_id'] = $classIds;
+                    }
                     if (is_array($params_array['class_id'])) {
                         $goodsModel = $goodsModel->whereIn('class_id', $params_array['class_id']);
                     } else {
@@ -336,6 +365,16 @@ class GoodsService extends BaseService
                 } else {
                     $goodsModel = $goodsModel->orderBy('id', $params_array['sort_order'] ?? 'desc')->orderBy('goods_sale', $params_array['sort_order'] ?? 'desc');
                 }
+            }
+
+            // 是否商家推荐
+            if (!empty(request('is_recommend'))) {
+                $goodsModel = $goodsModel->where('is_recommend', request('is_recommend'));
+            }
+
+            // 是否主站推荐
+            if (!empty(request('is_master'))) {
+                $goodsModel = $goodsModel->where('is_master', request('is_master'));
             }
 
             // 是否是拼团产品

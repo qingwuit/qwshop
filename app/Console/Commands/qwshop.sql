@@ -143,22 +143,19 @@ INSERT INTO `admin_to_roles` VALUES (4, 6, 1, NULL, NULL, NULL);
 -- Records of admins
 -- ----------------------------
 INSERT INTO `admins` VALUES (1, 0, 'admin', '$2y$10$hK33S6rakhABix382ecAie9tP/LFgEz1xfYIITfTGeDE5H4ObMHZC', '超级管理员', '/storage/avatar/2021-11-29/3iRdmBH4otVN8AEX33CrDcxTpmKcf6cfNjMKIyAr.png', 1, '0.0.0.0', NULL, NULL, '2021-11-05 03:12:56', '2021-11-29 00:37:04', NULL);
-INSERT INTO `admins` VALUES (5, 1, 'dddd', '$2y$10$tFdYq91XLGwj4vo3eZg8DOXsEULW9JfHBYnwyaoLsPn1E/wNnwvAa', 'dddd', '/storage/myfiles/2021-11-27/4f011vf81vyWHEbURCavDmiRBD1B3zIFyITkbgCI.png', 0, '0.0.0.0', NULL, NULL, '2021-11-21 23:26:18', '2022-02-15 20:13:23', NULL);
-INSERT INTO `admins` VALUES (4, 1, 'aa', '$2y$10$fqDVKc8dJAWwMcmB351TxemVqZ/31nkpIzjgsBIPikqtMmfIxo3RW', 'aa2', '/storage/avatar/2021-11-27/NsQF3oGvYgkJ7r7N6rz0mZR24fcMQZHC1UkfoSid.png', 0, '0.0.0.0', NULL, NULL, '2021-11-21 17:20:13', '2021-11-27 16:49:50', NULL);
-INSERT INTO `admins` VALUES (7, 0, '', '', '', '', 0, '0.0.0.0', '2022-02-15 23:39:18', NULL, '2022-02-15 23:39:18', '2022-02-15 23:39:18', NULL);
 
 -- ----------------------------
 -- Records of adv_spaces
 -- ----------------------------
-INSERT INTO `adv_spaces` VALUES (1, 0, '测试广告位', 123, 123, '2021-12-01 21:13:57', '2021-12-01 21:15:46', '2021-12-01 21:15:46');
-INSERT INTO `adv_spaces` VALUES (2, 0, '测试广告位', 213, 33, '2021-12-01 21:15:55', '2021-12-01 21:15:55', NULL);
-INSERT INTO `adv_spaces` VALUES (3, 1, 'ddd', 45, 5, '2021-12-02 13:07:07', '2021-12-02 13:07:07', NULL);
+INSERT INTO `adv_spaces` VALUES (1, 0, 'APP_首页幻灯片', 123, 123, '2021-12-01 21:13:57', '2021-12-01 21:15:46', NULL);
+INSERT INTO `adv_spaces` VALUES (2, 0, 'APP_首页底部广告', 213, 33, '2021-12-01 21:15:55', '2021-12-01 21:15:55', NULL);
 
 -- ----------------------------
 -- Records of advs
 -- ----------------------------
-INSERT INTO `advs` VALUES (1, 0, 2, 'sda23', '', '/storage/image/2021-12-01/7OuaqEkdbZ5ebZx9SllBQ4Ccd6E30b27OSTRssOl.png', '2021-12-01 23:01:11', '2021-12-30 00:00:00', 0, 0, 1, '2021-12-01 23:01:16', '2021-12-01 23:06:05', NULL);
-INSERT INTO `advs` VALUES (2, 1, 3, '范德萨', '', '/storage/image/2021-12-02/3L8wEFtlyrUfY2mwiNn8qxkPIhGhUe6yGURzE5yr.png', '2021-12-01 00:00:00', '2021-12-02 14:45:33', 0, 0, 1, '2021-12-02 14:45:37', '2021-12-02 15:19:08', NULL);
+INSERT INTO `advs` VALUES (3, 1, 1, '1', '/#', '/storage/image/2022-10-19/kerUHJiMBdZBDukUBq4J20ggbxwFMGoDqAB1LPxe.jpg', '2022-10-18 13:46:58', '2023-10-29 00:00:00', 0, 0, 1, '2022-10-19 13:47:10', '2022-10-19 13:49:31', NULL);
+INSERT INTO `advs` VALUES (4, 1, 2, '222', '', '/storage/image/2022-10-19/fQHZ49hRBWGHSazUIJngMFNz31XvJxVdYpRnLrze.png', '2022-10-18 00:00:00', '2023-10-26 00:00:00', 0, 0, 1, '2022-10-19 13:51:19', '2022-10-19 13:51:19', NULL);
+
 
 -- ----------------------------
 -- Records of agreements

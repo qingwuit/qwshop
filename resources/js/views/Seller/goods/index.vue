@@ -80,7 +80,7 @@ export default {
         }
 
         const goodsStatusChange = async (e,scopeData)=>{
-            let res = await proxy.R.put('/Admin/goods/'+scopeData.id,{goods_status:e})
+            let res = await proxy.R.put('/Seller/goods/'+scopeData.id,{goods_status:e})
             if(!res.code){
                 proxy.$message.success(proxy.$t('msg.success'))
             }

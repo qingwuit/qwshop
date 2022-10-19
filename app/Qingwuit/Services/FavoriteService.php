@@ -20,7 +20,7 @@ class FavoriteService extends BaseService
             return $this->format(new FavoriteHomeCollection($fav_list));
         } else {
             $model = $model->with(['store'=>function ($q) {
-                return $q->select('id', 'store_name', 'store_logo');
+                return $q->select('id', 'store_name', 'store_logo','area_info');
             }]);
             $fav_list = $model->paginate(request()->per_page??30);
             return $this->format(new FollowHomeCollection($fav_list));

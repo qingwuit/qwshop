@@ -2,8 +2,8 @@
     <div class="qw_input">
         <q-font v-if="params.type=='icon'" v-model:value="formData" />
         <table-select v-if="params.type=='table_select'" v-model:value="formData" :params="params" @changeVla="cascaderChange" />
-        <el-input v-if="params.type=='text' || params.type=='password' || params.type=='number' || params.type==undefined" :type="params.type||'text'" v-model="formData" :placeholder="params.placeholder||''"  />
-        <el-input v-if="params.type=='textarea'" :type="'textarea'" class="input_textarea" :show-word-limit="params.showWordLimit||true" :maxlength="params.maxlength||15" v-model="formData" :placeholder="params.placeholder||''"  />
+        <el-input v-if="params.type=='text' || params.type=='password' || params.type=='number' || params.type==undefined" :type="params.type||'text'" v-model="formData" :placeholder="params.placeholder||''" :disabled="params.disabled||false"  />
+        <el-input v-if="params.type=='textarea'" :type="'textarea'" class="input_textarea" :show-word-limit="params.showWordLimit||true" :maxlength="params.maxlength||15" v-model="formData" :placeholder="params.placeholder||''" :disabled="params.disabled||false"  />
         <el-cascader @change="cascaderChange"  style="width:100%" v-if="params.type=='cascader'" v-model="formData" :options="dictData[params.value]||[]" :props="params.props||{}" :placeholder="params.placeholder||''" />
         <el-cascader @change="cascaderChange"  style="width:100%" v-if="params.type=='cascader_lazy'" v-model="formData" :options="dictData[params.value]||[]" :props="params.props||{emitPath:true,label:'name',value:'id',lazy:true,lazyLoad:lazyLoad}" :placeholder="params.placeholder||''" />
         <el-select style="width:100%" v-if="params.type=='select'" v-model="formData" :filterable="params.filterable||false" :multiple="params.multiple||false" :placeholder="params.placeholder||''" >

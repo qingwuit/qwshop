@@ -64,7 +64,7 @@ class AuthController extends Controller
     {
         $data = $request->except('provider');
         $id = $this->getUserId($request->provider);
-        $pro = str_replace('api/', '', $request->route()->action['prefix']);
+        $pro = ucfirst(str_replace('api/', '', $request->route()->action['prefix']));
         if ($pro != 'Admin') {
             $pro = 'User';
         }

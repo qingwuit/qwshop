@@ -106,7 +106,7 @@
                     </el-col>
                     <el-col :span="24">
                         <el-form-item :label="$t('user.password')" prop="password">
-                            <el-input v-model="editUserForm.password" style="width:85%" />
+                            <el-input v-model="editUserForm.password" type="password" style="width:85%" />
                         </el-form-item>
                     </el-col>
                     <el-col :span="24">

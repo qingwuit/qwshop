@@ -7,7 +7,9 @@
 /storage/*.key
 /vendor
 /app/Http/Controllers/App
+/app/Http/Controllers/Wap
 /app/Qingwuit/app.php
+/app/Qingwuit/wap.php
 .env
 .env.backup
 .phpunit.result.cache

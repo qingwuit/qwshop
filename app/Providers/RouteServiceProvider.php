@@ -47,11 +47,13 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
 
-            // 设置分离路由
-            // Route::prefix('api')
-            //     ->middleware('api')
-            //     ->namespace($this->namespace)
-            //     ->group(app_path('Qingwuit/app.php'));
+            // 设置分离路由 : 移动端如果存在路由文件则执行
+            if(file_exists(app_path('Qingwuit/wap.php'))){
+                Route::prefix('api')
+                ->middleware('api')
+                ->namespace($this->namespace)
+                ->group(app_path('Qingwuit/wap.php'));
+            }
             Route::prefix('api')
                 ->middleware('api')
                 ->namespace($this->namespace)

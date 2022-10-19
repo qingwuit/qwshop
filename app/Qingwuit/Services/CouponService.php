@@ -49,7 +49,7 @@ class CouponService extends BaseService
             $coupon_model->where('id', $coupon_id)->decrement('stock', 1); // 数量减少
 
             DB::commit();
-            return $this->format();
+            return $this->format([],__('tip.success'));
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->formatError($e->getMessage());

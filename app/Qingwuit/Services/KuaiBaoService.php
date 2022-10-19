@@ -2,8 +2,6 @@
 
 namespace App\Qingwuit\Services;
 
-use GuzzleHttp\Client;
-
 class KuaiBaoService extends BaseService
 {
     public $url = "https://kop.kuaidihelp.com/api";
@@ -24,9 +22,7 @@ class KuaiBaoService extends BaseService
         $data2['phone'] = substr($phone, -4);
 
         $data['data'] = json_encode($data2);
-        $client = new Client(['verify' => false]); // 去掉证书验证
-        $this->getService('Tool')->httpRequest($url, 'POST', $data);
-        $response = $client->request('POST', $url, ['form_params' => $data]);
+        $response = $this->getService('Tool')->httpRequest($url, 'POST', $data);
         $kbInfo = json_decode($response['data'], true);
         if ($kbInfo['code'] != 0) {
             return $this->formatError($kbInfo['msg']);
@@ -90,9 +86,7 @@ class KuaiBaoService extends BaseService
         ];
 
         $data['data'] = json_encode($data2);
-        $client = new Client(['verify' => false]); // 去掉证书验证
-        $this->getService('Tool')->httpRequest($url, 'POST', $data);
-        $response = $client->request('POST', $url, ['form_params' => $data]);
+        $response = $this->getService('Tool')->httpRequest($url, 'POST', $data);
         $kbInfo = json_decode($response['data'], true);
 
         if (!isset($kbInfo['data'][$order->order_no]['task_info']['waybill_code'])) {

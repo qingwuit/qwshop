@@ -76,6 +76,7 @@ export default {
             {label:'用户名',value:'username'},
             {label:'手机号',value:'phone'},
             {label:'密码',value:'password',type:'password'},
+            {label:'支付密码',value:'pay_password',type:'password'},
             {label:'邀请人',value:'inviter_id',type:'table_select',viewType:'dict_tags',labelName:'nickname',valueName:'id',params:{},span:24,
             pageUrl:'/Admin/users',
             searchOptions:[

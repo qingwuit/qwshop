@@ -22,6 +22,7 @@ class FollowHomeCollection extends ResourceCollection
                     'is_type'               =>  $item->is_type,
                     'store_name'            =>  $item->store->store_name??'-',
                     'store_logo'            =>  $item->store->store_logo??'',
+                    'area_info'             =>  $item->store->area_info??'-',
                     'created_at'            =>  empty($this->created_at)?now()->format('Y-m-d H:i:s'):$this->created_at->format('Y-m-d H:i:s'),
                 ];
             }),

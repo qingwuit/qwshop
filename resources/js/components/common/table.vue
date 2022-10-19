@@ -65,7 +65,7 @@
             <el-pagination background 
             layout="total, sizes, prev, pager, next, jumper" 
             :page-size="listParams.per_page" 
-            :page-sizes="[1,30, 100, 200, 300, 400]" 
+            :page-sizes="paginationSize" 
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :page-count="listParams.last_page"
@@ -252,6 +252,13 @@ export default {
             type:Boolean,
             default:true
         },
+        // 分页大小
+        paginationSize:{
+            type:Array,
+            default:()=>{
+                return [ 30, 100, 200, 300, 400 ]
+            }
+        },  
         // 列表数据URI
         pageUrl:{
             type:String,
