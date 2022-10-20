@@ -147,8 +147,8 @@ INSERT INTO `admins` VALUES (1, 0, 'admin', '$2y$10$hK33S6rakhABix382ecAie9tP/LF
 -- ----------------------------
 -- Records of adv_spaces
 -- ----------------------------
-INSERT INTO `adv_spaces` VALUES (1, 0, 'APP_首页幻灯片', 123, 123, '2021-12-01 21:13:57', '2021-12-01 21:15:46', NULL);
-INSERT INTO `adv_spaces` VALUES (2, 0, 'APP_首页底部广告', 213, 33, '2021-12-01 21:15:55', '2021-12-01 21:15:55', NULL);
+INSERT INTO `adv_spaces` VALUES (1, 1, 'APP_首页幻灯片', 123, 123, '2021-12-01 21:13:57', '2021-12-01 21:15:46', NULL);
+INSERT INTO `adv_spaces` VALUES (2, 1, 'APP_首页底部广告', 213, 33, '2021-12-01 21:15:55', '2021-12-01 21:15:55', NULL);
 
 -- ----------------------------
 -- Records of advs
@@ -3811,12 +3811,12 @@ INSERT INTO `goods_brands` VALUES (1, '', '234', 0, NULL, NULL, NULL);
 -- ----------------------------
 -- Records of goods_classes
 -- ----------------------------
-INSERT INTO `goods_classes` VALUES (2, 0, 'http://pc.qingwuit.com/storage/goods_class/2021-02-21/88bNEsWnX6H869zlH8eZbIlN2faQghXuoVqrNbmQ.png', '家用电器', 0, '2020-08-02 14:58:08', '2021-02-21 14:58:36', NULL);
-INSERT INTO `goods_classes` VALUES (3, 0, 'http://pc.qingwuit.com/storage/goods_class/2021-02-21/OKMg3IThy9L1W5YYeN80uaUaIJPuT9ZIV6h4BQdK.png', '图书 & 音像 & 电子书', 1, '2020-08-02 14:58:15', '2021-02-21 14:58:43', NULL);
-INSERT INTO `goods_classes` VALUES (4, 0, 'http://pc.qingwuit.com/storage/goods_class/2021-02-21/RTB3mZKANhwF85fQWggyegLWuR3PEF40E6nYpuWC.png', '手机 & 数码 & 通信', 2, '2020-08-02 14:58:22', '2021-02-21 14:58:50', NULL);
-INSERT INTO `goods_classes` VALUES (5, 0, 'http://pc.qingwuit.com/storage/goods_class/2021-02-21/RCtZiAvIxaktEbCBPMGMUO9whF1eHZGbTzS9T9cg.png', '电脑 & 办公', 3, '2020-08-02 14:58:28', '2021-02-21 14:58:59', NULL);
-INSERT INTO `goods_classes` VALUES (6, 0, 'http://pc.qingwuit.com/storage/goods_class/2021-02-21/DuO1K6Gk8kSiD5cCE5GPVaFWKnC6OlBpK1pCYvSO.png', '家居 & 家具 & 家装', 4, '2020-08-02 14:58:34', '2021-02-21 14:59:06', NULL);
-INSERT INTO `goods_classes` VALUES (7, 0, '', '男装 & 女装 & 内衣', 5, '2020-08-02 14:58:42', '2020-08-02 14:59:25', NULL);
+INSERT INTO `goods_classes` VALUES (2, 0, '/storage/thumb/2022-10-09/3ZEF40eDAxKHmPe9KdVmz3gHvKNyJivH6KbEFEFT.png', '家用电器', 0, '2020-08-02 14:58:08', '2021-02-21 14:58:36', NULL);
+INSERT INTO `goods_classes` VALUES (3, 0, '/storage/thumb/2022-10-09/X6Qai4SAEllPsLU5urTFnvbgMf96RCPMZMDdq8uR.png', '图书 & 音像 & 电子书', 1, '2020-08-02 14:58:15', '2021-02-21 14:58:43', NULL);
+INSERT INTO `goods_classes` VALUES (4, 0, '/storage/thumb/2022-10-09/xkLNEuBthYivlT44XVPCtxgwagtg1kI7a2dn74KC.png', '手机 & 数码 & 通信', 2, '2020-08-02 14:58:22', '2021-02-21 14:58:50', NULL);
+INSERT INTO `goods_classes` VALUES (5, 0, '/storage/thumb/2022-10-09/COi5QQqKijxR1tAasrja2zNgNcGfMY6cytqdJtFv.png', '电脑 & 办公', 3, '2020-08-02 14:58:28', '2021-02-21 14:58:59', NULL);
+INSERT INTO `goods_classes` VALUES (6, 0, '/storage/thumb/2022-10-09/5VNRAbECyCExb98geXdmhFLBTQ3eShJPD3Rd2UJ4.png', '家居 & 家具 & 家装', 4, '2020-08-02 14:58:34', '2021-02-21 14:59:06', NULL);
+INSERT INTO `goods_classes` VALUES (7, 0, '/storage/thumb/2022-10-09/QCCMpReas9AmH3o9xtKlvHqIwc0JMu2yretzH1G9.png', '男装 & 女装 & 内衣', 5, '2020-08-02 14:58:42', '2020-08-02 14:59:25', NULL);
 INSERT INTO `goods_classes` VALUES (8, 2, '', '大家电', 0, '2020-08-02 14:58:57', '2020-08-02 14:58:57', NULL);
 INSERT INTO `goods_classes` VALUES (9, 2, '', '生活电器', 0, '2020-08-02 14:59:39', '2020-08-02 14:59:39', NULL);
 INSERT INTO `goods_classes` VALUES (10, 2, '', '节能电器', 0, '2020-08-02 14:59:47', '2020-08-02 14:59:47', NULL);

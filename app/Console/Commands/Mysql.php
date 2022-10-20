@@ -39,7 +39,7 @@ class Mysql extends Command
      */
     public function handle()
     {
-        Artisan::call('migrate:rollback'); // 先清空
+        Artisan::call('migrate:reset'); // 先清空
         Artisan::call('migrate'); // 迁移
         DB::unprepared(file_get_contents(app_path('Console'.DIRECTORY_SEPARATOR.'Commands'.DIRECTORY_SEPARATOR.'qwshop.sql'))); // 直接执行sql文件 导入数据
     }

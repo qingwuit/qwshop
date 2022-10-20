@@ -14,9 +14,9 @@
                 <ul>
                     <li v-for="(v,k) in data.friends" :key="k" @click="openChatItem(v.id)" :class="{ck:v.id==data.selectId}">
                         <div class="content_item" >
-                            <img class="avatar" :src="(data.selfData.sid == v.sid && data.selfData.stype == v.stype) ? (v.rinfo.avatar||require('@/assets/Home/kefu.png').default) : (v.sinfo.avatar||require('@/assets/Home/kefu.png').default)" />
+                            <img class="avatar" :src="(data.selfData.sid == v.sid && data.selfData.stype == v.stype) ? ((v.rinfo && v.rinfo.avatar)||require('@/assets/Home/kefu.png').default) : ((v.sinfo && v.sinfo.avatar)||require('@/assets/Home/kefu.png').default)" />
                             <div class="avatar_right">
-                                <div class="nickname text_over">{{(data.selfData.sid == v.sid && data.selfData.stype == v.stype) ? (v.rinfo.nickname||'anonymous') : (v.sinfo.nickname||'anonymous')}}</div>
+                                <div class="nickname text_over">{{(data.selfData.sid == v.sid && data.selfData.stype == v.stype) ? ((v.rinfo && v.rinfo.nickname)||'anonymous') : ((v.sinfo && v.sinfo.nickname)||'anonymous')}}</div>
                                 <div class="text text_over">{{v.lastMsg ? v.lastMsg.content_type && v.lastMsg.content_type == 'text' ? v.lastMsg.content : '[ '+ v.lastMsg.content_type +' ]' : ''}}</div>
                             </div>
                         </div>
@@ -255,7 +255,7 @@ export default {
             if(data.selfData.sid == selectData.sid && data.selfData.stype == selectData.stype){
                 return selectData.rinfo;
             }
-            return selectData.sinfo;
+            return selectData.sinfo || {};
         }
 
         // 根据Id 获取firends 所有内容
@@ -283,7 +283,7 @@ export default {
                     items = item.rinfo
                 }
             })
-            return items
+            return items || {}
         }
 
         // 点击好友item
@@ -328,7 +328,7 @@ export default {
             nextTick(()=>{
                 setTimeout(()=>{
                     if(proxy.$refs.scrollbarRef) proxy.$refs.scrollbarRef.setScrollTop(parseFloat(proxy.$refs.scrollbarDivRef.clientHeight))
-                },200)
+                },300)
             })
         }
 
