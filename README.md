@@ -27,5 +27,5 @@
 - 用户后台：/user/login
 - 账号密码：18888888888 123456
 
-## H5 bate demo H5版本(测试版本) v3 暂未开发 
+## H5 bate demo H5版本(测试版本) v3 未开源 
 ![H5](https://gitee.com/qingwuitcn/qwshop/raw/master/resources/js/assets/Home/qrcode.png "H5")
