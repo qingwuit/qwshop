@@ -25,7 +25,7 @@ class IntegralGoodsCollection extends ResourceCollection
                     'goods_price'           =>  $item->goods_price,
                     'goods_market_price'    =>  $item->goods_market_price,
                     'goods_stock'           =>  $item->goods_stock,
-                    'class_name'            =>  $item->class->name,
+                    'class_name'            =>  empty($item->class)?'-':$item->class->name,
                     'goods_sale'            =>  $item->goods_sale,
                     'goods_status'          =>  $item->goods_status,
                     'is_recommend'          =>  $item->is_recommend,
