@@ -16,7 +16,7 @@ class CreateDistributionLogsTable extends Migration
         Schema::create('distribution_logs', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('name', '30')->default('分销')->comment('标题');
+            $table->string('name', 30)->default('分销')->comment('标题');
             $table->unsignedInteger('user_id')->default(0)->comment('用户ID');
             $table->unsignedInteger('store_id')->default(0)->comment('店铺ID');
             $table->unsignedInteger('order_id')->default(0)->comment('订单ID');

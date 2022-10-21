@@ -81,6 +81,7 @@ Route::post('/sms', [App\Http\Controllers\Home\SmsController::class,'send'])->na
 Route::get('/article/{name}', [App\Http\Controllers\Home\ArticlesController::class,'article'])->name('home.article'); // 文章
 Route::get('/agreements/{name}', [App\Http\Controllers\Home\AgreementsController::class,'agreement'])->name('home.agreement'); // 协议
 Route::get('/Admin/load_menu', [App\Http\Controllers\Admin\MenusController::class,'loadMenu']);
+Route::get('/app_versions', [App\Http\Controllers\Admin\AppVersionsController::class,'app_versions']); // 获取APP版本
 Route::prefix('Admin')->middleware('auth:admins')->group(function () {
     // Route::get('/load_menu', [App\Http\Controllers\Admin\MenusController::class,'loadMenu']);
     Route::get('load_permission', [App\Http\Controllers\Admin\PermissionsController::class,'loadPermission']);
@@ -101,6 +102,7 @@ Route::prefix('Admin')->middleware('auth:admins')->group(function () {
     Route::resource('notices', App\Http\Controllers\Admin\NoticesController::class);
     Route::resource('adv_spaces', App\Http\Controllers\Admin\AdvSpacesController::class);
     Route::resource('advs', App\Http\Controllers\Admin\AdvsController::class);
+    Route::resource('app_versions', App\Http\Controllers\Admin\AppVersionsController::class); // 软件升级更新
     Route::resource('money_logs', App\Http\Controllers\Admin\MoneyLogsController::class)->only(['index','show']);
     Route::resource('seller_menus', App\Http\Controllers\Admin\SellerMenusController::class);
     Route::resource('areas', App\Http\Controllers\Admin\Exts\AreasController::class);

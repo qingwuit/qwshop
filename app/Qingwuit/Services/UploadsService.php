@@ -18,7 +18,7 @@ class UploadsService extends BaseService
 {
     protected $path = 'myfiles'; // 文件上传目录，默认地址
     protected $fileName = 'file'; // 上传的字段
-    protected $fileAllow = ['ico', 'crt', 'pem', 'xls', 'xlsx', 'png']; // 文件允许上传
+    protected $fileAllow = ['ico', 'crt', 'pem', 'xls', 'xlsx', 'png', 'apk', 'wgt']; // 文件允许上传
     protected $photoAllow = ['jpg', 'png', 'gif', 'jpeg']; // 图片允许上传
 
     // 上传图片

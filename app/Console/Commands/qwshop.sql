@@ -89,7 +89,7 @@ INSERT INTO `admin_menus` VALUES (58, 54, '支付分析', '', 'fa-money', '/Admi
 INSERT INTO `admin_menus` VALUES (59, 1, '仪表盘', '', 'fa-dashboard', '/Admin/dashboard', 'Admin/dashboard/index', 1, '', 0, '2022-01-09 00:48:54', '2022-01-09 00:48:54', NULL);
 INSERT INTO `admin_menus` VALUES (60, 31, '店铺配置', '', '', '/Admin/configs/store', 'Admin/configs/store', 0, '', 0, '2022-01-11 12:42:44', '2022-01-11 12:42:44', NULL);
 INSERT INTO `admin_menus` VALUES (61, 4, '平台用户', '', '', '/Admin/users', 'Admin/users/index', 0, '', 0, '2022-02-14 22:15:45', '2022-02-14 22:15:45', NULL);
-
+INSERT INTO `admin_menus` VALUES (62, 3, '版本更新', '', '', '/Admin/app_versions', 'Admin/app_versions/index', 0, '', 99, '2022-10-21 22:03:14', '2022-10-21 22:03:45', NULL);
 
 -- ----------------------------
 -- Records of admin_permission_groups
