@@ -19,7 +19,7 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
+        if (!$request->expectsJson()) {
             return route('login');
         }
     }
@@ -35,39 +35,36 @@ class Authenticate extends Middleware
         try {
             $this->authenticate($request, $guards);
         } catch (\Exception $th) {
-            return response()->json(['code'=>401,'msg'=>$th->getMessage(),'data'=>[]]);
+            return response()->json(['code' => 401, 'msg' => $th->getMessage(), 'data' => []]);
         }
+
+        // 判断如果有配置.ENV 文件 可以关掉接口权限 设置为false
+        if(!env('PERMISSION',true)) return $next($request);
 
         // 判断是否有权限访问
         try {
-            $thrMsg = ['code'=>403,'msg'=>__('tip.pmsThr'),'data'=>[]];
+            $thrMsg = ['code' => 403, 'msg' => __('tip.pmsThr'), 'data' => []];
             $hasPermission = false;
             $act = $request->route()->getAction();
             $auth = explode(':', $act['middleware'][1])[1];
-            if ($auth == 'users') {
-                return $next($request);
-            }
-            if ($this->getService('base')->getSuper($auth)) {
-                $hasPermission = true;
-            } // 超级管理员拥有所有权限
+
+            if ($auth == 'users') return $next($request);
+            if ($this->getService('base')->getSuper($auth)) $hasPermission = true; // 超级管理员拥有所有权限
+
             $roles = $this->getService('base')->getRoles($auth, ['permission']);
             if (empty($roles['roles']) && !$hasPermission) {
                 return response()->json($thrMsg);
             }
             if (isset($roles['roles']['permissions'])) {
                 foreach ($roles['roles']['permissions'] as $v) {
-                    if ($v['apis'] === $act['as']) {
-                        $hasPermission = true;
-                    }
+                    if ($v['apis'] === $act['as']) $hasPermission = true;
                 }
             }
-            if (!$hasPermission) {
-                return response()->json($thrMsg);
-            }
+            if (!$hasPermission) return response()->json($thrMsg);
         } catch (\Exception $th) {
             return response()->json($thrMsg);
         }
-        
+
         return $next($request);
     }
 }

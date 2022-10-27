@@ -30,20 +30,12 @@ class BaseService
     {
         $pageSize = intval(request('per_page') ?? 30); // 默认页码数量
         $isAll = boolval(request('isAll') ?? false); // 是否获取所有数据
-        if (!$tableModelName) {
-            return $this->formatError('select Model.');
-        }
+        if (!$tableModelName) return $this->formatError('select Model.');
         $tableModel = $this->getService($tableModelName, true);
 
-        if ($this->setUser) {
-            $tableModel = $tableModel->where($this->belongName, $this->getBelongId($this->auth));
-        } // 是否根据所属ID来
-        if ($where) {
-            $tableModel = $tableModel->where($where);
-        }
-        if ($orderBy) {
-            $tableModel = $tableModel->orderByRaw($orderBy);
-        }
+        if ($this->setUser) $tableModel = $tableModel->where($this->belongName, $this->getBelongId($this->auth)); // 是否根据所属ID来
+        if ($where) $tableModel = $tableModel->where($where);
+        if ($orderBy) $tableModel = $tableModel->orderByRaw($orderBy);
 
         // 条件查询
         $requestAll = request()->all();
@@ -132,16 +124,10 @@ class BaseService
 
         // 判断是否存在资源文件
         $data = $pageData;
-        if (!empty(request('isResource'))) {
-            $tableModelName .=  request('isResource');
-        } // 自定义资源文件
-        if ($isAll) {
-            $tableModelName .= 'All';
-        }
+        if (!empty(request('isResource'))) $tableModelName .=  request('isResource'); // 自定义资源文件
+        if ($isAll) $tableModelName .= 'All';
         $hasResource = $this->hasResource($pageData, $tableModelName);
-        if ($hasResource) {
-            $data = $hasResource;
-        }
+        if ($hasResource) $data = $hasResource;
 
         return $this->format($data);
     }
