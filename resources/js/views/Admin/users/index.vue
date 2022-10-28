@@ -100,6 +100,9 @@ export default {
             rules:{
                 username:[{required:true,message:proxy.$t('msg.requiredMsg')}],
             },
+            dict:[
+                {name:'inviter_id',url:'/Admin/users',selectDictByColumId:true,isPageDict:true},
+            ],
             view:{column:viewColumn},
             add:{column:addColumn},
             edit:{column:addColumn},

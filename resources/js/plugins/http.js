@@ -223,7 +223,6 @@ const R = {
     // 获取语种
     getLocalesName: () => {
         let locales = localStorage.getItem("language");
-        isEmpty(locales);
         let language = !isEmpty(locales)
             ? locales
             : (

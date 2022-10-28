@@ -340,9 +340,11 @@ const moduleIndex = computed(()=>store.state.load.moduleIndex)
         }
     }
     .module_ul{
+        display: flex;
+        margin-top: 15px;
         li{
-            float: left;
-            line-height: 60px;
+            flex: 0 0 auto;
+            line-height: 30px;
             display: flex;
             align-items: center;
             cursor: pointer;

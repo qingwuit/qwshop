@@ -38,7 +38,7 @@ class UsersController extends Controller
     public function show($id)
     {
         $rs = $this->getService($this->modelName, true)->find($id);
-        unset($rs['password']);
+        unset($rs['password'], $rs['pay_password']);
         return $this->success($rs, __('tip.success'));
     }
 

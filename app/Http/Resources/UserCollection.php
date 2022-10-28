@@ -28,6 +28,7 @@ class UserCollection extends ResourceCollection
                     'frozen_money'          =>  $item->frozen_money,
                     'integral'              =>  $item->integral,
                     'avatar'                =>  $item->avatar,
+                    'inviter_id'            =>  $item->inviter_id,
                     'ip'                    =>  $item->ip,
                     'login_time'            =>  $item->login_time,
                     'last_login_time'       =>  $item->last_login_time,

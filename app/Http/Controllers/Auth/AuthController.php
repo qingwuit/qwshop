@@ -43,18 +43,12 @@ class AuthController extends Controller
     {
         $info = $this->getUser($request->provider);
         if (!$info['status'] || empty($info['data'])) return $this->error(__('tip.userThr'));
-        if (isset($info['data']['password'])) {
-            unset($info['data']['password']);
-        }
-        if (isset($info['data']['pay_password'])) {
-            unset($info['data']['pay_password']);
-        }
+        if (isset($info['data']['password'])) unset($info['data']['password']);
+        if (isset($info['data']['pay_password'])) unset($info['data']['pay_password']);
         $pro = str_replace('api/', '', $request->route()->action['prefix']);
         if ($request->provider != 'users') {
             $defaultUrl = $this->getService($pro . 'Menu', true)->whereRaw('apis!=""')->orderBy('is_sort', 'asc')->first();
-            if ($defaultUrl) {
-                $info['data']['defaultUrl'] = $defaultUrl->apis ?? '/';
-            }
+            if ($defaultUrl) $info['data']['defaultUrl'] = $defaultUrl->apis ?? '/';
         }
         return $this->handle($info);
     }
@@ -105,7 +99,7 @@ class AuthController extends Controller
             $id = $this->getUserId($request->provider);
             return !empty($id) ? $this->success($id) : $this->auto(200);
         } catch (\Exception $e) {
-            return $this->auto(200,$e->getMessage());
+            return $this->auto(200, $e->getMessage());
         }
     }
 
