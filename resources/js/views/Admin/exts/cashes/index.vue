@@ -13,6 +13,7 @@ export default {
         const {ctx,proxy} = getCurrentInstance()
         const options = reactive([
             {label:'用户',value:'user_id',type:'dict_tags',labelName:'nickname',valueName:'id'},
+            {label:'店铺',value:'store_id',type:'dict_tags',labelName:'store_name',valueName:'id'},
             {label:'真实姓名',value:'name'},
             {label:'提现银行',value:'bank_name'},
             {label:'银行卡号',value:'card_no'},
@@ -54,7 +55,8 @@ export default {
 
         const dialogParam = reactive({
             dict:[
-                {name:'user_id',url:'/Admin/users',isPageDict:true,selectDictByColumId:true}
+                {name:'user_id',url:'/Admin/users',isPageDict:true,selectDictByColumId:true},
+                {name:'store_id',url:'/Admin/stores',isPageDict:true,selectDictByColumId:true}
             ],
             dictData:{
                 cash_status:[{label:proxy.$t('btn.waitExamine'),value:0},{label:proxy.$t('btn.success'),value:1},{label:proxy.$t('btn.rejected'),value:2}],
