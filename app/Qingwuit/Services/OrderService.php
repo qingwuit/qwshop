@@ -155,7 +155,7 @@ class OrderService extends BaseService
                 if ($collective_id != 0) {
                     $collective_resp = $this->getService('Collective', true)->where('goods_id', $v['goods_list'][0]['id'])->first();
                     if ($collective_resp) {
-                        $coupon_money += $order_price * ($collective_resp['data']['discount'] / 100);
+                        $coupon_money += $order_price * ($collective_resp->discount / 100);
                     } // 得出拼团减去的钱
                     $collective_id = $collectiveService->createCollectiveLog($collective_id, $collective_resp, $order_goods_data);
                 }

@@ -31,6 +31,7 @@ class OrderHomeResource extends JsonResource
             'delivery_code'         =>  $this->delivery_code,
             'total_price'           =>  $this->total_price,
             'freight_money'         =>  $this->freight_money,
+            'coupon_money'          =>  $this->coupon_money,
             'remark'                =>  $this->remark,
             'pay_time'              =>  $this->pay_time->format('Y-m-d H:i:s'),
             'created_at'            =>  $this->created_at->format('Y-m-d H:i:s'),

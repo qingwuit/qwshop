@@ -263,6 +263,10 @@
             "minimumErr":"最低购买数量为 1.",
             "createOrderThr":"请耐心等待，不要重复下单.",
             "cartEmpty":"未选择任何商品."
+        },
+        "order":{
+            "startTime":"开始时间",
+            "endTime":"结束时间"
         }
     }
 

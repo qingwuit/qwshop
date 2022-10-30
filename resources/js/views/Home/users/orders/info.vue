@@ -70,25 +70,21 @@
             <div class="x20"></div>
 
             <div class="admin_table_list">
-                <!-- <a-table :columns="columns" :data-source="data.info.order_goods" :pagination="false"  >
-                    <span slot="name" slot-scope="rows">
-                        <div class="admin_pic_txt">
-                            <div class="img"><img v-if="rows.goods_image" :src="rows.goods_image"><a-icon v-else type="picture" /></div>
-                            <div class="text" style="max-width:475px;line-height:20px">{{rows.goods_name}}</div>
-                            <div class="clear"></div>
-                        </div>
-                    </span>
-                    <span slot="buy_num" slot-scope="rows">
-                        x {{rows.buy_num}}
-                    </span>
-                    <span slot="goods_price" slot-scope="rows">
-                        <font color="#ca151e">￥{{rows.goods_price}}</font>
-                    </span>
-                </a-table> -->
+                <el-table :data="data.info.order_goods"  >
+                    <el-table-column v-for="(v,k) in data.columns" :key="k" :prop="v.value" :label="v.label" >
+                        <template #default="scope">
+                            <el-image v-if="v.type=='avatar'" :style="{width:'50px',height:'50px',borderRadius:'4px',textAlign:'center',lineHeight:'65px',background:R.isEmpty(scope.row[v.value])?'#f2f2f2':'null',display:'block'}" :fit="'fill'" :hide-on-click-modal="true" :src="scope.row[v.value]" lazy :preview-src-list="[scope.row[v.value]]" :preview-teleported="true">
+                                <template #error>
+                                    <el-icon :color="'#888'" :size="26"><Picture /></el-icon>
+                                </template>
+                            </el-image>
+                        </template>
+                    </el-table-column>
+                </el-table>
             </div>
 
 
-            <div class="order_info_right_price">总计：￥ {{data.info.total_price}}<span data-v-01d38243="">（运费：{{data.info.freight_money}}）</span></div>
+            <div class="order_info_right_price">总计：￥ {{data.info.total_price}}<span data-v-01d38243="">（运费：{{data.info.freight_money}} | 优惠：{{data.info.coupon_money||0}}）</span></div>
 
             <div style="margin-top:40px"><span style="font-size: 14px;font-weight: bold;">快递信息</span></div>
             <div class="x20"></div>
@@ -122,11 +118,10 @@ export default {
                 order_status:0
             },
             columns:[
-                //   {title:'#',dataIndex:'id',fixed:'left'},
-                {title:'商品名称',key:'id',fixed:'left',scopedSlots: { customRender: 'name' }},
-                {title:'规格属性',dataIndex:'sku_name'},
-                {title:'购买数量',key:'id',scopedSlots: { customRender: 'buy_num'}},
-                {title:'商品价格',key:'id',scopedSlots: { customRender: 'goods_price'} },
+                {label:'图片',value:'goods_image',type:'avatar'},
+                {label:'商品名称',value:'goods_name'},
+                {label:'规格属性',value:'sku_name'},
+                {label:'价格',value:'goods_price'},
             ],
             list:[],
         })
@@ -153,6 +148,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .order_info_list{
+    margin-bottom: 20px;
+}
+.admin_table_list{
     margin-bottom: 20px;
 }
 </style>

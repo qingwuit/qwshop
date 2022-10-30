@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {reactive,getCurrentInstance} from "vue"
+import {reactive,getCurrentInstance,watch} from "vue"
 import {useRoute} from "vue-router"
 import {editorHandle} from '@/plugins/config'
 export default {
@@ -33,6 +33,11 @@ export default {
         }
 
         loadData()
+
+        watch(()=>route.params.name,(e)=>{
+            if(!e) return
+            loadData()
+        })
 
         return {
             data,editorHandle

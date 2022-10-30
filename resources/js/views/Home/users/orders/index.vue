@@ -17,8 +17,8 @@
                                 style="width:250px" 
                                 v-model="data.params.created_at"
                                 type="daterange"
-                                :start-placeholder="'Start date'"
-                                :end-placeholder="'End date'"
+                                :start-placeholder="$t('home.order.startTime')"
+                                :end-placeholder="$t('home.order.endTime')"
                                 value-format="YYYY-MM-DD"
                             />
                         </li>
