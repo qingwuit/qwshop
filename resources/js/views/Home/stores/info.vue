@@ -199,6 +199,7 @@ export default {
 
         const get_goods_list = async ()=>{
             data.base64Decode.store_id = data.id
+            data.base64Code = window.btoa(JSON.stringify(data.base64Decode));
             data.params.params = data.base64Code;
             const resp = await proxy.R.get('/goods',data.params)
             if(!resp.code){
@@ -235,7 +236,6 @@ export default {
                 }
                 
                 data.base64Decode.sort_type= e;
-                console.log(data.base64Decode.sort_type)
             }
             data.base64Decode.store_id = data.id
             data.base64Code = window.btoa(JSON.stringify(data.base64Decode));

@@ -25,6 +25,7 @@ class StoreAdminCollection extends ResourceCollection
                 return [
                     'id'                    =>  $item->id,
                     'store_name'            =>  $item->store_name,
+                    'store_logo'            =>  $item->store_logo??'',
                     'area_info'             =>  $item->area_info,
                     'store_status'          =>  $item->store_status,
                     'store_verify'          =>  $item->store_verify,
