@@ -30,9 +30,7 @@ class OrderSettlementService extends BaseService
                                     ->get();
 
         // 结算订单为空
-        if ($order_list->isEmpty()) {
-            return $this->formatError(__('tip.order.empty'));
-        }
+        if ($order_list->isEmpty()) return $this->formatError(__('tip.order.empty'));
 
         $distribution_order = []; // 分销订单ID
         $order_settlement_array = []; // 结算信息
@@ -41,10 +39,7 @@ class OrderSettlementService extends BaseService
         foreach ($order_list as $v) {
 
             // 判断是否是售后订单 // 订单为换货的才能结算，退款的不予结算 | 退款状态 处理中不予结算
-            if (!empty($v->refund) && ($v->refund->refund_type==1 && $v->refund->refund_verify>0)) {
-                continue;
-            }
-
+            if (!empty($v->refund) && ($v->refund->refund_type==1 && $v->refund->refund_verify>0)) continue;
             $item = [];
             $item['order_id'] = $v->id;
             $item['user_id'] = $v->user_id;
@@ -116,7 +111,7 @@ class OrderSettlementService extends BaseService
             }
 
             // 订单修改状态为已经结算
-            $this->getService('Order', true)->whereIn('id', $order_settlement_array)->update(['is_settlement'=>1]);
+            $this->getService('Order', true)->whereIn('id', $distribution_order)->update(['is_settlement'=>1]);
 
             DB::commit();
             return $this->format([]);
