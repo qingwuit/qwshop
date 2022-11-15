@@ -110,9 +110,7 @@ class OrderService extends BaseService
 
                     // 秒杀
                     $seckillInfo = $seckillService->seckillInfoByGoodsId($order_goods_data['goods_id']);
-                    if ($seckillInfo['status']) {
-                        $coupon_money += $order_goods_data['total_price'] * ($seckillInfo['data']['discount'] / 100);
-                    }
+                    if ($seckillInfo['status']) $coupon_money = bcadd($coupon_money, bcmul($order_goods_data['total_price'], $seckillInfo['data']['discount'] / 100));
 
                     $order_goods_model->create($order_goods_data); // 插入订单商品表
 
@@ -120,10 +118,10 @@ class OrderService extends BaseService
                     $this->orderStock($order_goods_data['goods_id'], $order_goods_data['sku_id'], $order_goods_data['buy_num']);
 
                     // 将商品总总量加起来
-                    $total_weight += $order_goods_data['total_weight'];
+                    $total_weight = bcadd($total_weight, $order_goods_data['total_weight']);
 
                     // 将金额全部计算加载到订单里面
-                    $order_price += $order_goods_data['total_price'];
+                    $order_price = bcadd($order_price, $order_goods_data['total_price']);
                 }
 
                 // 获取优惠券的金额 并插入数据库
@@ -131,13 +129,13 @@ class OrderService extends BaseService
                     $cpli = $this->getService('CouponLog', true)->where('id', $order_data['coupon_id'])
                         ->where('user_id', $order_data['user_id'])
                         ->where('store_id', $order_data['store_id'])
-                        ->where('use_money', '<=', ($order_price + $freight_money))
+                        ->where('use_money', '<=', bcadd($order_price, $freight_money))
                         ->where('start_time', '<', now())->where('end_time', '>', now())
                         ->where('status', 0)->first();
                     if (empty($cpli)) {
                         $order_data['coupon_id'] = 0;
                     } else {
-                        $coupon_money += $cpli['money'];
+                        $coupon_money = bcadd($coupon_money, $cpli['money']);
                         $cpli->status = 1;
                         $cpli->order_id = $order_info->id;
                         $cpli->save();
@@ -145,9 +143,9 @@ class OrderService extends BaseService
                 }
 
                 // 满减
-                $full_reduction_resp = $fullReductionService->fullReductionInfoByStoreId($order_data['store_id'], ($order_price + $freight_money));
+                $full_reduction_resp = $fullReductionService->fullReductionInfoByStoreId($order_data['store_id'], round(bcadd($order_price, $freight_money), 2));
                 if ($full_reduction_resp['status']) {
-                    $coupon_money += $full_reduction_resp['data']['money'];
+                    $coupon_money = bcadd($coupon_money, $full_reduction_resp['data']['money']);
                 }
 
                 // 判断是否是拼团 如果是拼团减去他的金额
@@ -155,7 +153,7 @@ class OrderService extends BaseService
                 if ($collective_id != 0) {
                     $collective_resp = $this->getService('Collective', true)->where('goods_id', $v['goods_list'][0]['id'])->first();
                     if ($collective_resp) {
-                        $coupon_money += $order_price * ($collective_resp->discount / 100);
+                        $coupon_money = bcadd($coupon_money, bcmul($order_price, $collective_resp->discount / 100));
                     } // 得出拼团减去的钱
                     $collective_id = $collectiveService->createCollectiveLog($collective_id, $collective_resp, $order_goods_data);
                 }
@@ -164,11 +162,11 @@ class OrderService extends BaseService
                 $freight_money = $this->sumFreight($v['goods_list']['0']['freight_id'], $total_weight, $order_data['store_id'], $address_info['province_id']); // 直接计算运费，如果多个不同的商品取第一个商品的运费
 
                 // 订单总金额做修改，然后保存
-                $total_price = $order_price + $freight_money - $coupon_money; // 暂时总金额等于[订单金额+运费-优惠金额]
+                $total_price = bcsub(bcadd($order_price, $freight_money), $coupon_money); // 暂时总金额等于[订单金额+运费-优惠金额]
                 $order_info->total_price = round($total_price, 2);
-                $order_info->order_price = $order_price;
-                $order_info->freight_money = $freight_money; // 运费
-                $order_info->coupon_money = $coupon_money; // 优惠金额修改
+                $order_info->order_price = round($order_price, 2);
+                $order_info->freight_money = round($freight_money, 2); // 运费
+                $order_info->coupon_money = round($coupon_money, 2); // 优惠金额修改
                 $order_info->coupon_id = $order_data['coupon_id']; // 优惠券ID修改 ，以免非法ID传入
                 $order_info->collective_id = $collective_id; // 团购ID修改
                 $order_info->save(); // 保存入数据库
@@ -380,7 +378,7 @@ class OrderService extends BaseService
             $order_balance = 0;
             foreach ($params['order_list'] as $v) {
                 $order_ids[] = $v['id'];
-                $total_price += $v['total_price'];
+                $total_price = bcadd($total_price, $v['total_price']);
                 // $order_balance += $v['order_balance'];
             }
             // 余额支付时判断是否余额足够
@@ -588,8 +586,8 @@ class OrderService extends BaseService
                 }
                 // 超过了则开始分析是否有超出另外计价
                 if ($info->o_weight > 0) {
-                    $o_num = ceil(($total_weight - $info->f_weight) / $info->o_weight); // 超出的倍数
-                    return round($info->f_price + ($o_num * $info->o_price), 2);
+                    $o_num = ceil(bcdiv(bcsub($total_weight, $info->f_weight), $info->o_weight)); // 超出的倍数
+                    return round(bcadd($info->f_price, bcmul($o_num, $info->o_price)), 2);
                 }
             }
         }
@@ -640,7 +638,7 @@ class OrderService extends BaseService
             if (empty($list[$data['store']['id']]['store_total_price'])) {
                 $list[$data['store']['id']]['store_total_price'] = 0;
             }
-            $list[$data['store']['id']]['store_total_price'] += $data['total'];
+            $list[$data['store']['id']]['store_total_price'] = round(bcadd($list[$data['store']['id']]['store_total_price'], $data['total']), 2);
 
             // 判断是否库存足够
             if ($v['buy_num'] > $data['goods_stock']) {

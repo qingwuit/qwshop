@@ -12,11 +12,11 @@
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue-i18n@8.24.2/dist/vue-i18n.min.js"></script> 国际化 -->
 
-    <link rel="stylesheet" href="//unpkg.com/element-plus@2.2.20/dist/index.css" /> 
-    <script src="//unpkg.com/vue@3.2.39/dist/vue.global.prod.js"></script>
-    <script src="//unpkg.com/vue-router@4.1.3/dist/vue-router.global.prod.js"></script>
+    <link rel="stylesheet" href="//unpkg.com/element-plus@2.2.21/dist/index.css" /> 
+    <script src="//unpkg.com/vue@3.2.45/dist/vue.global.prod.js"></script>
+    <script src="//unpkg.com/vue-router@4.1.6/dist/vue-router.global.prod.js"></script>
     <script src="//unpkg.com/vuex@4.0.2/dist/vuex.global.prod.js"></script>
-    <script src="//unpkg.com/element-plus@2.2.20/dist/index.full.min.js"></script>
+    <script src="//unpkg.com/element-plus@2.2.21/dist/index.full.min.js"></script>
     <script src="//unpkg.com/nprogress@0.2.0/nprogress.js"></script>
     <script src="//unpkg.com/dayjs@1.11.5/dayjs.min.js"></script>
     <script src="//unpkg.com/xlsx@0.18.5/dist/xlsx.core.min.js"></script> <!-- excel -->
@@ -29,8 +29,8 @@
     <link href="//unpkg.com/nprogress@0.2.0/nprogress.css" rel="stylesheet" /> <!-- 进度条 -->
 
     <!-- edit -->
-    <link href="//unpkg.com/@wangeditor/editor@5.1.22/dist/css/style.css" rel="stylesheet">
-    <script src="//unpkg.com/@wangeditor/editor@5.1.22/dist/index.js"></script>
+    <link href="//unpkg.com/@wangeditor/editor@5.1.23/dist/css/style.css" rel="stylesheet">
+    <script src="//unpkg.com/@wangeditor/editor@5.1.23/dist/index.js"></script>
     <!-- edit -->
 
     <link href="{{ mix('css/base.css','dist') }}" rel="stylesheet" />
