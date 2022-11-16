@@ -1,15 +1,15 @@
 <template>
     <div class="qw_input">
-        <q-font v-if="params.type=='icon'" v-model:value="formData" />
-        <table-select v-if="params.type=='table_select'" v-model:value="formData" :params="params" @changeVla="cascaderChange" />
-        <el-input v-if="params.type=='text' || params.type=='password' || params.type=='number' || params.type==undefined" :type="params.type||'text'" v-model="formData" :placeholder="params.placeholder||''" :disabled="params.disabled||false"  />
-        <el-input v-if="params.type=='textarea'" :type="'textarea'" class="input_textarea" :show-word-limit="params.showWordLimit||true" :maxlength="params.maxlength||15" v-model="formData" :placeholder="params.placeholder||''" :disabled="params.disabled||false"  />
-        <el-cascader @change="cascaderChange"  style="width:100%" v-if="params.type=='cascader'" v-model="formData" :options="dictData[params.value]||[]" :props="params.props||{}" :placeholder="params.placeholder||''" />
-        <el-cascader @change="cascaderChange"  style="width:100%" v-if="params.type=='cascader_lazy'" v-model="formData" :options="dictData[params.value]||[]" :props="params.props||{emitPath:true,label:'name',value:'id',lazy:true,lazyLoad:lazyLoad}" :placeholder="params.placeholder||''" />
-        <el-select style="width:100%" v-if="params.type=='select'" v-model="formData" :filterable="params.filterable||false" :multiple="params.multiple||false" :placeholder="params.placeholder||''" >
+        <q-font v-if="params.type=='icon'" v-model:value="data.modelFormValue" />
+        <table-select v-if="params.type=='table_select'" v-model:value="data.modelFormValue" :params="params" @changeVla="cascaderChange" />
+        <el-input v-if="params.type=='text' || params.type=='password' || params.type=='number' || params.type==undefined" :type="params.type||'text'" v-model="data.modelFormValue" :placeholder="params.placeholder||''" :disabled="params.disabled||false"  />
+        <el-input v-if="params.type=='textarea'" :type="'textarea'" class="input_textarea" :show-word-limit="params.showWordLimit||true" :maxlength="params.maxlength||15" v-model="data.modelFormValue" :placeholder="params.placeholder||''" :disabled="params.disabled||false"  />
+        <el-cascader @change="cascaderChange"  style="width:100%" v-if="params.type=='cascader'" v-model="data.modelFormValue" :options="dictData[params.value]||[]" :props="params.props||{}" :placeholder="params.placeholder||''" />
+        <el-cascader @change="cascaderChange"  style="width:100%" v-if="params.type=='cascader_lazy'" v-model="data.modelFormValue" :options="dictData[params.value]||[]" :props="params.props||{emitPath:true,label:'name',value:'id',lazy:true,lazyLoad:lazyLoad}" :placeholder="params.placeholder||''" />
+        <el-select style="width:100%" v-if="params.type=='select'" v-model="data.modelFormValue" :filterable="params.filterable||false" :multiple="params.multiple||false" :placeholder="params.placeholder||''" >
             <el-option v-for="(v,k) in (dictData[params.value] || [])" :key="k" :label="params.oneArray?v:(v[(params.labelName||'label')])" :value="params.oneArray?v:v[(params.valueName||'value')]" />
         </el-select>
-        <el-autocomplete v-if="params.type=='autocomplete'" v-model="formData"  @select="cascaderChange" :fetch-suggestions="querySearch" >
+        <el-autocomplete v-if="params.type=='autocomplete'" v-model="data.modelFormValue"  @select="cascaderChange" :fetch-suggestions="querySearch" >
             <template #default="{ item }">
                 <div class="value">{{item}}</div>
             </template>
@@ -23,7 +23,7 @@
             :data="{option:params.option||null,name:params.value||null}"
             :on-success="handleAvatarSuccess"
         >
-            <img v-if="formData" style="width:100%;height:100%" :src="formData" :class="params.type == 'avatar'?'avatar':'avatar images'" />
+            <img v-if="data.modelFormValue" style="width:100%;height:100%" :src="data.modelFormValue" :class="params.type == 'avatar'?'avatar':'avatar images'" />
             <el-icon v-else class="avatar-uploader-icon"><plus /></el-icon>
         </el-upload>
         <el-upload
@@ -35,7 +35,7 @@
             :data="{option:params.option||null,name:params.value||null,uploadType:'uploadFile'}"
             :on-success="handleAvatarSuccess"
         >
-            <span  v-if="formData" :title="formData" class="file_path">{{formData}}</span>
+            <span  v-if="data.modelFormValue" :title="data.modelFormValue" class="file_path">{{data.modelFormValue}}</span>
             <el-icon v-else class="avatar-uploader-icon file" :size="20"><Upload /></el-icon>
         </el-upload>
         <!-- editer -->
@@ -43,13 +43,13 @@
             <div :id="'toolbar'+rand"></div>
             <div class="editClass" :style="'height:'+(params.height||'300px')" :id="'editor'+rand" ></div>
         </div>
-        <el-switch v-model="formData"  v-if="params.type=='switch'" :active-text="params.activeText||$t('btn.yes')" :inactive-text="params.inactiveText||$t('btn.no')" :inline-prompt="params.inlinePrompt||true" />
-        <el-radio-group v-model="formData" v-if="params.type=='radio'">
+        <el-switch v-model="data.modelFormValue"  v-if="params.type=='switch'" :active-text="params.activeText||$t('btn.yes')" :inactive-text="params.inactiveText||$t('btn.no')" :inline-prompt="params.inlinePrompt||true" />
+        <el-radio-group v-model="data.modelFormValue" v-if="params.type=='radio'">
             <el-radio v-for="(v,k) in (dictData[params.value] || [])" :key="k" :label="params.oneArray?v:(v[(params.labelName||'value')])" >{{params.oneArray?v:(v[(params.valueName||'label')])}}</el-radio>
         </el-radio-group>
-        <el-date-picker v-if="params.type=='datetime'" style="width:100%" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" :placeholder="params.placeholder||''" v-model="formData" />
-        <el-date-picker v-if="params.type=='daterange'" style="width:100%;box-sizing: border-box;" type="daterange" value-format="YYYY-MM-DD HH:mm:ss" :start-placeholder="params.startPlaceholder||$t('btn.dateRangeStart')"  :end-placeholder="params.endPlaceholder||$t('btn.dateRangeEnd')" v-model="formData" />
-        <el-date-picker v-if="params.type=='date'"  style="width:100%" type="date" value-format="YYYY-MM-DD" :placeholder="params.placeholder||''" v-model="formData" />
+        <el-date-picker v-if="params.type=='datetime'" style="width:100%" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" :placeholder="params.placeholder||''" v-model="data.modelFormValue" />
+        <el-date-picker v-if="params.type=='daterange'" style="width:100%;box-sizing: border-box;" type="daterange" value-format="YYYY-MM-DD HH:mm:ss" :start-placeholder="params.startPlaceholder||$t('btn.dateRangeStart')"  :end-placeholder="params.endPlaceholder||$t('btn.dateRangeEnd')" v-model="data.modelFormValue" />
+        <el-date-picker v-if="params.type=='date'"  style="width:100%" type="date" value-format="YYYY-MM-DD" :placeholder="params.placeholder||''" v-model="data.modelFormValue" />
     </div>
 </template>
 
@@ -65,12 +65,16 @@ export default {
     setup(props,{emit}) {
         const {proxy} = getCurrentInstance()
         const rand = ref((Math.random().toFixed(8)).replace('0.',''))
+        const data = reactive({
+            modelFormValue:null
+        })
         const objects = reactive({
             editorObj:null,
             E:null,
         })
         const splitStr = editSplitStr
         watch(()=>props.formData,(e)=>{
+            data.modelFormValue = e
             emit('update:formData',e)
             if(props.params.type == 'editor'){
                 if(objects.editorObj !== null && objects.E !== null && editorHandle(e) != ''){
@@ -80,6 +84,9 @@ export default {
                     }
                 }
             }
+        },{deep:true})
+        watch(()=>data.modelFormValue,(e)=>{
+            emit('update:formData',e)
         },{deep:true})
 
         // cascader 第一次无法显示rule验证问题
@@ -174,8 +181,8 @@ export default {
                 objects.editorObj = editorObj
                 objects.E = E
                 
-                if(!proxy.R.isEmpty(props.formData)){
-                    let splitContent = props.formData.split(splitStr)
+                if(!proxy.R.isEmpty(data.modelFormValue)){
+                    let splitContent = data.modelFormValue.split(splitStr)
                     if(splitContent.length==2){
                         E.SlateTransforms.removeNodes(editorObj, { at: [0] })
                         editorObj.insertNode(JSON.parse(splitContent[1]))
@@ -203,7 +210,7 @@ export default {
 
         const Token = getToken()
         const uploadPath = getUploadPath()
-        return {rand,cascaderChange,lazyLoad ,querySearch,handleAvatarSuccess,Token,uploadPath}
+        return {rand,cascaderChange,lazyLoad ,querySearch,handleAvatarSuccess,Token,uploadPath,data}
     }
 }
 </script>

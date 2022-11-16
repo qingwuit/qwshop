@@ -1,7 +1,7 @@
 <template>
     <div class="sms_block">
         <el-row :gutter="10">
-            <el-col :span="16"><el-input v-model="code" /></el-col>
+            <el-col :span="16"><el-input v-model="data.code" /></el-col>
             <el-col :span="8"><div :class="data.math<=0?'code_btn':'code_btn2'" @click="sendSms">{{data.code_text}}</div></el-col>
         </el-row>
         
@@ -18,6 +18,7 @@ export default {
             code_text:'',
             timeObj:null,
             math:0,
+            code:props.code,
         })
 
         data.code_text = proxy.$t('sms.sendCode')
@@ -47,7 +48,7 @@ export default {
             })
         }
 
-        watch(()=>props.code,(e)=>{
+        watch(()=>data.code,(e)=>{
             emit('update:code',e)
         },{deep:true})
 

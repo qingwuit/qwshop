@@ -1,6 +1,6 @@
 <template>
     <div class="qw_font">
-        <el-autocomplete  style="width:100%" :fetch-suggestions="querySearch" @select="handleSelect" v-model="value">
+        <el-autocomplete  style="width:100%" :fetch-suggestions="querySearch" @select="handleSelect" v-model="modelVal">
             <template #suffix>
                 <el-icon class="el-input__icon">
                     <i :class="'fa '+value " />
@@ -14,11 +14,12 @@
 </template>
 
 <script>
-import {watch} from "vue"
+import {ref,watch} from "vue"
 import fontjs from '@/plugins/font'
 export default {
     props:['value'],
     setup(props,{emit}) {
+        const modelVal = ref(props.value);
         const querySearch = (queryString, cb)=>{
             let res = fontjs.filter((e)=>{
                 return e.search(queryString)>-1
@@ -27,6 +28,10 @@ export default {
         }
 
         watch(()=>props.value,(e)=>{
+            modelVal.value = e
+            emit('update:value',e)
+        })
+        watch(()=>modelVal.value,(e)=>{
             emit('update:value',e)
         })
 
@@ -34,7 +39,7 @@ export default {
             emit('update:value',e)
         }
 
-        return {handleSelect,querySearch}
+        return {handleSelect,querySearch,modelVal}
     }
 }
 </script>
