@@ -62,10 +62,10 @@ class MoneyLogService extends BaseService
                 if ($model = $this->getService('Store', true)->lockForUpdate()->where('id', $store['id'])->first()) {
                     switch ($data['is_type']) {
                         case 0:
-                            $model->store_money = round(bcadd($model->store_money, floatval($data['money'])), 2);
+                            $model->store_money = bcadd($model->store_money, floatval($data['money']), 2);
                             break;
                         case 1:
-                            $model->store_frozen_money = round(bcadd($model->store_frozen_money, floatval($data['money'])), 2);
+                            $model->store_frozen_money = bcadd($model->store_frozen_money, floatval($data['money']), 2);
                             break;
                     }
                     $model->save();
@@ -76,13 +76,13 @@ class MoneyLogService extends BaseService
                 if ($model = $this->getService('User', true)->lockForUpdate()->find($userId)) {
                     switch ($data['is_type']) {
                         case 0:
-                            $model->money = round(bcadd($model->money, $data['money']), 2);
+                            $model->money = bcadd($model->money, $data['money'], 2);
                             break;
                         case 1:
-                            $model->frozen_money = round(bcadd($model->frozen_money, $data['money']), 2);
+                            $model->frozen_money = bcadd($model->frozen_money, $data['money'], 2);
                             break;
                         case 2:
-                            $model->integral = round(bcadd($model->integral, $data['money']), 2);
+                            $model->integral = bcadd($model->integral, $data['money'], 2);
                             break;
                     }
                     $model->save();
