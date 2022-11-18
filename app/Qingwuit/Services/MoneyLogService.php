@@ -29,6 +29,7 @@ class MoneyLogService extends BaseService
         ];
 
         $data = array_merge($data, $params);
+        $data['money'] = bcmul($data['money'], 1, 2);
         $userId = ($data['user_id'] == 0) ? $this->getUserId('users') : $data['user_id'];
 
         try {
@@ -62,13 +63,12 @@ class MoneyLogService extends BaseService
                 if ($model = $this->getService('Store', true)->lockForUpdate()->where('id', $store['id'])->first()) {
                     switch ($data['is_type']) {
                         case 0:
-                            $model->store_money = bcadd($model->store_money, floatval($data['money']), 2);
+                            $model->increment('store_money', $data['money']);
                             break;
                         case 1:
-                            $model->store_frozen_money = bcadd($model->store_frozen_money, floatval($data['money']), 2);
+                            $model->increment('store_frozen_money', $data['money']);
                             break;
                     }
-                    $model->save();
                 } else {
                     throw new \Exception(__('tip.error') . ' - money log');
                 }
@@ -76,16 +76,15 @@ class MoneyLogService extends BaseService
                 if ($model = $this->getService('User', true)->lockForUpdate()->find($userId)) {
                     switch ($data['is_type']) {
                         case 0:
-                            $model->money = bcadd($model->money, $data['money'], 2);
+                            $model->increment('money', $data['money']);
                             break;
                         case 1:
-                            $model->frozen_money = bcadd($model->frozen_money, $data['money'], 2);
+                            $model->increment('frozen_money', $data['money']);
                             break;
                         case 2:
-                            $model->integral = bcadd($model->integral, $data['money'], 2);
+                            $model->increment('integral', $data['money']);
                             break;
                     }
-                    $model->save();
                 } else {
                     throw new \Exception(__('tip.error') . ' - money log');
                 }
