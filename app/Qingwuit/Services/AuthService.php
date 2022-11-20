@@ -74,7 +74,7 @@ class AuthService extends BaseService
         $respData[$type] = $username;
 
         try {
-            $resp = Http::asForm()->post(url('/oauth/token'), $respData);
+            $resp = Http::asForm()->withOptions(['verify' => false])->post(url('/oauth/token'), $respData);
         } catch (\Exception $e) {
             if (empty($e->getCode())) $resp = Http::asForm()->post('nginx/oauth/token', $respData);
         }
