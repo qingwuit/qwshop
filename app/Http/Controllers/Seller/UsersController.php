@@ -19,15 +19,17 @@ class UsersController extends Controller
     {
         try {
             DB::beginTransaction();
+            // 判断是否存在相同得账号
+            if ($this->getService($this->modelName, true)->where('username', $request->username)->exists()) return $this->formatError(__('tip.userNameExist'));
             $model = $this->getService($this->modelName, true)
-                    ->create([
-                        'username'=>$request->username??'',
-                        'password'=>Hash::make($request->password??'123456'),
-                        'nickname'=>$request->nickname??'Mysterious',
-                        'avatar'=>$request->avatar??'',
-                        $this->belongName=>$this->getBelongId()
-                    ]);
-            $model->roles()->sync($request->role_id??[]);
+                ->create([
+                    'username'  => $request->username ?? '',
+                    'password'  => Hash::make($request->password ?? '123456'),
+                    'nickname'  => $request->nickname ?? 'Mysterious',
+                    'avatar'    => $request->avatar ?? '',
+                    $this->belongName => $this->getBelongId()
+                ]);
+            $model->roles()->sync($request->role_id ?? []);
             DB::commit();
             return $this->success([], __('tip.success'));
         } catch (\Exception $e) {
@@ -64,11 +66,11 @@ class UsersController extends Controller
             if (!empty($request->password)) {
                 $model->password = Hash::make($request->password);
             }
-            $model->nickname = $request->nickname??'';
-            $model->avatar = $request->avatar??'';
+            $model->nickname = $request->nickname ?? '';
+            $model->avatar = $request->avatar ?? '';
             $model->$belongName = $this->getBelongId();
             $model->save();
-            $model->roles()->sync($request->role_id??[]);
+            $model->roles()->sync($request->role_id ?? []);
             DB::commit();
             return $this->success([], __('tip.success'));
         } catch (\Exception $e) {

@@ -16,6 +16,8 @@ class UsersController extends Controller
     {
         try {
             DB::beginTransaction();
+            // 判断是否存在相同得账号
+            if ($this->getService($this->modelName, true)->where('username', $request->username)->exists()) return $this->formatError(__('tip.userNameExist'));
             $this->getService($this->modelName, true)
                 ->create([
                     'username' => $request->username ?? '',

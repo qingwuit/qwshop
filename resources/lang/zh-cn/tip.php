@@ -19,6 +19,7 @@ return [
     'configThr'                         =>  '配置信息异常.',
     'phoneThr'                          =>  '手机号码错误.',
     'userExist'                         =>  '手机号码错误.',
+    'userNameExist'                     =>  '用户名已经存在.',
     'phoneExist'                        =>  '手机号码已经存在.',
 
     // 订单状态
