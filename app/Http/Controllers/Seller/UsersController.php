@@ -23,7 +23,7 @@ class UsersController extends Controller
                     ->create([
                         'username'=>$request->username??'',
                         'password'=>Hash::make($request->password??'123456'),
-                        'nickname'=>$request->username??'Mysterious',
+                        'nickname'=>$request->nickname??'Mysterious',
                         'avatar'=>$request->avatar??'',
                         $this->belongName=>$this->getBelongId()
                     ]);
