@@ -61,6 +61,8 @@ class UsersController extends Controller
     {
         try {
             $belongName = $this->belongName;
+            // 判断是否存在相同得账号
+            if ($this->getService($this->modelName, true)->where('username', $request->username)->exists()) return $this->formatError(__('tip.userNameExist'));
             $model = $this->getService($this->modelName, true)->find($id);
             $model->username = $request->username;
             if (!empty($request->password)) {
