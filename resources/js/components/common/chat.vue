@@ -194,7 +194,8 @@ export default {
         }
 
         // 发送socket信息
-        const send = ({sendType = 'text'})=>{
+        const send = (sendType)=>{
+            sendType = sendType || 'text'
             let rData = loadAllById(data.selectId)
             let params = {
                 provider:props.params.provider,
