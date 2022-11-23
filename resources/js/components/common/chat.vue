@@ -62,7 +62,7 @@
                         <textarea v-model="data.params.content" :placeholder="'Please enter information'"  />
                     </div>
                     <div class="send_btn">
-                        <el-button type="success" :loading="loading" :icon="Promotion" @click="send">{{$t('btn.sendMsg')}}</el-button>
+                        <el-button type="success" :loading="loading" :icon="Promotion" @click="send('text')">{{$t('btn.sendMsg')}}</el-button>
                     </div>
                 </div>
             </div>

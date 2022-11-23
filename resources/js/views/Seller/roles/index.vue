@@ -192,7 +192,7 @@ export default {
 
         // 加载接口信息
         const loadPermission = async ()=>{
-            roleData.permissions = await proxy.R.get('/Admin/permission_groups?isAll=true&isWith=permissions')
+            roleData.permissions = await proxy.R.get('/Seller/permission_groups?isAll=true&isWith=permissions')
             let permissionLength = 0
             let permissionAllId = []
             roleData.permissions.map(item=>{
