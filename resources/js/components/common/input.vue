@@ -180,9 +180,8 @@ export default {
                 })
                 objects.editorObj = editorObj
                 objects.E = E
-                
-                if(!proxy.R.isEmpty(data.modelFormValue)){
-                    let splitContent = data.modelFormValue.split(splitStr)
+                if(!proxy.R.isEmpty(props.formData)){
+                    let splitContent = props.formData.split(splitStr)
                     if(splitContent.length==2){
                         E.SlateTransforms.removeNodes(editorObj, { at: [0] })
                         editorObj.insertNode(JSON.parse(splitContent[1]))
