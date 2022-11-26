@@ -164,6 +164,8 @@ class GoodsService extends BaseService
             } else {
                 $goodsModel->goods_verify = 1;
             }
+
+            if ($auth != 'users') $goodsModel->goods_verify = request('goods_verify', 1);
         }
 
         try {

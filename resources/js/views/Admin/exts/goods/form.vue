@@ -100,7 +100,7 @@
                     </el-col>
                     <el-col :span="12">
                         <el-form-item :label="'审核通过'" prop="goods_verify">
-                            <q-input :params="{value:'goods_verify',type:'select'}" v-model:formData="data.form.goods_verify" :dictData="{goods_verify:[{label:$t('store.verifyStatus.passVerify'),value:1},{label:$t('store.verifyStatus.verifying'),value:0},{label:$t('store.verifyStatus.verifyError'),value:2}]}" />
+                            <q-input :params="{value:'goods_verify',type:'select'}" v-model:formData="data.form.goods_verify" :dictData="{goods_verify:[{label:$t('store.verifyStatus.passVerify'),value:1},{label:$t('store.verifyStatus.verifying'),value:2},{label:$t('store.verifyStatus.verifyError'),value:0}]}" />
                         </el-form-item>
                     </el-col>
 
