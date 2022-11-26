@@ -73,6 +73,7 @@ export default {
             E:null,
         })
         const splitStr = editSplitStr
+        data.modelFormValue = props.formData
         watch(()=>props.formData,(e)=>{
             data.modelFormValue = e
             emit('update:formData',e)
@@ -108,9 +109,6 @@ export default {
         if(props.params.type == 'cascader_lazy' && props.params.props && props.params.props.lazy ){
             props.params.props.lazyLoad = lazyload
         }
-
-        // 懒加载处理
-        if(props.params.type == 'cascader_lazy') props.params.props.lazyLoad = lazyLoad
 
         // 自动补全
         const querySearch = (queryString,cb)=>{

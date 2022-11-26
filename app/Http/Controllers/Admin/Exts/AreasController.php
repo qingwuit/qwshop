@@ -18,21 +18,21 @@ class AreasController extends Controller
 
     public function loadArea(Request $request)
     {
-        $treeType = $request->type??'getAreaChildren';
-        $deep = $request->deep??-1;
+        $treeType = $request->type ?? 'getAreaChildren';
+        $deep = $request->deep ?? -1;
 
         // 懒加载数据
         if (isset($request->isLazy) && $request->isLazy) {
-            $pid = $request->pid??0;
+            $pid = $request->pid ?? 0;
             $area = $this->getService('Area', true)->where('pid', $pid)->orderBy('id')->get();
             return $this->success(new AreaBaseCollection($area));
         }
 
-        $data = $this->getService('Area', true)->select('id', 'name', 'code', 'pid')->get();
+        $data = $this->getService('Area', true)->select('id', 'name', 'code', 'pid', 'deep')->get();
         try {
-            if (Cache::has('area') && $deep==-1) return $this->success(Cache::get('area'));
+            if (Cache::has('area') && $deep == -1) return $this->success(Cache::get('area'));
             $tree = $this->getService('Tool')->$treeType($data, 0, 0, $deep);
-            if ($deep==-1) Cache::put('area', $tree);
+            if ($deep == -1) Cache::put('area', $tree);
         } catch (\Exception $e) {
             echo $e->getMessage();
             return $this->error(__('tip.failed'));

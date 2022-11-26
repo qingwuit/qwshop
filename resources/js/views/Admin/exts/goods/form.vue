@@ -213,7 +213,9 @@ export default {
             goodsAttr:[],
             goodsBrands:[],
             step:1,
-            form:{},
+            form:{
+                freight_id:-1
+            },
             rules:{
                 goods_name:[{required:true,message:proxy.$t('msg.requiredMsg')}],
                 goods_images:[{required:true,message:proxy.$t('msg.requiredMsg')}],
@@ -224,8 +226,10 @@ export default {
             uploadOptions:{option:JSON.stringify({width:800,height:800,thumb:[[400,400],[300,300],[150,150]]}),name:'goods'},
         })
         const nextStep = (e)=>{
+            let oldStep = data.step
             data.step = e
             if(e == 2){
+                data.step = oldStep
                 proxy.$refs.addForm.validate((valid)=>{
                     // 验证失败直接断点
                     if (!valid) return false
@@ -246,6 +250,7 @@ export default {
                         }).catch((err)=>{
                             console.log(err)
                         }).finally(()=>{
+                            data.step = e
                             loading.value = false
                             goodsBack();
                         })
