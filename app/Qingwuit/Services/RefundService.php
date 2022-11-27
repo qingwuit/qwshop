@@ -21,6 +21,10 @@ class RefundService extends BaseService
         if ($order_info->pay_time->lt(now()->subDays(7))) {
             return $this->formatError('over 7 days');
         }
+
+        if($order_info->is_settlement == 1){
+            return $this->formatError('The order has settlement .');
+        }
         
         if ($refund_model->where('user_id', $userId)->where('refund_verify', 0)->where('order_id', $order_id)->exists()) {
             return $this->formatError('refund handled');

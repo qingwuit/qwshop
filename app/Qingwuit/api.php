@@ -35,7 +35,7 @@ Route::middleware('auth:users')->group(function () {
     Route::resource('/user/addresses', App\Http\Controllers\Home\AddressesController::class); // 收货地址
     Route::get('/user/addresses/default/{id}', [App\Http\Controllers\Home\AddressesController::class,'set_default'])->name('home.address.default');
     Route::resource('/user/comments', App\Http\Controllers\Home\CommentsController::class)->only(['update','index','store','show']);
-    Route::put('/auth/edit', [App\Http\Controllers\Auth\AuthController::class,'edit'])->name('home.auth.edit'); // 编辑用户信息
+    Route::put('/auth/edit', [App\Http\Controllers\Auth\AuthController::class,'edit'])->name('home.auth.edit2'); // 编辑用户信息
     Route::post('/user/check', [App\Http\Controllers\Home\UserChecksController::class,'edit'])->name('home.user.check.edit');
     Route::get('/user/check', [App\Http\Controllers\Home\UserChecksController::class,'check'])->name('home.user.check');
     Route::resource('/user/cashes', App\Http\Controllers\Home\CashesController::class)->only(['store','index']); // 提现

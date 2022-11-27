@@ -71,8 +71,14 @@ class CashService extends BaseService
                 if ($model->store_id > 0) $this->getService('MoneyLog')->edit(['money' => -bcadd($model->money, $model->commission, 2), 'user_id' => $model->store_id, 'is_type' => 1, 'is_belong' => 1, 'name' => '提现成功']);
                 break;
             case 2:
-                if ($model->user_id > 0) $this->getService('MoneyLog')->edit(['money' => bcadd($model->money, $model->commission, 2), 'user_id' => $model->user_id, 'is_type' => 0, 'name' => '拒绝提现']);
-                if ($model->store_id > 0) $this->getService('MoneyLog')->edit(['money' => bcadd($model->money, $model->commission, 2), 'user_id' => $model->store_id, 'is_type' => 0, 'is_belong' => 1, 'name' => '拒绝提现']);
+                if ($model->user_id > 0){
+                    $this->getService('MoneyLog')->edit(['money' => bcadd($model->money, $model->commission, 2), 'user_id' => $model->user_id, 'is_type' => 0, 'name' => '拒绝提现']);
+                    $this->getService('MoneyLog')->edit(['money' => -bcadd($model->money, $model->commission, 2), 'user_id' => $model->user_id, 'is_type' => 1, 'name' => '拒绝提现']);
+                }
+                if ($model->store_id > 0) {
+                    $this->getService('MoneyLog')->edit(['money' => bcadd($model->money, $model->commission, 2), 'user_id' => $model->store_id, 'is_type' => 0, 'is_belong' => 1, 'name' => '拒绝提现']);
+                    $this->getService('MoneyLog')->edit(['money' => -bcadd($model->money, $model->commission, 2), 'user_id' => $model->store_id, 'is_type' => 1, 'is_belong' => 1, 'name' => '拒绝提现']);
+                }
                 break;
         }
         return $this->format();
