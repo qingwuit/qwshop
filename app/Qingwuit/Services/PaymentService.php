@@ -104,6 +104,7 @@ class PaymentService extends BaseService
         try {
             $this->setConfig($paymentName, $device, $config);
             $result = Pay::$paymentName($this->config)->$device($this->payData);
+            if(in_array($device,['app','wap','web'])) return $this->format($result->getBody()->getContents());
             return $this->format($result);
         } catch (\Exception $e) {
             dd($e->getMessage());
