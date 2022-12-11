@@ -74,6 +74,7 @@ class AuthService extends BaseService
         $respData[$type] = $username;
 
         try {
+            // 如果因为负载均衡反向代理导致url() 链接https变成http 参考 https://learnku.com/articles/67283
             $resp = Http::asForm()->withOptions(['verify' => false])->post(url('/oauth/token'), $respData);
         } catch (\Exception $e) {
             if (empty($e->getCode())) $resp = Http::asForm()->post('nginx/oauth/token', $respData);

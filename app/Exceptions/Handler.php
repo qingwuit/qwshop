@@ -13,7 +13,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        \Laravel\Passport\Exceptions\OAuthServerException::class, // passport异常取消掉，避免一直有日志
     ];
 
     /**
