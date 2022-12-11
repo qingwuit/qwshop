@@ -136,12 +136,12 @@ class DashboardController extends Controller
         // $data['list'] = new OrderCollection($this->getService('Order',true)->whereBetween('created_at',[$first_time,$end_time])->where('order_status','>',1)->orderBy('id','desc')->paginate(request()->per_page??30));
 
         // 获取店铺销售排行
-        $data['store'] = $this->getService('Goods', true)->select('goods_name', 'id')->withCount(['order_goods as orders_count'=>function ($q) {
+        $data['store'] = $this->getService('Goods', true)->select('goods_name', 'id')->where('store_id', $store_id)->withCount(['order_goods as orders_count'=>function ($q) {
             $q->select(DB::raw('sum(buy_num)'));
         }])->orderBy('orders_count', 'desc')->take(10)->get();
 
         // 获取商品销售排行
-        $data['goods'] = $this->getService('Goods', true)->select('goods_name', 'id')->withCount(['order_goods as orders_count'=>function ($q) {
+        $data['goods'] = $this->getService('Goods', true)->select('goods_name', 'id')->where('store_id', $store_id)->withCount(['order_goods as orders_count'=>function ($q) {
             $q->select(DB::raw('sum(total_price)'));
         }])->orderBy('orders_count', 'desc')->take(10)->get();
 
