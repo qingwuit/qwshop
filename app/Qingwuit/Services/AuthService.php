@@ -13,12 +13,12 @@ class AuthService extends BaseService
     // 登录服务
     public function login($apiLogin = true, $loginData = [])
     {
-        $provider = request('provider','users'); // 用户类型 User Admin
-        $grantType = request('grant_type','password'); // 登录方式
-        $clientType = request('client_type','password_client'); // 客户端类型默认密码类型得会过期
-        $username = request('username','');
-        $password = request('password','');
-        $type = request('type','username'); // 登录方式 phone email
+        $provider = request('provider', 'users'); // 用户类型 User Admin
+        $grantType = request('grant_type', 'password'); // 登录方式
+        $clientType = request('client_type', 'password_client'); // 客户端类型默认密码类型得会过期
+        $username = request('username', '');
+        $password = request('password', '');
+        $type = request('type', 'username'); // 登录方式 phone email
         $code = request('code'); // 手机登录验证码
         // $phone = request()->phone;
 
@@ -28,15 +28,15 @@ class AuthService extends BaseService
                 return $this->formatError($smsCheck['msg']);
             }
         }
-        
+
         // 总后台要做滑块验证
-        if($provider == 'admins'){
+        if ($provider == 'admins') {
             $capCheck = $this->getService('Captcha')->checkCap();
             if (!$capCheck['status']) {
                 return $this->formatError($capCheck['msg']);
             }
         }
-        
+
         // 外部API请求登录
         $where = ['password_client' => 1, 'personal_access_client' => 0, 'provider' => $provider];
         // 个人客户端无限时间
@@ -78,7 +78,7 @@ class AuthService extends BaseService
             $resp = Http::asForm()->withOptions(['verify' => false])->post(url('/oauth/token'), $respData);
         } catch (\Exception $e) {
             if (empty($e->getCode())) $resp = Http::asForm()->post('nginx/oauth/token', $respData);
-            if (!empty($e->getCode())) return $this->formatError($e->getMessage(), ['code'=>$e->getCode(),'file'=>$e->getFile(),'line'=>$e->getLine()]);
+            if (!empty($e->getCode())) return $this->formatError($e->getMessage(), ['code' => $e->getCode(), 'file' => $e->getFile(), 'line' => $e->getLine()]);
         }
 
 
@@ -94,7 +94,7 @@ class AuthService extends BaseService
 
             return $this->format($resp->json());
         }
-        if(isset($resp->json()['error']) && $resp->json()['error'] == 'invalid_grant') return $this->formatError(__('tip.userErr'));
+        if (isset($resp->json()['error']) && $resp->json()['error'] == 'invalid_grant') return $this->formatError(__('tip.userErr'));
         return $this->formatError($resp->json()['message'], $respData);
     }
 
@@ -114,7 +114,7 @@ class AuthService extends BaseService
             return;
         }
 
-        $model = $this->getService($modelName,true);
+        $model = $this->getService($modelName, true);
 
         // 判断是否存在相同得账号和电话
         if ($model->where($type, $username)->exists()) {
@@ -143,8 +143,12 @@ class AuthService extends BaseService
             $regData['inviter_id'] = request('inviter_id');
         }
 
-        if (!$model->create($regData)) {
-            return; // 账号建立失败
+        // 如果使用队列来处理高并发问题 下面推送到队列
+        if (env('APP_REDIS')) {
+            $this->getJob('Register')->dispatch(['model_name' => $modelName, 'register_type' => $type, 'reg_data' => $regData])->onQueue('register');
+            return $this->format([], 'Queue executing.');
+        } else {
+            if (!$model->create($regData)) return $this->formatError(__('tips.error'));
         }
 
         return $this->login(false, ['username' => $username, 'password' => $password, 'provider' => $provider]);

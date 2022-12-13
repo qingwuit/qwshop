@@ -6,6 +6,7 @@ trait ResourceTrait
 {
     protected $servicePath = 'App\Qingwuit\Services\\';
     protected $modelPath = 'App\Qingwuit\Models\\';
+    protected $jobPath = 'App\Jobs\\';
     protected $resourcePath = 'app\Http\Resources\\';
     protected $resourceNameSpacePath = 'App\Http\Resources\\';
 
@@ -15,6 +16,14 @@ trait ResourceTrait
         if (!$servicePath) $servicePath = $this->servicePath;
         $serviceName = ucfirst($serviceName); // 大写首字母
         return $isModel ? app()->make($this->modelPath . $serviceName) : app()->make($servicePath . $serviceName . 'Service');
+    }
+
+    // 获取任务类
+    protected function getJob($jobName = null, $jobPath = null)
+    {
+        if (!$jobPath) $jobPath = $this->jobPath;
+        $jobName = ucfirst($jobName); // 大写首字母
+        return app()->make($this->jobPath . $jobName);
     }
 
     // 是否存在资源文件处理 $type   Collection | Resource

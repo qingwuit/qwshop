@@ -73,6 +73,7 @@ const actions = {
 // mutations
 const mutations = {
     async loginAfter(state,{access_token='',refresh_token='',routeUriIndex=2,path='/Admin/login',isTo=false}){
+        if(R.isEmpty(access_token)) return // 如果token为空则直接返回首页
         let tokenName = 'token'
         let userName = 'user'
         let loginData = []
@@ -83,6 +84,7 @@ const mutations = {
         }else{
             loginData = state.loginData
         }
+        
         // console.log(loginData)
         // loginData[routeUriIndex].isLogin = true
         // state.userData[routeUriIndex] = {}

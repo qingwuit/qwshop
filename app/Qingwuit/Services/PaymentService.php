@@ -23,7 +23,10 @@ class PaymentService extends BaseService
             if (empty($out_trade_no)) throw new \Exception('not found out_trade_no');
             $orderPay = $this->getService('OrderPay', true)->where('pay_no', $out_trade_no)->first();
             $paySuccessData = $this->paySuccess($paymentName, $orderPay, $result);
-            if(!is_array($paySuccessData)) return $paySuccessData;
+            if(!is_array($paySuccessData)){
+                DB::commit();
+                return $paySuccessData;
+            }
             if (!$paySuccessData['status']) throw new \Exception($paySuccessData['msg']);
             DB::commit();
             return $paySuccessData;
