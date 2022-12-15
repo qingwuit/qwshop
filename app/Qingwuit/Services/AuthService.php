@@ -145,7 +145,7 @@ class AuthService extends BaseService
 
         // 如果使用队列来处理高并发问题 下面推送到队列
         if (env('APP_REDIS')) {
-            $this->getJob('Register')->dispatch(['model_name' => $modelName, 'register_type' => $type, 'reg_data' => $regData])->onQueue('register');
+            $this->getJob('Register',['model_name' => $modelName, 'register_type' => $type, 'reg_data' => $regData])->onQueue('register');
             return $this->format([], 'Queue executing.');
         } else {
             if (!$model->create($regData)) return $this->formatError(__('tips.error'));

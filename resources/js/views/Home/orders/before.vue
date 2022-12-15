@@ -177,13 +177,32 @@ export default {
             proxy.R.post('/user/order/create',params).then(res=>{
                 if(!res.code){
                     let str = window.btoa(JSON.stringify(res))
-                    router.push('/order/pay/'+str)
+                    // 如果是REDIS 
+                    if(res.order_id.length==0){
+                        let timers = setInterval( async ()=>{
+                            let resp = await proxy.R.post('/user/order/after',{params:str})
+                            if(!resp.code){
+                                if(resp.length>0){
+                                    clearInterval(timers)
+                                    resp.map(afterItem=>{
+                                        res.order_id.push(afterItem.id);
+                                    })
+                                    data.loading = false
+                                    str = window.btoa(JSON.stringify(res))
+                                    router.push('/order/pay/'+str)
+                                } 
+                            }
+                        },500)
+                    }else{
+                        data.loading = false
+                        router.push('/order/pay/'+str)
+                    }
                 }
             }).catch(error=>{
                 console.log(error)
                 data.loading = false
             }).finally(()=>{
-                data.loading = false
+                // data.loading = false
             })
         }
 

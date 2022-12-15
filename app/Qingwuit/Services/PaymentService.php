@@ -21,9 +21,22 @@ class PaymentService extends BaseService
             if ($paymentName == 'wechat') $out_trade_no = $result->resource['ciphertext']['out_trade_no'];
             if ($paymentName == 'alipay') $out_trade_no = $result->out_trade_no;
             if (empty($out_trade_no)) throw new \Exception('not found out_trade_no');
+
+            // REDIS 队列处理第三方回调
+            if (env('APP_REDIS')) {
+                $this->getJob('Payment', [
+                    'payment_name'  => $paymentName,
+                    'device'        => $device,
+                    'config'        => $config,
+                    'out_trade_no'  => $out_trade_no,
+                    'result'        => $result
+                ])->onQueue('payment');;
+                return Pay::$paymentName($this->config)->success();
+            }
+
             $orderPay = $this->getService('OrderPay', true)->where('pay_no', $out_trade_no)->first();
             $paySuccessData = $this->paySuccess($paymentName, $orderPay, $result);
-            if(!is_array($paySuccessData)){
+            if (!is_array($paySuccessData)) {
                 DB::commit();
                 return $paySuccessData;
             }
@@ -107,11 +120,11 @@ class PaymentService extends BaseService
         try {
             $this->setConfig($paymentName, $device, $config);
             $result = Pay::$paymentName($this->config)->$device($this->payData);
-            if(in_array($device,['app','wap','web'])) return $this->format($result->getBody()->getContents());
+            if (in_array($device, ['app', 'wap', 'web'])) return $this->format($result->getBody()->getContents());
             return $this->format($result);
         } catch (\Exception $e) {
-            dd($e->getMessage());
             Log::error('[' . $paymentName . ']:' . $e->getMessage());
+            dd($e->getMessage());
             return $this->formatError(__('tip.payment.paymentFailed'));
         }
     }

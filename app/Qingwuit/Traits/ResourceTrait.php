@@ -19,11 +19,12 @@ trait ResourceTrait
     }
 
     // 获取任务类
-    protected function getJob($jobName = null, $jobPath = null)
+    protected function getJob($jobName = null, $data = [], $iniFun = 'dispatch', $jobPath = null)
     {
         if (!$jobPath) $jobPath = $this->jobPath;
         $jobName = ucfirst($jobName); // 大写首字母
-        return app()->make($this->jobPath . $jobName);
+        $fullpath = $this->jobPath . $jobName;
+        return $fullpath::$iniFun($data);
     }
 
     // 是否存在资源文件处理 $type   Collection | Resource
