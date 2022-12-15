@@ -30,7 +30,7 @@ class PaymentService extends BaseService
                     'config'        => $config,
                     'out_trade_no'  => $out_trade_no,
                     'result'        => $result
-                ])->onQueue('payment');;
+                ])->onQueue('payment');
                 return Pay::$paymentName($this->config)->success();
             }
 
