@@ -148,7 +148,7 @@ export default {
                     server: '/api'+uploadPath+'uploads',
                     // form-data fieldName ，默认值 'wangeditor-uploaded-file'
                     fieldName: 'file',
-                    maxFileSize: 2 * 1024 * 1024, // 1M
+                    maxFileSize: 10 * 1024 * 1024, // 1M
                     maxNumberOfFiles: 10,
                     // 选择文件时的类型限制，默认为 ['image/*'] 。如不想限制，则设置为 []
                     allowedFileTypes: ['image/*'],
