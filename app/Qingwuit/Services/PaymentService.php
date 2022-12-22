@@ -108,6 +108,16 @@ class PaymentService extends BaseService
                     'openid' => request('openid', ''),
                 ];
             }
+
+            // 如果是wap 必填场景信息
+            if (in_array($device, ['wap'])) {
+                $this->payData['scene_info'] = [
+                    'payer_client_ip' => request()->getClientIp(),
+                    'h5_info' => [
+                        'type' => 'Wap'
+                    ]
+                ];
+            }
         }
 
         // 支付宝
