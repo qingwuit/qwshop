@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if(env('isSecure')) URL::forceScheme('https');
+        if(env('URL_SECURE')) URL::forceScheme('https');
         // 全局打印Sql
         // DB::listen(
         //     function ($sql) {
