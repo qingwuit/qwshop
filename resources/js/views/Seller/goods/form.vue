@@ -236,7 +236,7 @@
 </template>
 
 <script>
-import {reactive,ref,getCurrentInstance} from "vue"
+import {reactive,ref,getCurrentInstance,nextTick} from "vue"
 import {getToken,getUploadPath} from '@/plugins/config'
 import {ArrowRight,Delete,Upload,CameraFilled,PieChart,Picture,CircleCheck, Reading,CircleCheckFilled,List,SetUp } from '@element-plus/icons'
 export default {
@@ -272,6 +272,8 @@ export default {
         const nextStep = (e)=>{
             let oldStep = data.step
             data.step = e
+
+            // 直接发布商品
             if(e == 2){
                 data.step = oldStep
                 proxy.$refs.addForm.validate((valid)=>{
@@ -305,12 +307,20 @@ export default {
                 })
                 return
             }
+            // 选择到商品菜单跳转
             if(data.step == 1){
-                let status = false
-                proxy.$refs.addForm.validate((valid)=>{
-                    status = valid
+                
+            }
+
+            // 下一步选择规格属性
+            if(e == 3){
+                data.step = oldStep
+                nextTick(()=>{
+                    return proxy.$refs.addForm.validate((valid)=>{
+                        if (!valid) return false
+                        return data.step = e
+                    })
                 })
-                if (!status) return false
             }
         }
 
@@ -358,8 +368,6 @@ export default {
             if(!data.form.goods_master_image) data.form.goods_master_image = e.data
             if(!data.form.goods_images) data.form.goods_images = []
             data.form.goods_images.push(e.data) 
-           
-            console.log(data.form)
         }
 
         const editGoods = (e)=>{
