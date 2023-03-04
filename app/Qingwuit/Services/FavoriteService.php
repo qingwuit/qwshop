@@ -40,6 +40,7 @@ class FavoriteService extends BaseService
         $fav_info = $this->getService('Favorite', true)->where(['user_id'=>$userId,'out_id'=>$out_id,'is_type'=>request()->is_type])->first();
         if (!empty($fav_info)) {
             $this->getService('Favorite', true)->where(['user_id'=>$userId,'out_id'=>$out_id,'is_type'=>request()->is_type])->delete();
+            if(request('is_type') == 0) $this->getService('Goods',true)->where('id',$out_id)->decrement('goods_collect');
             return $this->format([], __('tip.success'));
         }
         $model = $this->getService('Favorite', true);
@@ -47,6 +48,7 @@ class FavoriteService extends BaseService
         $model->out_id = $out_id;
         $model->is_type = request()->is_type;
         $model->save();
+        if(request('is_type') == 0) $this->getService('Goods',true)->where('id',$out_id)->increment('goods_collect');
         return $this->format([], __('tip.success'));
     }
 
