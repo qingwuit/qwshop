@@ -153,8 +153,8 @@ INSERT INTO `adv_spaces` VALUES (2, 1, 'APP_首页底部广告', 213, 33, '2021-
 -- ----------------------------
 -- Records of advs
 -- ----------------------------
-INSERT INTO `advs` VALUES (3, 1, 1, '1', '/#', '/storage/image/2022-10-19/kerUHJiMBdZBDukUBq4J20ggbxwFMGoDqAB1LPxe.jpg', '2022-10-18 13:46:58', '2023-10-29 00:00:00', 0, 0, 1, '2022-10-19 13:47:10', '2022-10-19 13:49:31', NULL);
-INSERT INTO `advs` VALUES (4, 1, 2, '222', '', '/storage/image/2022-10-19/fQHZ49hRBWGHSazUIJngMFNz31XvJxVdYpRnLrze.png', '2022-10-18 00:00:00', '2023-10-26 00:00:00', 0, 0, 1, '2022-10-19 13:51:19', '2022-10-19 13:51:19', NULL);
+INSERT INTO `advs` VALUES (3, 1, 1, '1', '/#', '/storage/image/2022-10-19/kerUHJiMBdZBDukUBq4J20ggbxwFMGoDqAB1LPxe.jpg', '2022-10-18 13:46:58', '2033-10-29 00:00:00', 0, 0, 1, '2022-10-19 13:47:10', '2022-10-19 13:49:31', NULL);
+INSERT INTO `advs` VALUES (4, 1, 2, '222', '', '/storage/image/2022-10-19/fQHZ49hRBWGHSazUIJngMFNz31XvJxVdYpRnLrze.png', '2022-10-18 00:00:00', '2033-10-26 00:00:00', 0, 0, 1, '2022-10-19 13:51:19', '2022-10-19 13:51:19', NULL);
 
 
 -- ----------------------------

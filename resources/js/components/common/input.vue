@@ -215,7 +215,18 @@ export default {
 <style lang="scss">
 .qw_input{
     width: 100%;
-    .editor{border:1px solid #efefef;}
+    .editor{
+        border:1px solid #efefef;
+        h1{
+            font-size: 2em;
+        }
+        h2{
+            font-size: 1.5em;
+        }
+        h3{
+            font-size: 1.17em;
+        }
+    }
     .avatar-uploader{
         &.images .el-upload{
             width: 100%;
