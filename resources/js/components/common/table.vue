@@ -223,6 +223,7 @@ export default {
                 return {
                     lazy:false,
                     pid:'id',
+                    lazyPid:'pid',
                 }
             }
         },
@@ -300,6 +301,12 @@ export default {
         const editVis = ref(false) // 添加窗口状态
         const viewVis = ref(false) // 查看窗口状态
         const loading = ref(false) // 按钮状态
+
+        // 懒加载临时数据存储
+        const lazyDataTmp = reactive({
+            data:[],
+            loadRow:[],
+        })
 
         // 列表参数处理
         let queryParams = {
@@ -503,7 +510,63 @@ export default {
         // 懒加载
         const lazyLoad = async (tree, treeNode, resolve)=>{
             let childRaw = await getChildrenData(tree[props.tableCfg.pid||'id'])
+            // 先循环判断是否存在过
+            if(lazyDataTmp.data.length == 0) lazyDataTmp.data.push({tree, treeNode, resolve})
+            lazyDataTmp.data.map((lazyItem,lazyKey)=>{
+                if(lazyItem.tree && lazyItem.tree[props.columnId] == tree[[props.columnId]]){
+                    lazyDataTmp.data[lazyKey] = {tree, treeNode, resolve}
+                }else{
+                    lazyDataTmp.data.push({tree, treeNode, resolve})
+                }
+            })
+            // 查出来的数据都存放如临时变量中
+            if(childRaw.length>0){
+                childRaw.map(cItem=>{
+                    let rowStr = ''+cItem[props.columnId]+'|'+cItem[props.tableCfg.lazyPid||'pid']
+                    if(lazyDataTmp.loadRow.indexOf(rowStr) == -1) lazyDataTmp.loadRow.push(rowStr)
+                })
+            }
+            
             resolve(childRaw)
+        }
+
+        // 懒加载自动更新
+        const lazyAutoUpdate = ()=>{
+            try {
+                if(!props.tableCfg.lazy) return
+                // 循环查看是否有需要更新节点 
+                let nodeState = false
+                lazyDataTmp.data.map(item=>{
+                    if(formData.add[props.tableCfg.lazyPid||'pid'] == item.tree[props.columnId]){
+                        lazyLoad(item.tree,item.treeNode,item.resolve)
+                        nodeState = true
+                    }
+                })
+                // 节点未找到无法更新 则更新父节点
+                if(!nodeState){
+                    // 先查看之前查出来的数据是否存在这个父ID 如果存在再调
+                    let loadRowLen = lazyDataTmp.loadRow.length
+                    let parentIdVal = -1
+                    for(let i=0;i<loadRowLen;i++){
+                        let splitItems = lazyDataTmp.loadRow[i].split('|')
+                        if(splitItems[0] == formData.add[props.tableCfg.lazyPid||'pid']){
+                            parentIdVal = splitItems[1]
+                            break
+                        }
+                    }
+                    if(parentIdVal != -1){
+                        lazyDataTmp.data.map(item=>{
+                            if(parentIdVal == item.tree[props.columnId]){
+                                lazyLoad(item.tree,item.treeNode,item.resolve)
+                            }
+                        })
+                    }
+                    
+             
+                }
+            } catch (error) {
+                console.log('nodes update error.')
+            }
         }
 
         // 打开添加编辑弹框
@@ -533,6 +596,7 @@ export default {
                     proxy.R.post(pageUrl,formData.add).then(res=>{
                         if(!res.code || !res.data || !res.msg){
                             loadData()
+                            lazyAutoUpdate() // 懒加载自动更新
                             addVis.value = false
                             proxy.$message.success(proxy.$t('msg.success'))
                         }
@@ -586,6 +650,7 @@ export default {
                         loading.value = false
                         if(!res.code || !res.data || !res.msg){
                             loadData()
+                            lazyAutoUpdate() // 懒加载自动更新
                             editVis.value = false
                             proxy.$message.success(proxy.$t('msg.success'))
                         }
@@ -625,6 +690,7 @@ export default {
             ).then(async ()=>{
                 await proxy.R.deletes(pageUrl+'/'+ids,{})
                 loadData()
+                lazyAutoUpdate() // 懒加载自动更新
                 return proxy.$message.success(proxy.$t('msg.success')) // ElementPlus.ElMessage.error
             }).catch(()=>{})
         }
@@ -642,6 +708,7 @@ export default {
             ).then(async ()=>{
                 await proxy.R.deletes(pageUrl+'/'+id,{})
                 loadData()
+                lazyAutoUpdate() // 懒加载自动更新
                 return proxy.$message.success(proxy.$t('msg.success')) // ElementPlus.ElMessage.error
             }).catch(()=>{})
         }
