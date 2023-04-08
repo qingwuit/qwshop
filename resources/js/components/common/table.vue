@@ -511,14 +511,15 @@ export default {
         const lazyLoad = async (tree, treeNode, resolve)=>{
             let childRaw = await getChildrenData(tree[props.tableCfg.pid||'id'])
             // 先循环判断是否存在过
-            if(lazyDataTmp.data.length == 0) lazyDataTmp.data.push({tree, treeNode, resolve})
+            if(lazyDataTmp.data.length == 0) lazyDataTmp.data.push({tree, treeNode, resolve, id:tree[props.columnId]})
             lazyDataTmp.data.map((lazyItem,lazyKey)=>{
-                if(lazyItem.tree && lazyItem.tree[props.columnId] == tree[[props.columnId]]){
-                    lazyDataTmp.data[lazyKey] = {tree, treeNode, resolve}
+                if(lazyItem.tree && lazyItem.tree[props.columnId] == tree[props.columnId]){
+                    lazyDataTmp.data[lazyKey] = {tree, treeNode, resolve, id:tree[props.columnId]}
                 }else{
-                    lazyDataTmp.data.push({tree, treeNode, resolve})
+                    lazyDataTmp.data.push({tree, treeNode, resolve, id:tree[props.columnId]})
                 }
             })
+            lazyDataTmp.data = _.uniqBy(lazyDataTmp.data,'id')
             // 查出来的数据都存放如临时变量中
             if(childRaw.length>0){
                 childRaw.map(cItem=>{
@@ -561,12 +562,46 @@ export default {
                             }
                         })
                     }
-                    
-             
                 }
             } catch (error) {
                 console.log('nodes update error.')
             }
+        }
+
+        const deleteLazyAutoUpdate = (row)=>{
+            // 如果是删除的情况直接更新父节点
+            try {
+                if(!props.tableCfg.lazy) return
+                if(row == undefined || row.length <= 0) return
+                let pidArr = []
+                if(typeof(row) != 'array') pidArr = [row]
+                if(typeof(row) == 'array') pidArr = row
+                pidArr = _.uniq(pidArr) // 去重复
+                let loadRowLen = lazyDataTmp.loadRow.length
+                if(pidArr.length <= 0) return
+                pidArr.map(pidArrItem=>{
+                    let parentIdVal = -1
+                    for(let i=0;i<loadRowLen;i++){
+                        let splitItems = lazyDataTmp.loadRow[i].split('|')
+                        if(splitItems[0] == pidArrItem){
+                            parentIdVal = splitItems[1]
+                            break
+                        }
+                    }
+                    if(parentIdVal != -1){
+                        lazyDataTmp.data.map(async (item)=>{
+                            if(parentIdVal == item.tree[props.columnId]){
+                                proxy.$refs.multipleTable.store.states.lazyTreeNodeMap.value[parentIdVal] = []
+                                await lazyLoad(item.tree,item.treeNode,item.resolve)
+                            }
+                        })
+                    }
+                })
+            } catch (error) {
+                console.log(error)
+            }
+            
+
         }
 
         // 打开添加编辑弹框
@@ -690,7 +725,7 @@ export default {
             ).then(async ()=>{
                 await proxy.R.deletes(pageUrl+'/'+ids,{})
                 loadData()
-                lazyAutoUpdate() // 懒加载自动更新
+                deleteLazyAutoUpdate(multipleSelection.value) // 懒加载自动更新
                 return proxy.$message.success(proxy.$t('msg.success')) // ElementPlus.ElMessage.error
             }).catch(()=>{})
         }
@@ -708,7 +743,7 @@ export default {
             ).then(async ()=>{
                 await proxy.R.deletes(pageUrl+'/'+id,{})
                 loadData()
-                lazyAutoUpdate() // 懒加载自动更新
+                deleteLazyAutoUpdate(id) // 懒加载自动更新
                 return proxy.$message.success(proxy.$t('msg.success')) // ElementPlus.ElMessage.error
             }).catch(()=>{})
         }
