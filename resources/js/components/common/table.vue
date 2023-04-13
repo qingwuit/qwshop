@@ -532,13 +532,13 @@ export default {
         }
 
         // 懒加载自动更新
-        const lazyAutoUpdate = ()=>{
+        const lazyAutoUpdate = (handleType)=>{
             try {
                 if(!props.tableCfg.lazy) return
                 // 循环查看是否有需要更新节点 
                 let nodeState = false
                 lazyDataTmp.data.map(item=>{
-                    if(formData.add[props.tableCfg.lazyPid||'pid'] == item.tree[props.columnId]){
+                    if(formData[handleType][props.tableCfg.lazyPid||'pid'] == item.tree[props.columnId]){
                         lazyLoad(item.tree,item.treeNode,item.resolve)
                         nodeState = true
                     }
@@ -550,7 +550,7 @@ export default {
                     let parentIdVal = -1
                     for(let i=0;i<loadRowLen;i++){
                         let splitItems = lazyDataTmp.loadRow[i].split('|')
-                        if(splitItems[0] == formData.add[props.tableCfg.lazyPid||'pid']){
+                        if(splitItems[0] == formData[handleType][props.tableCfg.lazyPid||'pid']){
                             parentIdVal = splitItems[1]
                             break
                         }
@@ -631,7 +631,7 @@ export default {
                     proxy.R.post(pageUrl,formData.add).then(res=>{
                         if(!res.code || !res.data || !res.msg){
                             loadData()
-                            lazyAutoUpdate() // 懒加载自动更新
+                            lazyAutoUpdate('add') // 懒加载自动更新
                             addVis.value = false
                             proxy.$message.success(proxy.$t('msg.success'))
                         }
@@ -685,7 +685,7 @@ export default {
                         loading.value = false
                         if(!res.code || !res.data || !res.msg){
                             loadData()
-                            lazyAutoUpdate() // 懒加载自动更新
+                            lazyAutoUpdate('edit') // 懒加载自动更新
                             editVis.value = false
                             proxy.$message.success(proxy.$t('msg.success'))
                         }

@@ -29,7 +29,9 @@ export default {
         const data = reactive({
             // list:[],
             plot:[],
-            list:{},
+            list:{
+                data:[],
+            },
             line:undefined,
             random:(Math.random()+'').substr(0,5)
         })
