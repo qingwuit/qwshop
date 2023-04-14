@@ -491,7 +491,15 @@ export default {
 
         // 值发生改变
         watch(()=>props.tableData,(e)=>{
-            // console.log(e)
+            if(props.tableData.data){
+                listCount.data = props.tableData.count||0
+                listData.listData = props.tableData.data||[]
+                listParams.total = parseInt(props.tableData.total||0)
+                listParams.per_page = parseInt(props.tableData.per_page||1)
+                listParams.last_page = parseInt(props.tableData.last_page||1)
+                listParams.page = parseInt(props.tableData.current_page||1)
+                return
+            }
             loadData()
         })
 
@@ -755,6 +763,7 @@ export default {
             Object.keys(listParams).map(delVal=>{
                 if(proxy.R.isEmpty(listParams[delVal])) delete listParams[delVal]
             })  
+            emit('searchChange',listParams)
             loadData()
         }
         const searchOpen = ()=>{

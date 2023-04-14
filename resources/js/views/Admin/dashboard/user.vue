@@ -10,7 +10,17 @@
         </div>
         
         <div :id="'order_plot'+data.random" style="margin-top:20px;margin-bottom:40px"></div>
-        <table-view :options="options" @tableHandleSizeChange="handleSizeChange" @tableHandleCurrentChange="handleCurrentChange" :params="params" :searchOption="searchOptions" :btnConfig="btnConfigs" :tableData="data.list" :pagination="data.list.data && data.list.data.length>0" :handleHide="false" ></table-view>
+        <table-view 
+        :options="options" 
+        @searchChange="searchChange"
+        @tableHandleSizeChange="handleSizeChange" 
+        @tableHandleCurrentChange="handleCurrentChange" 
+        :params="params" 
+        :searchOption="searchOptions" 
+        :btnConfig="btnConfigs" 
+        :tableData="data.list" 
+        :pagination="data.list.data && data.list.data.length>0" 
+        :handleHide="false" ></table-view>
     </div>
 </template>
 
@@ -30,7 +40,7 @@ export default {
             // list:[],
             plot:[],
             list:{
-                data:[],
+                data:[]
             },
             line:undefined,
             random:(Math.random()+'').substr(0,5)
@@ -62,6 +72,14 @@ export default {
         const typeChange = (e)=>{
             params.is_type = e;
             params.created_at = null
+            loadData()
+        }
+
+        // 搜索回调
+        const searchChange = (e)=>{
+            delete e.is_type
+            Object.assign(params,e)
+            if(!e.nickname) delete params.nickname
             loadData()
         }
 
@@ -121,7 +139,7 @@ export default {
         })
 
         return {
-            data,params,options,btnConfigs,searchOptions,
+            data,params,options,btnConfigs,searchOptions,searchChange,
             typeChange,onChange,handleSizeChange,handleCurrentChange
         }
     }    

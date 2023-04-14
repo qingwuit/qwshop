@@ -131,7 +131,12 @@ class DashboardController extends Controller
         $sql .= " left join (select count(*) as num,DATE_FORMAT(created_at,'".$format[1]."') as time from users where created_at between ? and ? group by time) as U on U.time=tpl.time";
         // dd($sql);
         $data['plot'] = DB::select($sql, [$first_time,$end_time]);
-        $data['list'] = new UserCollection($this->getService('User', true)->whereBetween('created_at', [$first_time,$end_time])->orderBy('id', 'desc')->paginate(request()->per_page??30));
+        
+        $nickname = explode('|',request('nickname',''))[0];
+        $userListModel = $this->getService('User', true)->whereBetween('created_at', [$first_time,$end_time])->orderBy('id', 'desc');
+        if(!empty($nickname)) $userListModel = $userListModel->where('nickname','like',$nickname.'%');
+        $userListModel = $userListModel->paginate(request('per_page',30));
+        $data['list'] = new UserCollection($userListModel);
 
         return $this->success($data);
     }
@@ -175,7 +180,12 @@ class DashboardController extends Controller
         $sql .= " left join (select count(*) as num,DATE_FORMAT(created_at,'".$format[1]."') as time from stores where created_at between ? and ? group by time) as U on U.time=tpl.time";
         // dd($sql);
         $data['plot'] = DB::select($sql, [$first_time,$end_time]);
-        $data['list'] = $this->getService('Store', true)->whereBetween('created_at', [$first_time,$end_time])->orderBy('id', 'desc')->paginate(request()->per_page??30);
+
+        $storeName = explode('|',request('store_name',''))[0];
+        $storeListModel = $this->getService('Store', true)->whereBetween('created_at', [$first_time,$end_time])->orderBy('id', 'desc');
+        if(!empty($nickname)) $storeListModel = $storeListModel->where('store_name','like',$storeName.'%');
+        $storeListModel = $storeListModel->paginate(request('per_page',30));
+        $data['list'] = $storeListModel;
 
         return $this->success($data);
     }
@@ -273,7 +283,14 @@ class DashboardController extends Controller
         $sql .= " left join (select sum(total) as num,DATE_FORMAT(created_at,'".$format[1]."') as time from order_pays where created_at between ? and ?  group by time) as U on U.time=tpl.time";
         // dd($sql);
         $data['plot'] = DB::select($sql, [$first_time,$end_time]);
-        $data['list'] = $this->getService('OrderPay', true)->whereBetween('created_at', [$first_time,$end_time])->orderBy('id', 'desc')->paginate(request()->per_page??30);
+
+        $payListModel = $this->getService('OrderPay', true)->whereBetween('created_at', [$first_time,$end_time])->orderBy('id', 'desc');
+        if(!empty(request('pay_no',''))) $payListModel = $payListModel->where('pay_no','like',explode('|',request('pay_no'))[0].'%');
+        if(!empty(request('trade_no',''))) $payListModel = $payListModel->where('trade_no',explode('|',request('trade_no'))[0].'%');
+        if(!empty(request('payment_name',''))) $payListModel = $payListModel->where('payment_name',explode('|',request('payment_name'))[0]);
+        if(!empty(request('pay_status',0))) $payListModel = $payListModel->where('pay_status',explode('|',request('pay_status'))[0]);
+        $payListModel = $payListModel->paginate(request('per_page',30));
+        $data['list'] = $payListModel;
 
         return $this->success($data);
     }
