@@ -35,7 +35,7 @@ export default {
                 name:[{required:true,message:proxy.$t('msg.requiredMsg')}],
                 ename:[{required:true,message:proxy.$t('msg.requiredMsg')}],
             },
-            destroyOnClose:null,
+            destroyOnClose:true,
             view:{column:addColumn},
             add:{column:addColumn},
             edit:{column:addColumn},

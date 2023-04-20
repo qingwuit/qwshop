@@ -15,7 +15,8 @@
         "payPasswordThr":"请输入0-9数字支付密码.",
         "inputLengthThr":"位长度的字符.",
         "waitPageJump":"等待页面跳转.",
-        "requiredMsg":"不能为空."
+        "requiredMsg":"不能为空.",
+        "subNotAllowBuy":"子账户不允许使用平台购买功能."
     },
 
     "btn":{

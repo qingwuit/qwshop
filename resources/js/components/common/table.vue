@@ -110,7 +110,7 @@
         </el-dialog>
 
         <!-- 编辑dialog -->
-        <el-dialog :destroy-on-close="dialogParams.destroyOnClose" ref="editDialog" custom-class="table_dialog_class" v-model="editVis" :title="$t('btn.edit')" :width="dialogParams.width" :draggable="dialogParams.draggable" :fullscreen="dialogParams.fullscreen">
+        <el-dialog :destroy-on-close="dialogParams.destroyOnClose||true" ref="editDialog" custom-class="table_dialog_class" v-model="editVis" :title="$t('btn.edit')" :width="dialogParams.width" :draggable="dialogParams.draggable" :fullscreen="dialogParams.fullscreen">
             <template #header>
                 <span class="el-dialog__title">{{$t('btn.edit')}}</span>
                 <span class="fullscreenbtn" @click="dialogParams.fullscreen=!dialogParams.fullscreen"><el-icon><FullScreen /></el-icon></span>
