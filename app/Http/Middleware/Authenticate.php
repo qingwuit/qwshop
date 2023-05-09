@@ -51,7 +51,7 @@ class Authenticate extends Middleware
             if ($auth == 'users') return $next($request);
             if ($this->getService('base')->getSuper($auth)) $hasPermission = true; // 超级管理员拥有所有权限
 
-            $roles = $this->getService('base')->getRoles($auth, ['permission']);
+            $roles = $this->getService('base')->getRoles($auth, ['permissions']);
             if (empty($roles['roles']) && !$hasPermission) {
                 return response()->json($thrMsg);
             }
