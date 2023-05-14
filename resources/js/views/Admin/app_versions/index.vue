@@ -21,7 +21,7 @@ export default {
 
         // 搜索字段
         const searchOptions = reactive([
-            {label:'协议名称',value:'name',where:'likeRight'},
+            {label:'更新标题',value:'name',where:'likeRight'},
             {label:'设备',value:'device',where:'like'},
             {label:'版本名称',value:'version',where:'like'},
             {label:'设备',value:'device',where:'like'},

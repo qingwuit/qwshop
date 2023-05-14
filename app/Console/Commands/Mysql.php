@@ -41,6 +41,12 @@ class Mysql extends Command
     {
         Artisan::call('migrate:reset'); // 先清空
         Artisan::call('migrate'); // 迁移
-        DB::unprepared(file_get_contents(app_path('Console'.DIRECTORY_SEPARATOR.'Commands'.DIRECTORY_SEPARATOR.'qwshop.sql'))); // 直接执行sql文件 导入数据
+        // // 例1 导入sql有点慢试试这个新办法 没试过不知可行不可行，暂时先注释 ChatGPT3.5 给出的优化方案
+        // DB::disconnect();
+        // $systemCmd = 'mysql -u' . env('DB_USERNAME') . ' -p' . env('DB_PASSWORD') . ' -h '.env('DB_HOST').' -P '.env('DB_PORT').' ' . env('DB_DATABASE') . ' < ' . app_path('Console' . DIRECTORY_SEPARATOR . 'Commands' . DIRECTORY_SEPARATOR . 'qwshop.sql');
+        // system($systemCmd);
+        // // 例2
+        // DB::unprepared('system mysql -u' . env('DB_USERNAME') . ' -p' . env('DB_PASSWORD') . ' -h '.env('DB_HOST').' -P '.env('DB_PORT').' ' . env('DB_DATABASE') . ' < ' . app_path('Console' . DIRECTORY_SEPARATOR . 'Commands' . DIRECTORY_SEPARATOR . 'qwshop.sql'));
+        DB::unprepared(file_get_contents(app_path('Console' . DIRECTORY_SEPARATOR . 'Commands' . DIRECTORY_SEPARATOR . 'qwshop.sql'))); // 直接执行sql文件 导入数据
     }
 }

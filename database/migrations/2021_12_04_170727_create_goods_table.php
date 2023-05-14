@@ -26,6 +26,7 @@ class CreateGoodsTable extends Migration
             $table->string('goods_master_image', 150)->default('')->comment('主图');
             $table->unsignedDecimal('goods_price', 9, 2)->default(0.00)->comment('商品价格');
             $table->unsignedDecimal('goods_market_price', 9, 2)->default(0.00)->comment('市场价格');
+            $table->unsignedInteger('currency_id')->default(1)->comment('货币类型');
             $table->unsignedInteger('goods_stock')->default(0)->comment('库存');
             $table->unsignedDecimal('goods_weight', 9, 2)->default(0)->comment('商品重量');
             $table->unsignedInteger('goods_sale')->default(0)->comment('销售量');

@@ -28,6 +28,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedDecimal('order_balance', 9, 2)->default(0.00)->comment('余额支付金额');
             $table->unsignedDecimal('freight_money', 5, 2)->default(0.00)->comment('运费金额');
             $table->unsignedDecimal('coupon_money', 5, 2)->default(0.00)->comment('优惠金额');
+            $table->unsignedInteger('currency_id')->default(1)->comment('货币类型');
             $table->unsignedTinyInteger('order_status')->default(1)->comment('订单支付 0 取消 1 等待支付 2等待发货 3确认收货 4等待评论 5售后 6订单完成');
             $table->unsignedTinyInteger('refund_status')->default(0)->comment('0 退款 1退货 2 处理结束');
             $table->unsignedTinyInteger('is_settlement')->default(0)->comment('是否结算');

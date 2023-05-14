@@ -106,6 +106,7 @@ Route::prefix('Admin')->middleware('auth:admins')->group(function () {
     Route::resource('money_logs', App\Http\Controllers\Admin\MoneyLogsController::class)->only(['index','show']);
     Route::resource('seller_menus', App\Http\Controllers\Admin\SellerMenusController::class);
     Route::resource('areas', App\Http\Controllers\Admin\Exts\AreasController::class);
+    Route::resource('currencies', App\Http\Controllers\Admin\Exts\CurrenciesController::class); // 语种路由
     Route::resource('integral_orders', App\Http\Controllers\Admin\Exts\IntegralOrdersController::class)->only(['index','show','update']);
     Route::get('/clear_area', [App\Http\Controllers\Admin\Exts\AreasController::class,'clear_area'])->name('base.clearArea');
     Route::get('load_seller_menu', [App\Http\Controllers\Admin\SellerMenusController::class,'loadMenu']);

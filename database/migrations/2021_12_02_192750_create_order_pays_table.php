@@ -26,6 +26,7 @@ class CreateOrderPaysTable extends Migration
             $table->unsignedTinyInteger('is_recharge')->default(0)->comment('充值');
             $table->unsignedDecimal('total', 9, 2)->default(0.00)->comment('金额');
             $table->unsignedDecimal('balance', 9, 2)->default(0.00)->comment('余额');
+            $table->unsignedInteger('currency_id')->default(1)->comment('货币类型');
             $table->unsignedTinyInteger('pay_status')->default(0)->comment('支付状态');
             $table->timestamp('pay_time')->comment('支付时间');
             $table->timestamps();

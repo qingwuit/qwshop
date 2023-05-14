@@ -27,6 +27,7 @@ class CreateOrderGoodsTable extends Migration
             $table->unsignedInteger('buy_num')->default(1)->comment('购买数量');
             $table->unsignedDecimal('total_price', 9, 2)->default(0.00)->comment('总价格');
             $table->unsignedDecimal('goods_price', 9, 2)->default(0.00)->comment('商品单价');
+            $table->unsignedInteger('currency_id')->default(1)->comment('货币类型');
             $table->unsignedDecimal('total_weight', 6, 2)->default(0.00)->comment('总重量');
             $table->timestamps();
             $table->softDeletes();
