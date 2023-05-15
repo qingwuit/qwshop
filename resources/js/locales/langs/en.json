@@ -1,5 +1,273 @@
 {
     "name":"en",
     
-    "other":"xxx"
+    "msg": {
+        "success": "The operation was successful.",
+        "error": "The operation failed.",
+        "abnormal": "Abnormal operation.",
+        "selectErr": "Please select the operation data first.",
+        "loginSuc": "Login successful.",
+        "loginErr": "Login failed.",
+        "loginAbn": "Account or password error.",
+        "dataThr": "Data is abnormal.",
+        "readAgreement": "Please read the corresponding agreement first.",
+        "reInputError": "The two inputs are inconsistent.",
+        "payPasswordThr": "Please enter the 0-9 digital payment password.",
+        "inputLengthThr": "The character of the bit length.",
+        "waitPageJump": "Wait for page jump.",
+        "requiredMsg": "Cannot be empty.",
+        "subNotAllowBuy": "Sub-accounts are not allowed to use the platform purchase function."
+    },
+
+    "btn": {
+        "view": "View",
+        "add": "Add",
+        "edit": "Edit",
+        "del": "Delete",
+        "determine": "OK",
+        "cancel": "Cancel",
+        "export": "Export",
+        "import": "import",
+        "search": "Query",
+        "search2": "Search",
+        "reset": "Reset",
+        "open": "Expand",
+        "shrink": "shrink",
+        "default": "default",
+        "selectAll": "Select All",
+        "select": "select",
+        "clearCache": "clear cache",
+        "inputContent": "Please enter content",
+        "dateRangeStart": "Start time",
+        "dateRangeEnd": "End time",
+        "code": "Verification Code",
+        "yes": "yes",
+        "no": "no",
+        "success": "success",
+        "error": "failed",
+        "thr": "abnormal",
+        "putOnTheShelf": "On The Shelf",
+        "offTheShelf": "off the shelf",
+        "waitHandle": "Pending",
+        "goodsNext": "Next step, fill in the product information",
+        "attrNext": "Next step, fill in the specification information",
+        "back": "return",
+        "release": "release",
+        "money": "￥",
+        "passExamine": "Examined",
+        "waitExamine": "to be reviewed",
+        "rejected": "Rejected",
+        "reject": "reject",
+        "waitUse": "to be used",
+        "used": "used",
+        "notStarted": "not started",
+        "haveInHand": "In Hand",
+        "HasEnded": "HasEnded",
+        "sendMsg": "Send"
+    },
+
+    "agreement": {
+        "title":"Site Agreement"
+    },
+
+    "user": {
+        "username": "Account",
+        "password": "password",
+        "logout": "Exit the system",
+        "login": "login",
+        "register": "register",
+        "hello": "Hello",
+        "userInfo": "User Center",
+        "nickname": "nickname",
+        "avatar": "Avatar",
+        "integral": "integral",
+        "frozen_money": "Frozen money",
+        "money":"User money"
+    },
+
+    "table": {
+        "deltit": "Prompt",
+        "delmsg": "Are you sure you want to delete the selected data?",
+        "roleMenus": "Role Menu",
+        "rolePermissions": "role interface",
+        "roleName": "role name",
+        "roleBtn": "Operation Authority",
+        "roleEmptyContent": "No description yet",
+        "roleSelectAll": "Click to select all"
+    },
+
+    "menu": {
+        "emptyMenus": "empty menu",
+        "table": "Basic Page",
+        "custom": "custom"
+    },
+
+    "sms":{
+        "sendCode": "Send Verification Code",
+        "phoneEmpty": "The phone number is empty.",
+        "sendSuc": "SMS was sent successfully.",
+        "manySend": "Don't send frequently."
+    },
+
+    "config": {
+        "systemName": "Qingwu System",
+        "configWeb": "Website Configuration",
+        "web": {
+            "webName": "Website Name",
+            "indexName": "Home Page Title",
+            "keyword": "keyword",
+            "description": "Website description",
+            "logo": "Website Logo",
+            "tel": "Telephone",
+            "mobile": "landline",
+            "email": "email",
+            "icp": "Filing Information",
+            "open": "open",
+            "close": "Close",
+            "closeStatus": "Close the website",
+            "closeReason": "Close Reason"
+        },
+        "configUpload": "Upload configuration",
+        "upload": {
+            "saveType": "Storage method (Oss)",
+            "OssAccessKeyId": "OssAccessKeyId",
+            "OssSecretAccess": "OssSecretAccess",
+            "OssBucket": "OssBucket",
+            "OssEndpoint": "Node",
+            "cdn": "CDN domain name",
+            "ssl":"SSL or not"
+        },
+        "configAmap": "map configuration",
+        "amap": {
+            "key": "AutoNavi WEB key",
+            "jsapi": "High German JSAPI",
+            "security":"Security Key"
+        },
+        "configTask": "Timed task",
+        "task": {
+            "cancel": "Cancel order",
+            "confirm": "Confirm order",
+            "settlement": "settlement order",
+            "day": "day"
+        },
+        "configKuaibao": "Kuaibao Configuration",
+        "configKuaibaoDesc": "The logistics interface is [Kuaibao] third-party query",
+        "kuaibao":{
+            "appid": "APPID",
+            "appkey": "APPKEY",
+            "agentId":"AccessKey"
+        },
+        "configSms": "SMS configuration",
+        "sms":{
+            "other": "Other Configuration",
+            "key": "KEY",
+            "secret": "SECRET",
+            "sign": "Signature Configuration",
+            "log": "SMS log"
+        },
+        "configWechatPayWap": "Wechat H5(wap)",
+        "configWechatPayPublic": "Wechat public account",
+        "configWechatPayMini": "Wechat Mini Program",
+        "configWechatPayApp": "Wechat App",
+        "configWechatPayScan": "Wechat scan code (PC)",
+        "configAliWap": "Alipay (wap)",
+        "configAliWeb": "Alipay (Web)",
+        "configAliApp": "Alipay App",
+        "configAliScan": "Alipay scan code (PC)",
+        "configAliMini": "Alipay Mini Program",
+        "configPay": {
+            "appid": "APPID",
+            "secret": "Merchant secret key",
+            "app_secret": "Platform Key (AppSecret)",
+            "mch_secret_cert": "Merchant private key",
+            "mch_public_cert_path": "Merchant public key",
+            "mch_id": "Merchant ID (MCH_ID)",
+            "key": "KEY",
+            "app_secret_cert": "Application Private Key",
+            "app_public_cert_path": "Application Public Key",
+            "alipay_public_cert_path": "Alipay public key",
+            "alipay_root_cert_path": "Alipay root certificate",
+            "notify_url": "Asynchronous callback (notify_url)",
+            "return_url": "Synchronous callback (notify_url)"
+        },
+        "configWecahtOauthWap": "WeChat mobile terminal",
+        "configWecahtOauthPc": "Wechat PC",
+        "configOauth": {
+            "client_id": "ClientID",
+            "key": "Key",
+            "return_url": "Callback address"
+        },
+        "configStore": {
+            "storeConfig": "Store Configuration",
+            "faceConfig": "Facade Configuration",
+            "mapConfig": "Map Configuration",
+            "pcSlideConfig": "PC Slideshow",
+            "mobileSlideConfig": "Mobile Slideshow",
+            "storeLogo": "Store Icon",
+            "storeName": "Store Name",
+            "storeDesc": "Store Description",
+            "storeMobile": "Contact Phone",
+            "storeService": "After-sales service",
+            "storeFace": "store face",
+            "storeArea": "Address",
+            "storePoint": "Map Location",
+            "storeAddress": "Detailed address",
+            "slide1": "slide one",
+            "slide2": "Slide 2",
+            "slide3": "Slide 3",
+            "goodsVerify": "Goods Verification",
+            "cashMoney": "Cash withdrawal fee"
+        }
+    },
+
+    "store": {
+        "verifyStatus": {
+            "createStore": "Fill in information",
+            "verifying": "Verifying",
+            "verifyError": "Verification Denied",
+            "passVerify": "pass verification"
+        }
+    },
+
+    "order": {
+        "sendDelivery": "Processing order...",
+        "orderCancel": "Order Cancellation",
+        "waitPay": "waiting for payment",
+        "waitSend": "waiting for delivery",
+        "waitRec" : "waiting for receipt",
+        "orderConfirm": "waiting for receipt",
+        "waitComment": "Waiting for comments",
+        "orderRefund": "After-sale refund",
+        "orderReturned": "After-sales return",
+        "orderRefundOver": "After-sales completion",
+        "orderCompletion": "Order Completion",
+
+        "paymentWechat" : "Wechat payment",
+        "paymentAli" : "Alipay payment",
+        "paymentMoney" : "Balance payment"
+    },
+
+    "freight": {
+        "default": "Default Shipping",
+        "free": "Free Shipping",
+        "custom":"Custom Shipping"
+    },
+
+    "home": {
+        "check": {
+            "notCheck": "Please fill in the authentication information first."
+        },
+        "goods": {
+            "buyNumErr": "Please fill in the purchase quantity carefully.",
+            "skuErr": "Please select a SKU.",
+            "stockErr": "Insufficient stock.",
+            "minimumErr": "The minimum purchase quantity is 1.",
+            "createOrderThr": "Please wait patiently and do not place repeated orders.",
+            "cartEmpty":"No product selected."
+        },
+        "order": {
+            "startTime": "Start time",
+            "endTime": "end time"
+        }
+    }
 }
