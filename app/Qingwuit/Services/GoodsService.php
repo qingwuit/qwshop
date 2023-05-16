@@ -201,9 +201,9 @@ class GoodsService extends BaseService
                 }
 
                 // 如果ID不为空则代表存在此sku 进行修改
-                if (!empty($skuId)) {
-                    $this->getService('GoodsSku', true)->where('goods_id', $goodsId)->whereNotIn('id', $skuId)->delete();
-                }
+                $skuModel = $this->getService('GoodsSku', true)->where('goods_id', $goodsId);
+                if(!empty($skuId)) $skuModel->whereNotIn('id', $skuId)->delete();
+                if(empty($skuId)) $skuModel->delete();                
 
                 // 新建不存在sku进行插入数据库
                 if (!empty($skuData)) {
