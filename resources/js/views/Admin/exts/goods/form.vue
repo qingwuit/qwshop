@@ -52,7 +52,7 @@
                                 >
                                     <el-button :icon="Upload" type="primary">上传</el-button>
                                 </el-upload>
-                                <el-button :icon="Picture" @click="$message.info('暂未开发')">空间</el-button>
+                                <el-button :icon="Picture" @click="$message.info('总后台无法使用图片空间')">空间</el-button>
                             </div>
                         </el-form-item>
                     </el-col>

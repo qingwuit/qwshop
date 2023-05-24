@@ -17,49 +17,51 @@
             </div>
         </div>
         <slot name="table_top_hook" ></slot>
-        <el-table ref="multipleTable" 
-        :data="listData.listData||[]" border style="width: 100%" 
-        :lazy="tableCfg.lazy"
-        :row-key="columnId"
-        :load="tableCfg.lazy?lazyLoad:null"
-        @selection-change="handleSelectionChange" >
-            <el-table-column type="selection" width="55" />
-            <el-table-column v-for="(v,k) in options" 
-            :key="k" 
-            :label="v.label" 
-            :width="v.value == 'created_at'?(v.width?v.width||null:'165px'):v.width||null" 
-            :show-overflow-tooltip="v.overFlow||false"
-            :fixed="v.fixed||null" >
-                <template #default="scope">
-                    <!-- 默认展示文字 -->
-                    <span v-if="v.type == 'text' || v.type == undefined">{{scope.row[v.value] || '-'}}</span>
-                    <span v-if="v.type == 'money'"><em v-if="parseFloat(scope.row[v.value])>=0" class="moneycss paymoney">+{{scope.row[v.value] || '-'}}</em><em v-if="parseFloat(scope.row[v.value])<0" class="moneycss">{{scope.row[v.value] || '-'}}</em></span>
-                    <q-tags v-if="v.type=='tags'" :value="scope.row[v.value]" />
-                    <span v-if="v.type=='tags_array'"><q-tags  :styles="{marginRight:'8px'}" v-for="(arrItem,arrKey) in scope.row[v.value]" :key="arrKey" :value="arrItem" /></span>
-                    <span v-if="v.type=='icon_tags'"><i :class="'icon_tags fa '+scope.row[v.value]" /><q-tags :value="scope.row[v.value]" /></span>
-                    <span v-if="v.type == 'dict'">{{dictFind(v.value,scope.row[v.value],v.labelName||'label',v.valueName||'value')}}</span>
-                    <q-tags v-if="v.type=='dict_tags'"  :tag_type="v.tag_type||false" :value="dictFind(v.value,scope.row[v.value],v.labelName||'label',v.valueName||'value')" />
-                    <el-image v-if="v.type=='avatar' || v.type == 'image'" :style="v.style||{width:'50px',height:'50px',borderRadius:'4px',textAlign:'center',lineHeight:'65px',background:R.isEmpty(scope.row[v.value])?'#f2f2f2':'null',display:'block'}" :fit="v.fit||'fill'" :hide-on-click-modal="true" :src="scope.row[v.value]" lazy :preview-src-list="v.perView?[scope.row[v.value]]:null" :preview-teleported="v.perView?true:false">
-                        <template #error>
-                            <el-icon :color="v.errColor||'#888'" :size="v.errorPicSize||26"><Picture /></el-icon>
-                        </template>
-                    </el-image>
-                    <div class="custom_column" v-if="v.type=='custom'"><slot :name="v.value" :scopeData="scope.row" ></slot></div>
-                </template>
-            </el-table-column>
-            <el-table-column label="操作" v-if="handleHide" :width="handleWidth" fixed="right">
-                <template #default="scope">
-                    <slot name="table_column_button" >
-                        <div class="table_col_handle">
-                            <el-button :title="$t('btn.view')" v-if="btnConfigs.show && btnConfigs.show.show" :icon="View" @click="showData(scope.row)" />
-                            <el-button :title="$t('btn.edit')" v-if="btnConfigs.update && btnConfigs.update.show" type="primary" @click="openEditDialog(scope.row)" :icon="Edit" />
-                            <slot name="table_handleright_hook" :rows="scope.row"></slot>
-                            <el-button v-if="btnConfigs.deletes && btnConfigs.deletes.show" type="danger" @click="deleteRowData(scope.row[columnId])" :icon="Delete" />
-                        </div>
-                    </slot>
-                </template>
-            </el-table-column>
-        </el-table>
+        <slot name="table_main">
+            <el-table ref="multipleTable" 
+            :data="listData.listData||[]" border style="width: 100%" 
+            :lazy="tableCfg.lazy"
+            :row-key="columnId"
+            :load="tableCfg.lazy?lazyLoad:null"
+            @selection-change="handleSelectionChange" >
+                <el-table-column type="selection" width="55" />
+                <el-table-column v-for="(v,k) in options" 
+                :key="k" 
+                :label="v.label" 
+                :width="v.value == 'created_at'?(v.width?v.width||null:'165px'):v.width||null" 
+                :show-overflow-tooltip="v.overFlow||false"
+                :fixed="v.fixed||null" >
+                    <template #default="scope">
+                        <!-- 默认展示文字 -->
+                        <span v-if="v.type == 'text' || v.type == undefined">{{scope.row[v.value] || '-'}}</span>
+                        <span v-if="v.type == 'money'"><em v-if="parseFloat(scope.row[v.value])>=0" class="moneycss paymoney">+{{scope.row[v.value] || '-'}}</em><em v-if="parseFloat(scope.row[v.value])<0" class="moneycss">{{scope.row[v.value] || '-'}}</em></span>
+                        <q-tags v-if="v.type=='tags'" :value="scope.row[v.value]" />
+                        <span v-if="v.type=='tags_array'"><q-tags  :styles="{marginRight:'8px'}" v-for="(arrItem,arrKey) in scope.row[v.value]" :key="arrKey" :value="arrItem" /></span>
+                        <span v-if="v.type=='icon_tags'"><i :class="'icon_tags fa '+scope.row[v.value]" /><q-tags :value="scope.row[v.value]" /></span>
+                        <span v-if="v.type == 'dict'">{{dictFind(v.value,scope.row[v.value],v.labelName||'label',v.valueName||'value')}}</span>
+                        <q-tags v-if="v.type=='dict_tags'"  :tag_type="v.tag_type||false" :value="dictFind(v.value,scope.row[v.value],v.labelName||'label',v.valueName||'value')" />
+                        <el-image v-if="v.type=='avatar' || v.type == 'image'" :style="v.style||{width:'50px',height:'50px',borderRadius:'4px',textAlign:'center',lineHeight:'65px',background:R.isEmpty(scope.row[v.value])?'#f2f2f2':'null',display:'block'}" :fit="v.fit||'fill'" :hide-on-click-modal="true" :src="scope.row[v.value]" lazy :preview-src-list="v.perView?[scope.row[v.value]]:null" :preview-teleported="v.perView?true:false">
+                            <template #error>
+                                <el-icon :color="v.errColor||'#888'" :size="v.errorPicSize||26"><Picture /></el-icon>
+                            </template>
+                        </el-image>
+                        <div class="custom_column" v-if="v.type=='custom'"><slot :name="v.value" :scopeData="scope.row" ></slot></div>
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作" v-if="handleHide" :width="handleWidth" fixed="right">
+                    <template #default="scope">
+                        <slot name="table_column_button" >
+                            <div class="table_col_handle">
+                                <el-button :title="$t('btn.view')" v-if="btnConfigs.show && btnConfigs.show.show" :icon="View" @click="showData(scope.row)" />
+                                <el-button :title="$t('btn.edit')" v-if="btnConfigs.update && btnConfigs.update.show" type="primary" @click="openEditDialog(scope.row)" :icon="Edit" />
+                                <slot name="table_handleright_hook" :rows="scope.row"></slot>
+                                <el-button v-if="btnConfigs.deletes && btnConfigs.deletes.show" type="danger" @click="deleteRowData(scope.row[columnId])" :icon="Delete" />
+                            </div>
+                        </slot>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </slot>
         <div class="tabel_pagination" v-if="pagination">
             <!-- <span class="demonstration">Change page size</span> -->
             <el-pagination background 

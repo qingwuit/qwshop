@@ -198,6 +198,10 @@ export default {
             
         }
 
+        const getEditObjec = ()=>{
+            return objects
+        }
+
 
         // 头像上传
         const handleAvatarSuccess = (e)=>{
@@ -207,7 +211,7 @@ export default {
 
         const Token = getToken()
         const uploadPath = getUploadPath()
-        return {rand,cascaderChange,lazyLoad ,querySearch,handleAvatarSuccess,Token,uploadPath,data}
+        return {rand,cascaderChange,lazyLoad ,getEditObjec,querySearch,handleAvatarSuccess,Token,uploadPath,data}
     }
 }
 </script>

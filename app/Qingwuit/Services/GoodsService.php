@@ -276,9 +276,7 @@ class GoodsService extends BaseService
             $goods_spec = $this->getService('GoodsSpecs', true)->whereIn('id', $spec_id)->orderBy('id', 'desc')->get()->toArray();
             $attr_id = [];
             foreach ($goods_spec as $v) {
-                if (!in_array($v['attr_id'], $attr_id)) {
-                    $attr_id[] = $v['attr_id'];
-                }
+                if (!in_array($v['attr_id'], $attr_id)) $attr_id[] = $v['attr_id'];
             }
             $goods_attr = $this->getService('GoodsAttr', true)->whereIn('id', $attr_id)->with('specs')->orderBy('id', 'desc')->get()->toArray();
             foreach ($goods_attr as $k => $v) {

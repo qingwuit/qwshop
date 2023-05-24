@@ -86,7 +86,7 @@
                                 >
                                     <el-button :icon="Upload" type="primary">上传</el-button>
                                 </el-upload>
-                                <el-button :icon="Picture" @click="$message.info('暂未开发')">空间</el-button>
+                                <el-button :icon="Picture" @click="openSpace">空间</el-button>
                             </div>
                         </el-form-item>
                     </el-col>
@@ -126,7 +126,7 @@
                     </el-col>
                     <el-col :span="24">
                         <el-form-item :label="'商品详情'" prop="goods_content">
-                            <q-input :params="{value:'goods_content',type:'editor'}" v-model:formData="data.form.goods_content" />
+                            <q-input ref="goods_editor" :params="{value:'goods_content',type:'editor'}" v-model:formData="data.form.goods_content" />
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
@@ -232,6 +232,52 @@
             </template>
         </el-dialog>
 
+        <!-- 图片空间 -->
+        <el-dialog v-model="data.fileSpaceVis" title="选择图片" width="60%" center>
+            <div class="file_dirs" v-if="data.isFileSpaceDir">
+                <div class="items">
+                    <div class="dft_icon"><i class="fa fa-folder-open" /></div>
+                    <div class="btmtit" @click="toPic({id:0,name:'临时目录'})">临时目录</div>
+                </div>
+                <div class="items" v-for="(v,k) in data.dir" :key="k">
+                    <div class="dft_icon"><i class="fa fa-folder-open" /></div>
+                    <div class="btmtit" @click="toPic(v)">{{v.name}}</div>
+                </div>
+            </div>
+            <div class="file_dirs" v-if="!data.isFileSpaceDir">
+                <template  v-if="data.fileSpaces.length > 0">
+                    <div class="items" v-for="(v,k) in data.fileSpaces" :key="k" >
+                        <div class="handle_icon">
+                            <i class="fa fa-check-square-o" v-show="v.checked" />
+                        </div>
+                        <el-image style="width:100%;height:100%" :src="v.url" fit="contain" hide-on-click-modal :preview-src-list="[v.url]"></el-image>
+                        <div class="btmtit" :title="v.name" @click="checkFileSpace(k)" >{{v.name}}</div>
+                    </div>
+                </template>
+                <el-empty style="text-align:center;width: 100%;" v-else />
+            </div>
+            <div class="tabel_pagination" v-if="!data.isFileSpaceDir">
+                <el-pagination background 
+                layout="total, sizes, prev, pager, next, jumper" 
+                :page-size="data.fileSpaceParams.per_page" 
+                :page-sizes="[ 30, 100, 200, 300, 400 ]" 
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :page-count="data.fileSpaceParams.last_page"
+                :current-page="data.fileSpaceParams.page"
+                :total="data.fileSpaceParams.total">
+                </el-pagination>
+            </div>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="backFileSpaceDir" v-if="!data.isFileSpaceDir">返回目录</el-button>
+                    <el-button @click="data.fileSpaceVis = false">{{$t('btn.cancel')}}</el-button>
+                    <el-button type="primary" @click="insertFile(0)">插入主题</el-button>
+                    <el-button type="primary" @click="insertFile(1)">插入详情</el-button>
+                </span>
+            </template>
+        </el-dialog>
+
     </div>
 </template>
 
@@ -246,6 +292,9 @@ export default {
         const loading = ref(false)
         const data = reactive({
             centerDialogVisible:false,
+            fileSpaceVis:false,
+            isFileSpaceDir:true,
+            fileSpaceDirId:0,
             isEdit:false,
             classList:[],
             attrList:[],
@@ -268,6 +317,14 @@ export default {
                 goods_weight:[{required:true,message:proxy.$t('msg.requiredMsg')}],
             },
             uploadOptions:{option:JSON.stringify({width:800,height:800,thumb:[[400,400],[300,300],[150,150]]}),name:'goods'},
+            fileSpaceDir:[],
+            fileSpaces:[],
+            fileSpaceParams:{
+                per_page:20,// 每页大小
+                total:0,
+                last_page:1,
+                page:1
+            }
         })
         const nextStep = (e)=>{
             let oldStep = data.step
@@ -431,8 +488,6 @@ export default {
                     }else{
                         data.goodsAttr[index].specs[itemsKey].check = !data.goodsAttr[index].specs[itemsKey].check
                     }
-                    console.log(items.check)
-                    
                 }
             })
             structureSku();
@@ -480,7 +535,8 @@ export default {
                 attrId.map((items,key)=>{
                     skuList.push({spec_id:[items],sku_name:[attrName[key]],goods_market_price:0,goods_price:0,goods_stock:0,goods_weight:0});
                 })
-                 }
+            }
+            console.log(skuList)
           
             // 判断是否有已经设置过金额的则不改变内容
             // console.log(skuList.length,data.form.skuList.length)
@@ -501,17 +557,19 @@ export default {
                             strList.push(data.form.skuList[i].spec_id.sort().toString());
                         }
                     }
+                    // console.log(strList,data.form.skuList)
                     for(let i=0;i<strList.length;i++){
                         let ngt = false;
+                        let index = -1
                         data.form.skuList.map((skuItem,key)=>{
+                            console.log(strList[i],skuItem.spec_id.sort().toString(),strList[i] == skuItem.spec_id.sort().toString())
                             if(strList[i] == skuItem.spec_id.sort().toString()){
                                 ngt = true
+                                index = key
                             }
-                            if(ngt){
-                                data.form.skuList.splice(key,1)
-                            }
+                            
                         })
-                        
+                        if(ngt) data.form.skuList.splice(index,1)
                     }
                 }else{
                     skuList.forEach(item=>{
@@ -546,6 +604,83 @@ export default {
         }
         
 
+        // 打开图片空间
+        const loadDir = ()=>{
+            proxy.R.get('/Seller/file_space_dirs',{isAll:true}).then(res=>{
+                data.fileSpaces = []
+                if(!res.code) data.fileSpaceDir = res
+            })
+        }
+        const loadDirPic = ()=>{
+            data.fileSpaceParams.dir_id = data.fileSpaceDirId
+            proxy.R.get('/Seller/file_spaces',data.params).then(res=>{
+                if(!res.code){
+                    data.fileSpaces = res.data
+                    data.fileSpaceParams.per_page = res.per_page
+                    data.fileSpaceParams.total = res.total
+                    data.fileSpaceParams.last_page = res.last_page
+                    data.fileSpaceParams.page = res.page
+                }
+            })
+        }
+        const openSpace = ()=>{
+            data.fileSpaceVis = true
+            data.isFileSpaceDir  = true
+            loadDir()
+        }
+        const toPic = (v)=>{
+            data.fileSpaceDirId  = v.id
+            data.fileSpaces = []
+            loadDirPic()
+            data.isFileSpaceDir  = false
+        }
+        const backFileSpaceDir = ()=>{
+            data.isFileSpaceDir = true
+            data.fileSpaceDirId = 0
+        }
+        const insertFile = (e)=>{
+            // 插入主图
+            if(e == 0){
+                data.fileSpaces.map(item=>{
+                    if(item.checked && item.checked === true){
+                        if(!data.form.goods_master_image) data.form.goods_master_image = item.url
+                        if(!data.form.goods_images) data.form.goods_images = []
+                        data.form.goods_images.push(item.url)
+                    }
+                })
+                data.fileSpaceVis = false
+            }
+            if(e == 1){
+                let E = proxy.$refs['goods_editor'].getEditObjec()
+                E.editorObj.focus()
+                setTimeout(()=>{
+                    data.fileSpaces.map(item=>{
+                        if(item.checked && item.checked === true){
+                            E.editorObj.insertNode({type: 'image',src:item.url,children: [{ text: '' }]})
+                        }
+                    })
+                    data.fileSpaceVis = false
+                },200)
+            }
+        }
+        const checkFileSpace = (k)=>{
+            if(data.fileSpaces[k].checked){
+                data.fileSpaces[k].checked = !data.fileSpaces[k].checked
+            }else{
+                data.fileSpaces[k].checked = true
+            }
+        }
+        // 修改页面大小
+        const handleSizeChange = (e)=>{
+            data.params.per_page = e
+            loadDirPic()
+        }
+        // 修改页面内容
+        const handleCurrentChange = (e)=>{
+            data.params.page = e
+            if(data.params.per_page) loadDirPic()
+        }
+
         storeClass()
         goodsBrand()
         loadFreght()
@@ -555,6 +690,7 @@ export default {
 
         return {
             nextStep,chose,handleSuccess,setMaster,deleteImg,specChange,
+            openSpace,toPic,backFileSpaceDir,insertFile,checkFileSpace,handleSizeChange,handleCurrentChange,
             attrChose,openAttrWin,goodsBack,editGoods,data,
             Picture,PieChart,Upload,CircleCheck,Token,uploadPath,loading
         }
@@ -769,6 +905,59 @@ export default {
         width: 100%;
     }
 }
+.file_dirs{
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+    .items{
+        flex: 0 0 23%;
+        border: 1px solid #efefef;
+        height: 200px;
+        margin-right: 2%;
+        border-radius: 6px;
+        position: relative;
+        &:nth-child(4n){
+            margin-right: 0;
+        }
+        .dft_icon{
+            margin-top: 50px;
+            font-size: 80px;
+            justify-content: center;
+            align-items: center;
+            line-height: 200px;
+            display: flex;
+            color:#E6A23C;
+        }
+        .handle_icon{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 20px;
+            z-index: 800;
+            color: #67C23A;
+            i{
+                margin-left:10px ;
+                cursor: pointer;
+            }
+        }
+        .btmtit{
+            background: rgba(#000000, 0.6);
+            color:#fff;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            line-height: 35px;
+            border-radius: 0 0 6px 6px;
+            cursor: pointer;
+            overflow: hidden;
+            height: 35px;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+    }
+}
+
 </style>
 <style lang="scss">
 .goods_form .goods_form_item .el-upload-list{

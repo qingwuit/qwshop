@@ -42,7 +42,7 @@ class GoodsController extends Controller
             return (is_numeric($item));
         });
         $goodsList = $this->getService('Goods', true)->select('id')->where('store_id', $storeId)->whereIn('id', $idArray)->get();
-        if (empty($goodsList)) {
+        if ($goodsList->isEmpty()) {
             return $this->success();
         }
         $goodsId = [];

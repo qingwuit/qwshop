@@ -173,6 +173,8 @@ Route::prefix('Seller')->middleware('auth:users')->group(function () {
     Route::resource('full_reductions', App\Http\Controllers\Seller\FullReductionsController::class);
     Route::resource('collectives', App\Http\Controllers\Seller\CollectivesController::class);
     Route::resource('seckills', App\Http\Controllers\Seller\SeckillsController::class);
+    Route::resource('file_space_dirs', App\Http\Controllers\Seller\FileSpaceDirsController::class); // 图片空间文件夹
+    Route::resource('file_spaces', App\Http\Controllers\Seller\FileSpacesController::class)->only(['index','destroy']); // 图片空间
     Route::post('/orders/express/find', [App\Http\Controllers\Seller\OrdersController::class,'express'])->name('seller.order.express');
     Route::get('/orders/find/all', [App\Http\Controllers\Seller\OrdersController::class,'all'])->name('seller.order.findall');
     Route::get('/orders/print/waybill/{id}', [App\Http\Controllers\Seller\OrdersController::class,'print_waybill'])->name('seller.order.print.waybill');
