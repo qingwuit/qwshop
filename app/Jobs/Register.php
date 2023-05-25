@@ -39,7 +39,7 @@ class Register implements ShouldQueue
         $data = $this->data;
         $model = $this->getService($data['model_name'], true);
         // 判断是否存在相同得账号和电话
-        if ($model->where($data['type'], $data['reg_data']['username'])->exists()) {
+        if ($model->where($data['register_type'], $data['reg_data']['username'])->exists()) {
             // 该账号已经存在
             return info('[' . $data['reg_data']['username'] . '] ' . __('tip.userExist'));
         }
