@@ -272,7 +272,7 @@
                 <span class="dialog-footer">
                     <el-button @click="backFileSpaceDir" v-if="!data.isFileSpaceDir">返回目录</el-button>
                     <el-button @click="data.fileSpaceVis = false">{{$t('btn.cancel')}}</el-button>
-                    <el-button type="primary" @click="insertFile(0)">插入主题</el-button>
+                    <el-button type="primary" @click="insertFile(0)">插入主图</el-button>
                     <el-button type="primary" @click="insertFile(1)">插入详情</el-button>
                 </span>
             </template>
