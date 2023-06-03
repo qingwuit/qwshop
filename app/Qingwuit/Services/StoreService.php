@@ -119,10 +119,13 @@ class StoreService extends BaseService
         }
         if (isset(request()->area)) {
             $areaList = $this->getService('Area', true)->whereIn('id', request()->area)->get();
-            if ($areaList) {
+            if (!$areaList->isEmpty()) {
                 $areaInfo = '';
-                foreach ($areaList as $v) {
+                foreach ($areaList as $k=>$v) {
                     $areaInfo .= ' ' . $v['name'];
+                    if($k == 0) $store_model->province_id = $v['id'];
+                    if($k == 1) $store_model->city_id = $v['id'];
+                    if($k == 2) $store_model->region_id = $v['id'];
                 }
                 $store_model->area_info =  ltrim($areaInfo, ' ');
             }

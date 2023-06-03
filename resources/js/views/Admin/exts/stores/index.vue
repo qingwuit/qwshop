@@ -90,6 +90,7 @@ export default {
             {label:'公司名称',value:'store_company_name'},
             {label:'公司地址',value:'area',type:'cascader',props:{emitPath:true,label:'name',value:'id'}},
             {label:'详细地址',value:'store_address',span:24},
+            {label:'店铺详情',value:'store_description',span:24},
             {label:'营业执照',value:'business_license',span:24,type:'image',name:'store'},
             {label:'统一社会信用代码',value:'business_license_no'},
             {label:'法人',value:'legal_person'},
