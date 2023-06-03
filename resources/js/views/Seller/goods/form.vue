@@ -909,11 +909,13 @@ export default {
     display: flex;
     width: 100%;
     margin-bottom: 20px;
+    flex-flow:row wrap;
     .items{
         flex: 0 0 23%;
         border: 1px solid #efefef;
         height: 200px;
         margin-right: 2%;
+        margin-bottom: 20px;
         border-radius: 6px;
         position: relative;
         &:nth-child(4n){

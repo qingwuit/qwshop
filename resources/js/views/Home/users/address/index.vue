@@ -72,7 +72,7 @@ export default {
         const addColumn = [
              {label:'收件人',value:'receive_name'},
              {label:'手机',value:'receive_tel'},
-             {label:'公司地址',value:'area',type:'cascader',props:{emitPath:true,label:'name',value:'id'}},
+             {label:'地址信息',value:'area',type:'cascader',props:{emitPath:true,label:'name',value:'id'}},
              {label:'详细地址',value:'address'},
              {label:'设置默认',value:'is_default',type:'switch'},
         ]
