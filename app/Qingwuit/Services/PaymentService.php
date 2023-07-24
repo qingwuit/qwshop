@@ -244,7 +244,11 @@ class PaymentService extends BaseService
         if (!empty($payServiceConfig)) {
             foreach ($payServiceConfig as $k => $v) {
                 if (stripos($k, 'cert') != false && $k != 'app_secret_cert') {
-                    $payServiceConfig[$k] = public_path() . $v;
+                    if (stripos($k, 'http：//') == false && stripos($k, 'https：//') == false) {
+                        $payServiceConfig[$k] = public_path() . $v;
+                    } else {
+                        $payServiceConfig[$k] = $v;
+                    }
                 }
             }
         }
