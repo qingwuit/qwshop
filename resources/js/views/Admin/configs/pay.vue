@@ -64,7 +64,7 @@
                         <el-input v-model="form.wechatmini.mini_app_id"  />
                     </el-form-item>
                     <el-form-item :label="$t('config.configPay.app_secret')" prop="secret_key">
-                        <el-input v-model="form.wechatmp.secret_key"  />
+                        <el-input v-model="form.wechatmini.secret_key"  />
                     </el-form-item>
                     <el-form-item :label="$t('config.configPay.mch_id')" prop="mch_id">
                         <el-input v-model="form.wechatmini.mch_id"  />

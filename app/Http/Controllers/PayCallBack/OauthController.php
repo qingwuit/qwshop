@@ -41,7 +41,9 @@ class OauthController extends Controller
         $device = request('device', 'mp');
         $pay = $this->getService('Configs')->getFormatConfig('pay');
         $payCfg = $pay[$payment_name . $device];
-        $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' . $payCfg[(in_array($device, ['wap', 'mp', 'mini']) ? 'mp' . '_' : '') . 'app_id'] . '&secret=' . $payCfg['secret_key'] . '&code=' . request('code') . '&grant_type=authorization_code';
+        $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=";
+        if($device == 'mini') $url = "https://api.weixin.qq.com/sns/jscode2session?appid=";
+        $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' . $payCfg[(in_array($device, ['wap', 'mp']) ? 'mp' . '_' : '') . 'app_id'] . '&secret=' . $payCfg['secret_key'] . '&code=' . request('code') . '&grant_type=authorization_code';
         $resp = $this->getService('Tool')->httpRequest($url);
         $resp = json_decode($resp['data'], true);
         return $this->success($resp);
