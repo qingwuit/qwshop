@@ -1,4 +1,5 @@
-import {createI18n} from 'vue-i18n/index.mjs'
+// import {createI18n} from 'vue-i18n/index.mjs'
+import { createI18n } from 'vue-i18n'
 import R from '@/plugins/http'
 
 const language = R.getLocalesName()
