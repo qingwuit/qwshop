@@ -1,10 +1,13 @@
 # update from laradock/laradock qingwuit <bishashiwo@gmail.com>
+version: '2' #使用docker-compose版本
 services:
     qwshop:
       build:
         context: ./qwshop
       volumes:
         - ../:/var/www:cached
+      links: #服务之间的hosts绑定访问
+        - mysql:db #服务名:别名
     mysql:
       build:
         context: ./mysql
