@@ -138,6 +138,7 @@ export default {
                 data.params.total = resp.total;
                 data.params.per_page = resp.per_page;
                 data.params.current_page = resp.current_page;
+                data.params.last_page = resp.last_page;
             }
         }
 
