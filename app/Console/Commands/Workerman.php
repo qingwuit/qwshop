@@ -14,7 +14,7 @@ class Workerman extends Command
      *
      * @var string
      */
-    protected $signature = 'workerman {cmd} {--d}';
+    protected $signature = 'workerman {cmd} {--d} {--g}';
 
     /**
      * The console command description.
@@ -41,38 +41,24 @@ class Workerman extends Command
     public function handle()
     {
         global $argv;
-        $cmd = $this->argument('cmd');
-        $argv[1] = $cmd; // $cmd;
-        $argv[2] = $this->option('d') ? '-d' : '';
-
-        switch ($cmd) {
-            case 'start':
-                $this->start();
-                break;
-            case 'reload':
-                $this->reload();
-                break;
-            case 'stop':
-                echo "stop";
-                $this->stop();
-                break;
-            case 'status':
-                $this->status();
-                break;
-        }
+        $cmd[] = $this->argument('cmd');
+        if($this->option('d')) $cmd[] = '-d';
+        if($this->option('g')) $cmd[] = '-g';
+        $argv = $cmd;
+        $this->start();
     }
 
     /**
      * 发送结构
      *
      * @return void
-     * @Description 
+     * @Description
      * @Author hg <bishashiwo@gmail.com>
      * @Time 2022-02-20
      * [
      *    type=>'chat', // heart
      *    data=>[
-     *      'type'=>'text', 
+     *      'type'=>'text',
      *      'sid'=>'xxx',
      *      'rid'=>'xxx',
      *      'data'=>[],
