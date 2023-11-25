@@ -153,6 +153,23 @@ export default {
             {label:'订单号',value:'order_no'},
             {label:'备注',value:'remark',span:24},
         ]
+        const viewColumn = [
+            {label:'订单图片',value:'order_image',type:'avatar',span:24},
+            {label:'订单名称',value:'order_name'},
+            {label:'店铺名称',value:'store_name'},
+            {label:'买家昵称',value:'buyer_name'},
+            {label:'订单总额',value:'total_price'},
+            {label:'商品总额',value:'order_price'},
+            {label:'优惠价格',value:'coupon_money'},
+            {label:'收件人名',value:'receive_name'},
+            {label:'收件人手机',value:'receive_tel'},
+            {label:'地址信息',value:'receive_area'},
+            {label:'详细地址',value:'receive_address'},
+            {label:'快递单号',value:'delivery_no'},
+            {label:'订单状态',value:'order_status_cn'},
+            {label:'订单号',value:'order_no'},
+            {label:'备注',value:'remark',span:24},
+        ]
         const editColumn = [
             {label:'收件人名',value:'receive_name'},
             {label:'收件人手机',value:'receive_tel'},
@@ -182,7 +199,7 @@ export default {
                 {label:'详细地址',value:'receive_address'},
                 {label:'快递单号',value:'delivery_no'},
             ],
-            view:{column:addColumn},
+            view:{column:viewColumn},
             edit:{column:editColumn},
         })
 

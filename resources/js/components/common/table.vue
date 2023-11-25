@@ -785,9 +785,9 @@ export default {
             let headerData = []
             listData.listData.map(item=>{
                 let colItem = []
-                headerData = []
                 // 判断是否有选择数据 没有则取全部数据
                 if(!multipleSelection.value || multipleSelection.value.length<=0){
+                    headerData = []
                     exportOptions.map(itemOption=>{
                         let colItemVal = item[itemOption.value]||''
                         if(itemOption.type == 'dict_tags' || itemOption.type == 'dict'){
@@ -800,6 +800,7 @@ export default {
                 }else{
                     let ids = multipleSelection.value.join(',').split(',')
                     if(_.indexOf(ids,item[props.columnId]+'') > -1){
+                        headerData = []
                         exportOptions.map(itemOption=>{
                             let colItemVal = item[itemOption.value]||''
                             if(itemOption.type == 'dict_tags' || itemOption.type == 'dict'){
