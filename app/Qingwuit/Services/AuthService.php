@@ -145,7 +145,7 @@ class AuthService extends BaseService
 
         // 如果使用队列来处理高并发问题 下面推送到队列
         if (env('APP_REDIS')) {
-            $this->getJob('Register',['model_name' => $modelName, 'register_type' => $type, 'reg_data' => $regData])->onQueue('register');
+            $this->getJob('Register', ['model_name' => $modelName, 'register_type' => $type, 'reg_data' => $regData])->onQueue('register');
             return $this->format([], 'Queue executing.');
         } else {
             if (!$model->create($regData)) return $this->formatError(__('tips.error'));
@@ -172,15 +172,39 @@ class AuthService extends BaseService
                 case 'weixinapp': // 微信app
                     break;
                 case 'weixinmini': // 微信小程序
+                    if(empty($oauth['nickname'])) $oauth['nickname'] = 'mini_' . mt_rand(1000, 9999);
+                    break;
+                case 'weixinminiphone': // 微信小程序手机号
+                    if(empty($oauth['nickname'])) $oauth['nickname'] = 'mini_p_' . mt_rand(1000, 9999);
+                    if (isset($oauth['phone']) && !empty($oauth['phone'])) {
+                        // 查询是否存在该手机的账户
+                        $user = $this->getService($modelName, true)->where('username', $oauth['phone'])->first();
+                        if (!empty($user)) {
+                            $data = [
+                                'access_token'      =>  $user->createToken('token')->accessToken,
+                                'expires_in'        =>  0,
+                                'refresh_token'     =>  '',
+                                'token_type'        =>  'Bearer',
+                                'openid'            =>  $oauth['openid'] ?? '',
+                            ];
+                            DB::commit();
+                            return $this->format($data);
+                        }
+                    }
                     break;
             }
             if (substr($oauthName, 0, 6) == 'weixin') {
-                $uwInfo = $this->getService('Oauth', true)->where('unionid', $oauth['unionid'])->first();
+                $uwInfo = $this->getService('Oauth', true);
+                if (!empty($oauth['unionid'])) {
+                    $uwInfo = $uwInfo->where('unionid', $oauth['unionid'])->first();
+                } else {
+                    $uwInfo = $uwInfo->where('openid', $oauth['openid'])->first();
+                }
                 if (!$uwInfo) {
                     $randName = 'wx' . date('Ymd') . mt_rand(100, 999);
                     $userData = [
                         'nickname'      =>  $isArr ? $oauth['nickname'] : $oauth->nickname,
-                        'username'      =>  $randName,
+                        'username'      =>  $oauth['phone'] ?? $randName,
                         'phone'         =>  '',
                         'email'         =>  '',
                         'password'      =>  Hash::make('123456'),
@@ -194,10 +218,10 @@ class AuthService extends BaseService
                         'openid'        =>  $isArr ? $oauth['openid'] : $oauth->openid,
                         'model_name'    =>  $modelName,
                         'oauth_name'    =>  $oauthName,
-                        'nickname'      =>  $isArr ? $oauth['nickname'] : $oauth->nickname,
+                        'nickname'      =>  $isArr ? ($oauth['nickname'] ?? '') : $oauth->nickname,
                         'belong_id'     =>  $userId,
-                        'unionid'       =>  $isArr ? $oauth['unionid'] : $oauth->unionid,
-                        'headimgurl'    => ($isArr ? $oauth['avatar'] : $oauth->avatar) ?? '',
+                        'unionid'       =>  $isArr ? ($oauth['unionid'] ?? '') : $oauth->unionid,
+                        'headimgurl'    => ($isArr ? ($oauth['avatar'] ?? '') : $oauth->avatar) ?? '',
                         'created_at'    =>  now(),
                     ];
                     $this->getService('Oauth', true)->create($oauthData);
@@ -212,6 +236,7 @@ class AuthService extends BaseService
                 'refresh_token'     =>  '',
                 'token_type'        =>  'Bearer',
             ];
+            if(!empty($oauth['openid'])) $data['openid'] = $oauth['openid'];
             DB::commit();
             return $this->format($data);
         } catch (\Exception $e) {
