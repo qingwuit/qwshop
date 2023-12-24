@@ -35,7 +35,7 @@ class OrdersController extends Controller
     // 修改订单信息
     public function update(Request $request, $id)
     {
-        return $this->handle($this->getService('base')->editDat($this->modelName, $id, ['delivery_no', 'order_name', 'receive_name', 'receive_tel', 'receive_area', 'receive_address']));
+        return $this->handle($this->getService('base')->editDat($this->modelName, $id, ['delivery_no', 'delivery_code', 'order_status', 'order_name', 'receive_name', 'receive_tel', 'receive_area', 'receive_address']));
     }
 
     // 云打印订单

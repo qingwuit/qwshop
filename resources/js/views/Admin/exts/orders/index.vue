@@ -158,6 +158,8 @@ export default {
             {label:'收件人手机',value:'receive_tel'},
             {label:'地址信息',value:'receive_area'},
             {label:'详细地址',value:'receive_address'},
+            {label:'订单状态',value:'order_status',type:'select'},
+            {label:'物流公司',value:'delivery_code',type:'select',labelName:'name',valueName:'code'},
             {label:'快递单号',value:'delivery_no'},
         ]
         const dialogParam = reactive({
@@ -172,6 +174,9 @@ export default {
                     {label:proxy.$t('order.orderCompletion'),value:6},
                 ]
             },
+            dict:[
+                {name:'delivery_code',url:'/expresses?isAll=true'},
+            ],
             exportDataAdd:[
                 {label:'收件人名',value:'receive_name'},
                 {label:'收件人手机',value:'receive_tel'},
