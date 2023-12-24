@@ -212,6 +212,7 @@ class AuthService extends BaseService
                         'inviter_id'    =>  request('inviter_id', 0),
                         'belong_id'     =>  0,
                         'created_at'    =>  now(),
+                        'updated_at'    =>  now(),
                     ];
                     $userId = $this->getService($modelName, true)->insertGetId($userData);
                     $oauthData = [
@@ -221,8 +222,9 @@ class AuthService extends BaseService
                         'nickname'      =>  $isArr ? ($oauth['nickname'] ?? '') : $oauth->nickname,
                         'belong_id'     =>  $userId,
                         'unionid'       =>  $isArr ? ($oauth['unionid'] ?? '') : $oauth->unionid,
-                        'headimgurl'    => ($isArr ? ($oauth['avatar'] ?? '') : $oauth->avatar) ?? '',
+                        'headimgurl'    =>  ($isArr ? ($oauth['avatar'] ?? '') : $oauth->avatar) ?? '',
                         'created_at'    =>  now(),
+                        'updated_at'    =>  now(),
                     ];
                     $this->getService('Oauth', true)->create($oauthData);
                 } else {

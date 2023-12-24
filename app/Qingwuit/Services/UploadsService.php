@@ -223,25 +223,27 @@ class UploadsService extends BaseService
             $rs = '/storage/' . $rs;
         }
 
+        if (stripos($this->path, 'goods') == false) return $rs;
+
         // 文件空间处理
-        try{
+        try {
             $oldFileName = $file->getClientOriginalName();
-            $oldFileName = explode('.',$oldFileName)[0];
+            $oldFileName = explode('.', $oldFileName)[0];
             $fileSpaceData = [
-                'belong_id' =>  $this->getService('Store')->getStoreId()['data']??0,
+                'belong_id' =>  $this->getService('Store')->getStoreId()['data'] ?? 0,
                 'name'      =>  $oldFileName,
                 'new_name'  =>  $random,
                 'ext_name'  =>  $ext,
                 'disk_name' =>  $disk,
-                'md5'       =>  md5_file(public_path($rs))??'-', // oss的还要做判断
+                'md5'       =>  md5_file(public_path($rs)) ?? '-', // oss的还要做判断
                 'url'       =>  $rs,
-                'dir_id'    =>  request('dir_id',0),
+                'dir_id'    =>  request('dir_id', 0),
                 'status'    =>  1,
             ];
-            $this->getService('FileSpace',true)->create($fileSpaceData);
-        }catch(\Exception $e){}
+            $this->getService('FileSpace', true)->create($fileSpaceData);
+        } catch (\Exception $e) {
+        }
 
         return $rs;
     }
-
 }
