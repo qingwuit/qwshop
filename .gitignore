@@ -4,6 +4,7 @@
 /public/*.zip
 /*.zip
 /public/storage
+/public/.htaccess
 /storage/*.key
 /vendor
 /app/Http/Controllers/App
@@ -23,3 +24,4 @@ yarn-error.log
 composer.lock
 package-lock.json
 .php-cs-fixer.cache
+.htaccess
