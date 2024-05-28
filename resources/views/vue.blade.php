@@ -14,7 +14,7 @@
 
     <link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/element-plus/2.3.12/index.min.css" /> 
     <script src="//cdn.bootcdn.net/ajax/libs/vue/3.3.4/vue.global.min.js"></script>
-    <script src="//cdn.bootcdn.net/ajax/libs/vue-router/4.2.4/vue-router.global.min.js"></script>
+    <script src="//cdn.bootcdn.net/ajax/libs/vue-router/4.1.3/vue-router.global.min.js"></script>
     <script src="//cdn.bootcdn.net/ajax/libs/vuex/4.1.0/vuex.global.min.js"></script>
     <script src="//cdn.bootcdn.net/ajax/libs/element-plus/2.3.12/index.full.min.js"></script>
     <script src="//cdn.bootcdn.net/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
