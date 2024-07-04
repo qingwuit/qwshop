@@ -235,8 +235,8 @@ class OrderService extends BaseService
         // 这里看要不要加个 用户限制 以后看
         // $userId = $this->getUserId('users');
         // $model = $model->where('user_id',$userId);
-        if(!empty($params['order_id'])) $model = $model->whereIn('id', $params['order_id']);
-        if(empty($params['order_id'])) $model = $model->whereIn('order_no', $params['order_no']);
+        if (!empty($params['order_id'])) $model = $model->whereIn('id', $params['order_id']);
+        if (empty($params['order_id'])) $model = $model->whereIn('order_no', $params['order_no']);
         $list = $model->with('order_goods', 'refund')->get();
 
         return $this->format(new OrderAfterHomeCollection($list));
@@ -387,7 +387,7 @@ class OrderService extends BaseService
             'balance' => 0, // 用户余额
         ];
 
-        if (empty($params['user_id'])) {
+        if (empty($opt['user_id'])) {
             $params['user_id'] = $this->getUserId('users');
         }
 
