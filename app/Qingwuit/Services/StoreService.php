@@ -121,11 +121,11 @@ class StoreService extends BaseService
             $areaList = $this->getService('Area', true)->whereIn('id', request()->area)->get();
             if (!$areaList->isEmpty()) {
                 $areaInfo = '';
-                foreach ($areaList as $k=>$v) {
+                foreach ($areaList as $k => $v) {
                     $areaInfo .= ' ' . $v['name'];
-                    if($k == 0) $store_model->province_id = $v['id'];
-                    if($k == 1) $store_model->city_id = $v['id'];
-                    if($k == 2) $store_model->region_id = $v['id'];
+                    if ($k == 0) $store_model->province_id = $v['id'];
+                    if ($k == 1) $store_model->city_id = $v['id'];
+                    if ($k == 2) $store_model->region_id = $v['id'];
                 }
                 $store_model->area_info =  ltrim($areaInfo, ' ');
             }
@@ -191,7 +191,9 @@ class StoreService extends BaseService
             $store_classes_model = new StoreClass();
             $store_classes_info = $store_classes_model->where('store_id', $store_model->id)->first();
             $class_id = [];
-            foreach (request()->class_id as $k => $v) {
+            $rcl = request('class_id');
+            if (!is_array(request()->class_id)) $rcl = json_decode($rcl);
+            foreach ($rcl as $k => $v) {
                 if (count($v) > 3) {
                     $class_id[] = $v;
                 }
@@ -199,7 +201,7 @@ class StoreService extends BaseService
 
             $data = [
                 'store_id' => $store_model->id,
-                'class_id' => json_encode(request('class_id', [])),
+                'class_id' => is_array(request('class_id', [])) ? json_encode(request('class_id', [])) : request('class_id'),
                 'class_name' => '',
             ];
             if (empty($store_classes_info)) {
