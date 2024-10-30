@@ -242,37 +242,62 @@ class OrderService extends BaseService
         return $this->format(new OrderAfterHomeCollection($list));
     }
 
-    // 库存消减增加 is_type 0 减少  1增加
-    public function orderStock($goods_id, $sku_id, $num, $is_type = 0)
+    // 库存消减增加 
+    public function orderStock($goodsId, $skuId, $quantity, $isIncrease = false)
     {
         try {
             DB::beginTransaction();
-            if (empty($sku_id)) {
-                $goods_model = $this->getService('Goods', true)->lockForUpdate()->find($goods_id);
-                if (!$goods_model) {
-                    throw new \Exception(__('tip.order.handleErr') . ' - stock lock');
-                }
-                if (empty($is_type)) {
-                    $goods_model->decrement('goods_stock', $num);
-                } else {
-                    $goods_model->increment('goods_stock', $num);
-                }
-            } else {
-                $goods_sku_model = $this->getService('GoodsSku', true)->lockForUpdate()->find($sku_id);
-                if (!$goods_sku_model) {
-                    throw new \Exception(__('tip.order.handleErr') . ' - stock lock');
-                }
-                if (empty($is_type)) {
-                    $goods_sku_model->decrement('goods_stock', $num);
-                } else {
-                    $goods_sku_model->increment('goods_stock', $num);
-                }
+
+            // 根据是否提供了 SKU ID 来获取相应的模型
+            $model = $this->getLockedModel($goodsId, $skuId);
+            if (!$model) {
+                throw new \Exception(__('tip.order.handleErr') . ' - stock lock');
             }
+
+            // 根据 isIncrease 参数决定是增加还是减少库存
+            if ($isIncrease) {
+                $model->increment('goods_stock', $quantity);
+            } else {
+                $this->decreaseStockIfSufficient($model, $quantity);
+            }
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw new \Exception(__('tip.order.handleErr') . ' - stock');
+            throw new \Exception(__('tip.order.handleErr') . ' - stock: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * 获取锁定的商品或SKU模型
+     *
+     * @param int $goodsId 商品ID
+     * @param int|null $skuId SKU ID
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    private function getLockedModel($goodsId, $skuId = null)
+    {
+        if (empty($skuId)) {
+            return $this->getService('Goods', true)->lockForUpdate()->find($goodsId);
+        }
+
+        return $this->getService('GoodsSku', true)->lockForUpdate()->find($skuId);
+    }
+
+    /**
+     * 如果库存足够，则减少库存；否则抛出异常
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model 模型实例
+     * @param int $quantity 数量
+     * @throws \Exception 如果库存不足
+     */
+    private function decreaseStockIfSufficient($model, $quantity)
+    {
+        if ($model->goods_stock < $quantity) {
+            throw new \Exception(__('tip.order.stockErr'));
+        }
+
+        $model->decrement('goods_stock', $quantity);
     }
 
     // 销量消减增加 is_type 0 减少  1增加
@@ -496,7 +521,7 @@ class OrderService extends BaseService
                     $og_list = $this->getService('OrderGoods', true)->select('goods_id', 'sku_id', 'buy_num')->where('order_id', $order_id)->get();
                     // 库存修改
                     foreach ($og_list as $v) {
-                        $this->orderStock($v['goods_id'], $v['sku_id'], $v['buy_num'], 1);
+                        $this->orderStock($v['goods_id'], $v['sku_id'], $v['buy_num'], true);
                     }
                     // 如果有优惠券则修改优惠券
                     $this->getService('CouponLog', true)->where('order_id', $order_id)->update(['status' => 0, 'order_id' => 0]);
